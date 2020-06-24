@@ -1,0 +1,241 @@
+html {
+	height: 100%;
+}
+
+/* line 14, /app/app/assets/stylesheets/home/articles/structure.css.scss */
+body {
+	font-family: "Apple SD Gothic Neo", "Malgun Gothic", 'Nanum Gothic',
+		sans-serif;
+	color: #212529;
+	min-height: 100%;
+	position: relative;
+}
+
+/* line 21, /app/app/assets/stylesheets/home/articles/structure.css.scss */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+/* line 26, /app/app/assets/stylesheets/home/articles/structure.css.scss */
+section, article, aside, footer, header, nav, hgroup {
+	display: block;
+}
+
+
+.login {
+	position: absolute;
+	left:680px;
+	top: 17px;
+	display:inline-block;
+	border-radius: 4px;
+	border: solid 2px #B5E61D;
+	text-decoration: none;
+	height: 46px;
+	font-weight: bold;
+	background: #B5E61D;
+	margin-right: 5px;
+	color : #54905e;
+	
+}
+.newMember {
+	position: absolute;
+	left:740px;
+	top: 17px;
+	border-radius: 4px;
+	border: solid 2px #B5E61D;
+	text-decoration: none;
+	height: 46px;
+	font-weight: bold;
+	background: #B5E61D;
+	color : #54905e;
+	
+}
+/* line 49, /app/app/assets/stylesheets/home/articles/structure.css.scss */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+
+
+
+/* line 17, /app/app/assets/stylesheets/home/header.scss */
+button {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+/* line 27, /app/app/assets/stylesheets/home/header.scss */
+#fixed-bar {
+	width: 100%;
+	background-color: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+}
+/* line 35, /app/app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap {
+	width: 980px;
+	margin: 0 auto;
+	padding: 17px 0;
+	position: relative;
+}
+/* line 40, /app/app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap .fixed-logo {
+	width: 132px;
+	vertical-align: text-bottom;
+	margin-bottom: 5px;
+}
+/* line 45, /app/app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search {
+	position: absolute;
+	left: 150px;
+	top: 17px;
+	border-radius: 4px;
+	border: solid 2px #B5E61D;
+	text-decoration: none;
+	padding: 1px 8px 1px 14px;
+	height: 40px;
+}
+/* line 56, /app/app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-input-wrap {
+	position: relative;
+	padding-right: 40px;
+}
+/* line 59, /app/app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-input-wrap .fixed-search-input 
+	{
+	width: 440px;
+	height: 38px;
+	border: none;
+	font-size: 18px;
+	color: #212529;
+	margin-right: 6px;
+}
+/* line 66, /app/app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-input-wrap .fixed-search-input:focus
+	{
+	outline: none;
+}
+/* line 70, /app/app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-input-wrap .fixed-search-icon
+	{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 26px;
+	height: 26px;
+	fill: #00ff00;
+	padding: 7px 7px;
+}
+/* line 81, /app/app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-keyword-wrap {
+	position: absolute;
+	left: 20px;
+	top: 40px;
+	border: 1px solid #00ff00;
+	width: 448px;
+	padding: 10px;
+	background: #fff;
+	z-index: 101;
+	line-height: 2;
+	display: none;
+	font-size: 16px;
+	font-weight: 600;
+}
+/* line 94, /app/app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-keyword-wrap .search-keyword-text
+	{
+	color: #00ff00;
+}
+/* line 97, /app/app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-keyword-wrap .search-keyword-list
+	{
+	white-space: normal;
+	word-break: normal;
+}
+/* line 100, /app/app/assets/stylesheets/home/header.scss */
+#fixed-bar #fixed-bar-wrap #fixed-bar-search .search-keyword-wrap .search-keyword-list .search-keyword
+	{
+	text-decoration: none;
+	color: #212529;
+	white-space: nowrap;
+	margin-right: 8px;
+}
+
+
+/* line 11, /app/app/assets/stylesheets/home/footer.scss */
+footer {
+	position:absolute;
+    bottom:0;
+    width:100%;
+	background-color: #495057;
+	color: #dee2e6;
+	font-size: 15px;
+	line-height: 1.6;
+	letter-spacing: -0.6px;
+	text-align: center;
+	z-index: 100;
+}
+/* footer 상단 여백 */
+footer .footer-list {
+	list-style-type: none;
+	margin: 24px 0;
+}
+/* 가운데 줄맞춤 */
+footer .footer-list .footer-list-item {
+	display: inline-block;
+}
+/* a태그 클릭시 색상변경 안됨 / 밑줄 삭제  */
+footer .footer-list .footer-list-item a {
+	color: #dee2e6;
+	text-decoration: none;
+}
+
+/* li 태그 사이 ㅣ 추가 */
+footer .footer-list .footer-list-item:after {
+	content: '|';
+	margin: 0 16px;
+	color: #868e96;
+	font-weight: normal;
+}
+
+/* line 46, /app/app/assets/stylesheets/home/footer.scss */
+footer .footer-list .footer-list-item:last-child:after {
+	content: none;
+}
+
+/* line 53, /app/app/assets/stylesheets/home/footer.scss */
+footer #footer-address-list {
+	margin-bottom: 4px;
+	font-weight: 200;
+}
+/* line 56, /app/app/assets/stylesheets/home/footer.scss */
+footer #footer-address-list address {
+	display: inline-block;
+	font-style: normal;
+}
+
+/* line 64, /app/app/assets/stylesheets/home/footer.scss */
+footer #copyright {
+	color: #868e96;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.6;
+	letter-spacing: -0.6px;
+	margin: 8px 0;
+}
