@@ -19,16 +19,7 @@ public class MemberController {
 		}
 		return "addMember";
 	}
-	//회원가입 Action
-	@PostMapping("/addMember")
-	public String addMember(HttpSession session, MemberPic memberPic) {
-		if(session.getAttribute("loginMember")==null) {
-			MultipartFile mf = memberPic.getMemberPic();
-			if(memberPic.getMemberPic()!=null && !mf.getOriginalFilename().equals("")) {
-				if(!memberPic.getMemberPic().getContentType().equals("image/png")&&!memberPic.getMemberPic().getContentType().equals("imge/jpeg")&& !memberPic.getMemberPic().getContentType().equals("image/gif")) {
-					return "redirect:/addMember?imgMsg=n";
-				}
-			}
-		}
+	
+	
 	}
-}
+
