@@ -2,6 +2,8 @@ package com.project.secondhand.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,58 @@ import com.project.secondhand.vo.StoreBoardAndBoardPic;
 public class StoreController {
 	@Autowired
 	private StoreService storeService;
+	
+
+	
+	//업체가입 Form
+	@GetMapping("/addStore")
+	public String addStore(HttpSession session) {
+		if(session.getAttribute("loginStore")!=null) {
+			return "redirect/";
+		}
+		return "addStore";
+	}
+	//업체가입 Action
+	@PostMapping("/addStore")
+	public String addStore() {
+		
+		return "redirect:/";
+	}
+	//업체 id Check Action
+	@PostMapping("/storeIdCheck")
+	public String storeIdCheck() {
+		return "redirect:/";
+	}
+	//업체 email체크 (인증) Action
+	@PostMapping("/storeEmailCheck")
+	public String storeEmailCheck() {
+		return "redirect:/";
+	}
+	//로그인 Form
+	@GetMapping("/login")
+	public String login(HttpSession session) {
+		if(session.getAttribute("loginStore")!=null) {
+			return "redirect:/";
+		}
+		return "login";
+	}
+	//로그인 Action
+	@PostMapping("/login")
+	public String login() {
+		return "redirect:/";
+	}
+	//로그아웃
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		if(session.getAttribute("loginStore")!=null) {
+			return "redirect:/";
+		}
+		//세션종료
+		session.invalidate();
+		return "redirect:/";
+	}
+	
+	
 	
 	//업체홍보 리스트
 	@GetMapping("/StoreBoardList")
