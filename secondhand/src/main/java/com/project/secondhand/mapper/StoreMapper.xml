@@ -29,7 +29,7 @@
   	WHERE board_no =#{boardNo}
   </select>
   <!-- 업체 추가하기 -->
-  <insert id="addStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard">
+  <insert id="insertStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard">
 	INSERT INTO
 	market_store_board(
 		board_no,
@@ -49,11 +49,17 @@
 		  
   </insert>
   <!-- 업체 수정하기 -->
-  <update id="modifyStoreBoard">
-  
+  <update id="updateStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard">
+  	UPDATE market_store_board
+  	SET
+  		board_title =#{boardTitle},
+  		board_content =#{boardContent}
+  	WHERE board_no =#{boardNo}
   </update>
   <!-- 업체 삭제하기 -->
-  <delete id="removeStoreBoard">
-  
+  <delete id="deleteStoreBoard">
+  	DELETE
+  	FROM market_store_board
+  	WHERE board_no =#{boardNo}
   </delete>
 </mapper>

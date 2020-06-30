@@ -6,16 +6,16 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.project.secondhand.vo.StoreBoard;
 @Mapper
-public interface StoreBoardMapper {
+public interface StoreMapper {
 	//업체리스트
 	public List<StoreBoard> selectStoreBoardList(StoreBoard storeBoard);
 	//업체 상세보기
 	public StoreBoard selectStoreBoardListOne(int boardNo);
 	//업체 추가하기
-	public int addStoreBoard();
+	public int addStoreBoard(StoreBoard storeBoard);
 	//업체 수정하기
-	public int modifyStoreBoard();
+	public int modifyStoreBoard(StoreBoard storeBoard);
 	//업체 삭제하기
-	public int removeStoreBoard();
+	public int removeStoreBoard(int boardNo);
 
 }
