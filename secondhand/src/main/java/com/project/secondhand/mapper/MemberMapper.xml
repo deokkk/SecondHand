@@ -1,1 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+  
+  <insert id ="addMember" parameterType="com.gdu.cashbook.vo.Member">
+  	INSERT INTO member
+  	(
+  		member_no,
+  		member_nickname,
+  		member_pw,
+  		member_phone,
+  		member_email,
+  		member_date
+  	)
+  	VALUES
+  	(
+  		#{memberNo},
+  		#{memberNickname},
+  		PASSWORD(#{memberPw}),
+  		#{memberPhone},
+  		#{memberEmail},
+		NOW()  	
+  	)
+  
+  </insert>
