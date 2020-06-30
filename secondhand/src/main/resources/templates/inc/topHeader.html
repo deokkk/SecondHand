@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Second Hand</title>
+<link rel="stylesheet" media="all" href="css/searchWord.css" />
+<script src="js/main.js"></script>
+</head>
+<body >
+	<div th:fragment="topHeader">
+		<header id="fixed-bar">
+			<div id="fixed-bar-wrap">
+				<h1 id="fixed-bar-logo-title">
+					<a th:href="@{/index}">
+						<span class="sr-only"></span>
+						<img class="fixed-logo" alt="당근마켓" src="img/logo.jpg" />
+					</a>
+				</h1>
+				<section id="fixed-bar-search">
+				<div class="search-input-wrap">
+					<span class="sr-only">검색</span>
+					<input type="text" name="header-search-input" id="header-search-input" class="fixed-search-input" placeholder="상품, 업체 등을 검색해보세요." />
+					<button id="header-search-button">
+						<img class="fixed-search-icon" alt="Search" src="img/search.jpg" />
+					</button>				
+				</div>			
+				</section>
+				<button type = "button" id = "" class = "newMember">
+					<span>회원가입</span>
+				</button>
+				<button type = "button" id = "" class = "login">
+					<span>로그인</span>
+				</button>
+			</div>
+	</header>	
+	</div>
+</body>
+</html>
