@@ -48,6 +48,4 @@ public class StoreBoard {
 		return "StoreBoard [boardNo=" + boardNo + ", storeNo=" + storeNo + ", categoryName=" + categoryName
 				+ ", boardTitle=" + boardTitle + ", boardContent=" + boardContent + ", boardDate=" + boardDate + "]";
 	}
-	
-
 }
