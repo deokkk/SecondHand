@@ -1,21 +1,23 @@
 package com.project.secondhand.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.project.secondhand.vo.StoreBoard;
+import com.project.secondhand.vo.StoreBoardAndBoardPic;
 @Mapper
 public interface StoreMapper {
 	//업체리스트
-	public List<StoreBoard> selectStoreBoardList(StoreBoard storeBoard);
+	public ArrayList<StoreBoardAndBoardPic> selectStoreBoardList();
 	//업체 상세보기
 	public StoreBoard selectStoreBoardListOne(int boardNo);
 	//업체 추가하기
-	public int addStoreBoard(StoreBoard storeBoard);
+	public int insertStoreBoard(StoreBoard storeBoard);
 	//업체 수정하기
-	public int modifyStoreBoard(StoreBoard storeBoard);
+	public int updateStoreBoard(StoreBoard storeBoard);
 	//업체 삭제하기
-	public int removeStoreBoard(int boardNo);
+	public int deleteStoreBoard(int boardNo);
 
 }

@@ -2,19 +2,28 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.project.secondhand.mapper.StoreBoardMapper">
+<mapper namespace="com.project.secondhand.mapper.StoreMapper">
 	<!-- 업체 리스트 -->
-  <select id="selectStoreBoardList" parameterType="com.project.secondhand.vo.StoreBoard" resultType="com.project.secondhand.vo.StoreBoard">
-  	SELECT
-  		board_no AS boardNo,
+  <sql id = "selectBoard">
+		board_no AS boardNo,
   		store_no AS storeNo,
   		category_name AS categoryName,
   		board_title AS boardTitle,
   		board_content AS boardContent,
   		board_date AS boardDate
-  	FROM market_store_board
-  	WHERE store_no=#{storeNo}
-  	AND category_name=#{categoryName}
+  </sql>
+  <select id="selectStoreBoardList" parameterType="com.project.secondhand.vo.StoreBoardAndBoardPic" resultType="com.project.secondhand.vo.StoreBoardAndBoardPic">
+  	SELECT
+	msb.board_no AS boardNo,
+	msb.store_no AS storeNo,
+	msb.category_name AS categoryName,
+	msb.board_title AS boardTitle,
+	msb.board_content AS boardContent,
+	msb.board_date AS boardDate,
+	(SELECT GROUP_CONCAT(store_pic_name, ".", store_pic_ext)
+	FROM market_store_pic) AS boardPicName
+	FROM market_store_board msb INNER JOIN market_store_board_pic msbp
+	ON msb.board_no = msbp.board_no
   </select>
   <!-- 업체 리스트 상세보기 -->
   <select id="selectStoreBoardListOne" parameterType="com.project.secondhand.vo.StoreBoard" resultType="com.project.secondhand.vo.StoreBoard">
@@ -39,7 +48,7 @@
 		board_content,
 		board_date
 		)VALUES(
-		(MAX(board_no)+1,1),
+		#{boardNo},
 		#{storeNo},
 		#{categoryName},
 		#{boardTitle},

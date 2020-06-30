@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>홍보업체 등록</h1>
+	<form method = "post" th:action = "@{/addStoreBoard}">
+	<div>
+		<span>업체</span>
+		<input type = "text" name = "storeNo">	
+	</div>
+	<div>
+		<span>카테고리 항목</span>
+		<input type = "text" name = "categoryName">	
+	</div>
+	<div>
+		<span>업체명</span>
+		<input type = "text" name = "boardTitle">	
+	</div>
+	<div>
+		<span>업체내용</span>
+		<input type = "text" name = "boardContent">	
+	</div>
+	<div>
+	<button type = "submit">등록</button>
+	</div>
+	</form>
+</body>
+</html>

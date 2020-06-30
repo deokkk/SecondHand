@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>홍보업체 등록</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>BoardNo</th>
+				<th>StoreNo</th>
+				<th>CategoryName</th>
+				<th>BoardTitle</th>
+				<th>BoardContent</th>
+				<th>BoardDate</th>
+				<th>BoardPic</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each = "board, index : ${list}" >
+				<td th:text = "${board.boardNo}"></td>
+				<td th:text = "${board.storeNo}"></td>
+				<td th:text = "${board.categoryName}"></td>
+				<td th:text = "${board.boardTitle}"></td>
+				<td th:text = "${board.boardContent}"></td>
+				<td th:text = "${board.boardDate.substring(0, 16)}"></td>
+				<td th:text = "${board.boardPicName}"></td>
+				
+			</tr>
+		</tbody>
+	</table>
+	
+</body>
+</html>
