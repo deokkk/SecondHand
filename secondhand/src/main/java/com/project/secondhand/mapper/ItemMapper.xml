@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.secondhand.mapper.ItemMapper">
+	<!-- 업체 리스트 -->
+  <select id="selectItemListByAll" resultType="com.project.secondhand.vo.StoreBoard">
+  </select>
+  <!-- 업체 리스트 상세보기 -->
+  <select id="selectItemInfo">
+  
+  </select>
+  <!-- 업체 추가하기 -->
+  <insert id="insertItem">
+  
+  </insert>
+  <!-- 업체 수정하기 -->
+  <update id="updateItem">
+  
+  </update>
+  <!-- 업체 삭제하기 -->
+  <delete id="deleteItem">
+  
+  </delete>
+</mapper>

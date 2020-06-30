@@ -6,7 +6,7 @@ public class StoreBoard {
 	private String categoryName;
 	private String boardTitle;
 	private String boardContent;
-	private int boardDate;
+	private String boardDate;
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -37,10 +37,10 @@ public class StoreBoard {
 	public void setBoardContent(String boardContent) {
 		this.boardContent = boardContent;
 	}
-	public int getBoardDate() {
+	public String getBoardDate() {
 		return boardDate;
 	}
-	public void setBoardDate(int boardDate) {
+	public void setBoardDate(String boardDate) {
 		this.boardDate = boardDate;
 	}
 	@Override
@@ -48,6 +48,4 @@ public class StoreBoard {
 		return "StoreBoard [boardNo=" + boardNo + ", storeNo=" + storeNo + ", categoryName=" + categoryName
 				+ ", boardTitle=" + boardTitle + ", boardContent=" + boardContent + ", boardDate=" + boardDate + "]";
 	}
-	
-	
 }
