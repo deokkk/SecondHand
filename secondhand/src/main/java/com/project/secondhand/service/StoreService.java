@@ -1,15 +1,22 @@
 package com.project.secondhand.service;
 
+import java.awt.Image;
+import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
+
+import javax.swing.ImageIcon;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.secondhand.mapper.StoreMapper;
+import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreBoardAndBoardPic;
+import com.project.secondhand.vo.StorePic;
+import com.project.secondhand.vo.StorePicForm;
 
 @Service
 @Transactional
@@ -39,5 +46,40 @@ public class StoreService {
 	public int deleteStoreBoard(int boardNo) {
 		return storeMapper.deleteStoreBoard(boardNo);
 	}
-
+	
+	//업체 가입 및 사진 추가
+	public int addStore(StorePicForm storePicForm, Store store) {
+		
+		MultipartFile mf = storePicForm.getStorePicName();
+		String originName = mf.getOriginalFilename();
+		int lastDot = originName.lastIndexOf(".");
+		String extension = originName.substring(lastDot);
+		
+		String storePicName = store.getStoreName()+extension;
+		
+		StorePic storePic = new StorePic();
+		storePic.setStorePicExt(extension);
+		storePic.setStorePicName(storePicName);
+		
+		
+		String path = "D:\\sts-4.6.1.RELEASE\\maven.1590371256831\\cashbook\\src\\main\\resources\\static\\upload\\";
+		
+		File file = new File(path+storePicName);
+		try {
+			mf.transferTo(file);	//예외처리가 꼭 필요한 코드
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(); 	//예외처리를 없앤다.
+		} 
+		Image img = new ImageIcon(path+storePicName).getImage();
+		int imgWidth = 0;
+		int imgHeigh = 0;
+		imgWidth = img.getWidth(null);
+		imgHeigh = img.getHeight(null);
+		String widthImg = Integer.toString(imgWidth);
+		String heighImg = Integer.toString(imgHeigh);
+		storePic.setStorePicSize(widthImg+"*"+heighImg);
+		
+		return storeMapper.addStorePic(storePic);
+	}
 }

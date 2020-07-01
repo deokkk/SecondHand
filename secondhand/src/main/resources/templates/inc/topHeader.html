@@ -26,14 +26,21 @@
 					</button>				
 				</div>			
 				</section>
-				<button type = "button" id = "" class = "newMember">
+				<button type = "button" id = "addMember" class = "newMember">
 					<span>회원가입</span>
 				</button>
-				<button type = "button" id = "" class = "login">
+				<button type = "button" id = "login" class = "login">
 					<span>로그인</span>
 				</button>
 			</div>
 	</header>	
 	</div>
 </body>
+	<script>
+		$(document).ready(function(){
+			$("#login").click(function(){
+				location.href = 'login';
+			});
+		});
+	</script>
 </html>

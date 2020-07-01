@@ -9,10 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.secondhand.service.StoreService;
+import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreBoardAndBoardPic;
+import com.project.secondhand.vo.StorePicForm;
 
 @Controller
 public class StoreController {
@@ -31,8 +34,17 @@ public class StoreController {
 	}
 	//업체가입 Action
 	@PostMapping("/addStore")
-	public String addStore() {
+	public String addStore(HttpSession session, StorePicForm storePicForm, Store store) {
+		if(session.getAttribute("loginStore")!=null) {
+			return "redirect/";
+		}
 		
+		// 파일 .jpg .png .gif 만 업로드 가능
+		if(storePicForm.getStorePicName() != null) {
+			if(!storePicForm.getStorePicName().getContentType().equals("image/jpg") && !storePicForm.getStorePicName().getContentType().equals("image/png") && !storePicForm.getStorePicName().getContentType().equals("image/gif") && !storePicForm.getStorePicName().getContentType().equals("image/jpeg")) {
+				return "redirect:/addStore";
+			}
+		}
 		return "redirect:/";
 	}
 	//업체 id Check Action

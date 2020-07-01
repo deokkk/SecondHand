@@ -54,8 +54,40 @@
 		#{boardTitle},
 		#{boardContent},
 		NOW()
-		)
-		  
+		)  
+  </insert>
+  <!-- 업체 가입 -->
+  <insert id="addStore" parameterType="com.project.secondhand.vo.Store">
+  	INSERT INTO
+  		market_store(
+  			store_name,
+  			sotre_addr,
+  			store_phone,
+  			store_email,
+  			store_pw,
+  			store_date
+  		)VALUES(
+  			#{storeName},
+  			#{storeAddr},
+  			#{storePhone},
+  			#{storeEmail},
+  			#{storePw},
+  			NOW()
+  		)
+  </insert>
+  <!-- 업체 사진추가 -->
+  <insert id="addStorePic" parameterType="com.project.secondhand.vo.StorePic">
+  	INSERT INTO 
+  		market_store_pic(
+  			store_pic_name,
+  			store_pic_size,
+  			store_pic_ext
+  		)VALUES(
+  			#{storePicName},
+  			#{storePicSize},
+  			#{storePicExt}
+  		)
+  		
   </insert>
   <!-- 업체 수정하기 -->
   <update id="updateStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard">
