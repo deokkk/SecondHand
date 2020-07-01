@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>addNotice</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<h1 th:text="'공지사항 입력'"></h1>	
+	<form th:method="post" th:action="@{/addNotice}">
+		<div>
+			<label th:for="noticeTitle" th:text="제목"></label>
+			<input th:type="text" th:name="noticeTitle" th:id="noticeTitle" th:placeholder="'제목을 입력하세요'">
+		</div>
+			<div>
+			<label th:for="noticeContent" th:text="내용"></label>
+			<textarea rows="3" cols="50" th:name="noticeContent" th:id="noticeContent" th:placeholder="'내용을 입력하세요'"></textarea>
+		</div>
+		<div>
+			<button th:type="submit" th:id="addBtn" th:text="글작성"></button>
+		</div>
+		
+	</form>
+</body>
+</html>

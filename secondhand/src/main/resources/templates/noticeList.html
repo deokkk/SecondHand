@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>noticeList</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+			<h1 th:text="공지사항"></h1>
+			<table border="1">
+				<thead>
+					<tr>
+						<th th:text="'공지사항 번호'"></th>
+						<th th:text="'제목'"></th>
+						<th th:text="'날짜'"></th>				
+					</tr>
+				</thead>	
+				<tbody>
+					<tr th:each="notice : ${list}">
+						<td th:text="${notice.noticeNo}"></td>
+						<td><a th:href="@{/noticeDetail(noticeNo=${notice.noticeNo})}" th:text="${notice.noticeTitle}"></a></td>
+						<td th:text="${notice.noticeDate}"></td>   
+					</tr>
+				</tbody>	
+			</table>
+			<br>	
+			<div>
+				<a th:href="@{/addNotice}" class="btn btn-primary" th:text="입력하기"></a>
+			</div>
+</body>
+</html>
