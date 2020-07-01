@@ -22,6 +22,6 @@ public interface StoreMapper {
 	public int deleteStoreBoard(int boardNo);
 	//업체가입
 	public int addStore(Store store);
-	//업체 사진추가
+	//업체 사진추가하기
 	public int addStorePic(StorePic storePic);
 }
