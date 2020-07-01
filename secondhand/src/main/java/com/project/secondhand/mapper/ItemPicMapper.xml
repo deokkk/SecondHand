@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.secondhand.mapper.ItemPicMapper">
+	<insert id="insertItemPic" parameterType="com.project.secondhand.vo.ItemPic">
+		INSERT INTO market_item_pic(
+			item_no,
+			item_pic_name,
+			item_pic_size,
+			item_pic_ext
+		)VALUES(
+			#{itemNo},
+			#{itemPicName},
+			#{itemPicSize},
+			#{itemPicExt}
+		)
+	</insert>
+</mapper>

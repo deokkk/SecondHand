@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>물품 리스트</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>ItemNo</th>
+				<th>categoryName</th>
+				<th>memberNo</th>
+				<th>itemTitle</th>
+				<th>itemContent</th>
+				<th>itemPrice</th>
+				<th>itemState</th>
+				<th>itemDate</th>
+				<th>itemPic</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each ="item, index : ${list}">
+				<td th:text = "${item.itemNo}"></td>
+				<td th:text = "${item.categoryName}"></td>
+				<td th:text = "${item.memberNo}"></td>
+				<td th:text = "${item.itemTitle}"></td>
+				<td th:text = "${item.itemContent}"></td>
+				<td th:text = "${item.itemPrice}"></td>
+				<td th:text = "${item.itemState}"></td>
+				<td th:text = "${item.itemDate.substring(0, 16)}"></td>
+				<td th:text = "${item.itemPicName}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

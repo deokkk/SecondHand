@@ -3,16 +3,67 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.secondhand.mapper.ItemMapper">
+	<sql id = "selectItem">
+		item_no AS itemNo,
+  		category_name AS categoryName,
+  		member_no AS memberNo,
+  		item_title AS itemTitle,
+  		item_content AS itemContent,
+  		item_price AS itemPrice,
+  		item_state AS itemState,
+  		item_date AS itemDate
+  </sql>
 	<!-- 업체 리스트 -->
-  <select id="selectItemListByAll" resultType="com.project.secondhand.vo.StoreBoard">
+  <select id="selectItemListByAll" parameterType="com.project.secondhand.vo.ItemAndItemPic" resultType="com.project.secondhand.vo.ItemAndItemPic">
+  SELECT
+	i.item_no AS itemNo,
+	i.category_name AS categoryName,
+	i.member_no AS memberNo,
+	i.item_title AS itemTitle,
+	i.item_content AS itemContent,
+	i.item_price AS itemPrice,
+	i.item_state AS itemState,
+	i.item_date As itemDate,
+	(SELECT GROUP_CONCAT(item_pic_name, ".", item_pic_ext)FROM market_item_pic)AS itemPicName
+	FROM market_item i INNER JOIN market_item_pic ip
+	ON i.item_no = ip.item_no
   </select>
   <!-- 업체 리스트 상세보기 -->
-  <select id="selectItemInfo">
-  
+  <select id="selectItemInfo" parameterType="com.project.secondhand.vo.ItemAndItemPic" resultType="com.project.secondhand.vo.ItemAndItemPic">
+  SELECT
+  	i.item_no AS itemNo,
+	i.category_name AS categoryName,
+	i.member_no AS memberNo,
+	i.item_title AS itemTitle,
+	i.item_content AS itemContent,
+	i.item_price AS itemPrice,
+	i.item_state AS itemState,
+	i.item_date As itemDate,
+	(SELECT GROUP_CONCAT(item_pic_name, ".", item_pic_ext)FROM market_item_pic)AS itemPicName
+	FROM market_item i INNER JOIN market_item_pic ip
+	ON i.item_no = ip.item_no
+	WHERE i.item_no =#{itemNo}
+  	
   </select>
   <!-- 업체 추가하기 -->
-  <insert id="insertItem">
-  
+  <insert id="insertItem" parameterType="com.project.secondhand.vo.Item">
+  INSERT INTO market_item(
+  		category_name,
+  		member_no,
+  		item_title,
+  		item_content,
+  		item_price,
+  		item_state,
+  		item_date,
+  )VALUES(
+  		#{categoryName},
+  		#{memberNo},
+  		#{itemTitle},
+  		#{itemContent},
+  		#{itemPrice},
+  		#{itemState},
+  		NOW()
+  	)
   </insert>
   <!-- 업체 수정하기 -->
   <update id="updateItem">
