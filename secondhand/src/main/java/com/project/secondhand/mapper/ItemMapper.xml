@@ -24,9 +24,13 @@
 	i.item_price AS itemPrice,
 	i.item_state AS itemState,
 	i.item_date As itemDate,
-	(SELECT GROUP_CONCAT(item_pic_name, ".", item_pic_ext)FROM market_item_pic)AS itemPicName
+	ip.item_pic_name_one AS itemPicNameOne,
+	ip.item_pic_name_one AS itemPicNameTwo,
+	ip.item_pic_name_one AS itemPicNameThree,
+	ip.item_pic_name_one AS itemPicNameFour,
+	ip.item_pic_name_one AS itemPicNameFive
 	FROM market_item i INNER JOIN market_item_pic ip
-	ON i.item_no = ip.item_no
+
   </select>
   <!-- 업체 리스트 상세보기 -->
   <select id="selectItemInfo" parameterType="com.project.secondhand.vo.ItemAndItemPic" resultType="com.project.secondhand.vo.ItemAndItemPic">
@@ -39,7 +43,12 @@
 	i.item_price AS itemPrice,
 	i.item_state AS itemState,
 	i.item_date As itemDate,
-	(SELECT GROUP_CONCAT(item_pic_name, ".", item_pic_ext)FROM market_item_pic)AS itemPicName
+	ip.item_no AS itemNo,
+	ip.item_pic_name_one AS itemPicNameOne,
+	ip.item_pic_name_one AS itemPicNameTwo,
+	ip.item_pic_name_one AS itemPicNameThree,
+	ip.item_pic_name_one AS itemPicNameFour,
+	ip.item_pic_name_one AS itemPicNameFive
 	FROM market_item i INNER JOIN market_item_pic ip
 	ON i.item_no = ip.item_no
 	WHERE i.item_no =#{itemNo}
@@ -54,7 +63,7 @@
   		item_content,
   		item_price,
   		item_state,
-  		item_date,
+  		item_date
   )VALUES(
   		#{categoryName},
   		#{memberNo},

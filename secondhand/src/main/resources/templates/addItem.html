@@ -5,35 +5,31 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>아이템 등록</h1>
-	<form method="post" th:action="@{/addItem}">
-		<div>
-			<input type="text" id="categoryName" name="categoryName" th:placeholder="카테고리"> 
-		</div>
-		<div>
-			<input type="text" id="memberNo" th:placeholder="memberNo">
-		</div>
-		<div>
-			<input type="text" id="itemTitle" name="itemTitle" th:placeholder="제목">
-		</div>
-		<div>
-			<input type="text" id="itemContent" name="itemContent" th:placeholder="내용">
-		</div>
-		<div>
-			<input type="text" id="itemPrice" name="itemPrice" th:placeholder="가격">
-		</div>
-		<div>
-			<input type="text" id="itemState" name="itemState" th:placeholder="판매현황">
-		</div>
-		<div>
-			<input type="date" readonly="readonly" id="itemDate" th:placeholder="날짜">
-		</div>
-		<div>
-			<input type="file" name="itemPic" id="itemPic" th:placeholder="사진첨부">
-		</div>
-		<div>
-			<button type="submit">등록</button>
-		</div>
-	</form>
+   <h1>아이템 등록</h1>
+   <form method="post" th:action="@{/addItem}">
+      <div>
+         <input type="text" id="categoryName" name="categoryName" th:placeholder="카테고리"> 
+      </div>
+      <div>
+         <input type="text" id="memberNo" name = "memberNo" th:placeholder="memberNo">
+      </div>
+      <div>
+         <input type="text" id="itemTitle" name="itemTitle" th:placeholder="제목">
+      </div>
+      <div>
+         <input type="text" id="itemContent" name="itemContent" th:placeholder="내용">
+      </div>
+      <div>
+         <input type="text" id="itemPrice" name="itemPrice" th:placeholder="가격">
+      </div>
+      <div>
+         <input type="text" id="itemState" name="itemState" th:placeholder="판매현황">
+      </div>
+
+      
+      <div>
+         <button type="submit">등록</button>
+      </div>
+   </form>
 </body>
 </html>

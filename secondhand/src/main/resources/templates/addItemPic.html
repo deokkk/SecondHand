@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+   <h1>아이템 등록</h1>
+   <form method="post" th:action="@{/addItemPic}">
+      
+      <div>
+         <input type="hidden" id="memberNo" name = "itemNo" value = 5 th:placeholder="memberNo">
+      </div>
+      <div>
+      		<div class = "name">사진</div>      		
+            <input type="file" name="itemPicNameOne" id="" required>
+      </div>
+      <div>
+         <button type="submit">등록</button>
+      </div>
+   </form>
+</body>
+</html>

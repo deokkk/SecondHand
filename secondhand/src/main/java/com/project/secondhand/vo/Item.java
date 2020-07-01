@@ -63,5 +63,6 @@ public class Item {
 				+ itemTitle + ", itemContent=" + itemContent + ", itemPrice=" + itemPrice + ", itemState=" + itemState
 				+ ", itemDate=" + itemDate + "]";
 	}
+
 	
 }

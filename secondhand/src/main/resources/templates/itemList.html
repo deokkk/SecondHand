@@ -17,11 +17,12 @@
 				<th>itemPrice</th>
 				<th>itemState</th>
 				<th>itemDate</th>
-				<th>itemPic</th>
+				<th>itemPicOne</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each ="item, index : ${list}">
+				<td th:text = "${item.itemPicNameOne}"></td>
 				<td th:text = "${item.itemNo}"></td>
 				<td th:text = "${item.categoryName}"></td>
 				<td th:text = "${item.memberNo}"></td>
@@ -30,7 +31,8 @@
 				<td th:text = "${item.itemPrice}"></td>
 				<td th:text = "${item.itemState}"></td>
 				<td th:text = "${item.itemDate.substring(0, 16)}"></td>
-				<td th:text = "${item.itemPicName}"></td>
+				
+
 			</tr>
 		</tbody>
 	</table>

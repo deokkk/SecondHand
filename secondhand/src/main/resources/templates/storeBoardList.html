@@ -22,7 +22,8 @@
 				<button type="button">fffff</button>
 			</nav>
 			<section class="cards-wrap">
-			<div th:each = "board, index : ${list}">
+			<div th:each = "board, index : ${list}" th:value = "${board.boardNo == 1}">
+
 				<article class="card-top ">
 					<a class="card-link " data-event-label="98680541"
 						href="/articles/98680541">
@@ -30,7 +31,6 @@
 							<img alt="집을 정리합니다(아직가격미정)"
 								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
 						</div>
-						
 						<div class="card-desc">
 							<h2 class="card-title"><span th:text = "${board.boardTitle}"></span></h2>
 							<div class="card-region-name">광주 광산구 신가동</div>
@@ -62,245 +62,47 @@
 						</div>
 					</a>
 				</article>
+				<article class="card-top ">
+					<a class="card-link " data-event-label="98680541"
+						href="/articles/98680541">
+						<div class="card-photo">
+							<img alt="집을 정리합니다(아직가격미정)"
+								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
+						</div>
+						<div class="card-desc" >
+							<h2 class="card-title"><span th:text = "${board.boardTitle}"></span></h2>
+							<div class="card-region-name">광주 광산구 신가동</div>
+							<div class="card-price blank-price">-</div>
+							<div class="card-counts">
+								<p><span th:text = "'번호 :'+${board.boardNo}"></span></p>
+								<p><span th:text = "'카테고리 :'+${board.categoryName}"></span></p>
+								<p><span th:text = "'날짜 :' +${board.boardDate.substring(0, 16)}"></span></p>
+							</div>
+						</div>
+					</a>
+				</article>
+				<article class="card-top ">
+					<a class="card-link " data-event-label="98680541"
+						href="/articles/98680541">
+						<div class="card-photo">
+							<img alt="집을 정리합니다(아직가격미정)"
+								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
+						</div>
+						<div class="card-desc" >
+							<h2 class="card-title"><span th:text = "${board.boardTitle}"></span></h2>
+							<div class="card-region-name">광주 광산구 신가동</div>
+							<div class="card-price blank-price">-</div>
+							<div class="card-counts">
+								<p><span th:text = "'번호 :'+${board.boardNo}"></span></p>
+								<p><span th:text = "'카테고리 :'+${board.categoryName}"></span></p>
+								<p><span th:text = "'날짜 :' +${board.boardDate.substring(0, 16)}"></span></p>
+							</div>
+						</div>
+					</a>
+				</article>
 				</div>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98656249"
-						href="/articles/98656249">
-						<div class="card-photo">
-							<img alt="이케아 철제 선반 팝니다"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/D4CCE01A651633DB771E169846E5A09FD636BB6FD063E7DBAB43D97A0E69BEDB.jpg?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">이케아 철제 선반 팝니다</h2>
-							<div class="card-region-name">강원도 원주시 단계동</div>
-							<div class="card-price ">5,000원</div>
-							<div class="card-counts">
-								<span> 관심 5 </span> ∙ <span> 채팅 30 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98646611"
-						href="/articles/98646611">
-						<div class="card-photo">
-							<img alt="생활 접이식 자전거 팝니다."
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/988c8838cc92252cc4ef610ca209b48d86f271d0fba47083ba23304041cdff6c.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">생활 접이식 자전거 팝니다.</h2>
-							<div class="card-region-name">경기도 화성시 동탄1동</div>
-							<div class="card-price ">55,000원</div>
-							<div class="card-counts">
-								<span> 관심 13 </span> ∙ <span> 채팅 29 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98680541"
-						href="/articles/98680541">
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">집을 정리합니다(아직가격미정)</h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price blank-price">-</div>
-							<div class="card-counts">
-								<span> 관심 93 </span> ∙ <span> 채팅 55 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98680541"
-						href="/articles/98680541">
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">집을 정리합니다(아직가격미정)</h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price blank-price">-</div>
-							<div class="card-counts">
-								<span> 관심 93 </span> ∙ <span> 채팅 55 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98680541"
-						href="/articles/98680541">
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">집을 정리합니다(아직가격미정)</h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price blank-price">-</div>
-							<div class="card-counts">
-								<span> 관심 93 </span> ∙ <span> 채팅 55 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98680541"
-						href="/articles/98680541">
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">집을 정리합니다(아직가격미정)</h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price blank-price">-</div>
-							<div class="card-counts">
-								<span> 관심 93 </span> ∙ <span> 채팅 55 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98680541"
-						href="/articles/98680541">
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">집을 정리합니다(아직가격미정)</h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price blank-price">-</div>
-							<div class="card-counts">
-								<span> 관심 93 </span> ∙ <span> 채팅 55 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98680541"
-						href="/articles/98680541">
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">집을 정리합니다(아직가격미정)</h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price blank-price">-</div>
-							<div class="card-counts">
-								<span> 관심 93 </span> ∙ <span> 채팅 55 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98680541"
-						href="/articles/98680541">
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">집을 정리합니다(아직가격미정)</h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price blank-price">-</div>
-							<div class="card-counts">
-								<span> 관심 93 </span> ∙ <span> 채팅 55 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98680541"
-						href="/articles/98680541">
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">집을 정리합니다(아직가격미정)</h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price blank-price">-</div>
-							<div class="card-counts">
-								<span> 관심 93 </span> ∙ <span> 채팅 55 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98680541"
-						href="/articles/98680541">
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">집을 정리합니다(아직가격미정)</h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price blank-price">-</div>
-							<div class="card-counts">
-								<span> 관심 93 </span> ∙ <span> 채팅 55 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98680541"
-						href="/articles/98680541">
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">집을 정리합니다(아직가격미정)</h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price blank-price">-</div>
-							<div class="card-counts">
-								<span> 관심 93 </span> ∙ <span> 채팅 55 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98680541"
-						href="/articles/98680541">
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">집을 정리합니다(아직가격미정)</h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price blank-price">-</div>
-							<div class="card-counts">
-								<span> 관심 93 </span> ∙ <span> 채팅 55 </span>
-							</div>
-						</div>
-					</a>
-				</article>
-				<article class="card-top ">
-					<a class="card-link " data-event-label="98680541"
-						href="/articles/98680541">
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title">집을 정리합니다(아직가격미정)</h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price blank-price">-</div>
-							<div class="card-counts">
-								<span> 관심 93 </span> ∙ <span> 채팅 55 </span>
-							</div>
-						</div>
-					</a>
-				</article>
+				</div>
+				</div>
 
 			</section>
 		</section>

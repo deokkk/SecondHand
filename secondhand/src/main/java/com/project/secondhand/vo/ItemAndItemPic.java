@@ -9,9 +9,11 @@ public class ItemAndItemPic {
 	private int itemPrice;
 	private String itemState;
 	private String itemDate;
-	private String itemPicName;
-	private String itemPicSize;
-	private String itemPicExt;
+	private String itemPicNameOne;
+	private String itemPicNameTwo;
+	private String itemPicNameThree;
+	private String itemPicNameFour;
+	private String itemPicNameFive;
 	public int getItemNo() {
 		return itemNo;
 	}
@@ -60,30 +62,43 @@ public class ItemAndItemPic {
 	public void setItemDate(String itemDate) {
 		this.itemDate = itemDate;
 	}
-	public String getItemPicName() {
-		return itemPicName;
+	public String getItemPicNameOne() {
+		return itemPicNameOne;
 	}
-	public void setItemPicName(String itemPicName) {
-		this.itemPicName = itemPicName;
+	public void setItemPicNameOne(String itemPicNameOne) {
+		this.itemPicNameOne = itemPicNameOne;
 	}
-	public String getItemPicSize() {
-		return itemPicSize;
+	public String getItemPicNameTwo() {
+		return itemPicNameTwo;
 	}
-	public void setItemPicSize(String itemPicSize) {
-		this.itemPicSize = itemPicSize;
+	public void setItemPicNameTwo(String itemPicNameTwo) {
+		this.itemPicNameTwo = itemPicNameTwo;
 	}
-	public String getItemPicExt() {
-		return itemPicExt;
+	public String getItemPicNameThree() {
+		return itemPicNameThree;
 	}
-	public void setItemPicExt(String itemPicExt) {
-		this.itemPicExt = itemPicExt;
+	public void setItemPicNameThree(String itemPicNameThree) {
+		this.itemPicNameThree = itemPicNameThree;
+	}
+	public String getItemPicNameFour() {
+		return itemPicNameFour;
+	}
+	public void setItemPicNameFour(String itemPicNameFour) {
+		this.itemPicNameFour = itemPicNameFour;
+	}
+	public String getItemPicNameFive() {
+		return itemPicNameFive;
+	}
+	public void setItemPicNameFive(String itemPicNameFive) {
+		this.itemPicNameFive = itemPicNameFive;
 	}
 	@Override
 	public String toString() {
 		return "ItemAndItemPic [itemNo=" + itemNo + ", categoryName=" + categoryName + ", memberNo=" + memberNo
 				+ ", itemTitle=" + itemTitle + ", itemContent=" + itemContent + ", itemPrice=" + itemPrice
-				+ ", itemState=" + itemState + ", itemDate=" + itemDate + ", itemPicName=" + itemPicName
-				+ ", itemPicSize=" + itemPicSize + ", itemPicExt=" + itemPicExt + "]";
+				+ ", itemState=" + itemState + ", itemDate=" + itemDate + ", itemPicNameOne=" + itemPicNameOne
+				+ ", itemPicNameTwo=" + itemPicNameTwo + ", itemPicNameThree=" + itemPicNameThree + ", itemPicNameFour="
+				+ itemPicNameFour + ", itemPicNameFive=" + itemPicNameFive + "]";
 	}
 	
 
