@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE configuration
-  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-config.dtd">
-
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.secondhand.mapper.StoreMapper">
   
-  <insert id ="addMember" parameterType="com.gdu.cashbook.vo.Member">
+  
+  
+  <!-- 회원가입 -->
+  <insert id ="addMember" parameterType="com.project.secondhand.vo.Member">
   	INSERT INTO member
   	(
   		member_no,
@@ -23,5 +26,48 @@
   		#{memberEmail},
 		NOW()  	
   	)
-  
   </insert>
+  <!-- 회원가입 사진 -->
+  <insert id="addMember" parameterType="com.project.secondhand.vo.MemberPic">
+  	INSERT INTO member_pic
+  	(
+  		member_no,
+  		member_pic_name,
+  		member_pic_size,
+  		member_pic_ext
+  	)
+  	VALUES
+  	(
+  		#{memberNo},
+  		#{memberPicName},
+  		#{memberPicSize},
+		#{memberPicExt}  		
+  	)
+  </insert>
+  <!-- id(email)중복체크 -->
+  <select id="memberIdCheck" resultType="String" parameterType="String">
+  	SELECT
+  		member_email
+  	FROM
+  	(
+  	 SELECT member_email FROM member 
+  	 UNION
+  	 SELECT member_email FROM backup
+  	 )t
+  	 WHERE member_email=#{memberIdCk}
+  </select>
+  <!-- 로그인 id 비번 확인  -->
+  <select id="SelectLoginMember">
+  
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</mapper>
