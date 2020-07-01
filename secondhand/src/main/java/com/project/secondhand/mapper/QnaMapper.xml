@@ -12,31 +12,31 @@
 			qna_content
 		)VALUES(
 			#{qnaTitle},
-			#{memberNo},
+			1,
 			#{categoryName},
 			#{qnaContent}
 		)
 	</insert>
 	<!-- 자주 묻는 질문 리스트 -->
-	<select id="selectQnaList" resultType="com.project.secondhand.vo.Qna">
+	<select id="selectQnaList" parameterType="String" resultType="com.project.secondhand.vo.Qna">
 		SELECT 
 			qna_title qnaTitle,
 			member_no memberNo,
-			category_no categoryNo,
+			category_name categoryName,
 			qna_content qnaContent
-		FROM
-		WHERE qna_title=#{qnaTitle}
+		FROM market_qna			
+		WHERE qna_title LIKE CONCAT('%',#{searchWord},'%')
 		ORDER BY qna_title DESC
 	</select>
 	
 	<!-- 자주 묻는 질문 상세보기 -->
-	<select id="selectQna" parameterType="int" resultType="com.project.secondhand.vo.Qna">
+	<select id="selectQna" parameterType="String" resultType="com.project.secondhand.vo.Qna">
 		SELECT 
 			qna_title qnaTitle,
 			member_no memberNo,
-			category_no categoryNo,
+			category_name categoryName,
 			qna_content qnaContent
-		FROM
+		FROM market_qna
 		WHERE qna_title=#{qnaTitle}
 	</select>	
 	
@@ -46,12 +46,12 @@
 		SET
 			qna_title=#{qnaTitle},
 			category_name=#{categoryName},
-			qna_content=#{qnaConent}
+			qna_content=#{qnaContent}
 		WHERE qna_title=#{qnaTitle}
 	</update>
 	
 	<!-- 자주 묻는 질문 삭제하기 -->
-	<delete id="deleteQna" parameterType="int">
+	<delete id="deleteQna" parameterType="String">
 		DELETE FORM market_qna
 			qna_title=#{qnaTitle}
 		WHERE 

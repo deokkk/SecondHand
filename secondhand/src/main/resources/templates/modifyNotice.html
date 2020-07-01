@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>modifyNotice</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<h1 th:text="수정하기"></h1>
+		<form th:method="post" th:action="@{/modifyNotice}">
+			<input th:type="hidden" th:name="noticeNo" th:value="${notice.noticeNo}">
+			<div>
+				<label th:for="noticeTitle" th:text="제목"></label>
+				<input th:type="text" th:name="noticeTitle" th:id="noticeTitle" th:value="${notice.noticeTitle}">
+			</div>
+			<div>
+				<label th:for="noticeContnet" th:text="내용"></label>
+				<textarea th:rows="3" th:cols="50" th:name="noticeContent" th:id="noticeContent" th:text="${notice.noticeContent}"></textarea>
+			</div>
+			<div>
+				<button th:type="submit" th:id="modifyBtn">수정완료</button>
+			</div>
+		</form>
+
+</body>
+</html>

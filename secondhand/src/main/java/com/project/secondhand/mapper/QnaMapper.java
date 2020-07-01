@@ -13,7 +13,7 @@ public interface QnaMapper {
 		public int insertQna(Qna qna);
 		
 		//자주 묻는 질문 리스트
-		public List<Qna> selectQnaList();
+		public List<Qna> selectQnaList(String searchWord);
 		
 		//자주 묻는 질문 상세보기
 		public Qna selectQna(String qnaTitle);

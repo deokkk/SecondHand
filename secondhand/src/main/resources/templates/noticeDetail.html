@@ -11,6 +11,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#removeBtn').click(function() {
+			var result = confirm('정말 삭제하시겠습니까 ? 되돌릴수업어요 !');
+			
+			if(result){
+				location.replace('noticeList');
+			}else{
+				return false;
+			}
+		});	
+	}); 
+	
+</script>
 </head>
 <body>
 	<h1 th:text="'공지사항 상세보기'"></h1>
@@ -22,7 +36,7 @@
 	</div>
 	<div>
 		<a th:href="@{/modifyNotice(noticeNo=${notice.noticeNo})}" th:text="수정"></a>
-		<a th:href="@{/removeNotice(noticeNo=${notice.noticeNo})}" th:text="삭제"></a>
+		<a th:href="@{/removeNotice(noticeNo=${notice.noticeNo})}" th:text="삭제" th:id="removeBtn"></a>
 		<a th:href="@{/noticeList}" th:text="목록"></a>
 	</div>
 </body>

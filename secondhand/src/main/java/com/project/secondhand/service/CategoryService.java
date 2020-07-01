@@ -14,8 +14,9 @@ public class CategoryService {
 	private CategoryMapper categoryMapper;
 	
 	//리스트가져오기
-	public List<Category> getCategoryList(){
-		return categoryMapper.selectCategoryList();
+	public List<Category> getCategoryList(String categoryType){
+		return categoryMapper.selectCategoryList(categoryType);
+		
 	}
 	
 }

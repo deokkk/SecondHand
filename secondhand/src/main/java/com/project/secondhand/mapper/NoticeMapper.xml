@@ -48,7 +48,7 @@
 		SET
 			notice_title=#{noticeTitle},
 			notice_content=#{noticeContent},
-			notice_date=#{noticeDate}
+			notice_date=NOW()
 		WHERE notice_no=#{noticeNo}	
 	</update>
 	

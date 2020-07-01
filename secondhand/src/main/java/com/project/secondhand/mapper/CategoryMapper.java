@@ -11,5 +11,5 @@ import com.project.secondhand.vo.Category;
 public interface CategoryMapper {
 
 	//카테고리 리스트
-	public List<Category> selectCategoryList();
+	public List<Category> selectCategoryList(String categoryType);
 }
