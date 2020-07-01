@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>qnaDetail</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<h1 th:text="'자주묻는질문 상세보기'"></h1>
+	<div>
+		<div th:text="'제목 : ' + ${qna.qnaTitle}"></div>
+		<div th:text="'카테고리 : ' + ${qna.categoryName}"></div>
+		<div th:text="'내용 : ' + ${qna.qnaContent}"></div>
+	</div>
+	<div>
+		<a th:href=@{/modifyQna(qnaTitle=${qna.qnaTitle})} th:text="수정"></a>
+		<a th:href=@{/removeQna(qnaTitle=${qna.qnaTitle})} th:text="삭제"></a>
+		<a th:href=@{/qnaList} th:text="목록"></a>
+	</div>
+</body>
+</html>

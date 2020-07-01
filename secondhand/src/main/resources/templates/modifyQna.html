@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>modifyQna</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<h1 th:text="'자주묻는질문 수정'"></h1>
+	<form th:method="post" th:action="@{/addQna}">
+		<div>
+			<label th:for="qnaTitle" th:text="'제목 : '"></label>
+			<input th:type="text" th:name="qnaTitle" th:id="qnaTitle" th:value="${qna.qnaTitle}">
+		</div>
+		<div>
+			<label th:for="categoryName" th:text="'카테고리 : '"></label>
+			<select th:name="categoryName" th:id="categoryName">
+				<option th:value="" th:text="카테고리를 선택하세요."></option>
+				<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}" th:selected="${category.categoryName eq qna.categoryName}"></option>
+			</select>
+		</div>
+		<div>
+			<label th:for="qnaContent" th:text="'내용 : '"></label>
+			<textarea th:rows="3" th:cols="50" th:name="qnaContent" th:id="qnaContent" th:text="${qna.qnaContent}"></textarea>
+		</div>
+		<div>
+			<button th:type="submit" th:text="글수정"></button>
+		</div>
+	</form>
+</body>
+</html>
