@@ -6,7 +6,7 @@
 </head>
 <body>
    <h1>아이템 등록</h1>
-   <form method="post" th:action="@{/addItem}">
+   <form method="post" th:action="@{/addItem}" enctype="multipart/form-data">
       <div>
          <input type="text" id="categoryName" name="categoryName" th:placeholder="카테고리"> 
       </div>
@@ -25,6 +25,26 @@
       <div>
          <input type="text" id="itemState" name="itemState" th:placeholder="판매현황">
       </div>
+      <div>
+      	<div class = "name">사진</div>      		
+            <input type="file" name="itemPicNameOne" id="" required>
+      	</div>
+      	<div>
+      	<div class = "name">사진</div>      		
+            <input type="file" name="itemPicNameTwo" id="" required>
+      	</div>
+      	<div>
+      	<div class = "name">사진</div>      		
+            <input type="file" name="itemPicNameThree" id="" required>
+      	</div>
+      	<div>
+      	<div class = "name">사진</div>      		
+            <input type="file" name="itemPicNameFour" id="" required>
+      	</div>
+      	<div>
+      	<div class = "name">사진</div>      		
+            <input type="file" name="itemPicNameFive" id="" required>
+      	</div>
 
       
       <div>

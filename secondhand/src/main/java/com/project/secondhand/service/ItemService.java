@@ -3,8 +3,6 @@ package com.project.secondhand.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,13 +15,13 @@ import com.project.secondhand.mapper.ItemPicMapper;
 import com.project.secondhand.vo.Item;
 import com.project.secondhand.vo.ItemAndItemPic;
 import com.project.secondhand.vo.ItemPic;
-import com.project.secondhand.vo.ItemPicForm;
 
 @Service
 @Transactional
 public class ItemService {
 	@Autowired
 	private ItemMapper itemMapper;
+	@Autowired
 	private ItemPicMapper itemPicMapper;
 	@Value("C:\\Users\\JJH\\Desktop\\maven.1593574788868\\secondhand\\src\\main\\resources\\static\\upload\\")
 	private String path;
@@ -32,48 +30,183 @@ public class ItemService {
 		return itemMapper.selectItemListByAll();
 	}
 	//아이템 추가
-	public int insertItem(Item item) {		
-		return itemMapper.insertItem(item);
-	}
-	public int insertItemPic(ItemPicForm itemPicForm) {
-		MultipartFile itemPicOne = itemPicForm.getItemPicNameOne();
-		String originName = itemPicOne.getOriginalFilename();
-		String itemPicNameOne = null;
-		if(originName.equals("")) {
-			System.out.println("originName = '' ");
-			itemPicNameOne = "default.jpg";
+	public void insertItem(ItemAndItemPic itemAndItemPic) {
+		System.out.println(itemAndItemPic + "/itemAndItemPic/1");
+		Item item = new Item();
+		item.setItemNo(itemAndItemPic.getItemNo());
+		item.setMemberNo(itemAndItemPic.getMemberNo());
+		item.setCategoryName(itemAndItemPic.getCategoryName());
+		item.setItemTitle(itemAndItemPic.getItemTitle());
+		item.setItemContent(itemAndItemPic.getItemContent());
+		item.setItemPrice(itemAndItemPic.getItemPrice());
+		item.setItemState(itemAndItemPic.getItemState());
+		item.setItemDate(itemAndItemPic.getItemDate());
+		System.out.println(item + "/item/2");
+		itemMapper.insertItem(item);
+		
+		
+//		ItemPicForm itemPicForm = new ItemPicForm();
+		int itemNo = 1;
+		MultipartFile itemPicOne1 = itemAndItemPic.getItemPicNameOne();
+			System.out.println(itemPicOne1 + "/itemPicOne1/itemService");
+		MultipartFile itemPicOne2 = itemAndItemPic.getItemPicNameTwo();
+			System.out.println(itemPicOne2 + "/itemPicOne1/itemService");
+		MultipartFile itemPicOne3 = itemAndItemPic.getItemPicNameThree();
+			System.out.println(itemPicOne3 + "/itemPicOne1/itemService");
+		MultipartFile itemPicOne4 = itemAndItemPic.getItemPicNameFour();
+			System.out.println(itemPicOne4 + "/itemPicOne1/itemService");
+		MultipartFile itemPicOne5 = itemAndItemPic.getItemPicNameFive();
+			System.out.println(itemPicOne5 + "/itemPicOne5/itemService");
+		
+		String originName1 = itemPicOne1.getOriginalFilename();
+			System.out.println(originName1 + "/originName1/itemService");
+		String originName2 = itemPicOne2.getOriginalFilename();
+			System.out.println(originName2 + "/originName2/itemService");
+		String originName3 = itemPicOne3.getOriginalFilename();
+			System.out.println(originName3 + "/originName3/itemService");
+		String originName4 = itemPicOne4.getOriginalFilename();
+			System.out.println(originName4 + "/originName4/itemService");
+		String originName5 = itemPicOne5.getOriginalFilename();
+			System.out.println(originName5 + "/originName5/itemService");
+		
+		String itemPicNameOne1 = null;
+		String itemPicNameOne2 = null;
+		String itemPicNameOne3 = null;
+		String itemPicNameOne4 = null;
+		String itemPicNameOne5 = null;
+		
+		if(originName1.equals("")) {
+			System.out.println("originName1 = '' ");
+			itemPicNameOne1 = "default.jpg";
 		}else {
 			// 마지막 점의 위치
-			int lastDot = originName.lastIndexOf(".");
+			int lastDot = originName1.lastIndexOf(".");
 			System.out.println(lastDot + "/lastDot/");
-			String extension = originName.substring(lastDot);
-			itemPicNameOne = itemPicForm.getItemNo() + extension;
-			System.out.println(itemPicNameOne + "/itemNoPic/");
+			String extension = originName1.substring(lastDot);
+			itemPicNameOne1 =itemAndItemPic.getItemPicNameOne() + extension;
+			System.out.println(itemPicNameOne1 + "/itemNoPic/");
 		}
-		ItemPic itemPic = new ItemPic();
-		itemPic.setItemNo(itemPicForm.getItemNo());
-		itemPic.setItemPicNameOne(itemPicNameOne);
-		int row = itemPicMapper.insertItemPic(itemPic);
-		if(!originName.equals("")) {
-			File file = new File(path + itemPicNameOne);
+		if(originName2.equals("")) {
+			System.out.println("originName = '' ");
+			itemPicNameOne2 = "default.jpg";
+		}else {
+			// 마지막 점의 위치
+			int lastDot = originName2.lastIndexOf(".");
+			System.out.println(lastDot + "/lastDot/");
+			String extension = originName2.substring(lastDot);
+			itemPicNameOne2 =itemAndItemPic.getItemPicNameOne() + extension;
+			System.out.println(itemPicNameOne2 + "/itemNoPic/");
+		}
+		if(originName3.equals("")) {
+			System.out.println("originName = '' ");
+			itemPicNameOne3 = "default.jpg";
+		}else {
+			// 마지막 점의 위치
+			int lastDot = originName3.lastIndexOf(".");
+			System.out.println(lastDot + "/lastDot/");
+			String extension = originName3.substring(lastDot);
+			itemPicNameOne3 =itemAndItemPic.getItemPicNameOne() + extension;
+			System.out.println(itemPicNameOne3 + "/itemNoPic/");
+		}
+		if(originName4.equals("")) {
+			System.out.println("originName = '' ");
+			itemPicNameOne4 = "default.jpg";
+		}else {
+			// 마지막 점의 위치
+			int lastDot = originName4.lastIndexOf(".");
+			System.out.println(lastDot + "/lastDot/");
+			String extension = originName4.substring(lastDot);
+			itemPicNameOne4 =itemAndItemPic.getItemPicNameOne() + extension;
+			System.out.println(itemPicNameOne4 + "/itemNoPic/");
+		}
+		if(originName5.equals("")) {
+			System.out.println("originName = '' ");
+			itemPicNameOne5 = "default.jpg";
+		}else {
+			// 마지막 점의 위치
+			int lastDot = originName5.lastIndexOf(".");
+			System.out.println(lastDot + "/lastDot/");
+			String extension = originName5.substring(lastDot);
+			itemPicNameOne5 =itemAndItemPic.getItemPicNameOne() + extension;
+			System.out.println(itemPicNameOne5 + "/itemNoPic/");
+		}
+		if(!originName1.equals("")) {
+			File file = new File(path + itemPicNameOne1);
 			System.out.println(path + "<---Path");		
 	
 		try {
-			itemPicOne.transferTo(file);
+			itemPicOne1.transferTo(file);
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
-			throw new RuntimeException(); // 그래서 다시 예외를 발생시킨다. -> @Transactional이 rollback 시킨다.
-			// Exception
-			// 1. 문법적으로 반드시 예외처리를 해야만 하는 경우
-			// 2. 예외처리를 하지 않아도 되는 경우 ex) RuntimeException
+	
 		}
 		}
+		if(!originName2.equals("")) {
+			File file = new File(path + itemPicNameOne2);
+			System.out.println(path + "<---Path");		
+	
+		try {
+			itemPicOne2.transferTo(file);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
 		
-		// 3. service 보내기
-		return row;
+		}
+		}
+		if(!originName3.equals("")) {
+			File file = new File(path + itemPicNameOne3);
+			System.out.println(path + "<---Path");		
+	
+		try {
+			itemPicOne3.transferTo(file);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
+		
+		}
+		}
+		if(!originName4.equals("")) {
+			File file = new File(path + itemPicNameOne4);
+			System.out.println(path + "<---Path");		
+	
+		try {
+			itemPicOne4.transferTo(file);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
+			
+		}
+		}
+		if(!originName5.equals("")) {
+			File file = new File(path + itemPicNameOne5);
+			System.out.println(path + "<---Path");		
+	
+		try {
+			itemPicOne5.transferTo(file);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
+			
+		}
+		}
+		System.out.println(itemPicNameOne1 + "/itemPicNameOne1");
+		ItemPic itemPic = new ItemPic();
+		itemPic.setItemNo(itemNo);
+		itemPic.setItemPicNameOne(itemPicNameOne1);
+		itemPic.setItemPicNameTwo(itemPicNameOne2);
+		itemPic.setItemPicNameThree(itemPicNameOne3);
+		itemPic.setItemPicNameFour(itemPicNameOne4);
+		itemPic.setItemPicNameFive(itemPicNameOne5);
+		System.out.println(itemPic + "/itemPic///////////");
+		itemPicMapper.insertItemPic(itemPic);
 	}
 }
+
 
 

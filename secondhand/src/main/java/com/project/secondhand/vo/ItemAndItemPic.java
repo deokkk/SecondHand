@@ -1,5 +1,7 @@
 package com.project.secondhand.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ItemAndItemPic {
 	private int itemNo;
 	private String categoryName;
@@ -9,11 +11,11 @@ public class ItemAndItemPic {
 	private int itemPrice;
 	private String itemState;
 	private String itemDate;
-	private String itemPicNameOne;
-	private String itemPicNameTwo;
-	private String itemPicNameThree;
-	private String itemPicNameFour;
-	private String itemPicNameFive;
+	private MultipartFile itemPicNameOne;
+	private MultipartFile itemPicNameTwo;
+	private MultipartFile itemPicNameThree;
+	private MultipartFile itemPicNameFour;
+	private MultipartFile itemPicNameFive;
 	public int getItemNo() {
 		return itemNo;
 	}
@@ -62,34 +64,34 @@ public class ItemAndItemPic {
 	public void setItemDate(String itemDate) {
 		this.itemDate = itemDate;
 	}
-	public String getItemPicNameOne() {
+	public MultipartFile getItemPicNameOne() {
 		return itemPicNameOne;
 	}
-	public void setItemPicNameOne(String itemPicNameOne) {
+	public void setItemPicNameOne(MultipartFile itemPicNameOne) {
 		this.itemPicNameOne = itemPicNameOne;
 	}
-	public String getItemPicNameTwo() {
+	public MultipartFile getItemPicNameTwo() {
 		return itemPicNameTwo;
 	}
-	public void setItemPicNameTwo(String itemPicNameTwo) {
+	public void setItemPicNameTwo(MultipartFile itemPicNameTwo) {
 		this.itemPicNameTwo = itemPicNameTwo;
 	}
-	public String getItemPicNameThree() {
+	public MultipartFile getItemPicNameThree() {
 		return itemPicNameThree;
 	}
-	public void setItemPicNameThree(String itemPicNameThree) {
+	public void setItemPicNameThree(MultipartFile itemPicNameThree) {
 		this.itemPicNameThree = itemPicNameThree;
 	}
-	public String getItemPicNameFour() {
+	public MultipartFile getItemPicNameFour() {
 		return itemPicNameFour;
 	}
-	public void setItemPicNameFour(String itemPicNameFour) {
+	public void setItemPicNameFour(MultipartFile itemPicNameFour) {
 		this.itemPicNameFour = itemPicNameFour;
 	}
-	public String getItemPicNameFive() {
+	public MultipartFile getItemPicNameFive() {
 		return itemPicNameFive;
 	}
-	public void setItemPicNameFive(String itemPicNameFive) {
+	public void setItemPicNameFive(MultipartFile itemPicNameFive) {
 		this.itemPicNameFive = itemPicNameFive;
 	}
 	@Override

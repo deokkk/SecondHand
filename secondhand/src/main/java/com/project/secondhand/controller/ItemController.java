@@ -35,29 +35,33 @@ public class ItemController {
 		return "addItem";
 	}
 	@PostMapping("/addItem")
-	public String addItem(Item item, ItemPic itemPic) {
-		System.out.println(item + "/item/itemController");
-		itemService.insertItem(item);
+	public String addItem(ItemAndItemPic itemAndItemPic) {
+		System.out.println(itemAndItemPic + "/itemAndItemPic/itemController");
+		itemService.insertItem(itemAndItemPic);
 		return "redirect:/itemList";
 	}
-	@GetMapping("/addItemPic")
-	public String addItemPic() {
-		return "addItemPic";
-	}
-	@PostMapping("/addItemPic")
-	public String addItemPic(ItemPicForm itemPicForm) {
-		MultipartFile itemPicOne = itemPicForm.getItemPicNameOne();
-		if(itemPicForm.getItemPicNameOne() != null && !itemPicOne.getOriginalFilename().equals("")) {
-			//png, jpeg, gif 확장명을 가진 사진만 넣을 수 있음 
-			if(!itemPicForm.getItemPicNameOne().getContentType().equals("image/png") ||
-					!itemPicForm.getItemPicNameOne().getContentType().equals("image/jpeg") ||
-					!itemPicForm.getItemPicNameOne().getContentType().equals("image/gif")) {
-				return "redirect:/addItemPic?imgMsg=n";
-			}
-		int result = itemService.insertItemPic(itemPicForm);
-		System.out.println(result + "/result");
-		}
-		return "redirect:/itemList";
-	}
+//	@GetMapping("/addItemPic")
+//	public String addItemPic() {
+//		return "addItemPic";
+//	}
+//	@PostMapping("/addItemPic")
+//	public String addItemPic(ItemPicForm itemPicForm) {
+//		MultipartFile itemPicOne = itemPicForm.getItemPicNameOne();
+//		System.out.println(itemPicOne + "/itemPicOne/itemController");
+//		if(itemPicForm.getItemPicNameOne() != null && !itemPicOne.getOriginalFilename().equals("")) {
+//			//png, jpeg, gif 확장명을 가진 사진만 넣을 수 있음 
+//			if(itemPicForm.getItemPicNameOne().getContentType().equals("image/png") ||
+//					itemPicForm.getItemPicNameOne().getContentType().equals("image/jpeg") ||
+//					itemPicForm.getItemPicNameOne().getContentType().equals("image/gif")) 
+//			{
+//				int result = itemService.insertItemPic(itemPicForm);
+//				System.out.println(result + "/result/itemController");
+//				return "redirect:/itemList";
+//			}
+//			
+//		
+//		}
+//		return "redirect:/itemList";
+//	}
 
 }
