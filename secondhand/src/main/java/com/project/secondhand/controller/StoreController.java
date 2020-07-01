@@ -1,6 +1,8 @@
 package com.project.secondhand.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,7 +24,14 @@ public class StoreController {
 	@Autowired
 	private StoreService storeService;
 	
-
+	//회원가입 선택화면
+	@GetMapping("/addMemberChose")
+	public String addMemberChose(HttpSession session) {
+		if(session.getAttribute("loginStore")!=null) {
+			return "redirect/";
+		}
+		return "addMemberChose";
+	}
 	
 	//업체가입 Form
 	@GetMapping("/addStore")
@@ -34,17 +43,41 @@ public class StoreController {
 	}
 	//업체가입 Action
 	@PostMapping("/addStore")
-	public String addStore(HttpSession session, StorePicForm storePicForm, Store store) {
+	public String addStore(HttpSession session,Model model,Store store) {
 		if(session.getAttribute("loginStore")!=null) {
 			return "redirect/";
 		}
+		if(storeService.addStore(store)==1) {
+			String storeNo = Integer.toString(store.getStoreNo());
+			System.out.print(storeNo+"<-----------------------------------storeController");
+			model.addAttribute("storeNo", storeNo);
+			return "redirect:/addStorePic";
+		}
 		
+		return "redirect:/";
+	}
+	//업체 사진 Form
+	@GetMapping("/addStorePic")
+	public String addStorePic(HttpSession session) {
+		if(session.getAttribute("loginStore")!=null) {
+			return "redirect/";
+		}
+		return "addStorePic";
+	}
+	//업체사진 Action
+	@PostMapping("/addStorePic")
+	public String addStorePic(HttpSession session, StorePicForm storePicForm) {
+		
+		if(session.getAttribute("loginStore")!=null) {
+			return "redirect/";
+		}
 		// 파일 .jpg .png .gif 만 업로드 가능
 		if(storePicForm.getStorePicName() != null) {
 			if(!storePicForm.getStorePicName().getContentType().equals("image/jpg") && !storePicForm.getStorePicName().getContentType().equals("image/png") && !storePicForm.getStorePicName().getContentType().equals("image/gif") && !storePicForm.getStorePicName().getContentType().equals("image/jpeg")) {
 				return "redirect:/addStore";
 			}
 		}
+
 		return "redirect:/";
 	}
 	//업체 id Check Action

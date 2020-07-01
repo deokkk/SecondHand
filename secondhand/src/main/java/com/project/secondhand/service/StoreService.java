@@ -3,6 +3,7 @@ package com.project.secondhand.service;
 import java.awt.Image;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 
@@ -47,22 +48,23 @@ public class StoreService {
 		return storeMapper.deleteStoreBoard(boardNo);
 	}
 	
-	//업체 가입 및 사진 추가
-	public int addStore(StorePicForm storePicForm, Store store) {
+	//업체 가입
+	public int addStore(Store store) {
 		
+		return storeMapper.addStore(store);
+	}
+	
+	//업체 사진 추가
+	public void addStorePic(StorePicForm storePicForm, String storeName) {
 		MultipartFile mf = storePicForm.getStorePicName();
 		String originName = mf.getOriginalFilename();
+		System.out.println(originName + "<---------------- StoreSerivce");
 		int lastDot = originName.lastIndexOf(".");
 		String extension = originName.substring(lastDot);
 		
-		String storePicName = store.getStoreName()+extension;
+		String storePicName = storeName+extension;
 		
-		StorePic storePic = new StorePic();
-		storePic.setStorePicExt(extension);
-		storePic.setStorePicName(storePicName);
-		
-		
-		String path = "D:\\sts-4.6.1.RELEASE\\maven.1590371256831\\cashbook\\src\\main\\resources\\static\\upload\\";
+		String path = "C:\\spring eclipse\\spring work_space\\maven.1593564314857\\secondhand\\src\\main\\resources\\static\\upload\\";
 		
 		File file = new File(path+storePicName);
 		try {
@@ -78,8 +80,11 @@ public class StoreService {
 		imgHeigh = img.getHeight(null);
 		String widthImg = Integer.toString(imgWidth);
 		String heighImg = Integer.toString(imgHeigh);
+		StorePic storePic = new StorePic();
+		storePic.setStorePicExt(extension);
+		storePic.setStorePicName(storePicName);
 		storePic.setStorePicSize(widthImg+"*"+heighImg);
 		
-		return storeMapper.addStorePic(storePic);
+		storeMapper.addStorePic(storePic);
 	}
 }

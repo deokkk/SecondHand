@@ -26,20 +26,33 @@
 					</button>				
 				</div>			
 				</section>
-				<button type = "button" id = "addMember" class = "newMember">
+				<button type = "button" id = "addMemberChose" class = "newMember">
 					<span>회원가입</span>
 				</button>
-				<button type = "button" id = "login" class = "login">
-					<span>로그인</span>
+				<div th:if="${session.loginStore == null}">
+				<button type = "button" id = "loginbtn" class= "login">
+					로그인
 				</button>
+				</div>
+				<div th:if="${session.loginStore != null}">
+				<button type = "button" id = "logoutbtn" class= "login">
+					로그아웃
+				</button>
+				</div>
 			</div>
 	</header>	
 	</div>
 </body>
 	<script>
 		$(document).ready(function(){
-			$("#login").click(function(){
+			$("#addMemberChose").click(function(){
+				location.href = 'addMemberChose';
+			});
+			$("#loginbtn").click(function(){
 				location.href = 'login';
+			});
+			$("#logoutbtn").click(function(){
+				location.href = 'logout';
 			});
 		});
 	</script>

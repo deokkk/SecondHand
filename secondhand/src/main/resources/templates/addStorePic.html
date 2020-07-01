@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -13,11 +14,25 @@
 		</div>
 		<!-- class = "main" 내용 위치 선정 -->
 		<div class="main">
-			<div>
-			<a href="">일반회원</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="">기업</a>
-			</div>
+			<h1>프로필 사진</h1>
+			<form method="post" th:action="@{/addStorePic}" id="addStoreFormPic" enctype="multipart/form-data">
+				<div>
+					사진
+					<input type="file" id="storePicName" name="storePicName">
+				</div>
+				<div>
+					<button type="button" id="btn">사진 추가</button>
+				</div>
+			</form>
 		</div>
 	</div>
 	<div th:include="/inc/copyRight"></div>
 </body>
+<script>
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			$('addStoreFormPic').submit();
+		}
+	});
+</script>
 </html>

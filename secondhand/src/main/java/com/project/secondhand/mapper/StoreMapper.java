@@ -1,6 +1,7 @@
 package com.project.secondhand.mapper;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -23,5 +24,6 @@ public interface StoreMapper {
 	//업체가입
 	public int addStore(Store store);
 	//업체 사진추가하기
-	public int addStorePic(StorePic storePic);
+	public void addStorePic(StorePic storePic);
+	//public void addStorePic(@Param("storePic") StorePic storePic,@Param("store") Store store);
 }

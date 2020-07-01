@@ -56,12 +56,12 @@
 		NOW()
 		)  
   </insert>
-  <!-- 업체 가입 -->
-  <insert id="addStore" parameterType="com.project.secondhand.vo.Store">
+  	<!--  업체 가입  -->
+  <insert id="addStore" parameterType="com.project.secondhand.vo.Store" useGeneratedKeys="true" keyColumn="store_no" keyProperty="storeNo">
   	INSERT INTO
   		market_store(
   			store_name,
-  			sotre_addr,
+  			store_addr,
   			store_phone,
   			store_email,
   			store_pw,
@@ -89,6 +89,7 @@
   		)
   		
   </insert>
+
   <!-- 업체 수정하기 -->
   <update id="updateStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard">
   	UPDATE market_store_board
