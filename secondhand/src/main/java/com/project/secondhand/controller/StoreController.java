@@ -124,16 +124,16 @@ public class StoreController {
 	
 	
 	//업체홍보 리스트
-	@GetMapping("/StoreBoardList")
+	@GetMapping("/storeBoardList")
 	public String selectStoreBoardList(Model model) {
 	ArrayList<StoreBoardAndBoardPic> list = storeService.selectStoreBoardList();
 	model.addAttribute("list", list);
-		return "StoreBoardList";
+		return "storeBoardList";
 	}
 	//업체홍보 상세보기
-	@GetMapping("/StoreBoardListInfo")
+	@GetMapping("/storeBoardListInfo")
 	public String selectStoreBoardInfo(int boardNo) {
-		return "StoreBoardListInfo";
+		return "storeBoardListInfo";
 	}
 	
 	//업체홍보 추가하기 form
@@ -145,7 +145,7 @@ public class StoreController {
 	@PostMapping("/addStoreBoard")
 	public String addStoreBoard(StoreBoard storeBoard) {
 		storeService.addStoreBoard(storeBoard);
-		return "redirect:/StoreBoardList";
+		return "redirect:/storeBoardList";
 		
 	}
 	//업체홍보 수정하기
@@ -155,12 +155,12 @@ public class StoreController {
 	}
 	@PostMapping("/modifyStoreBoard")
 	public String modifyStoreBoard() {
-		return "redirect:/StoreBoardListInfo";
+		return "redirect:/storeBoardListInfo";
 	}
 	
 	//업체홍보 삭제하기
 	@GetMapping("/removeStoreBoard")
 	public String removeStoreBoard(int boardNo) {
-		return "redirect:/StoreBoardList";
+		return "redirect:/storeBoardList";
 	}
 }

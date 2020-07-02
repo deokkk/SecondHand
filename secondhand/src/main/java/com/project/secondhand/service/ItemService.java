@@ -46,7 +46,7 @@ public class ItemService {
 		
 		
 //		ItemPicForm itemPicForm = new ItemPicForm();
-		int itemNo = 1;
+		int itemNo = 9;
 		MultipartFile itemPicOne1 = itemAndItemPic.getItemPicNameOne();
 			System.out.println(itemPicOne1 + "/itemPicOne1/itemService");
 		MultipartFile itemPicOne2 = itemAndItemPic.getItemPicNameTwo();
@@ -82,8 +82,8 @@ public class ItemService {
 			// 마지막 점의 위치
 			int lastDot = originName1.lastIndexOf(".");
 			System.out.println(lastDot + "/lastDot/");
-			String extension = originName1.substring(lastDot);
-			itemPicNameOne1 =itemAndItemPic.getItemPicNameOne() + extension;
+			String extension = originName1.substring(0, lastDot);
+			itemPicNameOne1 =originName1 + extension;
 			System.out.println(itemPicNameOne1 + "/itemNoPic/");
 		}
 		if(originName2.equals("")) {
@@ -94,7 +94,7 @@ public class ItemService {
 			int lastDot = originName2.lastIndexOf(".");
 			System.out.println(lastDot + "/lastDot/");
 			String extension = originName2.substring(lastDot);
-			itemPicNameOne2 =itemAndItemPic.getItemPicNameOne() + extension;
+			itemPicNameOne2 =itemAndItemPic.getItemPicNameTwo() + extension;
 			System.out.println(itemPicNameOne2 + "/itemNoPic/");
 		}
 		if(originName3.equals("")) {
@@ -105,7 +105,7 @@ public class ItemService {
 			int lastDot = originName3.lastIndexOf(".");
 			System.out.println(lastDot + "/lastDot/");
 			String extension = originName3.substring(lastDot);
-			itemPicNameOne3 =itemAndItemPic.getItemPicNameOne() + extension;
+			itemPicNameOne3 =itemAndItemPic.getItemPicNameThree() + extension;
 			System.out.println(itemPicNameOne3 + "/itemNoPic/");
 		}
 		if(originName4.equals("")) {
@@ -116,7 +116,7 @@ public class ItemService {
 			int lastDot = originName4.lastIndexOf(".");
 			System.out.println(lastDot + "/lastDot/");
 			String extension = originName4.substring(lastDot);
-			itemPicNameOne4 =itemAndItemPic.getItemPicNameOne() + extension;
+			itemPicNameOne4 =itemAndItemPic.getItemPicNameFour() + extension;
 			System.out.println(itemPicNameOne4 + "/itemNoPic/");
 		}
 		if(originName5.equals("")) {
@@ -127,7 +127,7 @@ public class ItemService {
 			int lastDot = originName5.lastIndexOf(".");
 			System.out.println(lastDot + "/lastDot/");
 			String extension = originName5.substring(lastDot);
-			itemPicNameOne5 =itemAndItemPic.getItemPicNameOne() + extension;
+			itemPicNameOne5 =itemAndItemPic.getItemPicNameFive() + extension;
 			System.out.println(itemPicNameOne5 + "/itemNoPic/");
 		}
 		if(!originName1.equals("")) {
@@ -207,6 +207,3 @@ public class ItemService {
 		itemPicMapper.insertItemPic(itemPic);
 	}
 }
-
-
-
