@@ -98,18 +98,18 @@ public class StoreController {
 		return "redirect:/";
 	}
 	//로그인 Form
-	@GetMapping("/login")
-	public String login(HttpSession session) {
-		if(session.getAttribute("loginStore")!=null) {
-			return "redirect:/";
-		}
-		return "login";
-	}
+	//@GetMapping("/login")
+	//public String login(HttpSession session) {
+	//	if(session.getAttribute("loginStore")!=null) {
+	//		return "redirect:/";
+	//	}
+	//	return "login";
+	//}
 	//로그인 Action
-	@PostMapping("/login")
-	public String login() {
-		return "redirect:/";
-	}
+	//@PostMapping("/login")
+	//public String login() {
+	//	return "redirect:/";
+	//}
 	//로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {

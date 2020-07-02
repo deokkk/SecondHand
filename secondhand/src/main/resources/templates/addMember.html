@@ -1,71 +1,129 @@
 <!DOCTYPE html>
-<html xmlns:th ="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+</head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+// 확인 버튼을 클릭했을때 공란이면  모든칸은 초기화 된다.
 
-$('#idbtn').click(function() {
-	$('idForm').submit();
+let helperInit = function(){
+	$('#nameHelper').text("");
+	$('#pwHelper').text("");
+	$('#phoneHelper').text("");
+	$('#emailhelper').text("");
+};
+
+//document(body)가 준비되면 작동된다.
+$(document).ready(function(){
+	
+//<button>을 클릭하면 작동된다.
+	$('#btn').click(function(){	
+	if($('#memberNickname').val().length ===0) {
+		helperInit();
+		$('#nameHelper').text("닉네임을 입력하세요.");
+		$('#memberNickname').focus();	
+	}else if($('#memberPw').val().length < 4){
+		helperInit();
+		$('#pwHelper').text("4글자 이상 입력하세요");
+		$('#memberPw').focus();
+	}else if($('#memberPhone').val().length < 4){
+		helperInit();
+		$('#phoneHelper').text("4글자 이상 입력하세요");
+		$('#memberPhone').focus();
+	}else if($('#memberEmail').val().length < 4){
+		helperInit();
+		$('#emailrHelper').text("4글자 이상 입력하세요");
+		$('#memberEmail').focus();
+	}else{
+		$('#addMemberForm').submit();
+	}
+	$('#pwBtn').click(function(){
+		if($('#memberPw').val() != $('memberPw2').val()){
+			helperInit();
+			$('#pwHelper').text("비밀번호가 다릅니다.")
+			$('#membrPw2').focus();
+		}else{
+			$('#pwHelper').text("비밀번호가 일치합니다.")
+		}
+	});	
 });
-
-
-<!--�ߺ�Ȯ��-->
-
-
 </script>
-</head>
-<body>
-	<h1>ȸ������</h1>
-	<form id="idForm" method="post" th:action="@{/memberIdCheck}" enctype="application/x-www-form-urlencoded">
-			<div class="form-group confirm">
-			���̵� �ߺ� Ȯ��:
-			<input type="text" name="membeIdCk" id="memberIdCk" class="form-control">
-			<button id="idbtn" type="button">�ߺ�üũ</button>
-			<span id="idHelper"></span>
-			<span th:text="${msg}" id="idMsg"></span>
-		</div>
-	</form>
-	<form id="myForm" method="post" th:action="@{/addMember}" enctype="multipart/form-data"	>
-			<div>
-			����:
-			<input type="file" name="memberPic" id="">
-			</div>
-			<div class="form-group confirm">
-			ȸ������
-			<input type="text" th:value="{memberIdCk}" name="memberId" id="memberId" placeholder="�̸��� �Է�" class="form-control" readonly="readonly">
-			</div>
-			<div class="form-group confirm">
-			��й�ȣ:
-			<input type="password" name="memberPw" placeholder="��й�ȣ �Է�" id="memberPw" class="form-control">
-			<span id="pwHelper"></span>
-			</div>
-			<div class="form-group confirm">
-			��й�ȣ Ȯ��:
-			<input type="password" placeholder="��й�ȣ  Ȯ��" id="memberPw2" class="form-control">
-			</div>
-			<div class="form-group confirm">
-			�г���:
-			<input type="text" name="memberNickname" placeholder="�г���" id="memberNickname" class="form-control">
-			</div>
-			<div class="form-group confirm">
-			��ȭ��ȣ:
-			<input type="text" name="memberPhone" placeholder="��ȭ��ȣ" id="memberPhone" class="form-control">
-			</div>
-			<div>
-				<button type="button" id="btn">ȸ������</button>
-			</div>
-	
-	
-	</form>	<div>
-		</div>
-		<div>
-			<div></div>
-		</div>
-
-
-
-
+<body class="hoian-kr">
+	<div class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
+	<div class="container-fluid">
+		<section id="content">
+			<form method="post" th:action="@{/addMember}"	enctype="multipart/form-data" id = "addMember">
+				<div class="row">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-7">
+						<h2>회원가입</h2>
+						<table class="table">
+							<tbody>
+								<tr>
+									<td>
+										<label for="usr">닉네임:</label>
+									<td>
+										<input type="text" class="form-control"	id="memberNickname" name="memberNickname" th:placeholder="닉네임">
+										<span id = "nameHelper"></span>
+									</td>
+									<td>
+									
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="usr">비밀번호:</label><br><br><br>
+										<label for="usr">비밀번호 확인:</label>
+									</td>
+									<td>
+										<input type="password" class="form-control"	id="memberPw" name="memberPw">
+										<br>
+										<input type="password" class="form-control"	id="memberPw2"><button id="pwBtn" type="button">확인</button>
+										<span id = "pwHelper"></span>
+										
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="usr">번호 :</label>
+									</td>
+									<td>
+										<input type="text" class="form-control" id="memberPhone" name="memberPhone" th:placeholder="번호">
+										<span id = "phoneHelper"></span>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label for="usr">이메일 인증 :</label>
+									</td>
+									<td>
+										<input type="text" class="form-control" id="memberEmail" name="memberEmail">
+										<span id = "emailHelper"></span>
+									</td>	
+								</tr>
+							</tbody>
+						</table>
+						<div><button type="button" id = "btn" class="btn btn-success">회원가입</button></div>
+					</div>
+					<div class="col-sm-1"></div>					
+				</div>				
+			</form>
+		</section>
+	</div>
+	<div class="header">
+		<div th:include="/inc/copyRight"></div>
+	</div>
 </body>
 </html>

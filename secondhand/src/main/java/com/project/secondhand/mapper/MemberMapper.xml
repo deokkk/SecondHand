@@ -2,8 +2,15 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.project.secondhand.mapper.StoreMapper">
+<mapper namespace="com.project.secondhand.mapper.MemberMapper">
   
+  <!-- 로그인 -->
+  <select id="selectLoginMember" parameterType="com.project.secondhand.vo.LoginMember" resultType="com.project.secondhand.vo.LoginMember">
+  	SELECT member_email AS memberEmail, member_pw AS memberPw
+  	FROM market_member
+  	WHERE member_email =#{memberEmail}
+  	AND member_pw = PASSWORD(#{memberPw})
+   </select>
   
   
   <!-- 회원가입 -->
@@ -28,7 +35,7 @@
   	)
   </insert>
   <!-- 회원가입 사진 -->
-  <insert id="addMember" parameterType="com.project.secondhand.vo.MemberPic">
+  <insert id="addMemberPic" parameterType="com.project.secondhand.vo.MemberPic">
   	INSERT INTO member_pic
   	(
   		member_no,
