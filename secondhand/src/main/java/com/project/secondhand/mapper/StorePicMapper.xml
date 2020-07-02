@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.secondhand.mapper.StorePicMapper">
+
+  <delete id="deleteStoreBoardPic" parameterType = "int">
+  	DELETE
+  	FROM market_store_board_pic
+  	WHERE board_no =#{boardNo}
+  </delete>
+    <insert id="insertStorePic" parameterType="com.project.secondhand.vo.StoreBoardPic">
+   INSERT INTO market_store_pic(
+   store_no, 
+   store_pic_name_one,
+   store_pic_name_two,
+   store_pic_name_three,
+   store_pic_name_four,
+   store_pic_name_five
+   )VALUES(
+   #{storeNo},
+   #{storePicNameOne},
+   #{storePicNameTwo},
+   #{storePicNameThree},
+   #{storePicNameFour},
+   #{storePicNameFive}
+   )
+   </insert>
+  
+</mapper>

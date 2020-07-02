@@ -10,4 +10,5 @@ import com.project.secondhand.vo.ItemPic;
 @Mapper
 public interface ItemPicMapper {
 	public void insertItemPic(ItemPic itemPic);
+	public int deleteItemPic(int itemNo);
 }

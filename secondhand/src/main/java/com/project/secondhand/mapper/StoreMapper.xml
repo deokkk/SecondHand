@@ -20,22 +20,31 @@
 	msb.board_title AS boardTitle,
 	msb.board_content AS boardContent,
 	msb.board_date AS boardDate,
-	(SELECT GROUP_CONCAT(store_pic_name, ".", store_pic_ext)
-	FROM market_store_pic) AS boardPicName
+	msbp.board_pic_name_one AS boardPicNameOne,
+	msbp.board_pic_name_two AS boardPicNameTwo,
+	msbp.board_pic_name_three AS boardPicNameThree,
+	msbp.board_pic_name_four AS boardPicNameFour,
+	msbp.board_pic_name_Five AS boardPicNamefive
 	FROM market_store_board msb INNER JOIN market_store_board_pic msbp
 	ON msb.board_no = msbp.board_no
   </select>
   <!-- 업체 리스트 상세보기 -->
-  <select id="selectStoreBoardListOne" parameterType="com.project.secondhand.vo.StoreBoard" resultType="com.project.secondhand.vo.StoreBoard">
+  <select id="selectStoreBoardListOne" parameterType="com.project.secondhand.vo.StoreBoardAndBoardPic" resultType="com.project.secondhand.vo.StoreBoardAndBoardPic">
   	SELECT
-  		board_no boardNo,
-  		store_no storeNo,
-  		category_name categoryName,
-  		board_title boardTitle,
-  		board_content boardContent,
-  		board_date boardDate
-  	FROM market_store_board
-  	WHERE board_no =#{boardNo}
+	msb.board_no AS boardNo,
+	msb.store_no AS storeNo,
+	msb.category_name AS categoryName,
+	msb.board_title AS boardTitle,
+	msb.board_content AS boardContent,
+	msb.board_date AS boardDate,
+	msbp.board_pic_name_one AS boardPicNameOne,
+	msbp.board_pic_name_two AS boardPicNameTwo,
+	msbp.board_pic_name_three AS boardPicNameThree,
+	msbp.board_pic_name_four AS boardPicNameFour,
+	msbp.board_pic_name_Five AS boardPicNamefive
+	FROM market_store_board msb INNER JOIN market_store_board_pic msbp
+	ON msb.board_no = msbp.board_no
+  	WHERE msb.board_no = #{boardNo}
   </select>
   <!-- 업체 추가하기 -->
   <insert id="insertStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard">
@@ -103,9 +112,9 @@
   	WHERE board_no =#{boardNo}
   </update>
   <!-- 업체 삭제하기 -->
-  <delete id="deleteStoreBoard">
+  <delete id="deleteStoreBoard" parameterType = "int">
   	DELETE
   	FROM market_store_board
-  	WHERE board_no =#{boardNo}
+  	WHERE board_no = #{boardNo}
   </delete>
 </mapper>

@@ -55,31 +55,38 @@
   	
   </select>
   <!-- 업체 추가하기 -->
-  <insert id="insertItem" parameterType="com.project.secondhand.vo.Item">
+  <insert id="insertItem" parameterType="com.project.secondhand.vo.Item" useGeneratedKeys="true" keyColumn="item_no" keyProperty="itemNo">
   INSERT INTO market_item(
-  		category_name,
-  		member_no,
-  		item_title,
-  		item_content,
-  		item_price,
-  		item_state,
-  		item_date
+        category_name,
+        member_no,
+        item_title,
+        item_content,
+        item_price,
+        item_state,
+        item_date
   )VALUES(
-  		#{categoryName},
-  		#{memberNo},
-  		#{itemTitle},
-  		#{itemContent},
-  		#{itemPrice},
-  		#{itemState},
-  		NOW()
-  	)
+        #{categoryName},
+        #{memberNo},
+        #{itemTitle},
+        #{itemContent},
+        #{itemPrice},
+        #{itemState},
+        NOW()
+     )
   </insert>
   <!-- 업체 수정하기 -->
-  <update id="updateItem">
-  
-  </update>
+<!--   <update id="updateItem" parameterType = "com.project.secondhand.vo.Item" >
+  UPDATE market_item 
+  SET 
+  category_name =  #{categoryName},
+  item_title = #{itemTitle},
+  item_content =  #{itemContent},
+  item_date = NOW()
+  WHERE item_no=#{itemNo} 
+  </update> -->
   <!-- 업체 삭제하기 -->
-  <delete id="deleteItem">
-  
+  <delete id="deleteItem" parameterType = "int">
+  DELETE FROM market_item 
+  WHERE item_no = #{itemNo}
   </delete>
 </mapper>

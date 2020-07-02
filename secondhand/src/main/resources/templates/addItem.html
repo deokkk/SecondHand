@@ -11,18 +11,39 @@
 <link rel="stylesheet" media="all" href="css/itemList.css" />
 <script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
+<!--  -->
+
+<link rel="stylesheet" href="css/file.css">
+
+<!--  -->
+
 </head>
+<style>
+
+.btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+file{
+color: #11111;
+}
+
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 // 확인 버튼을 클릭했을때 공란이면  모든칸은 초기화 된다.
 
 let helperInit = function(){
-	$('#memberNo').text("");
-	$('#itemState').text("");
-	$('#itemTitle').text("");
-	$('#categoryName').text("");
-	$('#itemPrice').text("");
-	$('#itemContent').text("");
+
+	$('#titleHelper').text("");
+	$('#categoryHelper').text("");
+	$('#priceHelper').text("");
+	$('#contentHelper').text("");
 };
 
 //document(body)가 준비되면 작동된다.
@@ -85,8 +106,11 @@ $(document).ready(function(){
 									<td>
 										<label for="usr">카테고리:</label>
 									</td>
-									<td>
-										<input type="text" class="form-control"	id="categoryName" name="categoryName" th:placeholder="카테고리">
+									<td>				 
+										<select name="categoryName" id = "categoryName" style = "vertical-align: middle; text-align-last: center"  class="form-control">
+											<option>카테고리</option>
+											<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+										</select>										
 										<span id = "categoryHelper"></span>
 									</td>
 								</tr>
@@ -112,28 +136,30 @@ $(document).ready(function(){
 								</tr>
 							</tbody>
 						</table>
-						<div><button type="button" id = "btn" class="btn btn-success">등록</button></div>
+						<div><button type="button" id = "btn" class="btn">등록</button></div>
 					</div>
 					<div class="col-sm-3">
+
+						<br>
+						<div>						
+							<input type="file" name="itemPicNameOne" class = "btn">
+						</div>
+
 						<br>
 						<div>
-							<input type="file" name="itemPicNameOne" id="">
+							<input type="file" name="itemPicNameTwo" class = "btn">
 						</div>
 						<br>
 						<div>
-							<input type="file" name="itemPicNameTwo" id="">
+							<input type="file" name="itemPicNameThree"class = "btn">
 						</div>
 						<br>
 						<div>
-							<input type="file" name="itemPicNameThree" id="">
+							<input type="file" name="itemPicNameFour" class = "btn">
 						</div>
 						<br>
 						<div>
-							<input type="file" name="itemPicNameFour" id="">
-						</div>
-						<br>
-						<div>
-							<input type="file" name="itemPicNameFive" id="">
+							<input type="file" name="itemPicNameFive" class = "btn">
 						</div>
 					</div>
 					<div class="col-sm-1"></div>					
@@ -146,3 +172,4 @@ $(document).ready(function(){
 	</div>
 </body>
 </html>
+

@@ -21,4 +21,8 @@
 	#{itemPicNameFive}
 	)
 	</insert>
+	<delete id="deleteItemPic" parameterType = "int">
+	DELETE FROM market_item_pic
+	WHERE item_no = #{itemNo}
+	</delete>
 </mapper>
