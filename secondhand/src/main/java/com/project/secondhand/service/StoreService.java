@@ -50,19 +50,18 @@ public class StoreService {
 	
 	//업체 가입
 	public int addStore(Store store) {
-		
 		return storeMapper.addStore(store);
 	}
 	
 	//업체 사진 추가
-	public void addStorePic(StorePicForm storePicForm, String storeName) {
+	public void addStorePic(StorePicForm storePicForm) {
 		MultipartFile mf = storePicForm.getStorePicName();
 		String originName = mf.getOriginalFilename();
 		System.out.println(originName + "<---------------- StoreSerivce");
 		int lastDot = originName.lastIndexOf(".");
 		String extension = originName.substring(lastDot);
 		
-		String storePicName = storeName+extension;
+		String storePicName = storePicForm.getStroreNo()+extension;
 		
 		String path = "C:\\spring eclipse\\spring work_space\\maven.1593564314857\\secondhand\\src\\main\\resources\\static\\upload\\";
 		
@@ -73,18 +72,13 @@ public class StoreService {
 			e.printStackTrace();
 			throw new RuntimeException(); 	//예외처리를 없앤다.
 		} 
-		Image img = new ImageIcon(path+storePicName).getImage();
-		int imgWidth = 0;
-		int imgHeigh = 0;
-		imgWidth = img.getWidth(null);
-		imgHeigh = img.getHeight(null);
-		String widthImg = Integer.toString(imgWidth);
-		String heighImg = Integer.toString(imgHeigh);
+		String sizename = Integer.toString((int) file.length());
 		StorePic storePic = new StorePic();
+		storePic.setStroreNo(storePicForm.getStroreNo());
 		storePic.setStorePicExt(extension);
 		storePic.setStorePicName(storePicName);
-		storePic.setStorePicSize(widthImg+"*"+heighImg);
-		
+		storePic.setStorePicSize(sizename+"byte");
+		System.out.print(storePic.toString());
 		storeMapper.addStorePic(storePic);
 	}
 }

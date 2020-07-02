@@ -1,17 +1,17 @@
 package com.project.secondhand.vo;
 
 public class Store {
-	private int storeNo;
+	private Integer storeNo;
 	private String storeName;
 	private String storeAddr;
 	private String storePhone;
 	private String storeEmail;
 	private int storePw;
 	private String storeDate;
-	public int getStoreNo() {
+	public Integer getStoreNo() {
 		return storeNo;
 	}
-	public void setStoreNo(int storeNo) {
+	public void setStoreNo(Integer storeNo) {
 		this.storeNo = storeNo;
 	}
 	public String getStoreName() {
@@ -55,5 +55,4 @@ public class Store {
 		return "Store [storeNo=" + storeNo + ", storeName=" + storeName + ", storeAddr=" + storeAddr + ", storePhone="
 				+ storePhone + ", storeEmail=" + storeEmail + ", storePw=" + storePw + ", storeDate=" + storeDate + "]";
 	}
-	
 }

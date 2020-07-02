@@ -60,6 +60,7 @@
   <insert id="addStore" parameterType="com.project.secondhand.vo.Store" useGeneratedKeys="true" keyColumn="store_no" keyProperty="storeNo">
   	INSERT INTO
   		market_store(
+  			store_no,
   			store_name,
   			store_addr,
   			store_phone,
@@ -67,6 +68,7 @@
   			store_pw,
   			store_date
   		)VALUES(
+  			#{storeNo},
   			#{storeName},
   			#{storeAddr},
   			#{storePhone},
@@ -79,10 +81,12 @@
   <insert id="addStorePic" parameterType="com.project.secondhand.vo.StorePic">
   	INSERT INTO 
   		market_store_pic(
+  			store_no,
   			store_pic_name,
   			store_pic_size,
   			store_pic_ext
   		)VALUES(
+  			#{storeNo},
   			#{storePicName},
   			#{storePicSize},
   			#{storePicExt}

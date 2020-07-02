@@ -4,9 +4,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.project.secondhand.vo.MemberPic;
+import com.project.secondhand.vo.Member;
 
 public class MemberController {
 
@@ -48,7 +47,20 @@ public class MemberController {
 		}
 		return "login";
 	}
-
+	//멤버 로그인 Form
+	@GetMapping("/loginMember")
+	public String loginMember(HttpSession session) {
+		if (session.getAttribute("loginMember") != null) {
+			return "redirect:/";
+		}
+		return "loginMember";
+	}
+	//멤버 로그인 Action
+	@PostMapping("/loginMember")
+	public String loginMember(HttpSession session, Member member) {
+		
+		return "redirect:/";
+	}
 	// 로그인 Action
 	@PostMapping("/login")
 	public String login() {

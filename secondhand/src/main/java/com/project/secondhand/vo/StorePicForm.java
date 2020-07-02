@@ -3,15 +3,15 @@ package com.project.secondhand.vo;
 import org.springframework.web.multipart.MultipartFile;
 
 public class StorePicForm {
-	private int stroreNo;
+	private int storeNo;
 	private MultipartFile storePicName;
 	private String storePicSize;
 	private String storePicExt;
 	public int getStroreNo() {
-		return stroreNo;
+		return storeNo;
 	}
-	public void setStroreNo(int stroreNo) {
-		this.stroreNo = stroreNo;
+	public void setStoreNo(int storeNo) {
+		this.storeNo = storeNo;
 	}
 	public MultipartFile getStorePicName() {
 		return storePicName;
@@ -33,7 +33,7 @@ public class StorePicForm {
 	}
 	@Override
 	public String toString() {
-		return "StorePicForm [stroreNo=" + stroreNo + ", storePicName=" + storePicName + ", storePicSize="
+		return "StorePicForm [storeNo=" + storeNo + ", storePicName=" + storePicName + ", storePicSize="
 				+ storePicSize + ", storePicExt=" + storePicExt + "]";
 	}
 }

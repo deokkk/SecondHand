@@ -1,15 +1,15 @@
 package com.project.secondhand.vo;
 
 public class StorePic {
-	private int stroreNo;
+	private int storeNo;
 	private String storePicName;
 	private String storePicSize;
 	private String storePicExt;
 	public int getStroreNo() {
-		return stroreNo;
+		return storeNo;
 	}
 	public void setStroreNo(int stroreNo) {
-		this.stroreNo = stroreNo;
+		this.storeNo = stroreNo;
 	}
 	public String getStorePicName() {
 		return storePicName;
@@ -31,7 +31,7 @@ public class StorePic {
 	}
 	@Override
 	public String toString() {
-		return "StorePic [stroreNo=" + stroreNo + ", storePicName=" + storePicName + ", storePicSize=" + storePicSize
+		return "StorePic [storeNo=" + storeNo + ", storePicName=" + storePicName + ", storePicSize=" + storePicSize
 				+ ", storePicExt=" + storePicExt + "]";
 	}
 	

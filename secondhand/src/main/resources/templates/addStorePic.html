@@ -23,6 +23,7 @@
 				<div>
 					<button type="button" id="btn">사진 추가</button>
 				</div>
+				<input type="hidden" name="storeNo" th:value="${storeNo}">
 			</form>
 		</div>
 	</div>
@@ -31,8 +32,8 @@
 <script>
 	$(document).ready(function(){
 		$('#btn').click(function(){
-			$('addStoreFormPic').submit();
-		}
+			$('#addStoreFormPic').submit();
+		});
 	});
 </script>
 </html>

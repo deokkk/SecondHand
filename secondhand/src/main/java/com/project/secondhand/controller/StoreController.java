@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,41 +44,47 @@ public class StoreController {
 	}
 	//업체가입 Action
 	@PostMapping("/addStore")
-	public String addStore(HttpSession session,Model model,Store store) {
+	public String addStore(HttpSession session,Store store) {
 		if(session.getAttribute("loginStore")!=null) {
 			return "redirect/";
 		}
+		
 		if(storeService.addStore(store)==1) {
-			String storeNo = Integer.toString(store.getStoreNo());
-			System.out.print(storeNo+"<-----------------------------------storeController");
-			model.addAttribute("storeNo", storeNo);
-			return "redirect:/addStorePic";
+			int storeNo = Integer.valueOf(String.valueOf(store.getStoreNo()));
+			System.out.println(storeNo+"<--------------------------------generatedKey");
+			return "redirect:/addStorePic?storeNo="+storeNo;
 		}
+			
+		
 		
 		return "redirect:/";
 	}
 	//업체 사진 Form
 	@GetMapping("/addStorePic")
-	public String addStorePic(HttpSession session) {
+	public String addStorePic(HttpSession session,@RequestParam("storeNo") int storeNo,Model model) {
 		if(session.getAttribute("loginStore")!=null) {
 			return "redirect/";
 		}
+		model.addAttribute("storeNo", storeNo);
+		System.out.println(storeNo+"<--------------------------------addStorePic");
 		return "addStorePic";
 	}
 	//업체사진 Action
 	@PostMapping("/addStorePic")
 	public String addStorePic(HttpSession session, StorePicForm storePicForm) {
-		
+		System.out.println(storePicForm.getStroreNo()+"<--------------------------addstorepicNo");
 		if(session.getAttribute("loginStore")!=null) {
 			return "redirect/";
 		}
 		// 파일 .jpg .png .gif 만 업로드 가능
 		if(storePicForm.getStorePicName() != null) {
 			if(!storePicForm.getStorePicName().getContentType().equals("image/jpg") && !storePicForm.getStorePicName().getContentType().equals("image/png") && !storePicForm.getStorePicName().getContentType().equals("image/gif") && !storePicForm.getStorePicName().getContentType().equals("image/jpeg")) {
-				return "redirect:/addStore";
+				return "redirect:/addStorePic";
 			}
 		}
-
+		
+		storeService.addStorePic(storePicForm);
+		
 		return "redirect:/";
 	}
 	//업체 id Check Action
