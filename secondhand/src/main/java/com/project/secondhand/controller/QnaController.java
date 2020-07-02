@@ -1,9 +1,11 @@
 package com.project.secondhand.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import com.project.secondhand.service.CategoryService;
 import com.project.secondhand.service.QnaService;
@@ -22,7 +25,7 @@ import com.project.secondhand.vo.Qna;
 public class QnaController {
 	@Autowired private QnaService qnaService;
 	@Autowired private CategoryService categoryService;
-	
+
 	//자주묻는 질문 입력하기 form(운영자)
 	@GetMapping("/addQna")
 	public String addQna(HttpSession session, Model model) {
@@ -75,28 +78,66 @@ public class QnaController {
 		model.addAttribute("qna", qnaService.getQna(qnaTitle));
 		return "qnaDetail";
 	}
-	//자주 묻는 질문 수정하기 form(운영자)
-//	@GetMapping("/modifyQna")
-//	public String modifyQna(HttpSession session, Model model, @RequestParam(value ="qnaTitle")String qnaTitle) {
-////		관리자 로그인							
-////	if(관리자가 아닐떄) {
-////		return "redirect:"/"
-////	}
-//		List<Category> list = categoryService.getCategoryList("qna");	
-//		model.addAttribute("qna", qnaService.getQna(qnaTitle));
-//		model.addAttribute("categoryList", list);
-//		return "modifyQna";
+//	자주 묻는 질문 수정하기 form(운영자)
+	@GetMapping("/modifyQna")
+	public String modifyQna(HttpSession session, Model model, @RequestParam(value ="qnaTitle")String qnaTitle) {
+//		관리자 로그인							
+//	if(관리자가 아닐떄) {
+//		return "redirect:"/"
 //	}
-//	//자주 묻는 질문 수정하기 action(운영자)
-//	@PostMapping("/modifyQna")
-//	public String modifyQna(HttpSession session, Qna qna) {
-////		관리자 로그인							
-////	if(관리자가 아닐떄) {
-////		return "redirect:"/"
-////	}
-//		System.out.println(qna.toString());
-//		qnaService.modifyQna(qna);
-//		return "redirect:/qnaDetail?qnaTitle="+qna.getQnaTitle();
+		List<Category> list = categoryService.getCategoryList("qna");	
+		model.addAttribute("qna", qnaService.getQna(qnaTitle));
+		model.addAttribute("categoryList", list);
+		return "modifyQna";
+	}
+	//자주 묻는 질문 수정하기 action(운영자)
+	@PostMapping("/modifyQna")
+	public String modifyQna(HttpSession session, Qna qna, @RequestParam(value="originTitle") String originTitle) {
+//		관리자 로그인							
+//	if(관리자가 아닐떄) {
+//		return "redirect:"/"
 //	}
+		qnaService.modifyQna(qna, originTitle);
+		
+		String qnaTitle = "";
+		try {
+			qnaTitle = URLEncoder.encode(qna.getQnaTitle(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return "redirect:/qnaDetail?qnaTitle="+ qnaTitle;
+	}
 	//자주 묻는 질문 삭제하기
+	@GetMapping("/removeQna")
+	public String removeQna(HttpSession session, @RequestParam(value ="qnaTitle", required = false)String qnaTitle) {
+//		관리자 로그인							
+//	if(관리자가 아닐떄) {
+//		return "redirect:"/"
+//	}
+		qnaService.removeQna(qnaTitle);
+		return "redirect:/qnaList";
+	}  
+	
+	//메일 문의하기(Form)
+	@GetMapping("/sendQna")
+	public String sendQna(HttpSession session, Model model) {
+//									
+//	if(로그인이 안되어있을때) {
+//		return "redirect:"/"
+//	}
+		List<Category> list = categoryService.getCategoryList("qna");
+		model.addAttribute("categoryList", list);
+		return "sendQna";
+	}
+	//메일 문의하기(Action)
+	@PostMapping("/sendQna")
+	public String sendQna(HttpSession session, @RequestParam(value = "sendQnaCategory")String sendQnaCategory, @RequestParam(value = "sendQnaContent")String sendQnaContent) {
+//		
+//if(로그인이 안되어있을때) {
+//return "redirect:"/"
+//}	
+		System.out.println(sendQnaCategory + "<-------------sendQnaCategory");
+		System.out.println(sendQnaContent + "<-------------sendQnaContent");
+		return "redirect:/qnaList";
+	}
 }

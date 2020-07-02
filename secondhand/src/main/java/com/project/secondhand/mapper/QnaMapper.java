@@ -1,6 +1,7 @@
 package com.project.secondhand.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,7 +20,7 @@ public interface QnaMapper {
 		public Qna selectQna(String qnaTitle);
 		
 		//자주 묻는 질문 수정하기
-		public int updateQna(Qna qna);
+		public int updateQna(Map<String, Object> map);
 		
 		//자주 묻는 질문 삭제하기
 		public int deleteQna(String qnaTitle);

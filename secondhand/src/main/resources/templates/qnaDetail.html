@@ -11,19 +11,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<script>
+	$(document).ready(function() {
+		$('#qnaBtn').click(function() {
+			var result = confirm('정말 삭제하시겠습니까 ? 되돌릴수업어요 !');
+			if(result){
+				location.replace('qnaList')
+			}else{
+				return false;
+			}
+		});
+	});
+</script>	
 </head>
 <body>
+	<div class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
 	<h1 th:text="'자주묻는질문 상세보기'"></h1>
 	<span th:text="${qna}"></span>
 	<div>
-		<div th:text="'제목 : ' + ${qna.qnaTitle}"></div>
-		<div th:text="'카테고리 : ' + ${qna.categoryName}"></div>
-		<div th:text="'내용 : ' + ${qna.qnaContent}"></div>
+		<div th:text="'제목 :'+${qna.qnaTitle}"></div>
+		<div th:text="'카테고리 :'+${qna.categoryName}"></div>
+		<div th:text="'내용 :'+${qna.qnaContent}"></div>
 	</div>
 	<div>
-		<a th:href=@{/modifyQna(qnaTitle=${qna.qnaTitle})} th:text="수정"></a>
-		<a th:href=@{/removeQna(qnaTitle=${qna.qnaTitle})} th:text="삭제"></a>
-		<a th:href=@{/qnaList} th:text="목록"></a>
+		<a th:href="@{/modifyQna(qnaTitle=${qna.qnaTitle})}" th:text="수정"></a>
+		<a th:href="@{/removeQna(qnaTitle=${qna.qnaTitle})}" th:text="삭제" th:id="qnaBtn"></a>
+		<a th:href="@{/qnaList}" th:text="목록"></a>
 	</div>
 </body>
+<div th:include="/inc/copyRight"></div>
 </html>

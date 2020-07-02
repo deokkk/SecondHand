@@ -11,8 +11,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
 </head>
 <body>
+	<div class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
 			<h1 th:text="공지사항"></h1>
 			<table border="1">
 				<thead>
@@ -34,5 +38,6 @@
 			<div>
 				<a th:href="@{/addNotice}" class="btn btn-primary" th:text="입력하기"></a>
 			</div>
+<div th:include="/inc/copyRight"></div>			
 </body>
 </html>

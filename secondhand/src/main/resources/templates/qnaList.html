@@ -11,8 +11,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
 </head>
 <body>
+	<div class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
 	<h1 th:text="'자주묻는질문 리스트'"></h1>
 	<div>
 		<select th:name="categoryName" th:id="categoryName">
@@ -46,5 +50,6 @@
 	<div>
 		<a th:href="@{/sendQna}" th:text="'고객센터에 문의하기'"></a>
 	</div>
+	<div th:include="/inc/copyRight"></div>
 </body>
 </html>

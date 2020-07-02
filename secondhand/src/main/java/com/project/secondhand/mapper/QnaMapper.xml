@@ -41,20 +41,18 @@
 	</select>	
 	
 	<!-- 자주 묻는 질문 수정하기 -->
-	<update id="updateQna">
+	<update id="updateQna" parameterType="java.util.Map">
 		UPDATE market_qna
 		SET
-			qna_title=#{qnaTitle},
-			category_name=#{categoryName},
-			qna_content=#{qnaContent}
-		WHERE qna_title=#{qnaTitle}
+			qna_title=#{qna.qnaTitle},
+			category_name=#{qna.categoryName},
+			qna_content=#{qna.qnaContent}
+		WHERE qna_title=#{originTitle}
 	</update>
 	
 	<!-- 자주 묻는 질문 삭제하기 -->
 	<delete id="deleteQna" parameterType="String">
-		DELETE FORM market_qna
-			qna_title=#{qnaTitle}
-		WHERE 
-			qna_title=#{qnaTitle}
-	</delete>
+		DELETE FROM market_qna
+		WHERE qna_title=#{qnaTitle}
+	</delete>	
 </mapper>

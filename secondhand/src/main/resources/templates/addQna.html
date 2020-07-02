@@ -11,28 +11,43 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<script>
+
+
+	//제목 공백 확인
+	if($('#qnaTitle').val == ""){
+		alert("제목을 입력해주세요");
+		$('#qnaTitle').focus();
+		return
+	}
+</script>
 </head>
 <body>
+	<div class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
 	<h1 th:text="'자주묻는질문 입력'"></h1>
 	<form th:method="post" th:action="@{/addQna}">
 		<div>
-			<label th:for="qnaTitle" th:text="'제목 : '"></label>
+			<label id="qnaTitle" th:for="qnaTitle" th:text="'제목 : '"></label>
 			<input th:type="text" th:name="qnaTitle" th:id="qnaTitle" th:placeholder="'제목을 입력하세요'">
 		</div>
 		<div>
-			<label th:for="categoryName" th:text="'카테고리 : '"></label>
+			<label id="categoryName" th:for="categoryName" th:text="'카테고리 : '"></label>
 			<select th:name="categoryName" th:id="categoryName">
 				<option value="" th:text="'카테고리를 선택하세요.'"></option>
 				<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
 			</select>
 		</div>
 		<div>
-			<label th:for="qnaContent" th:text="'내용 : '"></label>
+			<label id="qnaContent" th:for="qnaContent" th:text="'내용 : '"></label>
 			<textarea th:rows="3" th:cols="50" th:name="qnaContent" th:id="qnaContent" th:placeholder="'내용을 입력하세요.'"></textarea>
 		</div>
 		<div>
-			<button th:type="submit" th:text="글작성"></button>
+			<button id="addQnaBtn" th:type="button" th:text="글작성"></button>
 		</div>
 	</form>
+<div th:include="/inc/copyRight"></div>	
 </body>
 </html>

@@ -11,11 +11,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
 </head>
 <body>
+	<div class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
 	<h1 th:text="'자주묻는질문 수정'"></h1>
 	<form th:method="post" th:action="@{/modifyQna}">
 		<input th:type="hidden" th:name="memberNo" th:value="${qna.memberNo}">
+		<input th:type="hidden" th:name="originTitle" th:value="${qna.qnaTitle}">
 		<div>
 			<label th:for="qnaTitle" th:text="'제목 : '"></label>
 			<input th:type="text" th:name="qnaTitle" th:id="qnaTitle" th:value="${qna.qnaTitle}">
@@ -35,5 +40,6 @@
 			<button th:type="submit" th:text="글수정"></button>
 		</div>
 	</form>
+<div th:include="/inc/copyRight"></div>	
 </body>
 </html>

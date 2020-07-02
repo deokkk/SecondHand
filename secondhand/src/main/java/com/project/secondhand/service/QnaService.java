@@ -36,8 +36,11 @@ public class QnaService {
 	}
 	
 	//자주 묻는 질문 수정하기
-	public int modifyQna(Qna qna) {
-		return qnaMapper.updateQna(qna);
+	public int modifyQna(Qna qna, String originTitle) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("qna", qna);
+		map.put("originTitle", originTitle);
+		return qnaMapper.updateQna(map);
 	}
 	
 	

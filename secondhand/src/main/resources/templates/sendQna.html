@@ -11,14 +11,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
 </head>
 <body>
+	<div class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
 	<h1 th:text="'고객센터에 문의하기'"></h1>
 	<form th:method="post" th:action="@{/sendQna}">
 		<div>
 			<label th:for="sendQnaCategory" th:text="'카테고리 : '"></label>
 			<select th:name="sendQnaCategory" th:id="sendQnaCategory">
-				<option th:value="" th:text="'카테고리를 선택하세요'"></option>
+				<option value="" th:text="'카테고리를 선택하세요'"></option>
 				<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
 			</select>
 		</div>
@@ -28,5 +32,6 @@
 		</div>
 		<button th:type="submit" th:text="문의하기"></button>
 	</form>
+<div th:include="/inc/copyRight"></div>	
 </body>
 </html>
