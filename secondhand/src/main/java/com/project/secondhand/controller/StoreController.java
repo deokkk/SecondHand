@@ -1,5 +1,7 @@
 package com.project.secondhand.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,11 +10,13 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.secondhand.service.StoreService;
 import com.project.secondhand.vo.Store;
@@ -24,7 +28,8 @@ import com.project.secondhand.vo.StorePicForm;
 public class StoreController {
 	@Autowired
 	private StoreService storeService;
-	
+	@Autowired 
+	private JavaMailSender javaMailSender;
 	//회원가입 선택화면
 	@GetMapping("/addMemberChose")
 	public String addMemberChose(HttpSession session) {
@@ -88,52 +93,37 @@ public class StoreController {
 		return "redirect:/";
 	}
 	//업체 id Check Action
-	@PostMapping("/storeIdCheck")
-	public String storeIdCheck() {
-		return "redirect:/";
+	@PostMapping("/storeEmailSame")
+	public String storeEmailSame(@RequestParam("storeEmailSame") String storeEmailSame,HttpSession session,Model model) {
+		return "redirect:/addStore";
 	}
-	//업체 email체크 (인증) Action
-	@PostMapping("/storeEmailCheck")
-	public String storeEmailCheck() {
-		return "redirect:/";
-	}
-	//로그인 Form
-	//@GetMapping("/login")
-	//public String login(HttpSession session) {
-	//	if(session.getAttribute("loginStore")!=null) {
-	//		return "redirect:/";
-	//	}
-	//	return "login";
-	//}
-	//로그인 Action
-	//@PostMapping("/login")
-	//public String login() {
-	//	return "redirect:/";
-	//}
-	//로그아웃
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		if(session.getAttribute("loginStore")!=null) {
+	//업체 email 보내기
+	@PostMapping("/storeEmailSend")
+	@ResponseBody
+	public String storeEmailSend(@RequestParam("storeEmailSend") String storeEmailSend) {
+		return storeService.emailCheck(storeEmailSend);
+		}
+		
+		//업체 email체크 (인증) Action
+		@PostMapping("/storeEmailCheck")
+		public String storeEmailCheck() {
 			return "redirect:/";
 		}
-		//세션종료
-		session.invalidate();
-		return "redirect:/";
-	}
-	
+
+
 	
 	
 	//업체홍보 리스트
-	@GetMapping("/storeBoardList")
+	@GetMapping("/StoreBoardList")
 	public String selectStoreBoardList(Model model) {
 	ArrayList<StoreBoardAndBoardPic> list = storeService.selectStoreBoardList();
 	model.addAttribute("list", list);
-		return "storeBoardList";
+		return "StoreBoardList";
 	}
 	//업체홍보 상세보기
-	@GetMapping("/storeBoardListInfo")
+	@GetMapping("/StoreBoardListInfo")
 	public String selectStoreBoardInfo(int boardNo) {
-		return "storeBoardListInfo";
+		return "StoreBoardListInfo";
 	}
 	
 	//업체홍보 추가하기 form
@@ -144,8 +134,8 @@ public class StoreController {
 	//업체홍보 추가하기 action
 	@PostMapping("/addStoreBoard")
 	public String addStoreBoard(StoreBoard storeBoard) {
-		storeService.addStoreBoard(storeBoard);
-		return "redirect:/storeBoardList";
+		//storeService.addStoreBoard(storeBoard);
+		return "redirect:/StoreBoardList";
 		
 	}
 	//업체홍보 수정하기
@@ -155,12 +145,12 @@ public class StoreController {
 	}
 	@PostMapping("/modifyStoreBoard")
 	public String modifyStoreBoard() {
-		return "redirect:/storeBoardListInfo";
+		return "redirect:/StoreBoardListInfo";
 	}
 	
 	//업체홍보 삭제하기
 	@GetMapping("/removeStoreBoard")
 	public String removeStoreBoard(int boardNo) {
-		return "redirect:/storeBoardList";
+		return "redirect:/StoreBoardList";
 	}
 }

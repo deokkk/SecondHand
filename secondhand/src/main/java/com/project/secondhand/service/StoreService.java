@@ -1,11 +1,13 @@
 package com.project.secondhand.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,8 +18,6 @@ import com.project.secondhand.mapper.StorePicMapper;
 import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreBoardAndBoardPic;
-//import com.project.secondhand.vo.StoreBoardAndStoreBoardPic;
-import com.project.secondhand.vo.StoreBoardPic;
 import com.project.secondhand.vo.StorePic;
 import com.project.secondhand.vo.StorePicForm;
 
@@ -26,6 +26,8 @@ import com.project.secondhand.vo.StorePicForm;
 public class StoreService {
    @Autowired
    private StoreMapper storeMapper;
+   @Autowired 
+	private	JavaMailSender javaMailSender;
    @Autowired
    private StorePicMapper storePicMapper;
    @Value("D:\\maven.1593574788868\\secondhand\\src\\main\\resources\\static\\upload\\")
@@ -235,32 +237,49 @@ public class StoreService {
       return storeMapper.addStore(store);
    }
    
-   //업체 사진 추가
-   public void addStorePic(StorePicForm storePicForm) {
-      MultipartFile mf = storePicForm.getStorePicName();
-      String originName = mf.getOriginalFilename();
-      System.out.println(originName + "<---------------- StoreSerivce");
-      int lastDot = originName.lastIndexOf(".");
-      String extension = originName.substring(lastDot);
-      
-      String storePicName = storePicForm.getStroreNo()+extension;
-      
-      String path = "C:\\spring eclipse\\spring work_space\\maven.1593564314857\\secondhand\\src\\main\\resources\\static\\upload\\";
-      
-      File file = new File(path+storePicName);
-      try {
-         mf.transferTo(file);   //예외처리가 꼭 필요한 코드
-      } catch (Exception e) {
-         e.printStackTrace();
-         throw new RuntimeException();    //예외처리를 없앤다.
-      } 
-      String sizename = Integer.toString((int) file.length());
-      StorePic storePic = new StorePic();
-      storePic.setStroreNo(storePicForm.getStroreNo());
-      storePic.setStorePicExt(extension);
-      storePic.setStorePicName(storePicName);
-      storePic.setStorePicSize(sizename+"byte");
-      System.out.print(storePic.toString());
-      storeMapper.addStorePic(storePic);
-   }
+    //업체 사진 추가
+ 	public void addStorePic(StorePicForm storePicForm) {
+ 		MultipartFile mf = storePicForm.getStorePicName();
+ 		String originName = mf.getOriginalFilename();
+ 		System.out.println(originName + "<---------------- StoreSerivce");
+ 		int lastDot = originName.lastIndexOf(".");
+ 		String extension = originName.substring(lastDot);
+ 		
+ 		String storePicName = storePicForm.getStroreNo()+extension;
+ 		
+ 		String path = "C:\\spring eclipse\\spring work_space\\maven.1593564314857\\secondhand\\src\\main\\resources\\static\\upload\\";
+ 		
+ 		File file = new File(path+storePicName);
+ 		try {
+ 			mf.transferTo(file);	//예외처리가 꼭 필요한 코드
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 			throw new RuntimeException(); 	//예외처리를 없앤다.
+ 		} 
+ 		String sizename = Integer.toString((int) file.length());
+ 		StorePic storePic = new StorePic();
+ 		storePic.setStroreNo(storePicForm.getStroreNo());
+ 		storePic.setStorePicExt(extension);
+ 		storePic.setStorePicName(storePicName);
+ 		storePic.setStorePicSize(sizename+"byte");
+ 		System.out.print(storePic.toString());
+ 		storeMapper.addStorePic(storePic);
+ 	}
+ 	
+ 	//이메일 인증번호 보내기
+ 		public String emailCheck(String storeEmailSend) {
+ 			
+ 			UUID uuid = UUID.randomUUID();
+ 			String emailCheck = uuid.toString().substring(0,8);
+ 			
+ 			SimpleMailMessage mm = new SimpleMailMessage();
+ 			mm.setTo(storeEmailSend);
+ 			System.out.println(storeEmailSend+"<-----------------------------storeEmailSend");
+ 			mm.setFrom("deokk95@gmail.com");
+ 			mm.setSubject("[이메일 인증]");
+ 			mm.setText("인증번호는"+ emailCheck+"입니다");
+ 			javaMailSender.send(mm);
+ 			
+ 			return emailCheck;
+ 		}
 }

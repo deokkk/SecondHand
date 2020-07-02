@@ -71,6 +71,18 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	//로그아웃
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		if(session.getAttribute("loginStore")!=null) {
+			return "redirect:/";
+		}
+		//세션종료
+		session.invalidate();
+		return "redirect:/";
+}
+
+	
 //멤버 로그인 Form
 	@GetMapping("/loginMember")
 	public String loginMember(HttpSession session) {
