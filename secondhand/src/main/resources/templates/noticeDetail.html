@@ -2,15 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>noticeDetail</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<!-- jQuery library -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
 <script>
 	$(document).ready(function() {
@@ -26,23 +24,43 @@
 	}); 
 	
 </script>
+<style>
+#noticeDetailBox {
+	text-align: right;
+}
+#noticeDetail{
+	height: 430px;
+}
+</style>
 </head>
 <body>
-	<div class="header">
+	<div th:class="header">
 		<div th:include="/inc/topHeader"></div>
 	</div>
-	<h1 th:text="'공지사항 상세보기'"></h1>
-	<div>
-	 	<div th:text="'번호 :'+${notice.noticeNo}"></div>
-	 	<div th:text="'제목 :'+${notice.noticeTitle}"></div>
-	 	<div th:text="'날짜 :'+${notice.noticeDate}"></div>
-	 	<div th:text="'내용 :'+${notice.noticeContent}"></div>
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:class="row">
+				<div th:class="col-sm-3"></div>
+				<div th:class="col-sm-6">
+	<h2 th:text="'공지사항 상세보기'"></h2>
+	<div th:class="form-group">
+	 	<div th:class="form-control" th:text="'번호 :'+${notice.noticeNo}"></div>
+	 	<div th:class="form-control" th:text="'제목 :'+${notice.noticeTitle}"></div>
+	 	<div th:class="form-control" th:text="'날짜 :'+${notice.noticeDate}"></div>
+	 	<div th:id="noticeDetail" th:class="form-control" th:text="'내용 :'+${notice.noticeContent}"></div>
 	</div>
-	<div>
-		<a th:href="@{/modifyNotice(noticeNo=${notice.noticeNo})}" th:text="수정"></a>
-		<a th:href="@{/removeNotice(noticeNo=${notice.noticeNo})}" th:text="삭제" th:id="noticeBtn"></a>
-		<a th:href="@{/noticeList}" th:text="목록"></a>
+	<div th:id="noticeDetailBox" th:class="form-group">
+		<a th:class="'btn btn-success'" th:href="@{/modifyNotice(noticeNo=${notice.noticeNo})}" th:text="수정"></a>
+		<a th:class="'btn btn-success'" th:href="@{/removeNotice(noticeNo=${notice.noticeNo})}" th:text="삭제" th:id="noticeBtn"></a>
+		<a th:class="'btn btn-success'" th:href="@{/noticeList}" th:text="목록"></a>
 	</div>
-<div th:include="/inc/copyRight"></div>	
+	<div th:class="col-sm-3"></div>
+	</div>
+	</div>
+	</section>
+		<div th:class="header">
+			<div th:include="/inc/copyRight"></div>
+		</div>
+		</div>
 </body>
 </html>

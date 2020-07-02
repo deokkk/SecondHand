@@ -3,53 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <title>qnaList</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
+<script>
+	$(document).ready(function() {
+		$('#categoryName').change(function() {
+			var categoryName = $(this).val();
+			var searchWord = $
+			$.ajax({
+				url : '/getqnaListByCategory',
+				type : 'GET',
+				data : {categoryName : categoryName},
+				success : function(data) {
+					$('#qnaTable').empty();
+					$.each(data, function(i) {
+						$('#qnaTable').append('<tr><td><a href="/qnaDetail?qnaTitle=' + data[i].qnaTitle + '">' + 'Q. ' + data[i].qnaTitle	+ '</a></td></tr>');
+					});
+				},
+				error : function() {
+					console.log('getqnaListByCategory fail');
+				}
+			});
+		});
+	});
+</script>
+<style>
+#qna-h2 {
+	margin-bottom: 20px;
+}
+
+#qnaBtnBox {
+	text-align: right;
+}
+
+#searchWord {
+	width: 90%;
+}
+
+#searchBtn {
+	width: 10%;
+}
+.table{
+	text-align: center;
+}
+a {
+	color: #e49aec;
+}
+#addQnaBox{
+	text-align: right;
+}
+#sendQnaBox{ 
+	text-align: center;
+	margin-top: 50px;
+}
+</style>
 </head>
 <body>
-	<div class="header">
+	<div th:class="header">
 		<div th:include="/inc/topHeader"></div>
 	</div>
-	<h1 th:text="'자주묻는질문 리스트'"></h1>
-	<div>
-		<select th:name="categoryName" th:id="categoryName">
-			<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
-		</select>
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:class="row">
+				<div th:class="col-sm-3"></div>
+				<div th:class="col-sm-6">
+					<h2 th:id="qna-h2" th:text="'자주묻는질문 리스트'"></h2>
+					<div th:class="form-group">
+						<select th:class="form-control" th:name="categoryName"	th:id="categoryName">
+							<option value="" th:text="'전체 카테고리'">
+							<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+						</select>
+					</div>
+					<div th:class="form-group">
+						<form th:class="form-inline" th:method="get" th:action="@{/qnaList}">
+							<label th:for="searchWord"></label> <input th:class="form-control" th:type="text" th:name="searchWord" th:id="searchWord">
+							<button th:class="'btn btn-success'" th:type="submit" th:id="searchBtn" th:text="검색"></button>
+						</form>
+					</div>
+					<div>
+						<table th:class="table">
+							<thead>
+								<tr>
+									<th th:text="'제목'"></th>
+								</tr>
+							</thead>
+							<tbody th:id="qnaTable">
+								<tr th:each="qna : ${qnaList}">
+									<td><a th:href="@{/qnaDetail(qnaTitle=${qna.qnaTitle})}" th:text="'Q. ' + ${qna.qnaTitle}"></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div th:id="addQnaBox">
+						<a th:class="'btn btn-success'" th:href="@{/addQna}" th:text="'입력'"></a>
+					</div>
+					<div th:id="sendQnaBox">
+						<a th:href="@{/sendQna}" th:text="'고객센터에 문의하기'"></a>
+					</div>
+				</div>
+				<div th:class="col-sm-3"></div>
+			</div>
+		</section>
+		<div th:class="header">
+			<div th:include="/inc/copyRight"></div>
+		</div>
 	</div>
-	<div>
-		<form th:method="get" th:action="@{/qnaList}">
-			<label th:for="searchWord"  th:text="'검색 : '"></label>
-			<input th:type="text" th:name="searchWord" th:id="searchWord">
-			<button th:type="submit" th:id="searchBtn" th:text="검색"></button>
-		</form>
-	</div>
-	<div>
-		<table border="1">
-			<thead>
-				<tr>
-					<th th:text="'제목'"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="qna : ${qnaList}">
-					<td><a th:href="@{/qnaDetail(qnaTitle=${qna.qnaTitle})}" th:text="'Q. ' + ${qna.qnaTitle}"></a></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<div>
-		<a th:href="@{/addQna}" th:text="'입력'"></a>
-	</div>
-	<div>
-		<a th:href="@{/sendQna}" th:text="'고객센터에 문의하기'"></a>
-	</div>
-	<div th:include="/inc/copyRight"></div>
 </body>
 </html>

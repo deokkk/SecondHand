@@ -3,51 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <title>addQna</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Popper JS -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
 <script>
-
-
-	//제목 공백 확인
-	if($('#qnaTitle').val == ""){
-		alert("제목을 입력해주세요");
-		$('#qnaTitle').focus();
-		return
+	let helperInit = function() {
+		$('#qnaTitleHelper').text("");
+		$('#qnaContentHelper').text("");
+		$('#qnaCategoryHelper').text("");
 	}
+	//doucment(body)가 준비되면 작동된다.
+	$(document).ready(function() {
+		//button 을 클릭하면 작동된다.	
+		$('#addQnaBtn').click(function() {
+			//제목 공백 확인
+			if ($('#qnaTitle').val() == "") {
+				helperInit();
+				$('#qnaTitleHelper').text('제목을 입력해주시기 바랍니다.');
+				$('#qnaTitle').focus();
+				return;
+			}
+			if($('#categoryName').val()==""){
+				helperInit();
+				$('#qnaCategoryHelper').text('카데고리를 선택해주시기 바랍니다.');
+				$('#categoryName').focus();
+				return;
+			}
+			if ($('#qnaContent').val() == "") {
+				helperInit();
+				$("#qnaContentHelper").text('내용을 입력해주시기 바랍니다.');
+				$('#qnaContent').focus();
+				return;
+			}
+			$('#addQnaForm').submit();
+		});
+	});
 </script>
+<style>
+	#qna-h2 {
+		margin-bottom: 20px;
+	}
+	#qnaBtnBox{
+		text-align: right;
+	}
+</style>
 </head>
-<body>
-	<div class="header">
+<body th:class="hoian-kr">
+	<div th:class="header">
 		<div th:include="/inc/topHeader"></div>
 	</div>
-	<h1 th:text="'자주묻는질문 입력'"></h1>
-	<form th:method="post" th:action="@{/addQna}">
-		<div>
-			<label id="qnaTitle" th:for="qnaTitle" th:text="'제목 : '"></label>
-			<input th:type="text" th:name="qnaTitle" th:id="qnaTitle" th:placeholder="'제목을 입력하세요'">
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<form th:id="addQnaForm" th:method="post" th:action="@{/addQna}">
+				<div th:class="row">
+					<div th:class="col-sm-3"></div>
+					<div th:class="col-sm-6">
+						<h2 th:id="qna-h2" th:text="'자주묻는질문 입력'"></h2>
+						<div th:class="form-group">
+							<label th:for="qnaTitle" th:text="'제목 : '"></label>
+							<input th:class="form-control" th:type="text" th:name="qnaTitle" th:id="qnaTitle" th:placeholder="'제목을 입력하세요'">
+							<span th:id="qnaTitleHelper"></span>
+						</div>
+						<div th:class="form-group">
+							<label th:for="categoryName" th:text="'카테고리 : '"></label>
+							<select th:class="form-control" th:name="categoryName" th:id="categoryName">
+								<option value="" th:text="'카테고리를 선택하세요.'"></option>
+								<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+							</select>
+							<span id="qnaCategoryHelper"></span>
+						</div>
+						<div th:class="form-group">
+							<label th:for="qnaContent" th:text="'내용 : '"></label>
+							<textarea th:class="form-control" th:rows="14" th:name="qnaContent" th:id="qnaContent" th:placeholder="'내용을 입력하세요.'"></textarea>
+							<span th:id="qnaContentHelper"></span>
+						</div>
+						<div th:id="qnaBtnBox">
+							<button th:id="addQnaBtn" th:type="button" th:class="'btn btn-success'"	th:text="글작성"></button>
+						</div>
+					</div>
+					<div th:class="col-sm-3"></div>
+				</div>
+			</form>
+		</section>
+		<div th:class="header">
+			<div th:include="/inc/copyRight"></div>
 		</div>
-		<div>
-			<label id="categoryName" th:for="categoryName" th:text="'카테고리 : '"></label>
-			<select th:name="categoryName" th:id="categoryName">
-				<option value="" th:text="'카테고리를 선택하세요.'"></option>
-				<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
-			</select>
-		</div>
-		<div>
-			<label id="qnaContent" th:for="qnaContent" th:text="'내용 : '"></label>
-			<textarea th:rows="3" th:cols="50" th:name="qnaContent" th:id="qnaContent" th:placeholder="'내용을 입력하세요.'"></textarea>
-		</div>
-		<div>
-			<button id="addQnaBtn" th:type="button" th:text="글작성"></button>
-		</div>
-	</form>
-<div th:include="/inc/copyRight"></div>	
+	</div>
 </body>
 </html>

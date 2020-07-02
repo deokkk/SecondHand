@@ -2,42 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>noticeList</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<!-- jQuery library -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
+<style>
+#qna-h2 {
+	margin-bottom: 20px;
+}
+
+#noticeListBox {
+	text-align: right;
+}
+</style>
 </head>
 <body>
-	<div class="header">
+	<div th:class="header">
 		<div th:include="/inc/topHeader"></div>
 	</div>
-			<h1 th:text="공지사항"></h1>
-			<table border="1">
-				<thead>
-					<tr>
-						<th th:text="'공지사항 번호'"></th>
-						<th th:text="'제목'"></th>
-						<th th:text="'날짜'"></th>				
-					</tr>
-				</thead>	
-				<tbody>
-					<tr th:each="notice : ${list}">
-						<td th:text="${notice.noticeNo}"></td>
-						<td><a th:href="@{/noticeDetail(noticeNo=${notice.noticeNo})}" th:text="${notice.noticeTitle}"></a></td>
-						<td th:text="${notice.noticeDate}"></td>   
-					</tr>
-				</tbody>	
-			</table>
-			<br>	
-			<div>
-				<a th:href="@{/addNotice}" class="btn btn-primary" th:text="입력하기"></a>
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:class="row">
+				<div th:class="col-sm-3"></div>
+				<div th:class="col-sm-6">
+					<h2 th:id="qna-h2" th:text="공지사항"></h2>
+					<table th:class="table">
+						<thead>
+							<tr>
+								<th th:text="'공지사항 번호'"></th>
+								<th th:text="'제목'"></th>
+								<th th:text="'날짜'"></th>
+							</tr>
+						</thead>
+						<tbody th:id="qnaTable">
+							<tr th:each="notice : ${list}">
+								<td th:text="${notice.noticeNo}"></td>
+								<td><a th:href="@{/noticeDetail(noticeNo=${notice.noticeNo})}" th:text="${notice.noticeTitle}"></a></td>
+								<td th:text="${notice.noticeDate}"></td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+					<div th:id="noticeListBox">
+						<a th:href="@{/addNotice}" th:class="'btn btn-success'" th:text="입력하기"></a>
+					</div>
+				</div>
+				<div th:class="col-sm-3"></div>
 			</div>
-<div th:include="/inc/copyRight"></div>			
+		</section>
+		<div th:class="header">
+			<div th:include="/inc/copyRight"></div>
+		</div>
+	</div>
 </body>
 </html>

@@ -55,4 +55,16 @@
 		DELETE FROM market_qna
 		WHERE qna_title=#{qnaTitle}
 	</delete>	
+	<!-- 자주 묻는 질문 카테고리별 필터링 -->
+	<select id="selectQnaListByCategory" parameterType="java.util.Map" resultType="com.project.secondhand.vo.Qna">
+      SELECT 
+         qna_title qnaTitle,
+         member_no memberNo,
+         category_name categoryName,
+         qna_content qnaContent
+      FROM market_qna         
+      WHERE qna_title LIKE CONCAT('%',#{searchWord},'%')
+      AND category_name LIKE CONCAT('%',#{categoryName},'%')  
+   </select>
+	
 </mapper>

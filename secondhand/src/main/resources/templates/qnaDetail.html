@@ -3,44 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <title>qnaDetail</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<!-- jQuery library -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
 <script>
 	$(document).ready(function() {
 		$('#qnaBtn').click(function() {
 			var result = confirm('정말 삭제하시겠습니까 ? 되돌릴수업어요 !');
-			if(result){
+			if (result) {
 				location.replace('qnaList')
-			}else{
+			} else {
 				return false;
 			}
 		});
 	});
-</script>	
+</script>
+<style>
+#qnaDetailBox {
+	text-align: right;
+}
+#qnaDatail{
+	height: 470px;
+}
+</style>
 </head>
-<body>
-	<div class="header">
+<body th:class="hoian-kr">
+	<div th:class="header">
 		<div th:include="/inc/topHeader"></div>
 	</div>
-	<h1 th:text="'자주묻는질문 상세보기'"></h1>
-	<span th:text="${qna}"></span>
-	<div>
-		<div th:text="'제목 :'+${qna.qnaTitle}"></div>
-		<div th:text="'카테고리 :'+${qna.categoryName}"></div>
-		<div th:text="'내용 :'+${qna.qnaContent}"></div>
-	</div>
-	<div>
-		<a th:href="@{/modifyQna(qnaTitle=${qna.qnaTitle})}" th:text="수정"></a>
-		<a th:href="@{/removeQna(qnaTitle=${qna.qnaTitle})}" th:text="삭제" th:id="qnaBtn"></a>
-		<a th:href="@{/qnaList}" th:text="목록"></a>
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:th:class="row">
+				<div th:class="col-sm-3"></div>
+				<div th:class="col-sm-6">
+					<h2 th:text="'자주묻는질문 상세보기'"></h2>
+					<div th:class="form-group">
+						<div th:class="form-control" th:text="'제목 :'+${qna.qnaTitle}"></div>
+						<div th:class="form-control" th:text="'카테고리 :'+${qna.categoryName}"></div>
+						<div th:id="qnaDatail" th:class="form-control" th:text="'내용 :'+${qna.qnaContent}"></div>
+					</div>
+					<div th:id="qnaDetailBox" th:class="form-group">
+						<a th:class="'btn btn-success'" th:href="@{/modifyQna(qnaTitle=${qna.qnaTitle})}" th:text="수정"></a>
+						<a th:class="'btn btn-success'" th:href="@{/removeQna(qnaTitle=${qna.qnaTitle})}" th:text="삭제" th:id="qnaBtn"></a>
+						<a th:class="'btn btn-success'" th:href="@{/qnaList}" th:text="목록"></a>
+					</div>
+				</div>
+				<div th:class="col-sm-3"></div>
+			</div>
+		</section>
+		<div th:class="header">
+			<div th:include="/inc/copyRight"></div>
+		</div>
 	</div>
 </body>
-<div th:include="/inc/copyRight"></div>
 </html>

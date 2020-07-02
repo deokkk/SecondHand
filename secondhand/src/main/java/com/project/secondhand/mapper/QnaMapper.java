@@ -25,4 +25,7 @@ public interface QnaMapper {
 		//자주 묻는 질문 삭제하기
 		public int deleteQna(String qnaTitle);
 		
+		//자주 묻는 질문 카테고리별 필터링
+		public List<Qna> selectQnaListByCategory(Map<String, Object> map);
+		
 }

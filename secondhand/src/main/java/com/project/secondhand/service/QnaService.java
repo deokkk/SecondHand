@@ -16,12 +16,20 @@ public class QnaService {
 	@Autowired private QnaMapper qnaMapper;
 	@Autowired private CategoryMapper categoryMapper;
 	
+	//자주묻는 질문 카테고리별 필터링
+	public List<Qna> getQnaListByCategory(String searchWord, String categoryName) {
+	      System.out.println(searchWord + " <----searchWord");
+	      System.out.println(categoryName + " <---categoryName");
+	      Map<String, Object> map = new HashMap<>();
+	      map.put("searchWord", searchWord);
+	      map.put("categoryName", categoryName);
+	      return qnaMapper.selectQnaListByCategory(map);
+	   }
+	
 	//자주 묻는 질문 입력하기
 	public int addQna (Qna qna) {
 		return qnaMapper.insertQna(qna);
 	}
-	
-	
 	//자주 묻는 질문 리스트
 	public Map<String, Object> getQnaList(String searchWord){
 		Map<String,Object> map = new HashMap<String, Object>();

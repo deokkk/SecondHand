@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.secondhand.service.CategoryService;
 import com.project.secondhand.service.QnaService;
@@ -26,6 +26,19 @@ public class QnaController {
 	@Autowired private QnaService qnaService;
 	@Autowired private CategoryService categoryService;
 
+	//자주묻는 질문 카테고리별 필터링
+	@GetMapping("/getqnaListByCategory")
+	   @ResponseBody
+	   public List<Qna> getqnaListByCategory(HttpSession session, @RequestParam(value = "searchWord", required = false) String searchWord, @RequestParam(value = "categoryName") String categoryName) {
+	      System.out.println(categoryName + " <--categoryName");
+	      if (searchWord == null) {
+	         searchWord = "";
+	      }
+	      List<Qna> list = qnaService.getQnaListByCategory(searchWord, categoryName);
+	      System.out.println(list);
+	      return qnaService.getQnaListByCategory(searchWord, categoryName);
+	   }
+	
 	//자주묻는 질문 입력하기 form(운영자)
 	@GetMapping("/addQna")
 	public String addQna(HttpSession session, Model model) {
