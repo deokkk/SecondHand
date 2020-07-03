@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>secondhand</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<script>
+	let helperInit = function() {
+		$('#emailHelper').text('');
+		$('#pwHelper').text('');
+	}
+	
+	$(document).ready(function(){
+		$('#loginBtn').click(function(){
+			if($('#adminEmail').val() == '') {
+				helperInit();
+				$('#emailHelper').text('이메일을 입력하세요');
+				$('#adminEmail').focus();
+				return;
+			}
+			if($('#adminPw').val() == '') {
+				helperInit();
+				$('#pwHelper').text('비밀번호를 입력하세요');
+				$('#pwEmail').focus();
+				return;
+			}
+			$('#adminForm').submit();
+		});	
+	});
+</script>
+</head>
+<body>
+<h1 th:text="'관리자 로그인'"></h1>
+<form th:method="post" th:action="@{/adminLogin}" th:id="adminForm">
+	<div>
+		<label th:for="adminEmail" th:text="이메일"></label>
+		<input th:type="text" th:name="adminEmail" th:id="adminEmail" th:placeholder="'이메일을 입력하세요.'">
+		<span th:id="emailHelper"></span>
+	</div>
+	<div>
+		<label th:for="adminPw" th:text="비밀번호"></label>
+		<input th:type="password" th:name="adminPw" th:id="adminPw" th:placeholder="'비밀번호을 입력하세요.'">
+		<span th:id="pwHelper"></span>
+	</div>
+	<div>
+		<button th:type="button" th:text="로그인" th:id="loginBtn"></button>
+	</div>
+</form>
+</body>
+</html>

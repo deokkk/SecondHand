@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>secondhand</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<script>
+	$(document).ready(function() {
+	//$(document).on("change", "input[name='categoryName']",function(){ 
+		$('#categoryType').change(function() {
+			var categoryType = $(this).val();
+			$.ajax({
+				url : '/getCategoryListByType',
+				type : 'GET',
+				data : {categoryType : categoryType},
+				success : function(data) {
+					$('#categoryTable').empty();
+					$.each(data, function(i) {
+						$('#categoryTable').append('<tr><td id="'+ data[i].categoryName +'">'+ data[i].categoryName +'</td><td><button type="button" id="updateBtn">수정</button></td><td><button type="button" id="deleteBtn">삭제</button></td>');
+					});
+				},
+				error : function() {
+					console.log('getCategoryListByType fail');
+				}
+			});
+		});
+		
+		$('#deleteBtn').click(function() {
+			var result = confirm('정말 삭제하시겠습니까 ? 되돌릴수업어요 !');
+			
+			if(result){
+				location.replace('categoryList');
+			}else{
+				return false;
+			}
+		});
+		
+		//$('.updateBtn').click(function(){
+		$(document).on("click", ".updateBtn", function(){
+			$(this).addClass('123');
+			$(this).removeClass('updateBtn')
+			var originName = $(this).attr('class');
+			var arr = originName.split(" ");
+			var inputName = '#'+arr[0];
+			console.log(inputName);
+			$(inputName).text('');
+			$(inputName).append('<input type="text" name="categoryName" id="categoryName">');
+			$('.123').click(function(){
+				var categoryName = $('#categoryName').val();
+				console.log(categoryName);
+				$.ajax({
+					url: '/modifyCategory',
+					type: 'POST',
+					data: {categoryName: categoryName, originName: arr[0]},
+					success: function(){
+						console.log('update success');
+						location.reload();
+					},
+					error: function(){
+						console.log('update fail');
+					}
+				});
+			});
+		});
+	});
+</script>
+</head>
+<body>
+<h1 th:text="'카테고리 리스트'"></h1>
+<div>
+	<select th:id="categoryType">
+		<option value="" th:text="전체보기">
+		<option th:value="item" th:text="상품"></option>
+		<option th:value="board" th:text="업체홍보게시판"></option>
+		<option th:value="qna" th:text="자주묻는질문"></option>
+	</select>
+	<table th:class="table">
+		<thead>
+			<tr>
+				<th th:text="'제목'"></th>
+				<th th:text="'수정'"></th>
+				<th th:text="'삭제'"></th>
+			</tr>
+		</thead>
+		<tbody th:id="categoryTable">
+			<tr th:each="category, stat : ${categoryList}">
+				<td th:text="${category.categoryName}" th:class="${category.categoryName}" th:id="${category.categoryName}"></td>
+				<td><button th:type="button" th:text="수정" th:class="${category.categoryName} +' updateBtn'"></button></td>
+				<td><button th:type="button" th:text="삭제" th:id="deleteBtn"></button></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>

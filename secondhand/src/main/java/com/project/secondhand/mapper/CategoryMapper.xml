@@ -11,4 +11,16 @@
 		WHERE category_type =#{categoryType}	
 	</select>	
 
+	<!-- 전체 카테고리 리스트 -->
+	<select id="selectCategoryListAll" resultType="com.project.secondhand.vo.Category">
+		SELECT 
+			category_name categoryName
+		FROM market_category
+	</select>
+	
+	<update id="updateCategory" parameterType="java.util.Map">
+		UPDATE market_category SET
+			category_name = #{categoryName}
+		WHERE category_name = #{originName}
+	</update>
 </mapper>

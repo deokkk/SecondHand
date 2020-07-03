@@ -35,16 +35,16 @@ public class QnaController {
 	
 	//자주묻는 질문 카테고리별 필터링
 	@GetMapping("/getqnaListByCategory")
-	   @ResponseBody
-	   public List<Qna> getqnaListByCategory(HttpSession session, @RequestParam(value = "searchWord", required = false) String searchWord, @RequestParam(value = "categoryName") String categoryName) {
-	      System.out.println(categoryName + " <--categoryName");
-	      if (searchWord == null) {
-	         searchWord = "";
-	      }
-	      List<Qna> list = qnaService.getQnaListByCategory(searchWord, categoryName);
-	      System.out.println(list);
-	      return qnaService.getQnaListByCategory(searchWord, categoryName);
+	@ResponseBody
+	public List<Qna> getqnaListByCategory(HttpSession session, @RequestParam(value = "searchWord", required = false) String searchWord, @RequestParam(value = "categoryName") String categoryName) {
+	   System.out.println(categoryName + " <--categoryName");
+	   if (searchWord == null) {
+	      searchWord = "";
 	   }
+	   List<Qna> list = qnaService.getQnaListByCategory(searchWord, categoryName);
+	   System.out.println(list);
+	   return qnaService.getQnaListByCategory(searchWord, categoryName);
+	}
 	
 	//자주묻는 질문 입력하기 form(운영자)
 	@GetMapping("/addQna")

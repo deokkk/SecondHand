@@ -37,6 +37,18 @@ body {
   margin-left: 50px;
 }
 
+.adminMenu {
+	cursor: pointer;
+}
+
+.hide {
+	display: none;
+}
+
+.hide li a {
+	font-size: large;
+}
+
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
