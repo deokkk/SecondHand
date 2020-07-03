@@ -90,7 +90,7 @@ button {
 /* line 35, /app/app/assets/stylesheets/home/header.scss */
 #fixed-bar #fixed-bar-wrap {
 	width: 980px;
-	margin: 0 auto;
+	/* margin: 0 auto; */ /* <----------sidemenu 추가하면서 지워야됨 */
 	padding: 17px 0;
 	position: relative;
 }
