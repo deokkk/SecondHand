@@ -104,9 +104,9 @@ $(document).ready(function(){
                            </td>
                            <td>             
                               <select name="categoryName" id = "categoryName" style = "vertical-align: middle; text-align-last: center"  class="form-control">
-                                 <option>카테고리</option>
-                                 <option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
-                              </select>                              
+								<option>카테고리</option>
+								<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+								</select>                             
                               <span id = "categoryHelper"></span>
                            </td>
                         </tr>
@@ -129,16 +129,24 @@ $(document).ready(function(){
 
                   <br>
                   <div>                  
-                     <input type="file" name="storePicNameOne" class = "btn">
+                     <input type="file" name="boardPicNameOne" class = "btn">
                   </div>
 
                   <br>
                   <div>
-                     <input type="file" name="storePicNameTwo" class = "btn">
+                     <input type="file" name="boardPicNameTwo" class = "btn">
                   </div>
                   <br>
                   <div>
-                     <input type="file" name="storePicNameThree"class = "btn">
+                     <input type="file" name="boardPicNameThree"class = "btn">
+                  </div>
+                  <br>
+                  <div>
+                     <input type="file" name="boardPicNameFour"class = "btn">
+                  </div>
+                  <br>
+                  <div>
+                     <input type="file" name="boardPicNameFive"class = "btn">
                   </div>
                </div>
                <div class="col-sm-1"></div>               

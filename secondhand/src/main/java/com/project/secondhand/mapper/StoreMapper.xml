@@ -47,7 +47,7 @@
   	WHERE msb.board_no = #{boardNo}
   </select>
   <!-- 업체 추가하기 -->
-  <insert id="insertStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard">
+  <insert id="insertStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard" useGeneratedKeys="true" keyColumn="board_no" keyProperty="boardNo">
 	INSERT INTO
 	market_store_board(
 		board_no,

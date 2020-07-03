@@ -11,6 +11,7 @@
 <link rel="stylesheet" media="all" href="css/itemList.css" />
 <script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
+<link rel="stylesheet" media="all" href="css/searchWord.css" />
 <!--  -->
 
 <link rel="stylesheet" href="css/file.css">
@@ -77,7 +78,7 @@ $(document).ready(function(){
 </script>
 <body class="hoian-kr">
 	<div class="header">
-		<div th:include="/inc/topHeader"></div>
+		<div th:include="/inc/main :: topHeader"></div>
 	</div>
 	<div class="container-fluid">
 		<section id="content">
@@ -168,7 +169,7 @@ $(document).ready(function(){
 		</section>
 	</div>
 	<div class="header">
-		<div th:include="/inc/copyRight"></div>
+		<div th:include="/inc/main :: copyRight"></div>
 	</div>
 </body>
 </html>

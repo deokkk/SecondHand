@@ -16,7 +16,7 @@ public interface StoreMapper {
 	//업체 상세보기
 	public StoreBoardAndBoardPic selectStoreBoardListOne(StoreBoardAndBoardPic storeBoardAndBoardPic);
 	//업체 추가하기
-	public int insertStoreBoard(StoreBoard storeBoard);
+	public void insertStoreBoard(StoreBoard storeBoard);
 	//업체 수정하기
 	public int updateStoreBoard(StoreBoard storeBoard);
 	//업체 삭제하기

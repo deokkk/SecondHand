@@ -14,5 +14,6 @@ import com.project.secondhand.vo.StorePic;
 public interface StorePicMapper {
 	//업체 게시물 사진 삭제
 	public int deleteStoreBoardPic(int boardNo);
-	 public void insertStorePic(StoreBoardPic storeBoardPic);
+	 public void insertStorePic(StorePic storePic);
+	 public void insertStoreBoardPic(StoreBoardPic storeBoardPic);
 }

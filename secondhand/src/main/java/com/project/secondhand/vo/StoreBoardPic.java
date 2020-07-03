@@ -1,39 +1,56 @@
 package com.project.secondhand.vo;
 
+
 public class StoreBoardPic {
-	private int boardPic;
-	private String boardPicName;
-	private String boardSize;
-	private String boardExt;
-	public int getBoardPic() {
-		return boardPic;
+	private int boardNo;
+	private String boardPicNameOne;
+	private String boardPicNameTwo;
+	private String boardPicNameThree;	
+	private String boardPicNameFour;
+	private String boardPicNameFive;
+	public int getBoardNo() {
+		return boardNo;
 	}
-	public void setBoardPic(int boardPic) {
-		this.boardPic = boardPic;
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
 	}
-	public String getBoardPicName() {
-		return boardPicName;
+	public String getBoardPicNameOne() {
+		return boardPicNameOne;
 	}
-	public void setBoardPicName(String boardPicName) {
-		this.boardPicName = boardPicName;
+	public void setBoardPicNameOne(String boardPicNameOne) {
+		this.boardPicNameOne = boardPicNameOne;
 	}
-	public String getBoardSize() {
-		return boardSize;
+	public String getBoardPicNameTwo() {
+		return boardPicNameTwo;
 	}
-	public void setBoardSize(String boardSize) {
-		this.boardSize = boardSize;
+	public void setBoardPicNameTwo(String boardPicNameTwo) {
+		this.boardPicNameTwo = boardPicNameTwo;
 	}
-	public String getBoardExt() {
-		return boardExt;
+	public String getBoardPicNameThree() {
+		return boardPicNameThree;
 	}
-	public void setBoardExt(String boardExt) {
-		this.boardExt = boardExt;
+	public void setBoardPicNameThree(String boardPicNameThree) {
+		this.boardPicNameThree = boardPicNameThree;
+	}
+	public String getBoardPicNameFour() {
+		return boardPicNameFour;
+	}
+	public void setBoardPicNameFour(String boardPicNameFour) {
+		this.boardPicNameFour = boardPicNameFour;
+	}
+	public String getBoardPicNameFive() {
+		return boardPicNameFive;
+	}
+	public void setBoardPicNameFive(String boardPicNameFive) {
+		this.boardPicNameFive = boardPicNameFive;
 	}
 	@Override
 	public String toString() {
-		return "StoreBoardPic [boardPic=" + boardPic + ", boardPicName=" + boardPicName + ", boardSize=" + boardSize
-				+ ", boardExt=" + boardExt + "]";
+		return "StoreBoardPic [boardNo=" + boardNo + ", boardPicNameOne=" + boardPicNameOne + ", boardPicNameTwo="
+				+ boardPicNameTwo + ", boardPicNameThree=" + boardPicNameThree + ", boardPicNameFour="
+				+ boardPicNameFour + ", boardPicNameFive=" + boardPicNameFive + "]";
 	}
+	
 	
 
 }

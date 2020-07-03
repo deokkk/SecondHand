@@ -9,14 +9,11 @@ public class StoreBoardAndBoardPic {
 	private String boardTitle;
 	private String boardContent;
 	private String boardDate;
-	private String boardPicName;
-	private String boardSize;
-	private String boardExt;
-   private MultipartFile itemPicNameOne;
-   private MultipartFile itemPicNameTwo;
-   private MultipartFile itemPicNameThree;
-   private MultipartFile itemPicNameFour;
-   private MultipartFile itemPicNameFive;
+   private MultipartFile boardPicNameOne;
+   private MultipartFile boardPicNameTwo;
+   private MultipartFile boardPicNameThree;
+   private MultipartFile boardPicNameFour;
+   private MultipartFile boardPicNameFive;
 public int getBoardNo() {
 	return boardNo;
 }
@@ -53,62 +50,45 @@ public String getBoardDate() {
 public void setBoardDate(String boardDate) {
 	this.boardDate = boardDate;
 }
-public String getBoardPicName() {
-	return boardPicName;
+public MultipartFile getBoardPicNameOne() {
+	return boardPicNameOne;
 }
-public void setBoardPicName(String boardPicName) {
-	this.boardPicName = boardPicName;
+public void setBoardPicNameOne(MultipartFile boardPicNameOne) {
+	this.boardPicNameOne = boardPicNameOne;
 }
-public String getBoardSize() {
-	return boardSize;
+public MultipartFile getBoardPicNameTwo() {
+	return boardPicNameTwo;
 }
-public void setBoardSize(String boardSize) {
-	this.boardSize = boardSize;
+public void setBoardPicNameTwo(MultipartFile boardPicNameTwo) {
+	this.boardPicNameTwo = boardPicNameTwo;
 }
-public String getBoardExt() {
-	return boardExt;
+public MultipartFile getBoardPicNameThree() {
+	return boardPicNameThree;
 }
-public void setBoardExt(String boardExt) {
-	this.boardExt = boardExt;
+public void setBoardPicNameThree(MultipartFile boardPicNameThree) {
+	this.boardPicNameThree = boardPicNameThree;
 }
-public MultipartFile getItemPicNameOne() {
-	return itemPicNameOne;
+public MultipartFile getBoardPicNameFour() {
+	return boardPicNameFour;
 }
-public void setItemPicNameOne(MultipartFile itemPicNameOne) {
-	this.itemPicNameOne = itemPicNameOne;
+public void setBoardPicNameFour(MultipartFile boardPicNameFour) {
+	this.boardPicNameFour = boardPicNameFour;
 }
-public MultipartFile getItemPicNameTwo() {
-	return itemPicNameTwo;
+public MultipartFile getBoardPicNameFive() {
+	return boardPicNameFive;
 }
-public void setItemPicNameTwo(MultipartFile itemPicNameTwo) {
-	this.itemPicNameTwo = itemPicNameTwo;
-}
-public MultipartFile getItemPicNameThree() {
-	return itemPicNameThree;
-}
-public void setItemPicNameThree(MultipartFile itemPicNameThree) {
-	this.itemPicNameThree = itemPicNameThree;
-}
-public MultipartFile getItemPicNameFour() {
-	return itemPicNameFour;
-}
-public void setItemPicNameFour(MultipartFile itemPicNameFour) {
-	this.itemPicNameFour = itemPicNameFour;
-}
-public MultipartFile getItemPicNameFive() {
-	return itemPicNameFive;
-}
-public void setItemPicNameFive(MultipartFile itemPicNameFive) {
-	this.itemPicNameFive = itemPicNameFive;
+public void setBoardPicNameFive(MultipartFile boardPicNameFive) {
+	this.boardPicNameFive = boardPicNameFive;
 }
 @Override
 public String toString() {
 	return "StoreBoardAndBoardPic [boardNo=" + boardNo + ", storeNo=" + storeNo + ", categoryName=" + categoryName
 			+ ", boardTitle=" + boardTitle + ", boardContent=" + boardContent + ", boardDate=" + boardDate
-			+ ", boardPicName=" + boardPicName + ", boardSize=" + boardSize + ", boardExt=" + boardExt
-			+ ", itemPicNameOne=" + itemPicNameOne + ", itemPicNameTwo=" + itemPicNameTwo + ", itemPicNameThree="
-			+ itemPicNameThree + ", itemPicNameFour=" + itemPicNameFour + ", itemPicNameFive=" + itemPicNameFive + "]";
+			+ ", boardPicNameOne=" + boardPicNameOne + ", boardPicNameTwo=" + boardPicNameTwo + ", boardPicNameThree="
+			+ boardPicNameThree + ", boardPicNameFour=" + boardPicNameFour + ", boardPicNameFive=" + boardPicNameFive
+			+ "]";
 }
+
 
 	
 	
