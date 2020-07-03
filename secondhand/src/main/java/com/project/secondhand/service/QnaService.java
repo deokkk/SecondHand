@@ -16,6 +16,11 @@ public class QnaService {
 	@Autowired private QnaMapper qnaMapper;
 	@Autowired private CategoryMapper categoryMapper;
 	
+	// 제목 중복검사
+	public int titleCheck(String title) {
+		return qnaMapper.titleCheck(title);
+	}
+	
 	//자주묻는 질문 카테고리별 필터링
 	public List<Qna> getQnaListByCategory(String searchWord, String categoryName) {
 	      System.out.println(searchWord + " <----searchWord");
@@ -49,6 +54,11 @@ public class QnaService {
 		map.put("qna", qna);
 		map.put("originTitle", originTitle);
 		return qnaMapper.updateQna(map);
+	}
+	
+	// 자주 묻는 질문 수정(제목 제외)
+	public int modifyQna(Qna qna) {
+		return qnaMapper.updateQnaExceptTitle(qna);
 	}
 	
 	

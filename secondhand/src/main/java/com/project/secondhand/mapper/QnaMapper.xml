@@ -3,6 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.secondhand.mapper.QnaMapper">
+	<!-- 제목 중복검사 -->
+	<select id="titleCheck" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(*)
+		FROM market_qna
+		WHERE qna_title = #{title}
+	</select>
+
 	<!-- 자주 묻는 질문 입력하기 -->
 	<insert id="insertQna">
 		INSERT INTO market_qna(
@@ -48,6 +56,15 @@
 			category_name=#{qna.categoryName},
 			qna_content=#{qna.qnaContent}
 		WHERE qna_title=#{originTitle}
+	</update>
+	
+	<!-- 자주 묻는 질문 수정하기(제목 제외) -->
+	<update id="updateQnaExceptTitle" parameterType="com.project.secondhand.vo.Qna">
+		UPDATE market_qna
+		SET
+			category_name=#{categoryName},
+			qna_content=#{qnaContent}
+		WHERE qna_title=#{qnaTitle}
 	</update>
 	
 	<!-- 자주 묻는 질문 삭제하기 -->

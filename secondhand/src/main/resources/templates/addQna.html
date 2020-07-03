@@ -28,20 +28,43 @@
 				$('#qnaTitleHelper').text('제목을 입력해주시기 바랍니다.');
 				$('#qnaTitle').focus();
 				return;
-			}
-			if($('#categoryName').val()==""){
-				helperInit();
-				$('#qnaCategoryHelper').text('카데고리를 선택해주시기 바랍니다.');
-				$('#categoryName').focus();
-				return;
-			}
-			if ($('#qnaContent').val() == "") {
-				helperInit();
-				$("#qnaContentHelper").text('내용을 입력해주시기 바랍니다.');
-				$('#qnaContent').focus();
-				return;
-			}
-			$('#addQnaForm').submit();
+			} else {
+				// 제목 중복검사
+				var title = $('#qnaTitle').val();
+				$.ajax({
+					url: '/titleCheck',
+					Type: 'GET',
+					data: {title: title},
+					success: function(data) {
+						console.log('check 성공');
+						if(data != 0) {
+							helperInit();
+							$('#qnaTitleHelper').text('제목이 중복됩니다.');
+							$('#qnaTitle').focus();
+							return;
+						} else {
+							// 카테고리 공백검사
+							if($('#categoryName').val()==""){
+								helperInit();
+								$('#qnaCategoryHelper').text('카데고리를 선택해주시기 바랍니다.');
+								$('#categoryName').focus();
+								return;
+							}
+							// 내용 공백검사
+							if ($('#qnaContent').val() == "") {
+								helperInit();
+								$("#qnaContentHelper").text('내용을 입력해주시기 바랍니다.');
+								$('#qnaContent').focus();
+								return;
+							}
+							$('#addQnaForm').submit();
+						}
+					},
+					error: function() {
+						console.log('check 실패');
+					}
+				});
+			}			
 		});
 	});
 </script>

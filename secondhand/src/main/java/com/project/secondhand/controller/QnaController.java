@@ -26,6 +26,13 @@ public class QnaController {
 	@Autowired private QnaService qnaService;
 	@Autowired private CategoryService categoryService;
 
+	// 제목 중복검사
+	@GetMapping("/titleCheck")
+	@ResponseBody
+	public int titleCheck(@RequestParam(value = "title") String title) {
+		return qnaService.titleCheck(title);
+	}
+	
 	//자주묻는 질문 카테고리별 필터링
 	@GetMapping("/getqnaListByCategory")
 	   @ResponseBody
@@ -110,7 +117,11 @@ public class QnaController {
 //	if(관리자가 아닐떄) {
 //		return "redirect:"/"
 //	}
-		qnaService.modifyQna(qna, originTitle);
+		if(originTitle.equals(qna.getQnaTitle())) {
+			qnaService.modifyQna(qna);
+		} else {
+			qnaService.modifyQna(qna, originTitle);
+		}
 		
 		String qnaTitle = "";
 		try {
