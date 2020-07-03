@@ -13,7 +13,7 @@
    </select>
   
   <!-- 회원가입 -->
-  <insert id ="addMember" parameterType="com.project.secondhand.vo.Member">
+  <insert id ="addMember" parameterType="com.project.secondhand.vo.Member" useGeneratedKeys="true" keyColumn="member_no" keyProperty="memberNo">
   	INSERT INTO market_member
   	(
   		member_no,
@@ -33,23 +33,7 @@
 		NOW()  	
   	)
   </insert>
-  <!-- 회원가입 사진 -->
-  <insert id="addMemberPic" parameterType="com.project.secondhand.vo.MemberPic">
-  	INSERT INTO member_pic
-  	(
-  		member_no,
-  		member_pic_name,
-  		member_pic_size,
-  		member_pic_ext
-  	)
-  	VALUES
-  	(
-  		#{memberNo},
-  		#{memberPicName},
-  		#{memberPicSize},
-		#{memberPicExt}  		
-  	)
-  </insert>
+  
   <!-- id(email)중복체크 -->
   <select id="memberIdCheck" resultType="String" parameterType="String">
   	SELECT
@@ -62,12 +46,24 @@
   	 )t
   	 WHERE member_email=#{memberIdCk}
   </select>
-  <!-- 로그인 id 비번 확인  -->
-  <select id="SelectLoginMember">
+	<!-- 회원가입 사진 -->
+  <insert id="addMemberPic" parameterType="com.project.secondhand.vo.MemberPic">
+  	INSERT INTO
+  		market_member_pic(
+  		member_no,
+  		member_pic_name
+  		)VALUES(
+  		#{memberNo},
+  		#{memberPicName}
+  		)
+  </insert>
   
+  <!-- 닉네임 중복체크 -->
+  <select id="NickCheck" resultType="com.project.secondhand.vo.Member">
+  	SELECT member_nickname
+  	FROM market_member
+  	WHERE member_nickname ={#memberNickname}
   </select>
-  
-  
   
   
   

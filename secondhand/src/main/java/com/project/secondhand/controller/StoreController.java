@@ -1,19 +1,17 @@
 package com.project.secondhand.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.secondhand.service.CategoryService;
 import com.project.secondhand.service.StoreService;
@@ -118,10 +116,17 @@ public class StoreController {
 		return "redirect:/";
 	}
 	//업체 id Check Action
-	@PostMapping("/storeIdCheck")
-	public String storeIdCheck() {
-		return "redirect:/";
-	}
+	   @PostMapping("/storeEmailSame")
+	   public String storeEmailSame(@RequestParam("storeEmailSame") String storeEmailSame,HttpSession session,Model model) {
+	      return "redirect:/addStore";
+	   }
+	//업체 email 보내기
+	   @PostMapping("/storeEmailSend")
+	   @ResponseBody
+	   public String storeEmailSend(@RequestParam("storeEmailSend") String storeEmailSend) {
+	      return storeService.emailCheck(storeEmailSend);
+	      }
+	      
 	//업체 email체크 (인증) Action
 	@PostMapping("/storeEmailCheck")
 	public String storeEmailCheck() {

@@ -7,10 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.secondhand.service.MemberService;
 import com.project.secondhand.vo.LoginMember;
 import com.project.secondhand.vo.Member;
+import com.project.secondhand.vo.MemberPicForm;
 @Controller
 public class MemberController {
 	@Autowired
@@ -45,18 +48,24 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
-//	// id 체크 Action
-//	@PostMapping("/memberIdCheck")
-//	public String memberIdCheck() {
-//		return "redirect:/";
-//	}
-//
-//	// email 체크(인증) action
-//	@PostMapping("/emailCheck")
-//	public String emailCheck() {
-//		return "redirect:/";
-//	}
-//
+//  회원 email 체크 Action
+	@PostMapping("/memberEmailSame")
+	public String memberEmailSame(@RequestParam ("memberEmailSame") String memberEmailSame) {
+		return "redirect:/addMember";
+	}
+// 회원 email 보내기
+	@PostMapping("/memberEmailSend")
+	@ResponseBody
+	public String memberEmailSend (@RequestParam("memberEmail") String memberEmail) {
+		return memberService.emailCheck(memberEmail);
+	}
+	
+// email 체크(인증) action
+	@PostMapping("/emailCheck")
+	public String emailCheck() {
+		return "redirect:/";
+	}
+
 // 로그인 Form
 	@GetMapping("/login")
 	public String login(HttpSession session) {
@@ -106,18 +115,69 @@ public class MemberController {
 		}
 	}
 
-
-//
-//	// 로그아웃
-//	@GetMapping("/logout")
-//	public String logout(HttpSession session) {
-//		if (session.getAttribute("loginMember") != null) {
-//			return "redirect:/";
-//		}
-//		// 세션종료
-//		session.invalidate();
-//		return "redirect:/";
-//	}
+//회원 닉네임 중복체크
+	
+	
+	
+	
+	
+//회원 사진 Form
+	@GetMapping("/addMemberPic")
+	public String addStorePic(HttpSession session,@RequestParam("memberNo") int memberNo,Model model) {
+		if(session.getAttribute("loginMember")!=null) {
+			return "redirect/";
+		}
+		model.addAttribute("memberNo", memberNo);
+		System.out.println(memberNo+"<--------------------------------addMemberPic");
+		return "addMemberPic";
+	}
+//회원사진 Action
+	@PostMapping("/addMemberPic")
+	public String addMemberPic(HttpSession session, MemberPicForm memberPicForm,@RequestParam("memberNo") int memberNo,Model model) {
+		System.out.println(memberPicForm.getMemberNo()+"<--------------------------addMemberpicNo");
+		if(session.getAttribute("loginMember")!=null) {
+			return "redirect/";
+		}
+		// 파일 .jpg .png .gif 만 업로드 가능
+		if(memberPicForm.getMemberPicName() != null) {
+			if(!memberPicForm.getMemberPicName().getContentType().equals("image/jpg") && !memberPicForm.getMemberPicName().getContentType().equals("image/png") && !memberPicForm.getMemberPicName().getContentType().equals("image/gif") && !memberPicForm.getMemberPicName().getContentType().equals("image/jpeg")) {
+				return "redirect:/addMemberPic";
+			}
+		}
+		model.addAttribute("memberNo", memberNo);
+		memberService.addMemberPic(memberPicForm);
+		
+		return "redirect:/addMemberAddr?memberNo="+memberNo;
+	}
+//회원주소 Form
+	@GetMapping("/addMemberAddr")
+	public String addMemberAddr(HttpSession session,@RequestParam("memberNo") int memberNo, Model model) {
+		if(session.getAttribute("loginMember")!=null) {
+			return "redirect/";
+		}
+		model.addAttribute("memberNo", memberNo);
+		return "addMemberAddr";
+		
+	}
+//회원주소 추가 Action
+	@PostMapping("/addMemberAddr")
+	public String addMemberAddr(HttpSession session,@RequestParam("memberNo") int memberNo,@RequestParam("memberAddr") String memberAddr) {
+		if(session.getAttribute("loginMember")!=null) {
+			return "redirect/";
+		}
+		System.out.println(memberAddr+"<-----------------------------memberControll memberAddr");
+		System.out.println(memberNo+"<-----------------------------memberControll memberNo");
+		
+		String date[] = memberAddr.split(" ");
+		for(int i=0; i<memberAddr.length(); i++) {
+			System.out.println(date[i]+"<------------------------------------ 시 구 동");
+		}
+		
+		return "redirect/";
+	}
+	
+	
+	
 }
 
 
