@@ -14,16 +14,16 @@
 		</div>
 		<!-- class = "main" 내용 위치 선정 -->
 		<div class="main">
-			<h1>일반회원 로그인</h1>
-			<form method="post" th:action="@{/loginMember}" id="loginMember">
+			<h1>기업 로그인</h1>
+			<form method="post" th:action="@{/loginStore}" id="loginStore">
 			<div>
 				Email : 
-				<input type="text" name="memberEmail" id="memberEmail">
+				<input type="text" name="storeEmail" id="storeEmail">
 				<span id="emailHelper"></span>
 			</div>
 			<div>
 				Pw : 
-				<input type="password" name="memberPw" id="memberPw">
+				<input type="password" name="storePw" id="storePw">
 				<span id="pwHelper"></span>
 			</div>
 			<div>
@@ -45,14 +45,14 @@
 
 	$(document).ready(function(){
 		$('#btn').click(function(){
-			if($('#memberEmail').val().length <1){
+			if($('#storeEmail').val().length <1){
 				helperInit();
 				$('#emailHelper').text("ID를 입력하세요");
-			}else if($('#memberPw').val().length <1){
+			}else if($('#storePw').val().length <1){
 				helperInit();
 				$('#pwHelper').text("비밀번호를 입력하세요");
 			}else{
-				$('#loginMember').submit();
+				$('#loginStore').submit();
 			}
 					
 		});

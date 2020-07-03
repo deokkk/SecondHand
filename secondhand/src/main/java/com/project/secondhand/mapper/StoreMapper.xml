@@ -102,7 +102,15 @@
   		)
   		
   </insert>
-
+	<!-- 업체 로그인 확인 -->
+	<select id="selectLoginStore" parameterType="com.project.secondhand.vo.Store" resultType="com.project.secondhand.vo.Store">
+		SELECT 
+			store_email AS storeEmail,
+			store_pw AS storePw
+		FROM market_store
+		WHERE store_email = #{storeEmail}
+		AND store_pw = PASSWORD(#{storePw})
+	</select>
   <!-- 업체 수정하기 -->
   <update id="updateStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard">
   	UPDATE market_store_board

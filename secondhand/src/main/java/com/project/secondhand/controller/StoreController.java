@@ -39,6 +39,31 @@ public class StoreController {
 		return "addMemberChose";
 	}
 	
+	//업체로그인 Form
+	@GetMapping("/loginStore")
+	public String loginStore(HttpSession session) {
+		if(session.getAttribute("loginStore")!=null) {
+			return "redirect/";
+		}
+		return "loginStore";
+	}
+	
+	//업체로그인 Action
+	@PostMapping("/loginStore")
+	public String loginStore(HttpSession session, Store store,Model model) {
+		if(session.getAttribute("loginStore")!=null) {
+			return "redirect/";
+		}
+		Store loginStore = storeService.selectLoginStore(store);
+		if(loginStore == null) {//로그인 실패시
+			model.addAttribute("msg","아이디와 비밀번호를 확인하세요");
+			return "loginStore";
+		}else { //로그인 성공
+			session.setAttribute("loginStore",loginStore);
+			return "redirect:/";
+		} 
+	}
+	
 	//업체가입 Form
 	@GetMapping("/addStore")
 	public String addStore(HttpSession session) {
@@ -102,32 +127,7 @@ public class StoreController {
 	public String storeEmailCheck() {
 		return "redirect:/";
 	}
-	//로그인 Form
-	//@GetMapping("/login")
-	//public String login(HttpSession session) {
-	//	if(session.getAttribute("loginStore")!=null) {
-	//		return "redirect:/";
-	//	}
-	//	return "login";
-	//}
-	//로그인 Action
-	//@PostMapping("/login")
-	//public String login() {
-	//	return "redirect:/";
-	//}
-	//로그아웃
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		if(session.getAttribute("loginStore")!=null) {
-			return "redirect:/";
-		}
-		//세션종료
-		session.invalidate();
-		return "redirect:/";
-	}
-	
-	
-	
+
 	//업체홍보 리스트
 	@GetMapping("/storeBoardList")
 	public String selectStoreBoardList(Model model) {

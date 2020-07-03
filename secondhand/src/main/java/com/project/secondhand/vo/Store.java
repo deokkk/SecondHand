@@ -6,7 +6,7 @@ public class Store {
 	private String storeAddr;
 	private String storePhone;
 	private String storeEmail;
-	private int storePw;
+	private String storePw;
 	private String storeDate;
 	public Integer getStoreNo() {
 		return storeNo;
@@ -38,10 +38,10 @@ public class Store {
 	public void setStoreEmail(String storeEmail) {
 		this.storeEmail = storeEmail;
 	}
-	public int getStorePw() {
+	public String getStorePw() {
 		return storePw;
 	}
-	public void setStorePw(int storePw) {
+	public void setStorePw(String storePw) {
 		this.storePw = storePw;
 	}
 	public String getStoreDate() {

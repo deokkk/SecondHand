@@ -64,7 +64,7 @@ $(document).ready(function(){
 	</div>
 	<div class="container-fluid">
 		<section id="content">
-			<form method="post" th:action="@{/addMember}"	enctype="multipart/form-data" id = "addMember">
+			<form method="post" th:action="@{/addMember}" enctype="multipart/form-data" id = "addMember">
 				<div class="row">
 					<div class="col-sm-2"></div>
 					<div class="col-sm-7">
@@ -106,12 +106,22 @@ $(document).ready(function(){
 								</tr>
 								<tr>
 									<td>
-										<label for="usr">이메일 인증 :</label>
+										<label for="usr">이메일 :</label>
 									</td>
 									<td>
 										<input type="text" class="form-control" id="memberEmail" name="memberEmail">
+										<button type="button" id="emailCh">인증번호 전송</button>
 										<span id = "emailHelper"></span>
 									</td>	
+								</tr>
+								<tr>
+									<td>
+										<label for="usr">인증번호 :</label>
+									</td>
+									<td>
+										<input type="text" class="form-control" id="memberEmail" name="memberEmail">
+										<button type="button" id="emailSa">인증번호 확인</button><span th:text="${msg}"></span>
+									</td>
 								</tr>
 							</tbody>
 						</table>

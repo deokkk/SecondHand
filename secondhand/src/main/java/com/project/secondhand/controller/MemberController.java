@@ -35,7 +35,7 @@ public class MemberController {
 	// 회원가입 Action
 	@PostMapping("/addMember") 
 	public String addMember(HttpSession session,Member member) {
-		if(session.getAttribute("loginStore")!=null) {
+		if(session.getAttribute("loginMember")!=null) {
 			return "redirect/";
 		}
 		if(memberService.addMember(member)==1) {
@@ -74,9 +74,6 @@ public class MemberController {
 	//로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		if(session.getAttribute("loginStore")!=null) {
-			return "redirect:/";
-		}
 		//세션종료
 		session.invalidate();
 		return "redirect:/";
@@ -97,12 +94,12 @@ public class MemberController {
 		if(session.getAttribute("loginMember")!=null) {
 			return "redirect:/";
 		}
-		System.out.println(loginMember+"<-loginMember");
-		Member returnLoginMember = memberService.login(loginMember);
-		System.out.println(returnLoginMember+"<-returnLoginMember");
+		//System.out.println(loginMember+"<-loginMember");
+		LoginMember returnLoginMember = memberService.login(loginMember);
+		//System.out.println(returnLoginMember+"<-returnLoginMember");
 		if(returnLoginMember == null) {//로그인 실패시
 			model.addAttribute("msg","아이디와 비밀번호를 확인하세요");
-			return "login";
+			return "loginMember";
 		}else { //로그인 성공
 			session.setAttribute("loginMember",loginMember);
 			return "redirect:/";

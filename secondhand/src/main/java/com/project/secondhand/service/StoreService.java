@@ -3,9 +3,12 @@ package com.project.secondhand.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +27,8 @@ import com.project.secondhand.vo.StorePicForm;
 @Service
 @Transactional
 public class StoreService {
+	@Autowired 
+	private	JavaMailSender javaMailSender;
    @Autowired
    private StoreMapper storeMapper;
    @Autowired
@@ -262,4 +267,26 @@ public class StoreService {
       System.out.print(storePic.toString());
       storeMapper.addStorePic(storePic);
    }
+   
+	//이메일 인증번호 보내기
+	public String emailCheck(String storeEmailSend) {
+		
+		UUID uuid = UUID.randomUUID();
+		String emailCheck = uuid.toString().substring(0,8);
+		
+		SimpleMailMessage mm = new SimpleMailMessage();
+		mm.setTo(storeEmailSend);
+		System.out.println(storeEmailSend+"<-----------------------------storeEmailSend");
+		mm.setFrom("deokk95@gmail.com");
+		mm.setSubject("[이메일 인증]");
+		mm.setText("인증번호는"+ emailCheck+"입니다");
+		javaMailSender.send(mm);
+		
+		return emailCheck;
+	}
+
+	//업체 로그인
+	public Store selectLoginStore(Store store) {
+		return storeMapper.selectLoginStore(store);
+}
 }

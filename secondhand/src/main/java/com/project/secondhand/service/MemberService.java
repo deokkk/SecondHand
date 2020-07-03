@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.secondhand.mapper.MemberMapper;
+import com.project.secondhand.vo.Admin;
 import com.project.secondhand.vo.LoginMember;
 import com.project.secondhand.vo.Member;
 @Service
@@ -18,8 +19,7 @@ public class MemberService {
 		return memberMapper.addMember(member);
 	}
 	//로그인
-	public Member login(LoginMember loginMember) {
+	public LoginMember login(LoginMember loginMember) {
 		return memberMapper.selectLoginMember(loginMember);
 	}
-	
 }

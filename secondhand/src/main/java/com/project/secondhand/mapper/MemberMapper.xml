@@ -12,10 +12,9 @@
   	AND member_pw = PASSWORD(#{memberPw})
    </select>
   
-  
   <!-- 회원가입 -->
   <insert id ="addMember" parameterType="com.project.secondhand.vo.Member">
-  	INSERT INTO member
+  	INSERT INTO market_member
   	(
   		member_no,
   		member_nickname,
