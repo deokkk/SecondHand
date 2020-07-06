@@ -20,6 +20,7 @@
 	</div>
 	<div>
 		<h1>상품 신고 리스트</h1>
+		<form method="post" th:action="@{/itemReportList}" enctype="multipart/form-data">
 		<table th:class="table" border="1">
 			<thead>
 				<tr>
@@ -32,9 +33,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td th:each="itemReport : ${list}"></td>
-					<td th:text="${itemReport.itemReportDeferNo}"></td>
+				 <tr th:each="itemReport,index : ${list}">
+				 	<td th:text="${itemReport.itemReportDeferNo}"></td>
 					<td th:text="${itemReport.itemNo}"></td>
 					<td th:text="${itemReport.memberNo}"></td>
 					<td th:text="${itemReport.categoryName}"></td>
@@ -43,6 +43,7 @@
 				</tr>
 			</tbody>
 		</table>
+		</form>
 	</div>
 	<!-- footer include -->
 	<div th:class="header">
