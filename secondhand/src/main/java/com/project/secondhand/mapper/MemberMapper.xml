@@ -33,6 +33,17 @@
 		NOW()  	
   	)
   </insert>
+  <!-- 회원탈퇴 -->
+  <delete id="removeMember" parameterType="com.project.secondhand.vo.Member">
+  	DELETE FROM market_member
+  	WHERE member_email = #{memberEmail}
+  	AND member_pw = PASSWORD(#{memberPw})
+  </delete>  
+  <delete id="removeMemberPic" parameterType="com.project.secondhand.vo.MemberPic">
+  	DELETE FROM market_member_pic
+  	WHERE member_no=#{memberNo}
+  </delete>
+  
   
   <!-- id(email)중복체크 -->
   <select id="memberIdCheck" resultType="String" parameterType="String">
@@ -64,10 +75,65 @@
   	FROM market_member
   	WHERE member_nickname ={#memberNickname}
   </select>
+  <!-- 회원 주소 추가 -->
+  <insert id="addMemberAddr" parameterType="com.project.secondhand.vo.MemberAddr">
+  	INSERT INTO
+  		market_member_addr(
+  			member_no,
+  			big_city,
+  			middle_city,
+  			small_city
+  		)VALUES(
+  			#{memberNo},
+  			#{bigCity},
+  			#{middleCity},
+  			#{smallCity}
+  		)
+  </insert>
+
   
+  <update id ="updateMemberPw" parameterType="com.project.secondhand.vo.Member">
+  	UPDATE market_member
+  	SET
+  		member_pw = PASSWORD(#{memberPw})
+  	WHERE member_phone = #{memberPhone}
+  	AND member_email = #{memberEmail}
+  </update>
   
+  <!-- 비밀번호 찾기 -->
+  <select id="findMemberPw" resultType="com.project.secondhand.vo.Member" parameterType="com.project.secondhand.vo.Member">
+  	SELECT *
+  	FROM market_member
+  	WHERE member_phone = #{memberPhone}
+  	AND member_email =#{memberEmail}
+  </select>  
   
+   <!-- 아이디(이메일) 찾기 -->
+  <select id="findMemberId" resultType="String" parameterType="com.project.secondhand.vo.Member">
+	SELECT
+		member_email
+	FROM market_member
+	WHERE member_phone = #{memberPhone}
+  </select>
   
+  <!-- 회원 정보 보기 -->
+  
+  <select id="selectMemberOne" parameterType="com.project.secondhand.vo.LoginMember" resultType="com.project.secondhand.vo.MemberInfo">
+  	SELECT
+		mm.member_nickname AS memberNickname,
+		mm.member_no AS memberNo,
+		mm.member_phone AS memberPhone,
+		mm.member_email AS memberEmail,
+		mm.member_date AS memberDate,
+		mmp.member_pic_name AS memberPicName,
+		mma.big_city AS bigCity,
+		mma.middle_city AS middleCity,
+		mma.small_city AS smallCity
+	FROM market_member mm
+	INNER JOIN market_member_pic mmp ON mm.member_no = mmp.member_no
+	INNER JOIN market_member_addr mma ON mm.member_no = mma.member_no
+	WHERE mm.member_email = #{memberEmail}
+  </select>
   
   
   

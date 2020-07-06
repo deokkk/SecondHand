@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.secondhand.mapper.AdminMapper">
+	<select id="adminLogin" parameterType="com.project.secondhand.vo.Admin" resultType="com.project.secondhand.vo.Admin">
+		SELECT
+			admin_id adminId,
+			admin_pw adminPw,
+			admin_email adminEmail
+		FROM market_admin
+		WHERE admin_email = #{adminEmail}
+		AND admin_pw = #{adminPw}
+	</select>
+</mapper>

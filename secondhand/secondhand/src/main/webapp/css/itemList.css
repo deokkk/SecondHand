@@ -1,0 +1,277 @@
+
+
+/* 인기중고매물 text */
+.head-title {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  text-align: center;
+  color: #212529;
+  margin-bottom: 40px;
+}
+/* 아이템틀 위치 */
+.cards-wrap {
+  margin: 0 auto;
+  text-align: center;
+}
+/* 아이템 창 내용 밑줄 제거 밑 색상선택  */
+.cards-wrap .card-link {
+  text-decoration: none;
+  color: #212529;
+}
+/* 아이템간 배열 위치 선택*/
+.cards-wrap .card-top,
+.cards-wrap .card {
+  position: relative;
+  text-align: left;
+  display: inline-block;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  width: calc(25% - 34px);
+  margin-right: 34px;
+  margin-bottom: 50px;
+
+}
+/* 아이템칸 수정 */
+.cards-wrap .card-top .card-photo,
+.cards-wrap .card .card-photo {
+  width: 100%;
+  position: relative;
+  height: 160px;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  background-color: #f8f9fa;
+}
+/* 아이템칸 이미지 */
+.cards-wrap .card-top .card-photo img,
+.cards-wrap .card .card-photo img {
+  width: 100%;
+  position: relative;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+}
+
+/* line 55, /app/app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-desc,
+.cards-wrap .card .card-desc {
+  padding: 16px;
+  padding-bottom: 0;
+}
+/* line 58, /app/app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-desc .card-title,
+.cards-wrap .card .card-desc .card-title {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  color: #212529;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+/* line 69, /app/app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-desc .card-region-name,
+.cards-wrap .card .card-desc .card-region-name {
+  font-size: 15px;
+  color: #868e96;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+/* 가격관련 */
+.cards-wrap .card-top .card-desc .card-price,
+.cards-wrap .card .card-desc .card-price {
+  font-size: 15px;
+  font-weight: 600;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e9ecef;
+  line-height: 1.3;
+  color: #ff8a3d;
+}
+/* line 86, /app/app/assets/stylesheets/home/articles/cards.scss */
+.cards-wrap .card-top .card-desc .card-price.blank-price,
+.cards-wrap .card .card-desc .card-price.blank-price {
+  color: #212529;
+}
+/* 관심 및 채팅관련 */
+.cards-wrap .card-top .card-desc .card-counts,
+.cards-wrap .card .card-desc .card-counts {
+  padding: 12px 0;
+  color: #adb5bd;
+  font-size: 13px;
+}
+
+
+
+/*한 페이지에 줄당 아이템 4개 배치  */
+.cards-wrap .card-top:nth-child(4n),
+.cards-wrap .card:nth-child(3n) {
+  margin-right: 0;
+  
+}
+
+/* 인기중고 매물 텍스트 위치 선정 */
+.cards-wrap #cards-more #cards-more-text #more-text {
+  padding-top: 15px;
+
+}
+
+/* line 20, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#content {
+  margin-top: 120px;
+  
+}
+
+/* 아이템과 coptyRight 사이의 거리 */
+.cards-wrap {
+  width: 940px;
+ padding-bottom: 150px;
+}
+
+/* 중고매물 타이틀과 아이템 사이 거리 */
+#hot-articles-navigation {
+  width: 980px;
+  margin: 0 auto;
+  text-align: right;
+  margin-bottom: 30px;
+}
+/* line 33, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#hot-articles-navigation .hot-articles-nav-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 10px 44px 10px 20px;
+  background-color: #fff;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border: solid 1px #e9ecef;
+  font-size: 17px;
+  letter-spacing: -0.6px;
+  text-align: left;
+  background: url(/assets/home/articles/icon-arrow-down-2d404f1988c159b270a18a0bb46b119f0065d38c18c1efc0b51d0d8c0af990f2.png) no-repeat 89% 50%;
+}
+/* line 48, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#hot-articles-navigation .hot-articles-nav-select:hover {
+  color: #868e96;
+}
+/* line 51, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#hot-articles-navigation .hot-articles-nav-select:disabled {
+  color: #adb5bd;
+  background: url(/assets/home/articles/icon-arrow-down-off-ed8303c34df3a75e5604b6209c582960a9135c0eec2e2ff1bc4f77fc5fec60c4.png) no-repeat 89% 50%;
+}
+/* line 55, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#hot-articles-navigation .hot-articles-nav-select::-ms-expand {
+  display: none;
+}
+
+/* line 60, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#hot-articles-go-download {
+  margin-top: 60px;
+  width: 100%;
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 80px 0;
+}
+/* line 66, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#hot-articles-go-download h3 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: -0.6px;
+}
+/* line 72, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#hot-articles-go-download p {
+  font-size: 17px;
+  line-height: 1.6;
+  letter-spacing: -0.6px;
+  color: #495057;
+  margin-top: 8px;
+  
+}
+/* line 79, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#hot-articles-go-download #hot-articles-download-buttons {
+  margin-top: 32px;
+
+}
+/* line 81, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#hot-articles-go-download #hot-articles-download-buttons .download-button {
+  display: inline-block;
+  padding: 13px 21px;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  background-color: #ff8a3d;
+  text-decoration: none;
+  margin: 0 8px;
+}
+/* line 90, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#hot-articles-go-download #hot-articles-download-buttons .download-button .download-text {
+  display: inline-block;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+/* line 99, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#hot-articles-go-download #hot-articles-download-buttons .download-button .home-google-play-bar-white,
+#hot-articles-go-download #hot-articles-download-buttons .download-button .home-apple-store-bar-white {
+  vertical-align: middle;
+}
+/* line 104, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#hot-articles-go-download #hot-articles-download-buttons .download-button:hover {
+  background-color: #f98538;
+}
+
+@media all and (-webkit-min-device-pixel-ratio: 1.5), all and (min-resolution: 1.5dppx) {
+  /* line 115, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+  #hot-articles-navigation .hot-articles-nav-select {
+    background: url(/assets/home/articles/icon-arrow-down@2x-3e0bb6e5c4e43c183ddbcf9feb17e9e3f2407282d28a520917b3756b3d181eae.png) no-repeat 89% 50%;
+    background-size: 10px 6px;
+  }
+  /* line 119, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+  #hot-articles-navigation .hot-articles-nav-select:disabled {
+    color: #adb5bd;
+    background: url(/assets/home/articles/icon-arrow-down-off@2x-fa5ce01a30c73ab7467d4d8a871c0e9df1f3c2e7b64b8a80fe6e9fc6cbd8fa99.png) no-repeat 89% 50%;
+    background-size: 10px 6px;
+  }
+}
+/* line 127, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#article-detail-hot-more {
+  margin: 2.4rem 1.6rem;
+  position: relative;
+}
+/* line 130, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#article-detail-hot-more h3 {
+  font-size: 1.7rem;
+  line-height: 1.47;
+  letter-spacing: -0.6px;
+  font-weight: normal;
+  padding-bottom: 2.4rem;
+}
+/* line 137, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#article-detail-hot-more #hot-more-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+}
+/* line 142, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+#article-detail-hot-more #hot-more-link a {
+  font-size: 1.5rem;
+  line-height: 1.4;
+  letter-spacing: -0.6px;
+  text-decoration: none;
+  color: #ff8a3d;
+}
+
+/* line 151, /app/app/assets/stylesheets/home/articles/hot.css.scss */
+.hot-articles-wrap {
+  width: 100%;
+}

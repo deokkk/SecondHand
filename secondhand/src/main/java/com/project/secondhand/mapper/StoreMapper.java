@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.project.secondhand.vo.Member;
 import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreBoardAndBoardPic;
@@ -27,4 +28,10 @@ public interface StoreMapper {
 	public void addStorePic(StorePic storePic);
 	//업체 로그인
 	public Store selectLoginStore(Store store);
+	//비밀번호 전송
+	public int updatestorePw(Store store);
+	//아이디(이메일) 찾기
+	public String findStoreId(Store store);
+	//비밀번호 찾기 
+	public Store findStorePw(Store store);
 }

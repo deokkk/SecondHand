@@ -125,4 +125,21 @@
   	FROM market_store_board
   	WHERE board_no = #{boardNo}
   </delete>
+  
+   <!-- 비밀번호 찾기 -->
+  <select id="findStorePw" resultType="com.project.secondhand.vo.Store" parameterType="com.project.secondhand.vo.Store">
+  	SELECT *
+  	FROM market_store
+  	WHERE store_phone = #{storePhone}
+  	AND store_email =#{storeEmail}
+  </select>  
+  
+   <!-- 아이디(이메일) 찾기 -->
+  <select id="findStorerId" resultType="String" parameterType="com.project.secondhand.vo.Store">
+	SELECT
+		store_email
+	FROM market_store
+	WHERE store_phone = #{storePhone}
+  </select>
+  
 </mapper>

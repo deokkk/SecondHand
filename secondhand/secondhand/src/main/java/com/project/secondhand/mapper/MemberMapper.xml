@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.secondhand.mapper.MemberMapper">
+  
+  <!-- 로그인 -->
+  <select id="selectLoginMember" parameterType="com.project.secondhand.vo.LoginMember" resultType="com.project.secondhand.vo.LoginMember">
+  	SELECT member_email AS memberEmail, member_pw AS memberPw
+  	FROM market_member
+  	WHERE member_email =#{memberEmail}
+  	AND member_pw = PASSWORD(#{memberPw})
+   </select>
+  
+  <!-- 회원가입 -->
+  <insert id ="addMember" parameterType="com.project.secondhand.vo.Member" useGeneratedKeys="true" keyColumn="member_no" keyProperty="memberNo">
+  	INSERT INTO market_member
+  	(
+  		member_no,
+  		member_nickname,
+  		member_pw,
+  		member_phone,
+  		member_email,
+  		member_date
+  	)
+  	VALUES
+  	(
+  		#{memberNo},
+  		#{memberNickname},
+  		PASSWORD(#{memberPw}),
+  		#{memberPhone},
+  		#{memberEmail},
+		NOW()  	
+  	)
+  </insert>
+  
+  <!-- id(email)중복체크 -->
+  <select id="memberIdCheck" resultType="String" parameterType="String">
+  	SELECT
+  		member_email
+  	FROM
+  	(
+  	 SELECT member_email FROM member 
+  	 UNION
+  	 SELECT member_email FROM backup
+  	 )t
+  	 WHERE member_email=#{memberIdCk}
+  </select>
+	<!-- 회원가입 사진 -->
+  <insert id="addMemberPic" parameterType="com.project.secondhand.vo.MemberPic">
+  	INSERT INTO
+  		market_member_pic(
+  		member_no,
+  		member_pic_name
+  		)VALUES(
+  		#{memberNo},
+  		#{memberPicName}
+  		)
+  </insert>
+  
+  <!-- 닉네임 중복체크 -->
+  <select id="NickCheck" resultType="com.project.secondhand.vo.Member">
+  	SELECT member_nickname
+  	FROM market_member
+  	WHERE member_nickname ={#memberNickname}
+  </select>
+  
+  <!-- 회원가입 주소 -->
+  <insert id="addMemberAddr" parameterType="com.project.secondhand.vo.MemberAddr">
+  	INSERT INTO
+  		market_member_addr(
+  			member_no,
+  			big_city,
+  			middle_city,
+  			small_city
+  		)VALUES(
+  			#{memberNo},
+  			#{bigCity},
+  			#{middleCity},
+  			#{smallCity}
+  		)
+  </insert>
+  
+  <!-- 회원 정보 보기 -->
+  
+  <select id="selectMemberOne" parameterType="com.project.secondhand.vo.LoginMember" resultType="com.project.secondhand.vo.MemberInfo">
+  	SELECT
+		mm.member_nickname AS memberNickname,
+		mm.member_no AS memberNo,
+		mm.member_phone AS memberPhone,
+		mm.member_email AS memberEmail,
+		mm.member_date AS memberDate,
+		mmp.member_pic_name AS memberPicName,
+		mma.big_city AS bigCity,
+		mma.middle_city AS middleCity,
+		mma.small_city AS smallCity
+	FROM market_member mm
+	INNER JOIN market_member_pic mmp ON mm.member_no = mmp.member_no
+	INNER JOIN market_member_addr mma ON mm.member_no = mma.member_no
+	WHERE mm.member_email = #{memberEmail}
+  </select>
+  
+  
+  
+  
+  
+</mapper>

@@ -1,0 +1,96 @@
+footer {
+  padding: auto auto -20px -20px;
+  background-color: #495057;
+  color: #dee2e6;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: -0.6px;
+  text-align: center;
+  z-index: 100;
+}
+/* line 20, /app/app/assets/stylesheets/home/footer.scss */
+footer .text-bold {
+  font-weight: bold;
+}
+/* line 23, /app/app/assets/stylesheets/home/footer.scss */
+footer .footer-list {
+  list-style-type: none;
+  margin: 24px 0;
+}
+/* line 26, /app/app/assets/stylesheets/home/footer.scss */
+footer .footer-list .footer-list-item {
+  display: inline-block;
+}
+/* line 28, /app/app/assets/stylesheets/home/footer.scss */
+footer .footer-list .footer-list-item a {
+  color: #dee2e6;
+  text-decoration: none;
+}
+/* line 32, /app/app/assets/stylesheets/home/footer.scss */
+footer .footer-list .footer-list-item a:hover {
+  text-decoration: underline;
+}
+/* line 36, /app/app/assets/stylesheets/home/footer.scss */
+footer .footer-list .footer-list-item:after {
+  content: '|';
+  margin: 0 16px;
+  color: #868e96;
+  font-weight: normal;
+}
+/* line 42, /app/app/assets/stylesheets/home/footer.scss */
+footer .footer-list .footer-list-item:last-child {
+  vertical-align: top;
+  text-align: left;
+}
+/* line 46, /app/app/assets/stylesheets/home/footer.scss */
+footer .footer-list .footer-list-item:last-child:after {
+  content: none;
+}
+/* line 49, /app/app/assets/stylesheets/home/footer.scss */
+footer .footer-list .footer-list-item:last-child p {
+  margin-bottom: -4px;
+}
+/* line 53, /app/app/assets/stylesheets/home/footer.scss */
+footer #footer-address-list {
+  margin-bottom: 4px;
+  font-weight: 200;
+}
+/* line 56, /app/app/assets/stylesheets/home/footer.scss */
+footer #footer-address-list address {
+  display: inline-block;
+  font-style: normal;
+}
+/* line 61, /app/app/assets/stylesheets/home/footer.scss */
+footer #ceo {
+  font-weight: 200;
+}
+/* line 64, /app/app/assets/stylesheets/home/footer.scss */
+footer #copyright {
+  color: #868e96;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: -0.6px;
+  margin: 8px 0;
+}
+
+/* line 97, /app/app/assets/stylesheets/home/footer.scss */
+.hoian-gb footer {
+  background-color: #F8F9FA;
+}
+/* line 98, /app/app/assets/stylesheets/home/footer.scss */
+.hoian-gb footer .footer-list .footer-list-item a {
+  color: #212529;
+}
+/* line 102, /app/app/assets/stylesheets/home/footer.scss */
+.hoian-gb footer .footer-list .footer-list-item:after {
+  content: "";
+}
+/* line 106, /app/app/assets/stylesheets/home/footer.scss */
+.hoian-gb footer #copyright {
+  font-size: 12px;
+  line-height: 140%;
+  letter-spacing: -0.04em;
+  color: #495057;
+  font-weight: normal;
+}

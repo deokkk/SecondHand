@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<script>
+	let helperInit = function () {
+		$('#sendQnaHelper').text("");
+	}
+	//doucment(body)가 준비되면 작동된다.
+	$(document).ready(function() {
+		//제목 공백 확인
+	//button 을 클릭하면 작동된다.
+	$('#sendQnaBtn').click(function () {
+		//제목 공백 확인
+		if($('sendQnaContent').val() == ""){
+			helperInit();
+			$('#sendQnaHelper').text('내용을 입력해주세요.')
+			$('#sendQnaBtn').foucs();
+			return;
+		}
+	});
+	});
+</script>
+<style>
+#sendQnaBox{
+	text-align: right;
+
+}
+</style>
+</head>
+<body>
+	<div th:class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
+	<div th:class="container-fluid">
+		<section th:id="content">
+	<form th:method="post" th:action="@{/sendQna}">
+		<div th:class="row">
+					<div th:class="col-sm-3"></div>
+					<div th:class="col-sm-6">
+	<h2 th:text="'고객센터에 문의하기'"></h2>
+		<div th:class="form-group">
+			<label th:for="sendQnaCategory"></label>
+			<select th:class="form-control" th:name="sendQnaCategory" th:id="sendQnaCategory">
+				<option value="" th:text="'전체 카테고리'"></option>
+				<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+			</select>
+		</div>
+		<div th:class="form-group">
+			<label th:for="sendQnaContent" th:text="''"></label>
+			<textarea th:class="form-control" th:rows="18" th:name="sendQnaContent" th:id="sendQnaContent" th:placeholder="'문의내용을 입력하세요.'"></textarea>
+			<span th:id="sendQnaHelper"></span>
+		</div>
+		<div id="sendQnaBox">
+		<button th:class="'btn btn-success'" th:id="sendQnaBtn" th:type="button" th:text="문의하기"></button>
+		</div>
+		</div>
+		<div th:class="col-sm-3"></div>
+		</div>
+	</form>
+	</section>
+		<div th:class="header">
+			<div th:include="/inc/copyRight"></div>
+		</div>
+		</div>
+</body>
+</html>

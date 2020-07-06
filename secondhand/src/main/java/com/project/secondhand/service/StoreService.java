@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.project.secondhand.mapper.StoreMapper;
 import com.project.secondhand.mapper.StorePicMapper;
+import com.project.secondhand.vo.Member;
 //import com.project.secondhand.mapper.StoreBoardPicMapper;
 import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreBoard;
@@ -288,5 +289,30 @@ public class StoreService {
 	//업체 로그인
 	public Store selectLoginStore(Store store) {
 		return storeMapper.selectLoginStore(store);
+		
+}
+
+	//비밀번호 찾기
+	public int getStorePw(Store member) {
+		UUID uuid = UUID.randomUUID();
+		String storePw = uuid.toString().substring(0, 8);
+		member.setStorePw(storePw);
+		int row = storeMapper.updatestorePw(member);
+		if(row ==1) {
+			System.out.println(storePw+"<--update memberPw");
+			//메일로 랜덤 비밀번호 전송
+			SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+			simpleMailMessage.setTo(member.getStoreEmail()); //메일받는사람
+			simpleMailMessage.setFrom("SECONDHANADMIN"); //메일 보내는 사람
+			simpleMailMessage.setSubject("SECONDHADN 비밀번호 찾기 메일입니다");
+			simpleMailMessage.setText("변경 비밀번호:" +storePw+ "새비밀번호로 변경해주세요");
+			javaMailSender.send(simpleMailMessage); 
+		}
+		return row;
+	}
+	//아이디 찾기
+	public String findStoreId(Store store) {
+		return storeMapper.findStoreId(store);
 }
 }
+

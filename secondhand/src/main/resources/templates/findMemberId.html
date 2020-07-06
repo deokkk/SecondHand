@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<link rel="stylesheet" media="all" href="css/searchWord.css" />
+<!--  -->
+
+<link rel="stylesheet" href="css/file.css">
+
+<!--  -->
+
+</head>
+<style>
+
+.btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+file{
+color: #11111;
+}
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$('#btn').click(function () {
+			$('#myform').submit();
+		});
+	});
+
+</script>
+<body class="hoian-kr">
+	<div class="header">
+		<div th:include="/inc/main :: topHeader"></div>
+	</div>
+	<div class="container-fluid">
+		<section id="content">
+			<form method="post" th:action="@{/findMemberId}" id="myform" enctype="multipart/form-data" >
+				<div class="row">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-7">
+						<h2>비밀전호 찾기</h2>
+						<table class="table">
+							<tbody>
+								<tr>
+									<td>
+										<label for="usr">핸드폰번호:</label>
+									</td>
+									<td>
+										<div class="form-group">
+											<!-- 추후 지성이형 조와 연결 -->
+											<input type="text" class="form-control"	name="memberPhone" th:placeholder="번호">
+											<span id = ""></span>
+										</div>
+									</td>
+								</tr>
+							
+							</tbody>
+						</table>
+						<div><button type="button" id = "btn" class="btn">찾기</button></div>
+					</div>
+					<div class="col-sm-1"></div>					
+				</div>				
+			</form>
+		</section>
+	</div>
+	<div class="header">
+		<div th:include="/inc/main :: copyRight"></div>
+	</div>
+</body>
+</html>

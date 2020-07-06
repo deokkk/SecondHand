@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.secondhand.service.MemberService;
 import com.project.secondhand.vo.LoginMember;
 import com.project.secondhand.vo.Member;
+import com.project.secondhand.vo.MemberAddr;
+import com.project.secondhand.vo.MemberInfo;
+import com.project.secondhand.vo.MemberPic;
 import com.project.secondhand.vo.MemberPicForm;
 @Controller
 public class MemberController {
@@ -48,25 +51,25 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
-//  회원 email 체크 Action
+	//  회원 email 체크 Action
 	@PostMapping("/memberEmailSame")
 	public String memberEmailSame(@RequestParam ("memberEmailSame") String memberEmailSame) {
 		return "redirect:/addMember";
 	}
-// 회원 email 보내기
+	// 회원 email 보내기
 	@PostMapping("/memberEmailSend")
 	@ResponseBody
 	public String memberEmailSend (@RequestParam("memberEmail") String memberEmail) {
 		return memberService.emailCheck(memberEmail);
 	}
 	
-// email 체크(인증) action
+	// email 체크(인증) action
 	@PostMapping("/emailCheck")
 	public String emailCheck() {
 		return "redirect:/";
 	}
 
-// 로그인 Form
+	// 로그인 Form
 	@GetMapping("/login")
 	public String login(HttpSession session) {
 		if (session.getAttribute("loginMember") != null) {
@@ -74,7 +77,7 @@ public class MemberController {
 		}
 		return "login";
 	}
-// 로그인 Action
+	//로그인 Action
 	@PostMapping("/login")
 	public String login() {
 		return "redirect:/";
@@ -89,7 +92,7 @@ public class MemberController {
 }
 
 	
-//멤버 로그인 Form
+	//멤버 로그인 Form
 	@GetMapping("/loginMember")
 	public String loginMember(HttpSession session) {
 		if (session.getAttribute("loginMember") != null) {
@@ -97,7 +100,7 @@ public class MemberController {
 		}
 		return "loginMember";
 	}
-//멤버 로그인 Action
+	//멤버 로그인 Action
 	@PostMapping("/loginMember")
 	public String loginMember(Model model, HttpSession session, LoginMember  loginMember) {
 		if(session.getAttribute("loginMember")!=null) {
@@ -115,13 +118,13 @@ public class MemberController {
 		}
 	}
 
-//회원 닉네임 중복체크
+	//회원 닉네임 중복체크
 	
 	
 	
 	
 	
-//회원 사진 Form
+	//회원 사진 Form
 	@GetMapping("/addMemberPic")
 	public String addStorePic(HttpSession session,@RequestParam("memberNo") int memberNo,Model model) {
 		if(session.getAttribute("loginMember")!=null) {
@@ -131,7 +134,7 @@ public class MemberController {
 		System.out.println(memberNo+"<--------------------------------addMemberPic");
 		return "addMemberPic";
 	}
-//회원사진 Action
+	//회원사진 Action
 	@PostMapping("/addMemberPic")
 	public String addMemberPic(HttpSession session, MemberPicForm memberPicForm,@RequestParam("memberNo") int memberNo,Model model) {
 		System.out.println(memberPicForm.getMemberNo()+"<--------------------------addMemberpicNo");
@@ -149,35 +152,128 @@ public class MemberController {
 		
 		return "redirect:/addMemberAddr?memberNo="+memberNo;
 	}
-//회원주소 Form
-	@GetMapping("/addMemberAddr")
-	public String addMemberAddr(HttpSession session,@RequestParam("memberNo") int memberNo, Model model) {
+
+	
+	//회원 비밀번호 찾기 Form
+	@GetMapping("/findMemberPw")
+	public String findMemberPw(HttpSession session) {
 		if(session.getAttribute("loginMember")!=null) {
-			return "redirect/";
+			return "redirect:/";
 		}
-		model.addAttribute("memberNo", memberNo);
-		return "addMemberAddr";
-		
+		return "findMemberPw";
 	}
-//회원주소 추가 Action
-	@PostMapping("/addMemberAddr")
-	public String addMemberAddr(HttpSession session,@RequestParam("memberNo") int memberNo,@RequestParam("memberAddr") String memberAddr) {
-		if(session.getAttribute("loginMember")!=null) {
-			return "redirect/";
+
+	//회원 비밀번호 찾기 Action
+	@PostMapping("/findMemberPw")
+	public String findMemberPw(Model model, Member member, HttpSession session) {
+		if(session.getAttribute("loginMember") !=null) {
+			return "redirect:/";
 		}
-		System.out.println(memberAddr+"<-----------------------------memberControll memberAddr");
-		System.out.println(memberNo+"<-----------------------------memberControll memberNo");
+		int row = memberService.getMemberPw(member);
+		System.out.println(row+"/row/PostfindMemberPw");
+		String msg = "전화번호와 메일을 확인하세요";
 		
-		String date[] = memberAddr.split(" ");
-		for(int i=0; i<memberAddr.length(); i++) {
-			System.out.println(date[i]+"<------------------------------------ 시 구 동");
+		if(row==1) {
+			msg = "비밀번호를 이메일로 전송했습니다";
 		}
-		
-		return "redirect/";
+		model.addAttribute("msg",msg);
+		return "memberPwView";
 	}
-	
-	
-	
+	//회원 아이디 찾기 Form
+	@GetMapping("/findMemberId")
+	public String findMemberId(HttpSession session) {
+		if(session.getAttribute("loginMember")!= null) {
+			return "redirect:/";
+		}
+		return "findMemberId";
+	}
+	//회원 아이디찾기 Action
+	@PostMapping("findMemberId")
+	public String findMemberId(Model model, Member member, HttpSession session) {
+		if(session.getAttribute("loginMember")!= null) {
+			return "redirect:/";
+		}
+		String findMemberId = memberService.findMemberId(member);
+		if(findMemberId ==null) {
+			model.addAttribute("msg","입력한 정보와 다릅니다.");
+			return "findMemberId";
+		}
+		findMemberId = "회원님의 아이디는 " +findMemberId+"입니다";
+		model.addAttribute("findMemberId",findMemberId);
+		
+		return "memberIdView";
+	}
+	//회원주소 Form
+		@GetMapping("/addMemberAddr")
+		public String addMemberAddr(HttpSession session,@RequestParam("memberNo") int memberNo, Model model) {
+			if(session.getAttribute("loginMember")!=null) {
+				return "redirect:/";
+			}
+			model.addAttribute("memberNo", memberNo);
+			return "addMemberAddr";
+			
+		}
+	//회원주소 추가 Action
+		@PostMapping("/addMemberAddr")
+		public String addMemberAddr(HttpSession session,@RequestParam("memberNo") int memberNo,@RequestParam("memberAddrAll") String memberAddrAll,MemberAddr memberAddr) {
+			if(session.getAttribute("loginMember")!=null) {
+				return "redirect:/";
+			}
+			System.out.println(memberAddrAll+"<-----------------------------memberControll memberAddr");
+			System.out.println(memberNo+"<-----------------------------memberControll memberNo");
+			
+			String date[] = memberAddrAll.split(" ");
+			/*
+			 * for(int i=0; i<memberAddrAll.length(); i++) {
+			 * System.out.println(date[i]+"<------------------------------------ 시 구 동"); }
+			 */
+			memberAddr.setMemberNo(memberNo);
+			if(date.length <3) {
+		         memberAddr.setBigCity(date[0]);
+		         memberAddr.setMiddleCity(date[1]);
+		         memberAddr.setSmallCity("");
+		      }else {
+		         memberAddr.setBigCity(date[0]);
+		         memberAddr.setMiddleCity(date[1]);
+		         memberAddr.setSmallCity(date[2]);   
+		      }
+			//System.out.println(memberAddr+"<--------------------------------------------AddmemberAddr");
+			memberService.addMemberAddr(memberAddr);
+			return "redirect:/";
+		}
+		
+	//회원 정보 보기
+		@GetMapping("/memberInfo")
+		public String selectMemberOne(HttpSession session, Model model) {
+			if(session.getAttribute("loginMember")==null) {
+				return "redirect:/";
+			}
+			
+			MemberInfo memberInfo = memberService.selectMemberOne((LoginMember)(session.getAttribute("loginMember")));
+			model.addAttribute("memberInfo", memberInfo);
+			return "memberInfo";
+		}
+		@GetMapping("/removeMember")
+		public String removeMember(HttpSession session) {
+			if(session.getAttribute("loginMember")==null) {
+				return "redirect:/";
+			}
+				return "removeMember";
+		}
+		@PostMapping("removeMember")
+		public String removeMember(HttpSession session, Member member, MemberPic memberPic,@RequestParam("memberPw")String memberPw) {
+			if(session.getAttribute("loginMember")==null) {
+				return "redirect:/";
+			}
+			LoginMember loginMember = (LoginMember)(session.getAttribute("loginMember"));
+			loginMember.setMemberPw(memberPw);
+			
+			memberService.removeMember(member, memberPic);
+			System.out.println(member+"<--Ctrl.member");
+			System.out.println(memberPic+"<--Ctrl.memberPic");
+			session.invalidate();
+			return "redirect:/";
+		}
 }
 
 

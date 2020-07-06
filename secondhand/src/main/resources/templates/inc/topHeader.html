@@ -41,6 +41,9 @@
 				<!-- ${session.loginMember} ? ${session.loginMember.memberEmail} : ${session.loginStore} ? ${session.loginStore.storeEmail} : ${session.loginAdmin.adminEmail} -->
 				<!-- <a href=""><span th:text="${session.loginMember.memberEmail}+'님'"></span></a>  -->
 				</div>
+				<button type = "button" id = "selectMemberOne" class = "selectMember">
+					<span>개인정보</span>
+				</button>
 			</div>
 	</header>	
 	</div>
@@ -55,6 +58,9 @@
 			});
 			$("#logoutbtn").click(function(){
 				location.href = 'logout';
+			});
+			$("#selectMemberOne").click(function(){
+				location.href = 'memberInfo';
 			});
 		});
 	</script>

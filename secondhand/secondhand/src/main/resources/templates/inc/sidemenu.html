@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<div th:fragment="sidemenu">
+		<div th:id="mySidenav" th:class="sidenav">
+			<a th:href="@{javascript:void(0)}" th:class="closebtn" onclick="closeNav()">&times;</a>
+			<a th:href="@{/#}">홈</a> 
+			<a th:href="@{/#}">공지사항</a> 
+			<a th:href="@{/#}">상품</a> 
+			<a th:href="@{/#}">업체홍보게시판</a>
+			<a th:href="@{/#}">자주묻는질문</a> 
+			<a th:class="adminMenu" th:if="${session.level}=='admin'">관리자메뉴</a>
+			<ul th:class="hide">
+				<li><a th:herf="@{/}">-회원리스트</a></li>
+				<li><a th:herf="@{/}">-업체리스트</a></li>
+				<li><a th:herf="@{/}">-카테고리리스트</a></li>
+				<li><a th:herf="@{/}">-신고리스트</a></li>
+			</ul>
+		</div>
+		<span
+			style="font-size: 30px; cursor: pointer; color: #B5E61D; margin: 10px;"
+			onclick="openNav()">&#9776;</span>
+	</div>
+</body>
+</html>

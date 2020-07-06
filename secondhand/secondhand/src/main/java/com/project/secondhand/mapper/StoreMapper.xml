@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.secondhand.mapper.StoreMapper">
+	<!-- 업체 리스트 -->
+  <sql id = "selectBoard">
+		board_no AS boardNo,
+  		store_no AS storeNo,
+  		category_name AS categoryName,
+  		board_title AS boardTitle,
+  		board_content AS boardContent,
+  		board_date AS boardDate
+  </sql>
+  <select id="selectStoreBoardList" parameterType="com.project.secondhand.vo.StoreBoardAndBoardPic" resultType="com.project.secondhand.vo.StoreBoardAndBoardPic">
+  	SELECT
+	msb.board_no AS boardNo,
+	msb.store_no AS storeNo,
+	msb.category_name AS categoryName,
+	msb.board_title AS boardTitle,
+	msb.board_content AS boardContent,
+	msb.board_date AS boardDate,
+	msbp.board_pic_name_one AS boardPicNameOne,
+	msbp.board_pic_name_two AS boardPicNameTwo,
+	msbp.board_pic_name_three AS boardPicNameThree,
+	msbp.board_pic_name_four AS boardPicNameFour,
+	msbp.board_pic_name_Five AS boardPicNamefive
+	FROM market_store_board msb INNER JOIN market_store_board_pic msbp
+	ON msb.board_no = msbp.board_no
+  </select>
+  <!-- 업체 리스트 상세보기 -->
+  <select id="selectStoreBoardListOne" parameterType="com.project.secondhand.vo.StoreBoardAndBoardPic" resultType="com.project.secondhand.vo.StoreBoardAndBoardPic">
+  	SELECT
+	msb.board_no AS boardNo,
+	msb.store_no AS storeNo,
+	msb.category_name AS categoryName,
+	msb.board_title AS boardTitle,
+	msb.board_content AS boardContent,
+	msb.board_date AS boardDate,
+	msbp.board_pic_name_one AS boardPicNameOne,
+	msbp.board_pic_name_two AS boardPicNameTwo,
+	msbp.board_pic_name_three AS boardPicNameThree,
+	msbp.board_pic_name_four AS boardPicNameFour,
+	msbp.board_pic_name_Five AS boardPicNamefive
+	FROM market_store_board msb INNER JOIN market_store_board_pic msbp
+	ON msb.board_no = msbp.board_no
+  	WHERE msb.board_no = #{boardNo}
+  </select>
+  <!-- 업체 추가하기 -->
+  <insert id="insertStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard" useGeneratedKeys="true" keyColumn="board_no" keyProperty="boardNo">
+	INSERT INTO
+	market_store_board(
+		board_no,
+		store_no,
+		category_name,
+		board_title,
+		board_content,
+		board_date
+		)VALUES(
+		#{boardNo},
+		#{storeNo},
+		#{categoryName},
+		#{boardTitle},
+		#{boardContent},
+		NOW()
+		)  
+  </insert>
+  	<!--  업체 가입  -->
+  <insert id="addStore" parameterType="com.project.secondhand.vo.Store" useGeneratedKeys="true" keyColumn="store_no" keyProperty="storeNo">
+  	INSERT INTO
+  		market_store(
+  			store_no,
+  			store_name,
+  			store_addr,
+  			store_phone,
+  			store_email,
+  			store_pw,
+  			store_date
+  		)VALUES(
+  			#{storeNo},
+  			#{storeName},
+  			#{storeAddr},
+  			#{storePhone},
+  			#{storeEmail},
+  			#{storePw},
+  			NOW()
+  		)
+  </insert>
+  <!-- 업체 사진추가 -->
+  <insert id="addStorePic" parameterType="com.project.secondhand.vo.StorePic">
+  	INSERT INTO 
+  		market_store_pic(
+  			store_no,
+  			store_pic_name,
+  			store_pic_size,
+  			store_pic_ext
+  		)VALUES(
+  			#{storeNo},
+  			#{storePicName},
+  			#{storePicSize},
+  			#{storePicExt}
+  		)
+  		
+  </insert>
+	<!-- 업체 로그인 확인 -->
+	<select id="selectLoginStore" parameterType="com.project.secondhand.vo.Store" resultType="com.project.secondhand.vo.Store">
+		SELECT 
+			store_email AS storeEmail,
+			store_pw AS storePw
+		FROM market_store
+		WHERE store_email = #{storeEmail}
+		AND store_pw = PASSWORD(#{storePw})
+	</select>
+  <!-- 업체 수정하기 -->
+  <update id="updateStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard">
+  	UPDATE market_store_board
+  	SET
+  		board_title =#{boardTitle},
+  		board_content =#{boardContent}
+  	WHERE board_no =#{boardNo}
+  </update>
+  <!-- 업체 삭제하기 -->
+  <delete id="deleteStoreBoard" parameterType = "int">
+  	DELETE
+  	FROM market_store_board
+  	WHERE board_no = #{boardNo}
+  </delete>
+</mapper>

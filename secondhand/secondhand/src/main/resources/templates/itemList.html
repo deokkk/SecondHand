@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+
+<title>SecondHand</title>
+
+<!-- 아이템 관련 css -->
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script
+   src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+</head>
+<body class="hoian-kr">
+   <div class="header">
+      <div th:include="/inc/topHeader"></div>
+   </div>
+                           
+   <section id="content">
+      <h1 class="head-title" id="hot-articles-head-title">홍보업체 리스트</h1>
+		<a th:href = "@{/addItem}" type = "button">아이템 추가</a>
+		<div class="title-line-divider"></div>
+		<nav id="hot-articles-navigation">
+		<form method="get" th:action = "@{/itemList(smallCity)}" enctype="multipart/form-data">
+			<input type = "text" name = "smallCity" id="smallCity">
+		<button type = "submit">입력</button>
+		</form>
+      </nav>
+      <section class="cards-wrap">
+         <div th:each="item, index : ${list}">
+
+            <article class="card-top ">
+               <a class="card-link " data-event-label="98680541"
+                  th:href="@{/itemInfo(itemNo=${item.itemNo})}">
+                  <div class="card-photo">
+                     <!-- <img th:src="@{${'/upload/'+item.itemPicNameOne}}" /> -->
+                  </div>
+                  <div class="card-desc">
+                     <h2 class="card-title">
+                        <span th:text="${item.itemTitle}"></span>
+                     </h2>
+                     <div class="card-region-name">광주 광산구 신가동</div>
+                     <div class="card-price ">
+                        <span th:text="${item.itemPrice}"></span>
+                     </div>
+                     <div class="card-counts">
+                        <p>
+                           <span th:text="'판매상태 :'+${item.itemState}"></span>
+                        </p>
+                        <p>
+                           <span th:text="'카테고리 :'+${item.categoryName}"></span>
+                        </p>
+                        <p>
+                           <span th:text="'날짜 :' +${item.itemDate.substring(0, 16)}"></span>
+                        </p>
+                     </div>
+                  </div>
+               </a>
+            </article>
+
+         </div>
+         </div>
+         </div>
+
+      </section>
+   </section>
+   <div class="header">
+      <div th:include="/inc/copyRight"></div>
+   </div>
+
+
+</body>
+</html>

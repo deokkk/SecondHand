@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Second Hand</title>
+<link rel="stylesheet" media="all" href="css/searchWord.css" />
+<script src="js/main.js"></script>
+</head>
+<body >
+	<div th:fragment="topHeader">
+		<header id="fixed-bar">
+			<div id="fixed-bar-wrap">
+				<h1 id="fixed-bar-logo-title">
+					<a th:href="@{/index}">
+						<span class="sr-only"></span>
+						<img class="fixed-logo" alt="당근마켓" src="img/logo.jpg" />
+					</a>
+				</h1>
+				<section id="fixed-bar-search">
+				<div class="search-input-wrap">
+					<span class="sr-only">검색</span>
+					<input type="text" name="header-search-input" id="header-search-input" class="fixed-search-input" placeholder="상품, 업체 등을 검색해보세요." />
+					<button id="header-search-button">
+						<img class="fixed-search-icon" alt="Search" src="img/search.jpg" />
+					</button>				
+				</div>			
+				</section>
+				
+				<button type = "button" id = "addMemberChose" class = "newMember">
+					<span>회원가입</span>
+				</button>
+				<div th:if="${session.loginMember == null || session.loginStore == null}">
+				<button type = "button" id = "loginbtn" class= "login">
+					로그인
+				</button>
+				</div>
+				<div th:if="${session.loginMember != null || session.loginStore != null}">
+				<button type = "button" id = "logoutbtn" class= "login">
+					로그아웃
+				</button>
+				<!-- ${session.loginMember} ? ${session.loginMember.memberEmail} : ${session.loginStore} ? ${session.loginStore.storeEmail} : ${session.loginAdmin.adminEmail} -->
+				<!-- <a href=""><span th:text="${session.loginMember.memberEmail}+'님'"></span></a>  -->
+				</div>
+				<button type = "button" id = "selectMemberOne" class = "selectMember">
+					<span>개인정보</span>
+				</button>
+			</div>
+	</header>	
+	</div>
+</body>
+	<script>
+		$(document).ready(function(){
+			$("#addMemberChose").click(function(){
+				location.href = 'addMemberChose';
+			});
+			$("#loginbtn").click(function(){
+				location.href = 'login';
+			});
+			$("#logoutbtn").click(function(){
+				location.href = 'logout';
+			});
+			$("#selectMemberOne").click(function(){
+				location.href = 'memberInfo';
+			});
+		});
+	</script>
+</html>

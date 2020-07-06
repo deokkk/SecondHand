@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Second Hand</title>
+</head>
+<link rel="stylesheet" media="all" href="css/base.css" />
+<body>
+	<div class="frame">
+		<!-- class= "header" 상단 검색창 위치 조정 -->
+		<div class="header">
+			<div th:include="/inc/topHeader"></div>
+		</div>
+		<!-- class = "main" 내용 위치 선정 -->
+		<div class="main">
+			<div>
+			<a th:href="@{/loginMember}">일반회원</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a th:href="@{/loginStore}">기업</a>
+			</div>
+		</div>
+	</div>
+	<div th:include="/inc/copyRight"></div>
+</body>
+</html>

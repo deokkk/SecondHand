@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.secondhand.service.CategoryService;
 import com.project.secondhand.service.StoreService;
 import com.project.secondhand.vo.Category;
+import com.project.secondhand.vo.Member;
 import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreBoardAndBoardPic;
@@ -177,4 +178,55 @@ public class StoreController {
 	public String removeStoreBoard(int boardNo) {
 		return "redirect:/storeBoardList";
 	}
-}
+	
+	
+	//업체 비밀번호 찾기 Form
+		@GetMapping("/findStorePw")
+		public String findStorePw(HttpSession session) {
+			if(session.getAttribute("loginStore")!=null) {
+				return "redirect:/";
+			}
+			return "findStorePw";
+		}
+
+	//업체 비밀번호 찾기 Action
+		@PostMapping("/findStorePw")
+		public String findStorePw(Model model, Store store, HttpSession session) {
+			if(session.getAttribute("loginStore") !=null) {
+				return "redirect:/";
+			}
+			int row = storeService.getStorePw(store);
+			System.out.println(row+"/row/PostfindStorePw");
+			String msg = "전화번호와 메일을 확인하세요";
+			
+			if(row==1) {
+				msg = "비밀번호를 이메일로 전송했습니다";
+			}
+			model.addAttribute("msg",msg);
+			return "storePwView";
+		}
+	//업체 아이디 찾기 Form
+		@GetMapping("/findStoreId")
+		public String findStoreId(HttpSession session) {
+			if(session.getAttribute("loginStore")!= null) {
+				return "redirect:/";
+			}
+			return "findStoreId";
+		}
+	//업체 아이디찾기 Action
+		@PostMapping("findStoreId")
+		public String findStoreId(Model model, Store store, HttpSession session) {
+			if(session.getAttribute("loginStore")!= null) {
+				return "redirect:/";
+			}
+			String findStoreId = storeService.findStoreId(store);
+			if(findStoreId ==null) {
+				model.addAttribute("msg","입력한 정보와 다릅니다.");
+				return "findStoreId";
+			}
+			findStoreId = "기업 회원님의 아이디는 " +findStoreId+"입니다";
+			model.addAttribute("findStoreId",findStoreId);
+			
+			return "storeIdView";
+		}
+	}

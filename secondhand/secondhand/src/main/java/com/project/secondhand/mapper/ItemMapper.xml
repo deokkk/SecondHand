@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.secondhand.mapper.ItemMapper">
+	<sql id="selectItem">
+		item_no AS itemNo,
+		category_name AS categoryName,
+		member_no AS memberNo,
+		item_title AS itemTitle,
+		item_content AS itemContent,
+		item_price AS itemPrice,
+		item_state AS itemState,
+		item_date AS itemDate
+	</sql>
+	<!-- 업체 리스트 -->
+	<select id="selectItemListByAll"
+		parameterType="com.project.secondhand.vo.ItemAndItemPic"
+		resultType="com.project.secondhand.vo.ItemAndItemPic">
+		SELECT
+		i.item_no AS itemNo,
+		i.category_name AS categoryName,
+		i.member_no AS memberNo,
+		i.item_title AS itemTitle,
+		i.item_content AS itemContent,
+		i.item_price AS itemPrice,
+		i.item_state AS itemState,
+		i.item_date As itemDate,
+		ip.item_pic_name_one AS itemPicNameOne,
+		ip.item_pic_name_one AS itemPicNameTwo,
+		ip.item_pic_name_one AS itemPicNameThree,
+		ip.item_pic_name_one AS itemPicNameFour,
+		ip.item_pic_name_one AS itemPicNameFive
+		
+		FROM market_item i INNER JOIN market_item_pic ip
+	</select>
+	<!-- 업체 리스트 상세보기 -->
+	<select id="selectItemInfo"
+		parameterType="com.project.secondhand.vo.ItemAndItemPic"
+		resultType="com.project.secondhand.vo.ItemAndItemPic">
+		SELECT
+		i.item_no AS itemNo,
+		i.category_name AS categoryName,
+		i.member_no AS memberNo,
+		i.item_title AS itemTitle,
+		i.item_content AS itemContent,
+		i.item_price AS itemPrice,
+		i.item_state AS itemState,
+		i.item_date As itemDate,
+		ip.item_no AS itemNo,
+		ip.item_pic_name_one AS itemPicNameOne,
+		ip.item_pic_name_one AS itemPicNameTwo,
+		ip.item_pic_name_one AS itemPicNameThree,
+		ip.item_pic_name_one AS itemPicNameFour,
+		ip.item_pic_name_one AS itemPicNameFive
+		FROM market_item i INNER JOIN market_item_pic ip
+		ON i.item_no = ip.item_no
+		WHERE i.item_no =#{itemNo}
+	</select>
+	<select id="searchItemByAddr"
+		parameterType="com.project.secondhand.vo.ItemAndMemberAndMemberAddrAndItemPic"
+		resultType="com.project.secondhand.vo.ItemAndMemberAndMemberAddrAndItemPic">
+		SELECT
+			 m.member_no AS memberNo,
+			 ma.small_city AS smallCity,
+			 i.item_no AS itemNo,
+			 i.category_name AS categoryName,
+			 i.item_title AS itemTitle,
+			 i.item_content AS itemContent,
+			 i.item_price AS itemPrice,
+			 i.item_state AS itemState,
+			 i.item_date AS itemDate,
+			 ip.item_pic_name_one AS itemPicNameOne,
+			 ip.item_pic_name_two AS itemPicNameTwo,
+			 ip.item_pic_name_three As itemPicNameThree,
+			 ip.item_pic_name_four AS itemPicNameFour,
+			 ip.item_pic_name_five As itemPicNameFive
+		FROM	   
+		market_member_addr ma INNER JOIN  market_member m 
+		ON ma.member_no = m.member_no
+		INNER JOIN market_item i ON m.member_no = i.member_no
+		INNER JOIN market_item_pic ip ON i.item_no=ip.item_no
+		WHERE small_city =#{smallCity}
+	</select>
+	<!-- 상품 추가하기 -->
+	<insert id="insertItem"
+		parameterType="com.project.secondhand.vo.Item" useGeneratedKeys="true"
+		keyColumn="item_no" keyProperty="itemNo">
+		INSERT INTO market_item(
+		category_name,
+		member_no,
+		item_title,
+		item_content,
+		item_price,
+		item_state,
+		item_date
+		)VALUES(
+		#{categoryName},
+		#{memberNo},
+		#{itemTitle},
+		#{itemContent},
+		#{itemPrice},
+		#{itemState},
+		NOW()
+		)
+	</insert>
+	<!-- 업체 수정하기 -->
+	<!-- <update id="updateItem" parameterType = "com.project.secondhand.vo.Item" 
+		> UPDATE market_item SET category_name = #{categoryName}, item_title = #{itemTitle}, 
+		item_content = #{itemContent}, item_date = NOW() WHERE item_no=#{itemNo} 
+		</update> -->
+	<!-- 업체 삭제하기 -->
+	<delete id="deleteItem" parameterType="int">
+		DELETE FROM market_item
+		WHERE item_no = #{itemNo}
+	</delete>
+</mapper>
