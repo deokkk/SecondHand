@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface ItemReportDefer {
+public interface ItemReportDeferMapper {
 	//아이템 신고 리스트
-	public ArrayList<ItemReportDefer> itemReportDeferList();
+	public ArrayList<ItemReportDeferMapper> itemReportDeferList();
 	//아이템 신고시 추가
-	public int addItemReportDefer(ItemReportDefer itemReportDefer);
+	public int addItemReportDefer(ItemReportDeferMapper itemReportDefer);
 
 }

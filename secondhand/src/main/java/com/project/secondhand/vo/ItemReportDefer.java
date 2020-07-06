@@ -45,7 +45,7 @@ public class ItemReportDefer {
 	}
 	@Override
 	public String toString() {
-		return "ItemReportDefer [itemReportDeferNo=" + itemReportDeferNo + ", itemNo=" + itemNo + ", memberNo="
+		return "ItemReportDeferMapper [itemReportDeferNo=" + itemReportDeferNo + ", itemNo=" + itemNo + ", memberNo="
 				+ memberNo + ", categoryName=" + categoryName + ", itemReportDeferContent=" + itemReportDeferContent
 				+ ", itemReportDeferDate=" + itemReportDeferDate + "]";
 	}

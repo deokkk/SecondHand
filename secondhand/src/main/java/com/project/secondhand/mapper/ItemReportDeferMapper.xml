@@ -4,7 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.secondhand.mapper.ItemReportDeferMapper">
 	<select id="itemReportDeferList" parameterType="com.project.secondhand.vo.ItemReportDefer" resultType="com.project.secondhand.vo.ItemReportDefer">
-		SELECT item_no,
+		SELECT
+			item_report_defer_no,
+			item_no,
 			member_no,
 			category_name,
 			item_report_defer_content,
@@ -15,12 +17,14 @@
 	<insert id="addItemReportDefer" parameterType="com.project.secondhand.vo.ItemReportDefer">
 		INSERT INTO 
 		market_item_report_defer(
+			item_report_defer_no,
 			item_no,
 			member_no,
 			category_name,
 			item_report_defer_content,
 			item_report_defer_date
-		)VALUE(
+		)VALUES(
+			#{itemReportDefeNo},
 			#{itemNo},
 			#{memberNo},
 			#{categoryName},
