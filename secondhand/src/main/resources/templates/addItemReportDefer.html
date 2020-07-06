@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>add Item Report Defer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+</head>
+<body>
+	<div th:class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
+	<form method="post" th:action="@{/addItemReport}" enctype="multipart/form-data">
+		<table class="table">
+			<thead>
+			<tr>
+				<td>
+					<div>
+						<input type="hidden" id="itemNo" name="itemNo" th:value="${itemReportDefer.itemNo}" readonly="readonly">
+						<input type="hidden" id=memberNo" name="memberNo" th:value="${itemReportDefer.memberNo}" readonly="readonly">
+					</div>	
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<select name="categoryName" id = "categoryName" style = "vertical-align: middle; text-align-last: center"  class="form-control">
+						<option>카테고리</option>
+						<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<textarea type="text" id="itemReportContent" name="itemReportContent" th:placeholder="신고사유"></textarea>
+				</td>
+				<td>
+					<input type="date" readonly= "readonly" id="itemReportDate" name="itemReportDate" th:value="${itemReportDefer.itemReportDeferDate}" th:placeholder="${itemReportDefer.itemReportDeferDate}">
+				</td>
+			</tr>
+			<div>
+				<button type="submit">확인</button>
+			</div>	
+			</thead>
+		</table>
+	</form>
+	<div th:class="header">
+		<div th:include="/inc/copyRight"></div>
+	</div>
+</body>
+</html>

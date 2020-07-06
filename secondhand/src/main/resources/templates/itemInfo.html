@@ -25,10 +25,7 @@
 			<button type="button">fffff</button>
 		</nav>
 		<section class="cards-wrap">
-
-
 			<article class="card-top ">
-				
 					<div class="card-photo">
 							 <img th:src="${item.itemPicNameOne}" /> 
 					</div>
@@ -56,14 +53,10 @@
 							</p>
 						</div>
 					</div>
-				</a>
 			</article>
-
-			</div>
-			</div>
-			</div>
-
 		</section>
+		<a th:href="@{/addItemReportDefer(itemNo=${item.itemNo})}">신고하기</a>
+		<a href="">채팅으로 거래하기</a>
 	</section>
 	<div class="header">
 		<div th:include="/inc/copyRight"></div>

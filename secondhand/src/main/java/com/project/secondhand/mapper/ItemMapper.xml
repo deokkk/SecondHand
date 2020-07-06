@@ -13,7 +13,7 @@
 		item_state AS itemState,
 		item_date AS itemDate
 	</sql>
-	<!-- 업체 리스트 -->
+	<!-- 상품 리스트 -->
 	<select id="selectItemListByAll"
 		parameterType="com.project.secondhand.vo.ItemAndItemPic"
 		resultType="com.project.secondhand.vo.ItemAndItemPic">
@@ -34,7 +34,7 @@
 		
 		FROM market_item i INNER JOIN market_item_pic ip
 	</select>
-	<!-- 업체 리스트 상세보기 -->
+	<!-- 상품 리스트 상세보기 -->
 	<select id="selectItemInfo"
 		parameterType="com.project.secondhand.vo.ItemAndItemPic"
 		resultType="com.project.secondhand.vo.ItemAndItemPic">
@@ -104,12 +104,12 @@
 		NOW()
 		)
 	</insert>
-	<!-- 업체 수정하기 -->
+	<!-- 상품 수정하기 -->
 	<!-- <update id="updateItem" parameterType = "com.project.secondhand.vo.Item" 
 		> UPDATE market_item SET category_name = #{categoryName}, item_title = #{itemTitle}, 
 		item_content = #{itemContent}, item_date = NOW() WHERE item_no=#{itemNo} 
 		</update> -->
-	<!-- 업체 삭제하기 -->
+	<!-- 상품 삭제하기 -->
 	<delete id="deleteItem" parameterType="int">
 		DELETE FROM market_item
 		WHERE item_no = #{itemNo}
