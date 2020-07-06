@@ -56,7 +56,14 @@
 			</article>
 		</section>
 		<a th:href="@{/addItemReportDefer(itemNo=${item.itemNo})}">신고하기</a>
-		<a href="">채팅으로 거래하기</a>
+		<!-- 채팅 -->
+		<button type="button" id="popup">채팅</button>
+		<a th:href="@{/addChatRoom(chatTo=1)}" target="_blank" th:text="'채팅으로 거래하기'"></a>
+		<script>
+			$('#popup').click(function() {
+				window.open("/addChatRoom?chatTo=1", "_blank", "top=0, width=420, height=700");
+			})
+		</script>
 	</section>
 	<div class="header">
 		<div th:include="/inc/copyRight"></div>

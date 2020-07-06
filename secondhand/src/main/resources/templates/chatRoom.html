@@ -13,6 +13,11 @@
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
 <script>
 	$(document).ready(function(){
+		$('#chatMessage').keydown(function(key){
+			if(key.keyCode == 13) {
+				$('#sendBtn').click();
+			}
+		});
 		$('#sendBtn').click(function(){
 			var sendId = $('#loginMemberId').val();
 			var roomNo = $('#roomNo').val();
@@ -24,25 +29,77 @@
 				data: {sendId: sendId, roomNo: roomNo, chatMessage: chatMessage},
 				success: function() {
 					console.log('send success');
+					$('#chatMessage').val('');
 				},
 				error: function() {
 					console.log('send fail');
 				}
 			});
 		});
+		
+		setInterval(function(){
+			var sendId = $('#loginMemberId').val();
+			var roomNo = $('#roomNo').val();
+			console.log('sendId : ' + sendId + ', roomNo : ' + roomNo);
+			$.ajax({
+				url: '/getNewMessage',
+				type: 'POST',
+				data: {roomNo: roomNo},
+				success: function(data) {
+					console.log(data);
+					console.log('getMessage success');
+					$.each(data, function(i){
+						console.log(data[i])
+						if(sendId == data[i].sendId) {
+							$('#msgBox').append('<div style="text-align: right">' + data[i].sendNickName + ' : ' + data[i].chatMessage + '</div>');
+						} else {
+							$('#msgBox').append('<div style="text-align: left">' + data[i].sendNickName + ' : ' + data[i].chatMessage + '</div>');
+						}			
+					});
+				},
+				error: function() {
+					console.log('getMessage fail');
+				}
+			});
+		}, 3000);
+		
+		$('#closeBtn').click(function(){
+			var roomNo = $('#roomNo').val();
+			console.log('roomNo : ' + roomNo);
+			$.ajax({
+				url: '/closeChatRoom',
+				type: 'GET',
+				data: {roomNo: roomNo},
+				success: function() {
+					console.log('close & update success');
+				},
+				error: function() {
+					console.log('close & update fail');
+				}
+			});
+			window.location.href='/getMyChatList';
+		});
 	});
 </script>
 </head>
 <body>
 <h1 th:text="채팅"></h1>
-<div id="msgBox" style="border: medium solid black; width: 400px; height: 600px;">
+
+<div th:id="msgBox" style="border: medium solid black; width: 400px; height: 600px;">
+	<div th:if="${chatMessageList} != null" th:each="message : ${chatMessageList}">
+		<div style="text-align: right" th:if="${message.sendEmail} == ${session.loginMember.memberEmail}" th:text="${message.sendNickName} + ' : ' + ${message.chatMessage}"></div>
+		<div style="text-align: left" th:if="${message.sendEmail} != ${session.loginMember.memberEmail}" th:text="${message.sendNickName} + ' : ' + ${message.chatMessage}"></div>
+	</div>
 </div>
 <div>
 	<!-- <input type="hidden" th:value="${session.loginMember.memberId}" id="loginMemberId"> -->
-	<input type="hidden" th:value="2" id="loginMemberId">
-	<input type="hidden" th:value="${roomNo}" id="roomNo">
-	<input type="text" name="chatMessage" id="chatMessage">
-	<button type="button" id="sendBtn">보내기</button>
+	<input th:type="hidden" th:value="2" th:id="loginMemberId">
+	<input th:type="hidden" th:value="${roomNo}" th:id="roomNo">
+	<input th:type="text" th:name="chatMessage" th:id="chatMessage">
+	<button th:type="button" th:id="sendBtn" th:text="보내기"></button>
+</div>
+<div>
+	<button th:type="button" th:id="closeBtn" th:text="나가기"></button>
 </div>
 </body>
 </html>

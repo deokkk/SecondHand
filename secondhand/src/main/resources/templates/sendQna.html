@@ -13,21 +13,28 @@
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
 <script>
 	let helperInit = function () {
-		$('#sendQnaHelper').text("");
+		$('#sendQnaContentHelper').text("");
+		$('#sendQnaCategoryHelper').text("");
 	}
 	//doucment(body)가 준비되면 작동된다.
 	$(document).ready(function() {
-		//제목 공백 확인
 	//button 을 클릭하면 작동된다.
-	$('#sendQnaBtn').click(function () {
-		//제목 공백 확인
-		if($('sendQnaContent').val() == ""){
-			helperInit();
-			$('#sendQnaHelper').text('내용을 입력해주세요.')
-			$('#sendQnaBtn').foucs();
-			return;
-		}
-	});
+		$('#sendQnaBtn').click(function () {
+			//내용 공백 확인
+			if($('#sendQnaContent').val() == ""){
+				helperInit();
+				$('#sendQnaContentHelper').text('내용을 입력해주세요.');
+				$('#sendQnaContent').foucs();
+				return;
+			}
+			if($('#sendQnaCategory').val() == "") {
+				helperInit();
+				$('#sendQnaCategoryHelper').text('카테고리를 선택하세요.');
+				$('#sendQnaCategory').foucs();
+				return;
+			}
+			$('#sendQnaForm').submit();
+		});
 	});
 </script>
 <style>
@@ -43,7 +50,7 @@
 	</div>
 	<div th:class="container-fluid">
 		<section th:id="content">
-	<form th:method="post" th:action="@{/sendQna}">
+	<form th:method="post" th:action="@{/sendQna}" th:id="sendQnaForm">
 		<div th:class="row">
 					<div th:class="col-sm-3"></div>
 					<div th:class="col-sm-6">
@@ -54,14 +61,15 @@
 				<option value="" th:text="'전체 카테고리'"></option>
 				<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
 			</select>
+			<span th:id="sendQnaCategoryHelper"></span>
 		</div>
 		<div th:class="form-group">
 			<label th:for="sendQnaContent" th:text="''"></label>
 			<textarea th:class="form-control" th:rows="18" th:name="sendQnaContent" th:id="sendQnaContent" th:placeholder="'문의내용을 입력하세요.'"></textarea>
-			<span th:id="sendQnaHelper"></span>
+			<span th:id="sendQnaContentHelper"></span>
 		</div>
 		<div id="sendQnaBox">
-		<button th:class="'btn btn-success'" th:id="sendQnaBtn" th:type="button" th:text="문의하기"></button>
+			<button th:class="'btn btn-success'" th:id="sendQnaBtn" th:type="button" th:text="문의하기"></button>
 		</div>
 		</div>
 		<div th:class="col-sm-3"></div>

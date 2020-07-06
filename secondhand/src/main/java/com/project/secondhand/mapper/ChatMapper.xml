@@ -3,6 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.secondhand.mapper.ChatMapper">
+	<sql id="chatMessageCol">
+		chat_no chatNo,
+		send_id sendId,
+		room_no roomNo,
+		chat_message chatMessage,
+		chat_date chatDate
+	</sql>
+
 	<!-- 채팅방 생성 -->
 	<insert id="insertChatRoom" parameterType="com.project.secondhand.vo.ChatRoom">
 		INSERT INTO market_chat_room (
@@ -32,4 +40,89 @@
 			NOW()
 		)
 	</insert>
+	
+	<!-- 메시지 리스트 -->
+	<select id="selectMessage" parameterType="String" resultType="com.project.secondhand.vo.ChatMessage">
+		SELECT
+			cm.chat_no chatNo,
+			cm.send_id sendId,
+			m.member_nickname sendNickName,
+			m.member_email sendEmail,
+			cm.room_no roomNo,
+			cm.chat_message chatMessage,
+			cm.chat_date chatDate
+		FROM market_chat_message cm INNER JOIN market_member m
+		ON cm.send_id = m.member_no
+		WHERE cm.room_no = #{roomNo} AND cm.chat_read = 1
+		ORDER BY chat_date;
+	</select>
+	
+	<!-- 안읽은 메시지 리스트 -->
+	<select id="selectNewMessage" parameterType="String" resultType="com.project.secondhand.vo.ChatMessage">
+		SELECT
+			cm.chat_no chatNo,
+			cm.send_id sendId,
+			m.member_nickname sendNickName,
+			m.member_email sendEmail,
+			cm.room_no roomNo,
+			cm.chat_message chatMessage,
+			cm.chat_date chatDate
+		FROM market_chat_message cm INNER JOIN market_member m
+		ON cm.send_id = m.member_no
+		WHERE cm.room_no = #{roomNo} AND cm.chat_read IS NULL
+		ORDER BY chat_date;
+	</select>
+	
+	<!-- 메시지 읽은 상태로 업데이트 -->
+	<update id="updateChatRead" parameterType="int">
+		UPDATE market_chat_message 
+		SET chat_read = 1
+	</update>
+	
+	<!-- 내 채팅 목록 -->
+	<select id="selectMyChatList" parameterType="String" resultType="com.project.secondhand.vo.ChatRoom">
+		SELECT 
+			 cr.room_no roomNo,
+			 cr.chat_to chatTo,
+			 m1.member_email chatToEmail,
+			 m1.member_nickname chatToNickName,
+			 cr.chat_from chatFrom,
+			 m2.member_email chatFromEmail,
+			 m2.member_nickname chatFromNickName,
+			 cr.room_date roomDate
+		FROM market_chat_room cr INNER JOIN market_member m1 
+		ON cr.chat_to = m1.member_no 
+		INNER JOIN market_member m2 
+		ON cr.chat_from = m2.member_no
+		WHERE (chat_to = (SELECT member_no 
+						FROM market_member 
+						WHERE member_email = #{memberEmail}) 
+			OR chat_from = (SELECT member_no 
+						FROM market_member 
+						WHERE member_email = #{memberEmail}))
+		AND cr.room_state IS NULL
+	</select>
+	
+	<!-- 이전 메시지 목록 -->
+	<select id="selectChatMessageList" parameterType="String" resultType="com.project.secondhand.vo.ChatMessage">
+		SELECT
+			cm.chat_no chatNo,
+			cm.send_id sendId,
+			m.member_nickname sendNickName,
+			m.member_email sendEmail,
+			cm.room_no roomNo,
+			cm.chat_message chatMessage,
+			cm.chat_date chatDate
+		FROM market_chat_message cm INNER JOIN market_member m
+		ON cm.send_id = m.member_no
+		WHERE cm.room_no = #{roomNo}
+		ORDER BY chat_date;
+	</select>
+	
+	<!-- 채팅방 나가기 -->
+	<update id="updateRoomState" parameterType="String">
+		UPDATE market_chat_room 
+		SET room_state = 1
+		WHERE room_no = #{roomNo}
+	</update>
 </mapper>

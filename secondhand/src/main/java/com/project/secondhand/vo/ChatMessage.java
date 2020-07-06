@@ -3,6 +3,8 @@ package com.project.secondhand.vo;
 public class ChatMessage {
 	private int chatNo;
 	private int sendId;
+	private String sendNickName;
+	private String sendEmail;
 	private String roomNo;
 	private String chatMessage;
 	private String chatDate;
@@ -17,6 +19,18 @@ public class ChatMessage {
 	}
 	public void setSendId(int sendId) {
 		this.sendId = sendId;
+	}
+	public String getSendNickName() {
+		return sendNickName;
+	}
+	public void setSendNickName(String sendNickName) {
+		this.sendNickName = sendNickName;
+	}
+	public String getSendEmail() {
+		return sendEmail;
+	}
+	public void setSendEmail(String sendEmail) {
+		this.sendEmail = sendEmail;
 	}
 	public String getRoomNo() {
 		return roomNo;
@@ -38,7 +52,8 @@ public class ChatMessage {
 	}
 	@Override
 	public String toString() {
-		return "ChatMessage [chatNo=" + chatNo + ", sendId=" + sendId + ", roomNo=" + roomNo + ", chatMessage="
-				+ chatMessage + ", chatDate=" + chatDate + "]";
+		return "ChatMessage [chatNo=" + chatNo + ", sendId=" + sendId + ", sendNickName=" + sendNickName
+				+ ", sendEmail=" + sendEmail + ", roomNo=" + roomNo + ", chatMessage=" + chatMessage + ", chatDate="
+				+ chatDate + "]";
 	}
 }

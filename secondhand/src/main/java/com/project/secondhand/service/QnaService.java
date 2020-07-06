@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.project.secondhand.mapper.CategoryMapper;
@@ -15,6 +17,7 @@ import com.project.secondhand.vo.Qna;
 public class QnaService {
 	@Autowired private QnaMapper qnaMapper;
 	@Autowired private CategoryMapper categoryMapper;
+	@Autowired private JavaMailSender javaMailSender;
 	
 	// 제목 중복검사
 	public int titleCheck(String title) {
@@ -65,5 +68,15 @@ public class QnaService {
 	//자주 묻는 질문 삭제하기
 	public int removeQna(String qnaTitle) {
 		return qnaMapper.deleteQna(qnaTitle);
+	}
+	
+	// 메일로 문의하기
+	public void sendQna(String memberEmail, String sendQnaCategory, String sendQnaContent) {
+		SimpleMailMessage mm = new SimpleMailMessage();
+		mm.setTo("kims18@nate.com");
+		mm.setSubject("[문의하기]");
+		mm.setFrom(memberEmail);
+		mm.setText("카테고리 : " + sendQnaCategory + "\n내용 : " + sendQnaContent);
+		javaMailSender.send(mm);
 	}
 }

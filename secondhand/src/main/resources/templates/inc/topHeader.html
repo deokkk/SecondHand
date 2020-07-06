@@ -44,6 +44,15 @@
 				<button type = "button" id = "selectMemberOne" class = "selectMember">
 					<span>개인정보</span>
 				</button>
+				<!-- 채팅 목록 -->
+				<div th:if="${session.loginMember != null || session.loginStore != null}">
+					<button th:type="button" th:id="chatListBtn" th:text="채팅"></button>
+					<script>
+						$('#chatListBtn').click(function() {
+							window.open("/getMyChatList", "_blank", "top=0, width=420, height=700")
+						})
+					</script>
+				</div>
 			</div>
 	</header>	
 	</div>

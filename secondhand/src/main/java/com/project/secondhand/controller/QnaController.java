@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.secondhand.service.CategoryService;
 import com.project.secondhand.service.QnaService;
 import com.project.secondhand.vo.Category;
+import com.project.secondhand.vo.Member;
 import com.project.secondhand.vo.Qna;
 
 @Controller
@@ -162,6 +163,9 @@ public class QnaController {
 //}	
 		System.out.println(sendQnaCategory + "<-------------sendQnaCategory");
 		System.out.println(sendQnaContent + "<-------------sendQnaContent");
+		//String memberEmail = ((Member)session.getAttribute("loginMember")).getMemberEmail();
+		String memberEmail = "test";
+		qnaService.sendQna(memberEmail, sendQnaCategory, sendQnaContent);
 		return "redirect:/qnaList";
 	}
 }
