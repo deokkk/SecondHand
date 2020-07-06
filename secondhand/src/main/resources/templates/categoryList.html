@@ -23,7 +23,7 @@
 				success : function(data) {
 					$('#categoryTable').empty();
 					$.each(data, function(i) {
-						$('#categoryTable').append('<tr><td id="'+ data[i].categoryName +'">'+ data[i].categoryName +'</td><td><button type="button" id="updateBtn">수정</button></td><td><button type="button" id="deleteBtn">삭제</button></td>');
+						$('#categoryTable').append('<tr><td class="' + data[i].categoryName + '" id="' + data[i].categoryName + '">'+ data[i].categoryName + '</td><td><button type="button" class="'+ data[i].categoryName +' updateBtn">수정</button></td><td><button type="button" id="deleteBtn">삭제</button></td>');
 					});
 				},
 				error : function() {
@@ -32,11 +32,25 @@
 			});
 		});
 		
-		$('#deleteBtn').click(function() {
+		$('.deleteBtn').click(function() {
 			var result = confirm('정말 삭제하시겠습니까 ? 되돌릴수업어요 !');
-			
+			var originName = $(this).attr('class');
+			var arr = originName.split(" ");
+			var categoryName = arr[0];
+			console.log(categoryName)
 			if(result){
-				location.replace('categoryList');
+				$.ajax({
+					url: '/removeCategory',
+					type: 'POST',
+					data: {categoryName: categoryName},
+					success: function(data) {
+						console.log('dalete success');;
+						location.reload();
+					},
+					error: function() {
+						console.log('delete fail');
+					}
+				});
 			}else{
 				return false;
 			}
@@ -44,15 +58,14 @@
 		
 		//$('.updateBtn').click(function(){
 		$(document).on("click", ".updateBtn", function(){
-			$(this).addClass('123');
-			$(this).removeClass('updateBtn')
+			console.log('!!!!!!!!!!!!!!!!!!!!!!')
 			var originName = $(this).attr('class');
 			var arr = originName.split(" ");
 			var inputName = '#'+arr[0];
 			console.log(inputName);
 			$(inputName).text('');
-			$(inputName).append('<input type="text" name="categoryName" id="categoryName">');
-			$('.123').click(function(){
+			$(inputName).append('<input type="text" name="categoryName" id="categoryName" value="' + arr[0] + '">');
+			$('.updateBtn').click(function(){
 				var categoryName = $('#categoryName').val();
 				console.log(categoryName);
 				$.ajax({
@@ -65,6 +78,29 @@
 					},
 					error: function(){
 						console.log('update fail');
+					}
+				});
+			});
+		});
+		
+		$(document).on("click", "#addCategory", function(){
+			$('#addCategoryBox').prepend('<select id="addCategoryType"><option value="item">상품</option><option value="board">게시판</option><option value="qna">자주묻는질문</option></select><input type="text" id="categoryName">');
+			$(this).attr('id', 'addBtn')
+			$('#addBtn').click(function(){
+				var categoryType = $('#addCategoryType').val(); 
+				console.log(categoryType)
+				var categoryName = $('#categoryName').val();
+				console.log(categoryName);
+				$.ajax({
+					url: '/addCategory',
+					type: 'POST',
+					data: {categoryName: categoryName, categoryType: categoryType},
+					success: function(data) {
+						console.log('add success');;
+						location.reload();
+					},
+					error: function() {
+						console.log('add fail');
 					}
 				});
 			});
@@ -93,10 +129,13 @@
 			<tr th:each="category, stat : ${categoryList}">
 				<td th:text="${category.categoryName}" th:class="${category.categoryName}" th:id="${category.categoryName}"></td>
 				<td><button th:type="button" th:text="수정" th:class="${category.categoryName} +' updateBtn'"></button></td>
-				<td><button th:type="button" th:text="삭제" th:id="deleteBtn"></button></td>
+				<td><button th:type="button" th:text="삭제" th:class="${category.categoryName} +' deleteBtn'"></button></td>
 			</tr>
 		</tbody>
 	</table>
+	<div id="addCategoryBox">
+		<button th:type="button" th:text="입력" th:id="addCategory"></button>
+	</div>
 </div>
 </body>
 </html>

@@ -23,4 +23,19 @@
 			category_name = #{categoryName}
 		WHERE category_name = #{originName}
 	</update>
+	
+	<delete id="deleteCategory" parameterType="String">
+		DELETE FROM market_category
+		WHERE category_name = #{categoryName}
+	</delete>
+	
+	<insert id="insertCategory" parameterType="com.project.secondhand.vo.Category">
+		INSERT INTO market_category (
+			category_name,
+			category_type
+		) VALUES (
+			#{categoryName},
+			#{categoryType}
+		)
+	</insert>
 </mapper>

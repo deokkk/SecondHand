@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<script>
+	$(document).ready(function(){
+		$('#sendBtn').click(function(){
+			var sendId = $('#loginMemberId').val();
+			var roomNo = $('#roomNo').val();
+			var chatMessage = $('#chatMessage').val();
+			console.log('sendId : ' + sendId + ', roomNo : ' + roomNo + ', chatMessage : ' + chatMessage);
+			$.ajax({
+				url: '/sendMsg',
+				type: 'POST',
+				data: {sendId: sendId, roomNo: roomNo, chatMessage: chatMessage},
+				success: function() {
+					console.log('send success');
+				},
+				error: function() {
+					console.log('send fail');
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+<h1 th:text="채팅"></h1>
+<div id="msgBox" style="border: medium solid black; width: 400px; height: 600px;">
+</div>
+<div>
+	<!-- <input type="hidden" th:value="${session.loginMember.memberId}" id="loginMemberId"> -->
+	<input type="hidden" th:value="2" id="loginMemberId">
+	<input type="hidden" th:value="${roomNo}" id="roomNo">
+	<input type="text" name="chatMessage" id="chatMessage">
+	<button type="button" id="sendBtn">보내기</button>
+</div>
+</body>
+</html>

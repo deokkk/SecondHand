@@ -33,4 +33,12 @@ public class CategoryService {
 		map.put("originName", originName);
 		return categoryMapper.updateCategory(map);
 	}
+	
+	public int removeCategory(String categoryName) {
+		return categoryMapper.deleteCategory(categoryName);
+	}
+	
+	public int addCategory(Category category) {
+		return categoryMapper.insertCategory(category);
+	}
 }

@@ -18,6 +18,18 @@ import com.project.secondhand.vo.Category;
 @Controller
 public class CategoryController {
 	@Autowired private CategoryService categoryService;
+	
+	@PostMapping("/addCategory")
+	@ResponseBody
+	public int addCategory(Category category) {
+		return categoryService.addCategory(category);
+	}
+	
+	@PostMapping("/removeCategory")
+	@ResponseBody
+	public int romoveCategory(@RequestParam(value = "categoryName") String categoryName) {
+		return categoryService.removeCategory(categoryName);
+	}
 
 	@GetMapping("/getCategoryListByType")
 	@ResponseBody

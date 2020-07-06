@@ -18,4 +18,8 @@ public interface CategoryMapper {
 	public List<Category> selectCategoryListAll();
 	
 	public int updateCategory(Map<String, String> map);
+	
+	public int deleteCategory(String categoryName);
+	
+	public int insertCategory(Category category);
 }
