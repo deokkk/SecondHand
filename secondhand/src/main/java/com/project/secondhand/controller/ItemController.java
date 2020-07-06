@@ -19,6 +19,7 @@ import com.project.secondhand.vo.Item;
 import com.project.secondhand.vo.ItemAndItemPic;
 import com.project.secondhand.vo.ItemPic;
 import com.project.secondhand.vo.ItemPicForm;
+import com.project.secondhand.vo.ItemAndMemberAndMemberAddrAndItemPic;
 
 @Controller
 public class ItemController {
@@ -26,6 +27,8 @@ public class ItemController {
 	private ItemService itemService;
 	@Autowired
 	private CategoryService categoryService;
+	
+	
 	//아이템 삭제
 	@GetMapping("removeItem")
 	public String removeItem(@RequestParam(value="itemNo", required = false) int itemNo) {
@@ -34,19 +37,23 @@ public class ItemController {
 	}
 	//아이템 상세보기
 	@GetMapping("/itemInfo")
-		public String selectItemInfo(ItemAndItemPic itemAndItemPic, Model model, @RequestParam(value="itemNo", required = false) int itemNo) {
-			itemAndItemPic = itemService.selectItemInfo(itemAndItemPic);
-			System.out.println(itemAndItemPic + "/itemAndItemPic/itemController");
-			model.addAttribute("item", itemAndItemPic);
-			System.out.println(itemAndItemPic + "/item/itemController");
-			return "itemInfo";
+	public String selectItemInfo(ItemAndItemPic itemAndItemPic, Model model, @RequestParam(value="itemNo", required = false) int itemNo) {
+		itemAndItemPic = itemService.selectItemInfo(itemAndItemPic);
+		System.out.println(itemAndItemPic + "/itemAndItemPic/itemController");
+		model.addAttribute("item", itemAndItemPic);
+		System.out.println(itemAndItemPic + "/item/itemController");
+		return "itemInfo";
 		}
 	//아이템 리스트
 	@GetMapping("/itemList")
-	public String selectItemList(Model model) {
+	public String selectItemList(Model model, String smallCity) {
+		System.out.println(smallCity+"<--Ctrl.smallCity");
 		ArrayList<ItemAndItemPic> list = itemService.selectItemListByAll();
 		System.out.println(list + "/list/itemController");
 		model.addAttribute("list", list);
+		
+		List<ItemAndMemberAndMemberAddrAndItemPic> maipList = itemService.searchItemByAddr(smallCity);
+		
 		return "itemList";
 	}
 	//아이템 추가하기

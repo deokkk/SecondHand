@@ -36,6 +36,10 @@ $(document).ready(function(){
 		helperInit();
 		$('#pwHelper').text("4글자 이상 입력하세요");
 		$('#memberPw').focus();
+	}else if($('#memberPw').val() !=$('#memberPw2').val()){
+		helperInit();
+		$('#pwHelper').text("비밀번호가 다릅니다.");
+		$('#memberPw').focus();
 	}else if($('#memberPhone').val().length < 4){
 		helperInit();
 		$('#phoneHelper').text("4글자 이상 입력하세요");
@@ -47,16 +51,39 @@ $(document).ready(function(){
 	}else{
 		$('#addMemberForm').submit();
 	}
-	$('#pwBtn').click(function(){
-		if($('#memberPw').val() != $('memberPw2').val()){
+	$('#idbtn').click(function(){
+		if($('#memberIdCheck').val().length<4){
 			helperInit();
-			$('#pwHelper').text("비밀번호가 다릅니다.")
-			$('#membrPw2').focus();
+			$('#idHelper').text("아이디를 4글자 이상 입력하세요")
+			$('#memberIdCheck').focus();
 		}else{
-			$('#pwHelper').text("비밀번호가 일치합니다.")
+			$('#idform').submit();
 		}
 	});	
 });
+	var confirm = '';
+	$('#emailCh').click(function(){
+		var memberEmail = $('#memberEmail').val();
+		$.ajax({
+			url: '/memberEmailSend',
+			type: 'POST',
+			data: {memberEmail : memberEmail},
+			success: function(data) {
+				alert('전송완료');
+				confirm = data;
+			}
+		});
+	});
+	$('#emailSa').click(function(){
+		var memberEmailSame = $('#memberEmailSame').val();
+		if(memberEmailSame == confirm) {
+			alert('일치!');
+		} else {
+			alert('불일치!');
+		}
+	});
+});
+
 </script>
 <body class="hoian-kr">
 	<div class="header">
@@ -64,7 +91,7 @@ $(document).ready(function(){
 	</div>
 	<div class="container-fluid">
 		<section id="content">
-			<form method="post" th:action="@{/addMember}" enctype="multipart/form-data" id = "addMember">
+			<form method="post" th:action="@{/addMember}" enctype="multipart/form-data" id = "addMemberForm">
 				<div class="row">
 					<div class="col-sm-2"></div>
 					<div class="col-sm-7">
@@ -75,7 +102,8 @@ $(document).ready(function(){
 									<td>
 										<label for="usr">닉네임:</label>
 									<td>
-										<input type="text" class="form-control"	id="memberNickname" name="memberNickname" th:placeholder="닉네임">
+										<input type="text" class="form-control"	id="memberNickname" name="memberNickname" th:placeholder="닉네임을입력하세요">
+										<button id= "idbtn" type="button">중복체크</button>
 										<span id = "nameHelper"></span>
 									</td>
 									<td>
@@ -88,9 +116,9 @@ $(document).ready(function(){
 										<label for="usr">비밀번호 확인:</label>
 									</td>
 									<td>
-										<input type="password" class="form-control"	id="memberPw" name="memberPw">
+										<input type="password" class="form-control"	id="memberPw" name="memberPw" th:placeholder="비밀번호를입력하세요">
 										<br>
-										<input type="password" class="form-control"	id="memberPw2"><button id="pwBtn" type="button">확인</button>
+										<input type="password" class="form-control"	id="memberPw2"th:placeholder="비밀번호를입력하세요"> 
 										<span id = "pwHelper"></span>
 										
 									</td>
@@ -100,7 +128,7 @@ $(document).ready(function(){
 										<label for="usr">번호 :</label>
 									</td>
 									<td>
-										<input type="text" class="form-control" id="memberPhone" name="memberPhone" th:placeholder="번호">
+										<input type="text" class="form-control" id="memberPhone" name="memberPhone" th:placeholder="번호를입력하세요">
 										<span id = "phoneHelper"></span>
 									</td>
 								</tr>
@@ -109,7 +137,7 @@ $(document).ready(function(){
 										<label for="usr">이메일 :</label>
 									</td>
 									<td>
-										<input type="text" class="form-control" id="memberEmail" name="memberEmail">
+										<input type="text" class="form-control" id="memberEmail" name="memberEmail"th:placeholder="email을입력하세요">
 										<button type="button" id="emailCh">인증번호 전송</button>
 										<span id = "emailHelper"></span>
 									</td>	
@@ -119,7 +147,7 @@ $(document).ready(function(){
 										<label for="usr">인증번호 :</label>
 									</td>
 									<td>
-										<input type="text" class="form-control" id="memberEmail" name="memberEmail">
+										<input type="text" class="form-control" id="memberEmailSame" name="memberEmailSame"th:placeholder="인증번호를입력하세요">
 										<button type="button" id="emailSa">인증번호 확인</button><span th:text="${msg}"></span>
 									</td>
 								</tr>

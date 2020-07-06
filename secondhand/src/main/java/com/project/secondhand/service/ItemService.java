@@ -3,6 +3,7 @@ package com.project.secondhand.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import com.project.secondhand.mapper.ItemPicMapper;
 import com.project.secondhand.vo.Item;
 import com.project.secondhand.vo.ItemAndItemPic;
 import com.project.secondhand.vo.ItemPic;
+import com.project.secondhand.vo.ItemAndMemberAndMemberAddrAndItemPic;
 
 @Service
 @Transactional
@@ -25,6 +27,11 @@ public class ItemService {
    private ItemPicMapper itemPicMapper;
    @Value("D:\\maven.1593574788868\\secondhand\\src\\main\\resources\\static\\upload\\")
    private String path;
+   //주소별 아이템 리스트 출력
+   public List<ItemAndMemberAndMemberAddrAndItemPic> searchItemByAddr(String smallCity){
+	   System.out.println(smallCity+"<--itemService/smallCity");
+	   return itemMapper.searchItemByAddr(smallCity);
+   }
    //아이템 삭제
    public int removeItem(int itemNo) {
 	  
