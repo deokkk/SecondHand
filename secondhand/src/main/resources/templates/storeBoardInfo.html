@@ -4,58 +4,158 @@
 <meta charset="utf-8">
 
 <title>SecondHand</title>
-
-<!-- 아이템 관련 css -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" media="all" href="css/itemList.css" />
 <script
 	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
+<link rel="stylesheet" media="all" href="css/searchWord.css" />
+<style>
+.imgSize {
+	width: 300px;
+	height: 300px;
+}
+</style>
 </head>
 <body class="hoian-kr">
 	<div class="header">
 		<div th:include="/inc/topHeader"></div>
 	</div>
+	<div class="container-fluid">
+	<h2>홍보업체 상세보기</h2>
+		<P>
+					<div style="font-size: 15px; color: #c0c0c0;">
+						<!-- <span class="card-counts"
+							th:text="'작성일자 :' +${board.boardDate.substring(0, 16)}"></span> -->
+					</div>
+
+					<p>
+						<h4 style="text-align: center;">업체사진</h4>
+									<p>
+									<div class="form-group">
+										<!-- 추후 지성이형 조와 연결 -->
+										<div id="demo" class="carousel slide" data-ride="carousel">
+
+											<!-- Indicators -->
+											<ul class="carousel-indicators">
+												<li data-target="#demo" data-slide-to="0" class="active"></li>
+												<li data-target="#demo" data-slide-to="1"></li>
+												<li data-target="#demo" data-slide-to="2"></li>
+											</ul>
+
+											<!-- The slideshow -->
+											<div class="carousel-inner">
+												<div class="carousel-item active imgSize">
+													<img src="upload/123123.png" alt="Los Angeles">
+												</div>
+												<div class="carousel-item imgSize">
+													<img src="upload/123123.png" alt="Los Angeles">
+												</div>
+												<div class="carousel-item imgSize">
+													<img src="upload/123123.png" alt="Los Angeles">
+												</div>
+											</div>
+
+											<!-- Left and right controls -->
+											<a class="carousel-control-prev" href="#demo"
+												data-slide="prev"> <span
+												class="carousel-control-prev-icon"></span>
+											</a> <a class="carousel-control-next" href="#demo"
+												data-slide="next"> <span
+												class="carousel-control-next-icon"></span>
+											</a>
+
+										</div>
+									</div>
 	<section id="content">
-	<a th:href="@{/removeStoreBoard(boardNo=${board.boardNo})}" type = "button">삭제</a>
-		<h1 class="head-title" id="hot-articles-head-title">홍보업체 리스트</h1>
-		<div class="title-line-divider"></div>
-		<nav id="hot-articles-navigation">
-			<input type="text" name="" id="" placeholder="주소를 입력하세요."
-				class="hot-articles-nav-select">
-			<button type="button">fffff</button>
-		</nav>
-		<section class="cards-wrap">
-
-
-			<article class="card-top ">
+		<div class="row">
+		
+			<div class="col-sm-2"></div>
+			<div class="col-sm-4">
+				
 					
-						<div class="card-photo">
-							<img alt="집을 정리합니다(아직가격미정)"
-								src="https://dnvefa72aowie.cloudfront.net/origin/article/202006/b839f7d08719f03e566d5edfc12d7d5a0b818fe1c59f2cd7b81cf5838eae0b40.webp?q=82&amp;s=300x300&amp;t=crop" />
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title"><span th:text = "${board.boardTitle}"></span></h2>
-							<div class="card-region-name">광주 광산구 신가동</div>
-							<div class="card-price ">5,000원</div>
-							<div class="card-counts">
-								<p><span th:text = "'번호 :'+${board.boardNo}"></span></p>
-								<p><span th:text = "'카테고리 :'+${board.categoryName}"></span></p>
-								<p><span th:text = "'날짜 :' +${board.boardDate.substring(0, 16)}"></span></p>
-							</div>
-						</div>
-					</a>
-				</article>
-
+					
+					<table class="table">
+						<tbody>
+						<tr>
+								<td><label for="usr">제목:</label></td>
+								<td>
+									<div class="form-group">
+										추후 지성이형 조와 연결
+										<a th:href = "@{/addStoreReportDefer(boardNo = ${board.boardNo})}">신고하기</a>
+										<span th:text="${board.boardTitle}"></span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td><label for="usr">카테고리:</label></td>
+								<td><span th:text=" ${board.categoryName}"></span></td>
+							</tr>
+							<tr>
+								<td><label for="usr">상호명:</label></td>
+								<td class="card-counts"><span th:text="${board.storeName}"></span>
+									<p></p>
+									<p></p></td>
+							</tr>
+							<tr>
+								<td><label for="comment">업체 주소:</label></td>
+								<td>
+									<div class="form-group">
+										<span th:text="${board.storeAddr}"></span>
+									</div>
+								</td>
+							</tr>							
+						</tbody>
+					</table>
+					 
 			</div>
-			</div>
-			</div>
-
-		</section>
-	</section>
+			
+		
+		<div class="col-sm-4">
+		 <table class="table">
+						<tbody>
+							
+							<tr>
+								<td><label for="comment">전화번호:</label></td>
+								<td>
+									<div class="form-group">
+										<span th:text="${board.storePhone}"></span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td><label for="usr">이메일:</label></td>
+								<td><span th:text=" ${board.categoryName}"></span></td>
+							</tr>
+							<tr>
+								<td rowspan = "2"><label for="usr">내용:</label></td>
+								<td class="card-counts" rowspan = "2"><span th:text="${board.storeName}"></span>
+							</tr>
+											
+						</tbody>
+					</table> 
+		
+		</div>
+		
+		<div class="col-sm-2">
+		
+		
+		</div>
+		</div>
+</section>
+</div>
 	<div class="header">
 		<div th:include="/inc/copyRight"></div>
+
 	</div>
-
-
+	
 </body>
 </html>

@@ -8,8 +8,8 @@
 			<a th:href="@{javascript:void(0)}" th:class="closebtn" onclick="closeNav()">&times;</a>
 			<a th:href="@{/#}">홈</a> 
 			<a th:href="@{/#}">공지사항</a> 
-			<a th:href="@{/#}">상품</a> 
-			<a th:href="@{/#}">업체홍보게시판</a>
+			<a th:href="@{/itemList}">상품</a> 
+			<a th:href="@{/storeBoardList}">업체홍보게시판</a>
 			<a th:href="@{/#}">자주묻는질문</a> 
 			<a th:class="adminMenu" th:if="${session.level}=='admin'">관리자메뉴</a>
 			<ul th:class="hide">

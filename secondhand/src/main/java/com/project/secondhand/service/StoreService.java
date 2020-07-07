@@ -3,6 +3,7 @@ package com.project.secondhand.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +14,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.secondhand.mapper.ItemReportDeferMapper;
+import com.project.secondhand.mapper.ItemReportResultMapper;
 import com.project.secondhand.mapper.StoreMapper;
 import com.project.secondhand.mapper.StorePicMapper;
+import com.project.secondhand.vo.ItemReportDefer;
+import com.project.secondhand.vo.ItemReportResult;
 import com.project.secondhand.vo.Member;
 //import com.project.secondhand.mapper.StoreBoardPicMapper;
 import com.project.secondhand.vo.Store;
+import com.project.secondhand.vo.StoreAndStoreBoardAndBoardPic;
 import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreBoardAndBoardPic;
 //import com.project.secondhand.vo.StoreBoardAndStoreBoardPic;
 import com.project.secondhand.vo.StoreBoardPic;
+import com.project.secondhand.vo.StoreList;
 import com.project.secondhand.vo.StorePic;
 import com.project.secondhand.vo.StorePicForm;
+import com.project.secondhand.vo.StoreReportDefer;
+import com.project.secondhand.vo.StoreReportResult;
 
 @Service
 @Transactional
@@ -36,13 +45,21 @@ public class StoreService {
    private StorePicMapper storePicMapper;
    @Value("D:\\maven.1593574788868\\secondhand\\src\\main\\resources\\static\\upload\\")
    private String path;
+   //카테고리 기준으로 업체 리스트 가져오기
+   public List<StoreList>selectStoreBoardListByCategory(String categoryName){
+	   return storeMapper.selectStoreBoardListByCategory(categoryName);
+   }
+   //주소 기준으로 업체 리스트 가져오기
+   public List<StoreList>selectStoreBoardListByAddr(String storeAddr){
+	   return storeMapper.selectStoreBoardListByAddr(storeAddr);
+   }
    //업체 리스트
-   public ArrayList<StoreBoardAndBoardPic>selectStoreBoardList(){
+   public ArrayList<StoreList>selectStoreBoardList(){
 	      return storeMapper.selectStoreBoardList();
 	   }
 	   //홍보업체 게시물 상세보기
-	   public StoreBoardAndBoardPic selectStoreBoardListOne(StoreBoardAndBoardPic storeBoardAndBoardPic) {
-	      return storeMapper.selectStoreBoardListOne(storeBoardAndBoardPic);
+	   public StoreList selectStoreBoardInfo(StoreList storeList) {
+	      return storeMapper.selectStoreBoardInfo(storeList);
 	   }
 	   //삭제
 	   public int removeStoreBoard(int boardNo) {
@@ -314,5 +331,37 @@ public class StoreService {
 	public String findStoreId(Store store) {
 		return storeMapper.findStoreId(store);
 }
+	
+	//상품 신고 리스트
+	public ArrayList<StoreReportDefer>storeReportDeferList(){
+		return storeMapper.storeReportDeferList();
+	}
+	//상품신고 상세보기
+	public StoreReportDefer storeReportDeferInfo(StoreReportDefer storeReportDefer) {
+		return storeMapper.storeReportDeferInfo(storeReportDefer);
+	}
+	//상품 신고 추가하기
+	public int addStoreReportDefer(StoreReportDefer storeReportDefer) {
+		return storeMapper.addStoreReportDefer(storeReportDefer);
+		
+	}
+	//상품신고 결과 리스트
+	public ArrayList<StoreReportResult>storeReportResultList(){
+		return storeMapper.storeReportResultList();
+	}
+	//상품신고 결과 상세보기
+	public StoreReportResult storeReportResultInfo(StoreReportResult storeReportResult) {
+		return storeMapper.storeReportResultInfo(storeReportResult);
+	}
+	//상품신고 결과 추가하기
+	public int addStoreReportResult(StoreReportResult storeReportResult, int boardNo, int storeReportResultNo) {
+		int row = storeMapper.addStoreReportResult(storeReportResult);
+		if(row ==1) {
+			storeMapper.removeStoreReportDefer(storeReportResultNo);
+		}
+
+		
+		return  row;
+	}
 }
 

@@ -4,12 +4,10 @@ font : 14px/1.8 Arial, Helvetica, sans-serif;
 .frame{
 width: 800px;
 margin: 0 auto;
-border : 1px solid #aaa;
 }
 .header{
 padding: 40px 10px;
 text_alighn: center;
-background: #eee;
 margin_bottom: 20px;
 }
 .main{

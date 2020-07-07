@@ -26,25 +26,50 @@
 		<button type = "submit">입력</button>
 		</form>
       </nav>
+      
       <section class="cards-wrap">
-         <div th:each="item, index : ${list}">
-
-            <article class="card-top ">
-               <a class="card-link " data-event-label="98680541"
+      <form method = "post" th:action = "@{/storeBoardListByCategory}">
+			
+				<select name="categoryName" id = "categoryName" style = "vertical-align: middle; text-align-last: center"  class="form-control">
+					<option>카테고리</option>
+					<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+				</select> 
+				<button type="submit" class = "btn">찾기</button>
+			
+			</form>
+			<form method = "post" th:action = "@{/itemListByAddr}">
+			<nav id="hot-articles-navigation">
+				<input type="text" name="smallCity" id="" placeholder="주소를 입력하세요."	class="hot-articles-nav-select">
+				<button type="submit" class = "btn">찾기</button>
+			</nav>
+			</form>
+			<table class="cards-wrap" th:each="item, index : ${list}">
+		      <tr class="card-top">
+		      	<td class="card-photo">
+		      	<a class="card-link" data-event-label="98680541"
                   th:href="@{/itemInfo(itemNo=${item.itemNo})}">
-                  <div class="card-photo">
-                     <!-- <img th:src="@{${'/upload/'+item.itemPicNameOne}}" /> -->
-                  </div>
-                  <div class="card-desc">
-                     <h2 class="card-title">
-                        <span th:text="${item.itemTitle}"></span>
-                     </h2>
-                     <div class="card-region-name">광주 광산구 신가동</div>
-                     <div class="card-price ">
-                        <span th:text="${item.itemPrice}"></span>
-                     </div>
-                     <div class="card-counts">
-                        <p>
+		      		<img th:src="@{${'/upload/'+item.itemPicNameOne}}" />
+		      		</a>
+		      	</td>
+		      </tr>
+		      <tr class="card-desc">
+		      	<td class="card-title">
+		      		<span th:text="${item.itemTitle}"></span>
+		      	</td>
+		      </tr>
+		      <tr class="card-desc">
+		      	<td class="card-region-name">
+		      		<span>광주 광산구 신가동</span>
+		      	</td>
+		      </tr>
+		      <tr class="card-desc">
+		      	<td class="card-price ">
+		      		 <span th:text="${item.itemPrice}"></span>
+		      	</td>
+		      </tr>
+		      <tr class="card-desc">
+		      	<td class="card-counts">
+		      		 <p>
                            <span th:text="'판매상태 :'+${item.itemState}"></span>
                         </p>
                         <p>
@@ -53,16 +78,12 @@
                         <p>
                            <span th:text="'날짜 :' +${item.itemDate.substring(0, 16)}"></span>
                         </p>
-                     </div>
-                  </div>
-               </a>
-            </article>
-
-         </div>
-         </div>
-         </div>
+		      	</td>
+		      </tr>
+		    </table>
 
       </section>
+
    </section>
    <div class="header">
       <div th:include="/inc/copyRight"></div>

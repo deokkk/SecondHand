@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ItemAndMemberAndMemberAddrAndItemPic {
 	private int memberNo; //market_member
+	private String memberNickName;
 	private String bigCity;
 	private String middleCity;
 	private String smallCity;
@@ -12,6 +13,7 @@ public class ItemAndMemberAndMemberAddrAndItemPic {
 	private String itemTitle;
 	private String itemContent;
 	private int itemPrice;
+	private String itemState;
 	private String itemDate;
 	private MultipartFile itemPicNameOne;
 	private MultipartFile itemPicNameTwo;
@@ -23,6 +25,12 @@ public class ItemAndMemberAndMemberAddrAndItemPic {
 	}
 	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;
+	}
+	public String getMemberNickName() {
+		return memberNickName;
+	}
+	public void setMemberNickName(String memberNickName) {
+		this.memberNickName = memberNickName;
 	}
 	public String getBigCity() {
 		return bigCity;
@@ -72,6 +80,12 @@ public class ItemAndMemberAndMemberAddrAndItemPic {
 	public void setItemPrice(int itemPrice) {
 		this.itemPrice = itemPrice;
 	}
+	public String getItemState() {
+		return itemState;
+	}
+	public void setItemState(String itemState) {
+		this.itemState = itemState;
+	}
 	public String getItemDate() {
 		return itemDate;
 	}
@@ -110,14 +124,14 @@ public class ItemAndMemberAndMemberAddrAndItemPic {
 	}
 	@Override
 	public String toString() {
-		return "ItemAndMemberAndMemberAddrAndItemPic [memberNo=" + memberNo + ", bigCity=" + bigCity + ", middleCity="
-				+ middleCity + ", smallCity=" + smallCity + ", itemNo=" + itemNo + ", categoryName=" + categoryName
-				+ ", itemTitle=" + itemTitle + ", itemContent=" + itemContent + ", itemPrice=" + itemPrice
-				+ ", itemDate=" + itemDate + ", itemPicNameOne=" + itemPicNameOne + ", itemPicNameTwo=" + itemPicNameTwo
-				+ ", itemPicNameThree=" + itemPicNameThree + ", itemPicNameFour=" + itemPicNameFour
-				+ ", itemPicNameFive=" + itemPicNameFive + "]";
+		return "ItemAndMemberAndMemberAddrAndItemPic [memberNo=" + memberNo + ", memberNickName=" + memberNickName
+				+ ", bigCity=" + bigCity + ", middleCity=" + middleCity + ", smallCity=" + smallCity + ", itemNo="
+				+ itemNo + ", categoryName=" + categoryName + ", itemTitle=" + itemTitle + ", itemContent="
+				+ itemContent + ", itemPrice=" + itemPrice + ", itemState=" + itemState + ", itemDate=" + itemDate
+				+ ", itemPicNameOne=" + itemPicNameOne + ", itemPicNameTwo=" + itemPicNameTwo + ", itemPicNameThree="
+				+ itemPicNameThree + ", itemPicNameFour=" + itemPicNameFour + ", itemPicNameFive=" + itemPicNameFive
+				+ "]";
 	}
-	
 	
 
 }

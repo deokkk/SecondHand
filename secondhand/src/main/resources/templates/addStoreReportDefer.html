@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>add Item Report Defer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+</head>
+<script>
+let helpInit=function(){
+	$('#contentHelper').text("");
+};
+
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			if($('#boardReportDeferContent').val().length ===0){
+			helpInit();
+			$('#contentHelper').text("내용을 입력하세요.");
+			$('#boardReportDeferContent').focus();
+		}else{
+			$('#itemReport').submit();
+		}
+		});
+	});
+</script>
+<body>
+	<div th:class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
+	<form method="post" id="itemReport"th:action="@{/addStoreReportDefer}" enctype="multipart/form-data">
+		<table class="table">
+			<thead>
+				<tr>
+					<td>
+						<div>
+							<input type="hidden" id="itemNo" name="boardNo" th:value="${boardNo}" readonly="readonly">
+							<!-- <input type="hidden" id="memberNo" name="memberNo" th:value="${itemReportDefer.memberNo}" readonly="readonly"> -->
+							<input type = "hidden" name = "memberNo" value = "1">
+						</div>	
+					</td>
+				</tr>	
+				<tr>
+					<td>
+						<select name="categoryName" id = "categoryName" style = "vertical-align: middle; text-align-last: center"  class="form-control">
+							<option>카테고리</option>
+							<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<textarea cols="40" rows="10" id="boardReportDeferContent" name="boardReportDeferContent" th:placeholder="신고사유"></textarea>
+						<span id="contentHelper"></span>
+					</td>
+				</tr>				
+			</thead>
+		</table>
+		<div>
+			<button type="button" id="btn">입력</button>
+		</div>
+	</form>
+	<div th:class="header">
+		<div th:include="/inc/copyRight"></div>
+	</div>
+</body>
+</html>

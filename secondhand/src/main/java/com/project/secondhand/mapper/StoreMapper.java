@@ -1,21 +1,32 @@
 package com.project.secondhand.mapper;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.project.secondhand.vo.ItemReportDefer;
+import com.project.secondhand.vo.ItemReportResult;
 import com.project.secondhand.vo.Member;
 import com.project.secondhand.vo.Store;
+import com.project.secondhand.vo.StoreAndStoreBoardAndBoardPic;
 import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreBoardAndBoardPic;
+import com.project.secondhand.vo.StoreList;
 import com.project.secondhand.vo.StorePic;
+import com.project.secondhand.vo.StoreReportDefer;
+import com.project.secondhand.vo.StoreReportResult;
 @Mapper
 public interface StoreMapper {
+	//업체의 카테고리를 기준으로 리슽트 가져오기
+	public List<StoreList>selectStoreBoardListByCategory(String categoryName);
+	//업체 주소를 기준으로 리스트 가져오기
+	public List<StoreList>selectStoreBoardListByAddr(String storeAddr);
 	//업체리스트
-	public ArrayList<StoreBoardAndBoardPic> selectStoreBoardList();
+	public ArrayList<StoreList> selectStoreBoardList();
 	//업체 상세보기
-	public StoreBoardAndBoardPic selectStoreBoardListOne(StoreBoardAndBoardPic storeBoardAndBoardPic);
+	public StoreList selectStoreBoardInfo(StoreList storeList);
 	//업체 추가하기
 	public void insertStoreBoard(StoreBoard storeBoard);
 	//업체 수정하기
@@ -34,4 +45,19 @@ public interface StoreMapper {
 	public String findStoreId(Store store);
 	//비밀번호 찾기 
 	public Store findStorePw(Store store);
+	//아이템 신고 리스트
+	public ArrayList<StoreReportDefer> storeReportDeferList();
+	//아이템 신고 리스트 상세보기
+	public StoreReportDefer storeReportDeferInfo(StoreReportDefer storeReportDefer);
+	//아이템 신고시 추가
+	public int addStoreReportDefer(StoreReportDefer storeReportDefer);
+	//아이템 신고 승인 시 삭제
+	public int removeStoreReportDefer(int storeReportDeferNo);
+	//아이템 신고 결과 리스트
+	public ArrayList<StoreReportResult> storeReportResultList();
+	//아이템 신고 결과 상세보기
+	public StoreReportResult storeReportResultInfo(StoreReportResult storeReportResult);
+	//아이템 신고 추가
+	public int addStoreReportResult(StoreReportResult storeReportResult);
+
 }

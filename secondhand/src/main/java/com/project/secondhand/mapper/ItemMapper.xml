@@ -15,12 +15,14 @@
 	</sql>
 	<!-- 상품 리스트 -->
 	<select id="selectItemListByAll"
-		parameterType="com.project.secondhand.vo.ItemAndItemPic"
-		resultType="com.project.secondhand.vo.ItemAndItemPic">
-		SELECT
+		parameterType="com.project.secondhand.vo.ItemList"
+		resultType="com.project.secondhand.vo.ItemList">
+		SELECT		
+		mm.member_no AS memberNo,
+		mm.member_nickname AS memberNickName,
+		ma.small_city AS smallCity,
 		i.item_no AS itemNo,
 		i.category_name AS categoryName,
-		i.member_no AS memberNo,
 		i.item_title AS itemTitle,
 		i.item_content AS itemContent,
 		i.item_price AS itemPrice,
@@ -31,37 +33,69 @@
 		ip.item_pic_name_one AS itemPicNameThree,
 		ip.item_pic_name_one AS itemPicNameFour,
 		ip.item_pic_name_one AS itemPicNameFive
-		
-		FROM market_item i INNER JOIN market_item_pic ip
+		FROM market_item i INNER JOIN market_item_pic ip INNER JOIN market_member mm INNER JOIN market_member_addr ma
+		ON i.item_no = ip.item_no
+		AND mm.member_no = ma.member_no
+		AND i.member_no = mm.member_no
 	</select>
 	<!-- 상품 리스트 상세보기 -->
 	<select id="selectItemInfo"
-		parameterType="com.project.secondhand.vo.ItemAndItemPic"
-		resultType="com.project.secondhand.vo.ItemAndItemPic">
-		SELECT
+		parameterType="com.project.secondhand.vo.ItemList"
+		resultType="com.project.secondhand.vo.ItemList">
+		SELECT		
+		mm.member_no AS memberNo,
+		mm.member_nickname AS memberNickName,
+		ma.small_city AS smallCity,
 		i.item_no AS itemNo,
 		i.category_name AS categoryName,
-		i.member_no AS memberNo,
 		i.item_title AS itemTitle,
 		i.item_content AS itemContent,
 		i.item_price AS itemPrice,
 		i.item_state AS itemState,
 		i.item_date As itemDate,
-		ip.item_no AS itemNo,
 		ip.item_pic_name_one AS itemPicNameOne,
 		ip.item_pic_name_one AS itemPicNameTwo,
 		ip.item_pic_name_one AS itemPicNameThree,
 		ip.item_pic_name_one AS itemPicNameFour,
 		ip.item_pic_name_one AS itemPicNameFive
-		FROM market_item i INNER JOIN market_item_pic ip
+		FROM market_item i INNER JOIN market_item_pic ip INNER JOIN market_member mm INNER JOIN market_member_addr ma
 		ON i.item_no = ip.item_no
+		AND mm.member_no = ma.member_no
+		AND i.member_no = mm.member_no
 		WHERE i.item_no =#{itemNo}
 	</select>
-	<select id="searchItemByAddr"
-		parameterType="com.project.secondhand.vo.ItemAndMemberAndMemberAddrAndItemPic"
-		resultType="com.project.secondhand.vo.ItemAndMemberAndMemberAddrAndItemPic">
+	<select id="selectItemByAddr"
+		parameterType="com.project.secondhand.vo.ItemList"
+		resultType="com.project.secondhand.vo.ItemList">
 		SELECT
 			 m.member_no AS memberNo,
+			 m.member_nickname AS memberNickName,
+			 ma.small_city AS smallCity,
+			 i.item_no AS itemNo,
+			 i.category_name AS categoryName,
+			 i.item_title AS itemTitle,
+			 i.item_content AS itemContent,
+			 i.item_price AS itemPrice,
+			 i.item_state AS itemState,
+			 i.item_date AS itemDate,
+			 ip.item_pic_name_one AS itemPicNameOne,
+			 ip.item_pic_name_two AS itemPicNameTwo,
+			 ip.item_pic_name_three As itemPicNameThree,
+			 ip.item_pic_name_four AS itemPicNameFour,
+			 ip.item_pic_name_five As itemPicNameFive
+		FROM	   
+		market_member_addr ma INNER JOIN  market_member m 
+		ON ma.member_no = m.member_no
+		INNER JOIN market_item i ON m.member_no = i.member_no INNER JOIN market_item_pic ip 
+		ON i.item_no=ip.item_no
+		WHERE ma.small_city =#{smallCity}
+	</select>
+	<select id="selectItemByCategory"
+		parameterType="com.project.secondhand.vo.ItemList"
+		resultType="com.project.secondhand.vo.ItemList">
+		SELECT
+			 m.member_no AS memberNo,
+			 m.member_nickname AS memberNickName,
 			 ma.small_city AS smallCity,
 			 i.item_no AS itemNo,
 			 i.category_name AS categoryName,
@@ -80,7 +114,7 @@
 		ON ma.member_no = m.member_no
 		INNER JOIN market_item i ON m.member_no = i.member_no
 		INNER JOIN market_item_pic ip ON i.item_no=ip.item_no
-		WHERE small_city =#{smallCity}
+		WHERE i.category_name =#{categoryName}
 	</select>
 	<!-- 상품 추가하기 -->
 	<insert id="insertItem"
