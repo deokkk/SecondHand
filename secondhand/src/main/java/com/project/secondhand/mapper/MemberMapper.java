@@ -29,6 +29,8 @@ public interface MemberMapper {
 	public MemberInfo selectMemberOne(LoginMember loginMember);
 	//회원사진 삭제
 	public int removeMemberPic(MemberPic memberPic);
+	//회원 정보 수정
+	public void modifyMember(MemberInfo memberInfo);
  
 }
  	

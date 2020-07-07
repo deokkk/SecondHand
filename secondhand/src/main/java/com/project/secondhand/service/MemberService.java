@@ -125,4 +125,9 @@ public class MemberService {
 	public MemberInfo selectMemberOne(LoginMember loginMember) {
 		return memberMapper.selectMemberOne(loginMember);
 	}
+	
+	//회원 정보 수정
+	public void modifyMember(MemberInfo memberInfo) {
+		memberMapper.modifyMember(memberInfo);
+	}
 }

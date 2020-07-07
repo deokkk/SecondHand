@@ -134,8 +134,12 @@
 	INNER JOIN market_member_addr mma ON mm.member_no = mma.member_no
 	WHERE mm.member_email = #{memberEmail}
   </select>
-  
-  
+  <!-- 회원 정보 수정 -->
+  <update id="modifyMember" parameterType="com.project.secondhand.vo.MemberInfo">
+  	UPDATE market_member
+		SET member_nickname = #{memberNickname}
+	WHERE member_email = #{memberEmail}
+  </update>
   
   
 </mapper>
