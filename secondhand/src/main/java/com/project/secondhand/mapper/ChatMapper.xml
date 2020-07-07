@@ -42,7 +42,7 @@
 	</insert>
 	
 	<!-- 메시지 리스트 -->
-	<select id="selectMessage" parameterType="String" resultType="com.project.secondhand.vo.ChatMessage">
+	<!-- <select id="selectMessage" parameterType="String" resultType="com.project.secondhand.vo.ChatMessage">
 		SELECT
 			cm.chat_no chatNo,
 			cm.send_id sendId,
@@ -53,12 +53,12 @@
 			cm.chat_date chatDate
 		FROM market_chat_message cm INNER JOIN market_member m
 		ON cm.send_id = m.member_no
-		WHERE cm.room_no = #{roomNo} AND cm.chat_read = 1
+		WHERE cm.room_no = #{roomNo}
 		ORDER BY chat_date;
-	</select>
+	</select> -->
 	
 	<!-- 안읽은 메시지 리스트 -->
-	<select id="selectNewMessage" parameterType="String" resultType="com.project.secondhand.vo.ChatMessage">
+	<!-- <select id="selectNewMessage" parameterType="String" resultType="com.project.secondhand.vo.ChatMessage">
 		SELECT
 			cm.chat_no chatNo,
 			cm.send_id sendId,
@@ -69,15 +69,9 @@
 			cm.chat_date chatDate
 		FROM market_chat_message cm INNER JOIN market_member m
 		ON cm.send_id = m.member_no
-		WHERE cm.room_no = #{roomNo} AND cm.chat_read IS NULL
+		WHERE cm.room_no = #{roomNo}
 		ORDER BY chat_date;
-	</select>
-	
-	<!-- 메시지 읽은 상태로 업데이트 -->
-	<update id="updateChatRead" parameterType="int">
-		UPDATE market_chat_message 
-		SET chat_read = 1
-	</update>
+	</select> -->
 	
 	<!-- 내 채팅 목록 -->
 	<select id="selectMyChatList" parameterType="String" resultType="com.project.secondhand.vo.ChatRoom">
@@ -103,7 +97,7 @@
 		AND cr.room_state IS NULL
 	</select>
 	
-	<!-- 이전 메시지 목록 -->
+	<!-- 메시지 목록 -->
 	<select id="selectChatMessageList" parameterType="String" resultType="com.project.secondhand.vo.ChatMessage">
 		SELECT
 			cm.chat_no chatNo,

@@ -58,10 +58,17 @@
 		<a th:href="@{/addItemReportDefer(itemNo=${item.itemNo})}">신고하기</a>
 		<!-- 채팅 -->
 		<button type="button" id="popup">채팅</button>
+		<input th:type="hidden" th:value="${session.loginMember}" th:id="sessionVal">
 		<a th:href="@{/addChatRoom(chatTo=1)}" target="_blank" th:text="'채팅으로 거래하기'"></a>
 		<script>
 			$('#popup').click(function() {
-				window.open("/addChatRoom?chatTo=1", "_blank", "top=0, width=420, height=700");
+				var value = $('#sessionVal').val();
+				console.log(value + ' <----loginMember');
+				if(value == "") {
+					location.href="/login";
+				} else {					
+					window.open("/addChatRoom?chatTo=1", "_blank", "top=0, width=420, height=700");
+				}
 			})
 		</script>
 	</section>

@@ -32,25 +32,21 @@ public class ChatService {
 	}
 	
 	//안읽은 메시지 리스트
-	public List<ChatMessage> getNewMessage(String roomNo) {
-		System.out.println(roomNo + " <--roomNo service");
-		List<ChatMessage> list = chatMapper.selectNewMessage(roomNo);
-		for(ChatMessage cm : list) chatMapper.updateChatRead(cm.getChatNo());
-		return list;
-	}
+	/*
+	 * public List<ChatMessage> getNewMessage(String roomNo) {
+	 * System.out.println(roomNo + " <--roomNo service"); List<ChatMessage> list =
+	 * chatMapper.selectNewMessage(roomNo); for(ChatMessage cm : list)
+	 * chatMapper.updateChatRead(cm.getChatNo()); return list; }
+	 */
 	
 	// 채팅방 목록
 	public List<ChatRoom> getMyChatList(String memberEmail) {
 		return chatMapper.selectMyChatList(memberEmail);
 	}
 	
-	// 이전 메시지 리스트
+	//  메시지 리스트
 	public List<ChatMessage> getChatMessageList(String roomNo) {
 		List<ChatMessage> list =  chatMapper.selectChatMessageList(roomNo);
-		for(ChatMessage cm : list) {
-			chatMapper.updateChatRead(cm.getChatNo());
-			System.out.println(cm.toString() + "<-----message");
-		}
 		return list;
 	}
 	

@@ -125,4 +125,9 @@ public class MemberService {
 	public MemberInfo selectMemberOne(LoginMember loginMember) {
 		return memberMapper.selectMemberOne(loginMember);
 	}
+	
+	// 회원 번호 가져오기
+	public int getMemberNoByEmail(String memberEmail) {
+	   return memberMapper.selectMemberNoByEmail(memberEmail);
+	}
 }

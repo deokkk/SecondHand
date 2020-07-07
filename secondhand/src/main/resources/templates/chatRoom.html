@@ -13,20 +13,21 @@
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
 <script>
 	$(document).ready(function(){
+		let msgCnt = 0;
 		$('#chatMessage').keydown(function(key){
 			if(key.keyCode == 13) {
 				$('#sendBtn').click();
 			}
 		});
 		$('#sendBtn').click(function(){
-			var sendId = $('#loginMemberId').val();
+			var sendEmail = $('#loginMemberEmail').val();
 			var roomNo = $('#roomNo').val();
 			var chatMessage = $('#chatMessage').val();
-			console.log('sendId : ' + sendId + ', roomNo : ' + roomNo + ', chatMessage : ' + chatMessage);
+			console.log('sendEmail : ' + sendEmail + ', roomNo : ' + roomNo + ', chatMessage : ' + chatMessage);
 			$.ajax({
 				url: '/sendMsg',
 				type: 'POST',
-				data: {sendId: sendId, roomNo: roomNo, chatMessage: chatMessage},
+				data: {sendEmail: sendEmail, roomNo: roomNo, chatMessage: chatMessage},
 				success: function() {
 					console.log('send success');
 					$('#chatMessage').val('');
@@ -38,24 +39,29 @@
 		});
 		
 		setInterval(function(){
-			var sendId = $('#loginMemberId').val();
+			var sendEmail = $('#loginMemberEmail').val();
 			var roomNo = $('#roomNo').val();
-			console.log('sendId : ' + sendId + ', roomNo : ' + roomNo);
+			console.log('sendEmail : ' + sendEmail + ', roomNo : ' + roomNo);
 			$.ajax({
-				url: '/getNewMessage',
+				url: '/getChatMessageList',
 				type: 'POST',
 				data: {roomNo: roomNo},
 				success: function(data) {
-					console.log(data);
 					console.log('getMessage success');
+					$('#msgBox').empty();
 					$.each(data, function(i){
-						console.log(data[i])
-						if(sendId == data[i].sendId) {
+						if(sendEmail == data[i].sendEmail) {
 							$('#msgBox').append('<div style="text-align: right">' + data[i].sendNickName + ' : ' + data[i].chatMessage + '</div>');
 						} else {
 							$('#msgBox').append('<div style="text-align: left">' + data[i].sendNickName + ' : ' + data[i].chatMessage + '</div>');
 						}			
 					});
+					console.log(msgCnt + ' <--msgCnt');
+					console.log(data.length + '<--data.length');
+					if(parseInt(msgCnt) < parseInt(data.length)) {
+						$('#msgBox').scrollTop($('#msgBox').prop('scrollHeight'));
+						msgCnt = data.length;	
+					}
 				},
 				error: function() {
 					console.log('getMessage fail');
@@ -85,15 +91,15 @@
 <body>
 <h1 th:text="채팅"></h1>
 
-<div th:id="msgBox" style="border: medium solid black; width: 400px; height: 600px;">
+<div th:id="msgBox" style="border: medium solid black; width: 400px; height: 580px; overflow-y: scroll">
 	<div th:if="${chatMessageList} != null" th:each="message : ${chatMessageList}">
 		<div style="text-align: right" th:if="${message.sendEmail} == ${session.loginMember.memberEmail}" th:text="${message.sendNickName} + ' : ' + ${message.chatMessage}"></div>
 		<div style="text-align: left" th:if="${message.sendEmail} != ${session.loginMember.memberEmail}" th:text="${message.sendNickName} + ' : ' + ${message.chatMessage}"></div>
 	</div>
 </div>
 <div>
-	<!-- <input type="hidden" th:value="${session.loginMember.memberId}" id="loginMemberId"> -->
-	<input th:type="hidden" th:value="2" th:id="loginMemberId">
+	<input type="hidden" th:value="${session.loginMember.memberEmail}" id="loginMemberEmail">
+	<!-- <input th:type="hidden" th:value="2" th:id="loginMemberId"> -->
 	<input th:type="hidden" th:value="${roomNo}" th:id="roomNo">
 	<input th:type="text" th:name="chatMessage" th:id="chatMessage">
 	<button th:type="button" th:id="sendBtn" th:text="보내기"></button>

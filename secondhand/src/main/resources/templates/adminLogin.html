@@ -11,6 +11,27 @@
 <link rel="stylesheet" media="all" href="css/itemList.css" />
 <script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
+<!-- sidemenu style, javascript 파일 -->
+<link rel="stylesheet" href="css/sidemenu.css">
+<script src="js/sidemenu.js"></script>
+<style>
+#btnBox {
+	text-align: right;
+}
+/* sidemenu 추가하면서 수정된 style */
+#footer {
+	left: 0px;
+}
+@font-face { 
+	font-family: 'yg-jalnan'; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); 
+	font-weight: normal; 
+	font-style: normal; 
+} 
+.sidenav a, .sidenav ul li {
+	font-family: 'yg-jalnan';
+}
+</style>
 <script>
 	let helperInit = function() {
 		$('#emailHelper').text('');
@@ -37,21 +58,39 @@
 </script>
 </head>
 <body>
-<h1 th:text="'관리자 로그인'"></h1>
-<form th:method="post" th:action="@{/adminLogin}" th:id="adminForm">
-	<div>
-		<label th:for="adminEmail" th:text="이메일"></label>
-		<input th:type="text" th:name="adminEmail" th:id="adminEmail" th:placeholder="'이메일을 입력하세요.'">
-		<span th:id="emailHelper"></span>
+	<!-- sidemenu include -->
+	<div th:include="/inc/sidemenu::sidemenu"></div>
+	<div th:class="header">
+		<div th:include="/inc/topHeader"></div>
 	</div>
-	<div>
-		<label th:for="adminPw" th:text="비밀번호"></label>
-		<input th:type="password" th:name="adminPw" th:id="adminPw" th:placeholder="'비밀번호을 입력하세요.'">
-		<span th:id="pwHelper"></span>
+		<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:class="row">
+				<div th:class="col-sm-3"></div>
+				<div th:class="col-sm-3">
+					<h2 th:text="'관리자 로그인'"></h2>
+					<form th:method="post" th:action="@{/adminLogin}" th:id="adminForm">
+						<div th:class="form-group">
+							<label th:for="adminEmail" th:text="이메일"></label>
+							<input th:class="form-control" th:type="text" th:name="adminEmail" th:id="adminEmail" th:placeholder="'이메일을 입력하세요.'">
+							<span th:id="emailHelper"></span>
+						</div>
+						<div th:class="form-group">
+							<label th:for="adminPw" th:text="비밀번호"></label>
+							<input th:class="form-control" th:type="password" th:name="adminPw" th:id="adminPw" th:placeholder="'비밀번호을 입력하세요.'">
+							<span th:id="pwHelper"></span>
+						</div>
+						<div th:id="btnBox">
+							<button th:type="button" th:text="로그인" th:id="loginBtn"></button>
+						</div>
+					</form>
+				</div>
+				<div th:class="col-sm-6"></div>
+			</div>
+		</section>
+		<div th:class="header">
+			<div th:include="/inc/copyRight"></div>
+		</div>
 	</div>
-	<div>
-		<button th:type="button" th:text="로그인" th:id="loginBtn"></button>
-	</div>
-</form>
 </body>
 </html>

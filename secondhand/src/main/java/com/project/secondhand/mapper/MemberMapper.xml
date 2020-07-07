@@ -117,7 +117,6 @@
   </select>
   
   <!-- 회원 정보 보기 -->
-  
   <select id="selectMemberOne" parameterType="com.project.secondhand.vo.LoginMember" resultType="com.project.secondhand.vo.MemberInfo">
   	SELECT
 		mm.member_nickname AS memberNickname,
@@ -134,8 +133,11 @@
 	INNER JOIN market_member_addr mma ON mm.member_no = mma.member_no
 	WHERE mm.member_email = #{memberEmail}
   </select>
-  
-  
-  
-  
+  <!-- 회원 번호 가져오기 -->
+  <select id="selectMemberNoByEmail" parameterType="String" resultType="int">
+     SELECT
+        member_no memberNo
+     FROM market_member
+     WHERE member_email = #{memberEmail}
+  </select>
 </mapper>

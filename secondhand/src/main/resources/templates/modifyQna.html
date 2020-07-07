@@ -10,6 +10,9 @@
 <link rel="stylesheet" media="all" href="css/itemList.css" />
 <script src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
+<!-- sidemenu style, javascript 파일 -->
+<link rel="stylesheet" href="css/sidemenu.css">
+<script src="js/sidemenu.js"></script>
 <script>
 	let helperInit = function() {
 		$('#qnaTitleHelper').text("");
@@ -51,9 +54,24 @@
 #modifyQnaBox {
 	text-align: right;
 }
+/* sidemenu 추가하면서 수정된 style */
+#footer {
+	left: 0px;
+}
+@font-face { 
+	font-family: 'yg-jalnan'; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); 
+	font-weight: normal; 
+	font-style: normal; 
+} 
+.sidenav a, .sidenav ul li {
+	font-family: 'yg-jalnan';
+}
 </style>
 </head>
 <body>
+	<!-- sidemenu include -->
+	<div th:include="/inc/sidemenu::sidemenu"></div>
 	<div th:class="header">
 		<div th:include="/inc/topHeader"></div>
 	</div>
@@ -81,7 +99,7 @@
 						</div>
 						<div th:class="form-group">
 							<label th:for="qnaContent" th:text="'내용 : '"></label>
-							<textarea th:class="form-control" th:rows="14" th:name="qnaContent" th:id="qnaContent" th:text="${qna.qnaContent}"></textarea>
+							<textarea th:class="form-control" th:rows="10" th:name="qnaContent" th:id="qnaContent" th:text="${qna.qnaContent}"></textarea>
 							<span th:id="qnaContenthelper"></span>
 						</div>
 						<div th:id="modifyQnaBox">

@@ -11,11 +11,40 @@
 <link rel="stylesheet" media="all" href="css/itemList.css" />
 <script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
+<!-- sidemenu style, javascript 파일 -->
+<link rel="stylesheet" href="css/sidemenu.css">
+<script src="js/sidemenu.js"></script>
+<style>
+#qna-h2 {
+	margin-bottom: 20px;
+}
+.table {
+	text-align: center;
+}
+.btnBox {
+	width: 100%;
+	text-align: right;
+}
+/* sidemenu 추가하면서 수정된 style */
+#footer {
+	left: 0px;
+}
+@font-face { 
+	font-family: 'yg-jalnan'; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); 
+	font-weight: normal; 
+	font-style: normal; 
+} 
+.sidenav a, .sidenav ul li {
+	font-family: 'yg-jalnan';
+}
+</style>
 <script>
 	$(document).ready(function() {
 	//$(document).on("change", "input[name='categoryName']",function(){ 
 		$('#categoryType').change(function() {
 			var categoryType = $(this).val();
+			console.log(categoryType + " <--categoryType")
 			$.ajax({
 				url : '/getCategoryListByType',
 				type : 'GET',
@@ -55,16 +84,14 @@
 				return false;
 			}
 		});
-		
-		//$('.updateBtn').click(function(){
+
 		$(document).on("click", ".updateBtn", function(){
-			console.log('!!!!!!!!!!!!!!!!!!!!!!')
 			var originName = $(this).attr('class');
 			var arr = originName.split(" ");
 			var inputName = '#'+arr[0];
 			console.log(inputName);
 			$(inputName).text('');
-			$(inputName).append('<input type="text" name="categoryName" id="categoryName" value="' + arr[0] + '">');
+			$(inputName).append('<input type="text" class="form-control" name="categoryName" id="categoryName" value="' + arr[0] + '">');
 			$('.updateBtn').click(function(){
 				var categoryName = $('#categoryName').val();
 				console.log(categoryName);
@@ -84,11 +111,13 @@
 		});
 		
 		$(document).on("click", "#addCategory", function(){
-			$('#addCategoryBox').prepend('<select id="addCategoryType"><option value="item">상품</option><option value="board">게시판</option><option value="qna">자주묻는질문</option></select><input type="text" id="categoryName">');
+			$('#addCategoryBox').prepend('<div class="col-3"><select class="form-control" id="addCategoryType"><option value="item">상품</option><option value="board">게시판</option><option value="qna">자주묻는질문</option></select></div><div class="col-7"><input class="form-control" type="text" id="categoryName"></div>');
+			$('.btnBox').addClass('col-2');
 			$(this).attr('id', 'addBtn')
+			$(this).addClass('btn');
 			$('#addBtn').click(function(){
 				var categoryType = $('#addCategoryType').val(); 
-				console.log(categoryType)
+				console.log(categoryType);
 				var categoryName = $('#categoryName').val();
 				console.log(categoryName);
 				$.ajax({
@@ -109,32 +138,54 @@
 </script>
 </head>
 <body>
-<h1 th:text="'카테고리 리스트'"></h1>
-<div>
-	<select th:id="categoryType">
-		<option value="" th:text="전체보기">
-		<option th:value="item" th:text="상품"></option>
-		<option th:value="board" th:text="업체홍보게시판"></option>
-		<option th:value="qna" th:text="자주묻는질문"></option>
-	</select>
-	<table th:class="table">
-		<thead>
-			<tr>
-				<th th:text="'제목'"></th>
-				<th th:text="'수정'"></th>
-				<th th:text="'삭제'"></th>
-			</tr>
-		</thead>
-		<tbody th:id="categoryTable">
-			<tr th:each="category, stat : ${categoryList}">
-				<td th:text="${category.categoryName}" th:class="${category.categoryName}" th:id="${category.categoryName}"></td>
-				<td><button th:type="button" th:text="수정" th:class="${category.categoryName} +' updateBtn'"></button></td>
-				<td><button th:type="button" th:text="삭제" th:class="${category.categoryName} +' deleteBtn'"></button></td>
-			</tr>
-		</tbody>
-	</table>
-	<div id="addCategoryBox">
-		<button th:type="button" th:text="입력" th:id="addCategory"></button>
+<!-- sidemenu include -->
+<div th:include="/inc/sidemenu::sidemenu"></div>
+<div th:class="header">
+	<div th:include="/inc/topHeader"></div>
+</div>
+<div th:class="container-fluid">
+	<section th:id="content">
+		<div th:class="row">
+			<div th:class="col-sm-3"></div>
+			<div th:class="col-sm-6">
+				<h2 th:id="qna-h2" th:text="'카테고리 리스트'"></h2>
+				<div th:class="form-group">
+					<select th:class="form-control" th:id="categoryType">
+						<option value="" th:text="전체보기">
+						<option th:value="item" th:text="상품"></option>
+						<option th:value="board" th:text="업체홍보게시판"></option>
+						<option th:value="qna" th:text="자주묻는질문"></option>
+					</select>
+				</div>
+				<div>
+					<table th:class="table">
+						<thead>
+							<tr>
+								<th th:style="'width: 80%;'" th:text="'제목'"></th>
+								<th th:style="'width: 10%;'" th:text="'수정'"></th>
+								<th th:style="'width: 10%;'" th:text="'삭제'"></th>
+							</tr>
+						</thead>
+						<tbody th:id="categoryTable">
+							<tr th:each="category, stat : ${categoryList}">
+								<td th:text="${category.categoryName}" th:class="${category.categoryName}" th:id="${category.categoryName}"></td>
+								<td><button th:type="button" th:text="수정" th:class="${category.categoryName} +' updateBtn'"></button></td>
+								<td><button th:type="button" th:text="삭제" th:class="${category.categoryName} +' deleteBtn'"></button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div th:id="addCategoryBox" th:class="row">
+					<div th:class="btnBox">
+						<button th:type="button" th:text="입력" th:id="addCategory"></button>
+					</div>
+				</div>
+			</div>
+			<div th:class="col-sm-3"></div>
+		</div>
+	</section>
+	<div th:class="header">
+		<div th:include="/inc/copyRight"></div>
 	</div>
 </div>
 </body>

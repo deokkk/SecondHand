@@ -16,10 +16,10 @@ public interface ChatMapper {
 	public int insertChatMessage(ChatMessage chatMessage);
 	
 	// 메시지 리스트
-	public List<ChatMessage> selectMessage(String roomNo);
+	//public List<ChatMessage> selectMessage(String roomNo);
 	
 	// 안읽은 메시지 리스트
-	public List<ChatMessage> selectNewMessage(String roomNo);
+	//public List<ChatMessage> selectNewMessage(String roomNo);
 	
 	// 메시지 읽은 상태로 업데이트
 	public int updateChatRead(int chatNo);
@@ -27,7 +27,7 @@ public interface ChatMapper {
 	// 내 채팅 목록
 	public List<ChatRoom> selectMyChatList(String memberEmail);
 	
-	// 이전 메시지 리스트
+	// 메시지 리스트
 	public List<ChatMessage> selectChatMessageList(String roomNo);
 	
 	// 채팅방 나가기
