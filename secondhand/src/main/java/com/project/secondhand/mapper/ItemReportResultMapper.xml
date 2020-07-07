@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.secondhand.mapper.ItemReportResultMapper">
+	<select id="itemReportResultList" parameterType="com.project.secondhand.vo.ItemReportResult" resultType="com.project.secondhand.vo.ItemReportResult">
+		SELECT
+			item_report_result_no AS itemReportResultNo,
+			item_no AS itemNo,
+			member_no AS memberNo,
+			category_name AS categoryName,
+			item_report_result_content AS itemReportResultContent,
+			item_report_result_date AS itemReportResultDate
+		FROM market_item_report_result
+			
+	</select>
+	<select id="itemReportResultInfo" parameterType="com.project.secondhand.vo.ItemReportResult" resultType="com.project.secondhand.vo.ItemReportResult">
+		SELECT
+			item_report_result_no AS itemReportResultNo,
+			item_no AS itemNo,
+			member_no AS memberNo,
+			category_name AS categoryName,
+			item_report_result_content AS itemReportResultContent,
+			item_report_result_date AS itemReportResultDate
+			FROM market_item_report_result
+			WHERE item_report_result_no =#{itemReportResultNo}
+	</select>
+	<insert id="addItemReportResult" parameterType="com.project.secondhand.vo.ItemReportResult">
+		INSERT INTO 
+		market_item_report_result(
+			item_report_result_no,
+			item_no,
+			member_no,
+			category_name,
+			item_report_result_content,
+			item_report_result_date
+		)VALUES(
+			#{itemReportResultNo},
+			#{itemNo},
+			#{memberNo},
+			#{categoryName},
+			#{itemReportResultContent},
+			NOW())
+	</insert>
+</mapper>
