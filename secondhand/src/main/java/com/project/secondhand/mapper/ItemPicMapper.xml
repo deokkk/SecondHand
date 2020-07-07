@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.secondhand.mapper.ItemPicMapper">
+	<!-- 아이템 사진 추가  -->
 	<insert id="insertItemPic" parameterType="com.project.secondhand.vo.ItemPic">
 	INSERT INTO 
 	market_item_pic(
@@ -21,6 +22,7 @@
 	#{itemPicNameFive}
 	)
 	</insert>
+	<!-- 아이템 사진 삭제 -->
 	<delete id="deleteItemPic" parameterType = "int">
 	DELETE FROM market_item_pic
 	WHERE item_no = #{itemNo}

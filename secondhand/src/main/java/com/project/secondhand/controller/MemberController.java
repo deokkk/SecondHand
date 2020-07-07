@@ -2,6 +2,7 @@ package com.project.secondhand.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -253,6 +254,25 @@ public class MemberController {
 			model.addAttribute("memberInfo", memberInfo);
 			return "memberInfo";
 		}
+		
+	//회원 정보 수정
+		@GetMapping("/modifyMember")
+		public String modifyMember(HttpSession session, Model model) {
+			if(session.getAttribute("loginMember")==null) {
+				return "redirect:/";
+			}
+			MemberInfo memberInfo = memberService.selectMemberOne((LoginMember)(session.getAttribute("loginMember")));
+			model.addAttribute("memberInfo", memberInfo);
+			return "modifyMember";
+		}
+		@PostMapping("/modifyMember")
+		public String modifyMember(HttpSession session, MemberInfo memberInfo) {
+			System.out.println(memberInfo.getMemberEmail()+"<----------------------------------membercontroller memberemail");
+			memberService.modifyMember(memberInfo);
+			System.out.println(memberInfo.getMemberNickname()+"<----------------------------------membercontroller membernickname");
+			return "redirect:/memberInfo";
+		}
+		
 		@GetMapping("/removeMember")
 		public String removeMember(HttpSession session) {
 			if(session.getAttribute("loginMember")==null) {

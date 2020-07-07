@@ -4,9 +4,38 @@
 <head>
 <meta charset="utf-8">
 <title>Second Hand</title>
+<link rel="stylesheet" href="css/sidemenu.css">
+<script src="js/sidemenu.js"></script>
 </head>
 <link rel="stylesheet" media="all" href="css/base.css" />
+<style>
+#fixed-bar #fixed-bar-wrap .fixed-logo {
+	position: absolute;
+	top: 17px;
+	left: 10px;
+}
+#fixed-bar {
+	margin-left: 250px;
+	text-align: left;
+}
+#fixed-bar-wrap {
+	margin-left: 0px;
+}
+#footer {
+	left: 0px;
+}
+@font-face { 
+	font-family: 'yg-jalnan'; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); 
+	font-weight: normal; 
+	font-style: normal; 
+} 
+.sidenav a {
+	font-family: 'yg-jalnan';
+}
+</style>
 <body>
+<div th:include="/inc/sidemenu::sidemenu"></div>
 	<div class="frame">
 		<!-- class= "header" 상단 검색창 위치 조정 -->
 		<div class="header">
@@ -16,6 +45,7 @@
 		<div class="main">
 			<h1>여기다 내용 적으면 됨</h1>
 		</div>
+		
 	</div>
 	<div th:include="/inc/copyRight"></div>
 </body>

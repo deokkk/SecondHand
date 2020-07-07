@@ -14,9 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.secondhand.mapper.ItemMapper;
 import com.project.secondhand.mapper.ItemPicMapper;
 import com.project.secondhand.vo.Item;
-import com.project.secondhand.vo.ItemAndItemPic;
 import com.project.secondhand.vo.ItemPic;
 import com.project.secondhand.vo.ItemAndMemberAndMemberAddrAndItemPic;
+import com.project.secondhand.vo.ItemList;
 
 @Service
 @Transactional
@@ -27,10 +27,14 @@ public class ItemService {
    private ItemPicMapper itemPicMapper;
    @Value("D:\\maven.1593574788868\\secondhand\\src\\main\\resources\\static\\upload\\")
    private String path;
+   //카테고리별 아이템 리스트 출력
+   public List<ItemList> selectItemByCategory(String categoryName){
+	   return itemMapper.selectItemByCategory(categoryName);
+   }
    //주소별 아이템 리스트 출력
-   public List<ItemAndMemberAndMemberAddrAndItemPic> searchItemByAddr(String smallCity){
+   public List<ItemList> selectItemByAddr(String smallCity){
 	   System.out.println(smallCity+"<--itemService/smallCity");
-	   return itemMapper.searchItemByAddr(smallCity);
+	   return itemMapper.selectItemByAddr(smallCity);
    }
    //아이템 삭제
    public int removeItem(int itemNo) {
@@ -42,41 +46,41 @@ public class ItemService {
 	   return row;
    }
    //아이템 목록
-   public ArrayList<ItemAndItemPic> selectItemListByAll(){
+   public ArrayList<ItemList> selectItemListByAll(){
       return itemMapper.selectItemListByAll();
    }
    //아이템 상세보기
-   public ItemAndItemPic selectItemInfo(ItemAndItemPic itemAndItemPic) {
-	   System.out.println(itemAndItemPic + "/itemAndItemPic/ItemService");
-	   return itemMapper.selectItemInfo(itemAndItemPic);
+   public ItemList selectItemInfo(ItemList itemList) {
+	   System.out.println(itemList + "/itemList/ItemService");
+	   return itemMapper.selectItemInfo(itemList);
    }
    //아이템 추가
-   public void insertItem(ItemAndItemPic itemAndItemPic) {
-      System.out.println(itemAndItemPic + "/itemAndItemPic/1");
+   public void insertItem(ItemAndMemberAndMemberAddrAndItemPic itemAndMemberAndMemberAddrAndItemPic) {
+      System.out.println(itemAndMemberAndMemberAddrAndItemPic + "/itemAndMemberAndMemberAddrAndItemPic/1");
       Item item = new Item();
-      item.setItemNo(itemAndItemPic.getItemNo());
-      item.setMemberNo(itemAndItemPic.getMemberNo());
-      item.setCategoryName(itemAndItemPic.getCategoryName());
-      item.setItemTitle(itemAndItemPic.getItemTitle());
-      item.setItemContent(itemAndItemPic.getItemContent());
-      item.setItemPrice(itemAndItemPic.getItemPrice());
-      item.setItemState(itemAndItemPic.getItemState());
-      item.setItemDate(itemAndItemPic.getItemDate());
+      item.setItemNo(itemAndMemberAndMemberAddrAndItemPic.getItemNo());
+      item.setMemberNo(itemAndMemberAndMemberAddrAndItemPic.getMemberNo());
+      item.setCategoryName(itemAndMemberAndMemberAddrAndItemPic.getCategoryName());
+      item.setItemTitle(itemAndMemberAndMemberAddrAndItemPic.getItemTitle());
+      item.setItemContent(itemAndMemberAndMemberAddrAndItemPic.getItemContent());
+      item.setItemPrice(itemAndMemberAndMemberAddrAndItemPic.getItemPrice());
+      item.setItemState(itemAndMemberAndMemberAddrAndItemPic.getItemState());
+      item.setItemDate(itemAndMemberAndMemberAddrAndItemPic.getItemDate());
       System.out.println(item + "/item/2");
       itemMapper.insertItem(item);
       
       
 //      ItemPicForm itemPicForm = new ItemPicForm();
       int itemNo = Integer.valueOf(String.valueOf(item.getItemNo()));
-      MultipartFile itemPicOne1 = itemAndItemPic.getItemPicNameOne();
+      MultipartFile itemPicOne1 = itemAndMemberAndMemberAddrAndItemPic.getItemPicNameOne();
          System.out.println(itemPicOne1 + "/itemPicOne1/itemService");
-      MultipartFile itemPicOne2 = itemAndItemPic.getItemPicNameTwo();
+      MultipartFile itemPicOne2 = itemAndMemberAndMemberAddrAndItemPic.getItemPicNameTwo();
          System.out.println(itemPicOne2 + "/itemPicOne1/itemService");
-      MultipartFile itemPicOne3 = itemAndItemPic.getItemPicNameThree();
+      MultipartFile itemPicOne3 = itemAndMemberAndMemberAddrAndItemPic.getItemPicNameThree();
          System.out.println(itemPicOne3 + "/itemPicOne1/itemService");
-      MultipartFile itemPicOne4 = itemAndItemPic.getItemPicNameFour();
+      MultipartFile itemPicOne4 = itemAndMemberAndMemberAddrAndItemPic.getItemPicNameFour();
          System.out.println(itemPicOne4 + "/itemPicOne1/itemService");
-      MultipartFile itemPicOne5 = itemAndItemPic.getItemPicNameFive();
+      MultipartFile itemPicOne5 = itemAndMemberAndMemberAddrAndItemPic.getItemPicNameFive();
          System.out.println(itemPicOne5 + "/itemPicOne5/itemService");
       
       String originName1 = itemPicOne1.getOriginalFilename();
@@ -103,8 +107,8 @@ public class ItemService {
          // 마지막 점의 위치
          int lastDot = originName1.lastIndexOf(".");
          System.out.println(lastDot + "/lastDot/");
-         String extension = originName1.substring(0, lastDot) + originName1.substring(lastDot);
-         itemPicNameOne1 =extension;
+         String extension = originName1.substring(lastDot);
+         itemPicNameOne1 =itemAndMemberAndMemberAddrAndItemPic.getItemPicNameOne() + extension ;
          System.out.println(itemPicNameOne1 + "/itemNoPic/");
       }
       if(originName2.equals("")) {

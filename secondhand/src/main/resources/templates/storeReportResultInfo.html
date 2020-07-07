@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>itemReportResultOne</title>
+</head>
+<body>
+	<div class="header">
+      <div th:include="/inc/topHeader"></div>
+   </div>
+<div>
+	<h1>신고 상세보기</h1>
+	
+	<form method = "post" th:action = "@{/addStoreReportResult(boardNo =${storeReportResult.boardNo}, boardReportResultNo = ${boardReportDeferNo})}">
+	<div>
+	<span th:text = "${boardReportResultNo}" th:value="${boardReportResultNo}"></span>
+		<input type ="text" name="boardReportResultNo">
+		<input type="text" id="boardNo" name="boardNo"readonly="readonly" th:value="${storeReportResult.boardNo}">
+		<input type="text" id="memberNo" name="memberNo" th:value="1" readonly="readonly">
+	</div>
+	<div>
+		<input type="text" id="categoryName" name="categoryName"  readonly="readonly" th:value="${storeReportResult.categoryName}">
+	</div>
+	<div>
+		<input type= "text" id="boardReportResultContent" name="boardReportResultContent" th:value="${storeReportResult.boardReportResultContent}">
+	</div>
+	<div>
+		<input type="text" id="boardReportResultDate" name="boardReportResultDate" th:value="${storeReportResult.boardReportResultDate.substring(0,16)}">
+	</div>
+	<div>
+		
+	</div>
+	</form>
+</div>
+	 <div class="header">
+      <div th:include="/inc/copyRight"></div>
+   </div>
+</body>
+</html>

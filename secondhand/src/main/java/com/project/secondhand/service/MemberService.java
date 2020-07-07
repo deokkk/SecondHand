@@ -126,6 +126,11 @@ public class MemberService {
 		return memberMapper.selectMemberOne(loginMember);
 	}
 	
+	//회원 정보 수정
+	public void modifyMember(MemberInfo memberInfo) {
+		memberMapper.modifyMember(memberInfo);
+	}
+	
 	// 회원 번호 가져오기
 	public int getMemberNoByEmail(String memberEmail) {
 	   return memberMapper.selectMemberNoByEmail(memberEmail);

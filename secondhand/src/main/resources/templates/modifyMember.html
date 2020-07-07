@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Second Hand</title>
+</head>
+<link rel="stylesheet" media="all" href="css/base.css" />
+<body>
+	<div class="frame">
+		<!-- class= "header" 상단 검색창 위치 조정 -->
+		<div class="header">
+			<div th:include="/inc/topHeader"></div>
+		</div>
+		<!-- class = "main" 내용 위치 선정 -->
+		<div class="main">
+			<div class="container">
+				<h1 align="center">회원정보 수정</h1>
+				<form method="post" th:action="@{/modifyMember}" enctype="multipart/form-data" id="myform">
+					<div align="center">
+						<img th:src="@{'/upload/'+ ${memberInfo.memberPicName}}" width="100" height="100"></img>
+						<input type="file" id="memberPicName">	
+					</div>
+					
+					<div>
+						이름 : 
+						<input type="text" name = "memberNickname" id = "memberNickname" th:value="${memberInfo.memberNickname}">
+					</div>
+					<div>
+						비밀번호 : 
+						<input type="password" name = "memberPw" id = "memberPw">
+						<span id="pwHelper"></span>
+					</div>
+					<div>
+						비밀번호 확인 : 
+						<input type="password" id = "memberPw2">
+					</div>
+					<span th:text="${memberInfo.memberEmail}"></span>
+					<input type="hidden" name="memberEmail" th:value="${memberInfo.memberEmail}">
+					<div>
+						<button type="button" id="btn">수정</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div th:include="/inc/copyRight"></div>
+</body>
+<script>
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			if($('#memberPw').val() != $('#memberPw2').val()){
+				$('#pwHelper').text("pw를 확인하세요");
+				$('#memberPw').focus();
+				return;
+			}
+			$('#myform').submit();
+		});
+	});
+</script>
+</html>
