@@ -33,13 +33,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				 <tr th:each="itemReport,index : ${list}">
+				 <tr th:each="itemReport,index : ${itemReport}">
 				 	<td th:text="${itemReport.itemReportDeferNo}"></td>
 					<td th:text="${itemReport.itemNo}"></td>
 					<td th:text="${itemReport.memberNo}"></td>
 					<td th:text="${itemReport.categoryName}"></td>
-					<td th:text="${itemReport.itemReportDeferContent}"></td>
-					<td th:text="${itemReport.itemReportDeferDate}"></td>
+					<td><a th:href="@{/itemReportDeferInfo(itemReportDeferNo=${itemReport.itemReportDeferNo})}"><span th:text="${itemReport.itemReportDeferContent}"></span></a></td>
+					<td th:text="${itemReport.itemReportDeferDate.substring(0, 16)}"></td>
 				</tr>
 			</tbody>
 		</table>

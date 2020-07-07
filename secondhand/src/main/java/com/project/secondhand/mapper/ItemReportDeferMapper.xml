@@ -5,14 +5,25 @@
 <mapper namespace="com.project.secondhand.mapper.ItemReportDeferMapper">
 	<select id="itemReportDeferList" parameterType="com.project.secondhand.vo.ItemReportDefer" resultType="com.project.secondhand.vo.ItemReportDefer">
 		SELECT
-			item_report_defer_no,
-			item_no,
-			member_no,
-			category_name,
-			item_report_defer_content,
-			item_report_defer_date
+			item_report_defer_no AS itemReportDeferNo,
+			item_no AS itemNo,
+			member_no AS memberNo,
+			category_name AS categoryName,
+			item_report_defer_content AS itemReportDeferContent,
+			item_report_defer_date AS itemReportDeferDate
 		FROM market_item_report_defer
-		WHERE item_report_defer_no =#{itemReportDeferNo}
+			
+	</select>
+	<select id="itemReportDeferInfo" parameterType="com.project.secondhand.vo.ItemReportDefer" resultType="com.project.secondhand.vo.ItemReportDefer">
+		SELECT
+			item_report_defer_no AS itemReportDeferNo,
+			item_no AS itemNo,
+			member_no AS memberNo,
+			category_name AS categoryName,
+			item_report_defer_content AS itemReportDeferContent,
+			item_report_defer_date AS itemReportDeferDate
+			FROM market_item_report_defer
+			WHERE item_report_defer_no =#{itemReportDeferNo}
 	</select>
 	<insert id="addItemReportDefer" parameterType="com.project.secondhand.vo.ItemReportDefer">
 		INSERT INTO 
@@ -24,11 +35,15 @@
 			item_report_defer_content,
 			item_report_defer_date
 		)VALUES(
-			#{itemReportDefeNo},
+			#{itemReportDeferNo},
 			#{itemNo},
 			#{memberNo},
 			#{categoryName},
 			#{itemReportDeferContent},
 			NOW())
 	</insert>
+	<delete id="removeItemReportDefer" parameterType="int">
+		DELETE FROM market_item_report_defer
+		WHERE item_report_defer_no =#{itemReportDeferNo}
+	</delete>
 </mapper>
