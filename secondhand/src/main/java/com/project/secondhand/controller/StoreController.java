@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import com.project.secondhand.mapper.ItemReportResultMapper;
 import com.project.secondhand.service.CategoryService;
 import com.project.secondhand.service.StoreService;
@@ -33,7 +34,11 @@ public class StoreController {
 	private StoreService storeService;
 	@Autowired
 	private CategoryService categoryService;
-	
+	//업체홍보관련 카테고리 선택 템플릿
+	@GetMapping("/categoryListByStore")
+	public String categoryListByStore() {
+		return "categoryListByStore";
+	}
 	//회원가입 선택화면
 	@GetMapping("/addMemberChose")
 	public String addMemberChose(HttpSession session) {
@@ -141,9 +146,8 @@ public class StoreController {
 
 	//업체홍보 리스트
 	@GetMapping("/storeBoardList")
-	public String selectStoreBoardList(Model model) {
-		List<Category> categoryList = categoryService.getCategoryList("업체홍보");
-		
+	public String selectStoreBoardList(Model model) {		
+	List<Category> categoryList = categoryService.getCategoryList("업체홍보");		
 	ArrayList<StoreList> list = storeService.selectStoreBoardList();
 	model.addAttribute("list", list);
 	model.addAttribute("categoryList", categoryList);
@@ -176,15 +180,23 @@ public class StoreController {
 	
 	//업체홍보 추가하기 form
 	@GetMapping("/addStoreBoard")
-	public String addStoreBoard(Model model) {
+	public String addStoreBoard(HttpSession session, Model model) {
+		if(session.getAttribute("loginStore")==null) {
+			return "redirect:/";
+		}
+		Store loginStore = (Store)session.getAttribute("loginStore");
+		System.out.println(loginStore + "/loginStore/StoreController");
 		List<Category> list = categoryService.getCategoryList("업체홍보");
 		model.addAttribute("categoryList", list);
+		model.addAttribute("loginStore", loginStore);
 		System.out.println(list + "/list/StoreController");
 		return "addStoreBoard";
 	}
 	//업체홍보 추가하기 action
 	@PostMapping("/addStoreBoard")
 	public String addStoreBoard(StoreBoardAndBoardPic storeBoardAndBoardPic) {
+		
+			
 		System.out.println(storeBoardAndBoardPic + "/storeBoardAndBoardPic/StoreController");
 		storeService.addStoreBoard(storeBoardAndBoardPic);
 		return "redirect:/storeBoardList";
@@ -202,7 +214,12 @@ public class StoreController {
 	
 	//업체홍보 삭제하기
 	@GetMapping("/removeStoreBoard")
-	public String removeStoreBoard(int boardNo) {
+	public String removeStoreBoard(HttpSession session, int boardNo) {
+		if(session.getAttribute("loginStore")==null) {
+			return "redirect:/";
+		}
+		System.out.println(boardNo + "/boardNo/removeStoreBoard");
+		storeService.deleteStoreBoard(boardNo);
 		return "redirect:/storeBoardList";
 	}
 	
@@ -241,7 +258,7 @@ public class StoreController {
 			return "findStoreId";
 		}
 	//업체 아이디찾기 Action
-		@PostMapping("findStoreId")
+		@PostMapping("/findStoreId")
 		public String findStoreId(Model model, Store store, HttpSession session) {
 			if(session.getAttribute("loginStore")!= null) {
 				return "redirect:/";

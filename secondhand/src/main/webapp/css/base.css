@@ -12,6 +12,52 @@ margin_bottom: 20px;
 }
 .main{
 float: left;
-width:600px;
-
+width:1200px;
+}
+.categoryImg{
+	width:1200px;	
+	padding-left: 400px;
+	padding-top: 40px;
+}
+.mainImg{
+	padding-left: 50px;
+	width: 250px;
+}
+.mainImg2{
+	padding-bottom : 55px;
+	padding-left: 50px;
+	width: 100px;
+}
+.mainImg3{
+	padding-bottom : 40px;
+	padding-left: 50px;
+	width: 100px;
+}
+.mainImg4{
+	padding-bottom : 40px;
+	padding-left: 50px;
+	width: 100px;
+}
+.mainImg5{
+	padding-bottom : 40px;
+	padding-left: 50px;
+	width: 100px;
+}
+.mainImg6{
+	padding-bottom : 40px;
+	padding-left: 50px;
+	width: 100px;
+}
+.mainImg7{
+	padding-bottom : 40px;
+	padding-left: 50px;
+	width: 100px;
+}
+.mainImg8{
+	padding-bottom : 40px;
+	padding-left: 50px;
+	width: 100px;
+}
+a.underLine{
+	 text-decoration: none;
 }

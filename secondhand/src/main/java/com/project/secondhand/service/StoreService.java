@@ -249,7 +249,11 @@ public class StoreService {
    
    //홍보업체 게시물 삭제하기
    public int deleteStoreBoard(int boardNo) {
-      return storeMapper.deleteStoreBoard(boardNo);
+	   int row = storePicMapper.deleteStoreBoardPic(boardNo);
+	   if(row ==1) {		   
+		   storeMapper.deleteStoreBoard(boardNo);
+	   }
+      return row; 
    }
    
    //업체 가입

@@ -27,7 +27,7 @@ public class ItemController {
 	
 	
 	//아이템 삭제
-	@GetMapping("removeItem")
+	@GetMapping("/removeItem")
 	public String removeItem(@RequestParam(value="itemNo", required = false) int itemNo) {
 		itemService.removeItem(itemNo);
 		return "redirect:/itemList";

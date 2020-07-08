@@ -189,7 +189,7 @@ public class MemberController {
 		return "findMemberId";
 	}
 	//회원 아이디찾기 Action
-	@PostMapping("findMemberId")
+	@PostMapping("/findMemberId")
 	public String findMemberId(Model model, Member member, HttpSession session) {
 		if(session.getAttribute("loginMember")!= null) {
 			return "redirect:/";
@@ -280,7 +280,7 @@ public class MemberController {
 			}
 				return "removeMember";
 		}
-		@PostMapping("removeMember")
+		@PostMapping("/removeMember")
 		public String removeMember(HttpSession session, Member member, MemberPic memberPic,@RequestParam("memberPw")String memberPw) {
 			if(session.getAttribute("loginMember")==null) {
 				return "redirect:/";
