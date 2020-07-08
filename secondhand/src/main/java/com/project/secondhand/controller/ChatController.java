@@ -32,6 +32,7 @@ public class ChatController {
 		int chatFrom = memberService.getMemberNoByEmail(((LoginMember)session.getAttribute("loginMember")).getMemberEmail());
 		System.out.println(chatFrom);
 		String roomNo = chatService.addChatRoom(chatTo, chatFrom);
+		model.addAttribute("chatRoomInfo", chatService.getRoomOne(roomNo));
 		model.addAttribute("roomNo", roomNo);		
 		return "chatRoom";
 	}

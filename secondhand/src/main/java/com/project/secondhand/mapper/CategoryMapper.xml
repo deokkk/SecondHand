@@ -8,7 +8,7 @@
 		SELECT 
 			category_name categoryName
 		FROM market_category
-		WHERE category_type =#{categoryType}	
+		WHERE category_type LIKE CONCAT('%', #{categoryType}, '%')	
 	</select>	
 
 	<!-- 전체 카테고리 리스트 -->

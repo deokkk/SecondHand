@@ -64,6 +64,20 @@ section, article, aside, footer, header, nav, hgroup {
 	color : #54905e;
 	
 }
+
+#chatListBtn {
+	position: absolute;
+	left: 900px;
+	top: 17px;
+	border-radius: 4px;
+	border: solid 2px #B5E61D;
+	text-decoration: none;
+	width: 65px;
+	height: 46px;
+	font-weight: bold;
+	background: #B5E61D;
+	color : #54905e;
+}
 /* line 49, /app/app/assets/stylesheets/home/articles/structure.css.scss */
 .sr-only {
 	position: absolute;

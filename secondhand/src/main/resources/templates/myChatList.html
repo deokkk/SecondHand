@@ -11,7 +11,21 @@
 <script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <style>
 td {
+	width: 400px;
 	padding: 0px;
+}
+.btn {
+	width: 400px;
+	height: 60px;
+	padding: 0px;
+	font-size: x-large;
+	margin-bottom: 5px;
+	border: 1px solid #c1c1c1;
+	border-radius: 0.1em;
+}
+
+.btn:hover {
+	background-color: #c1c1c1;
 }
 
 .titleBox {
@@ -23,10 +37,10 @@ td {
 <div th:class="titleBox">
 	<h2 th:text="채팅목록"></h2>
 </div>
-<table th:class="table" style="width: 400px;">
+<table>
 	<tr th:each="chatRoom : ${myChatList}">
-		<td th:if="${session.loginMember.memberEmail} == ${chatRoom.chatToEmail}"><a style="width: 400px; height: 60px;" class="btn" th:href="@{/chatRoom(roomNo=${chatRoom.roomNo})}" th:text="${chatRoom.chatFromNickName}"></a></td>
-		<td th:if="${session.loginMember.memberEmail} == ${chatRoom.chatFromEmail}"><a style="width: 400px; height: 60px;" class="btn" th:href="@{/chatRoom(roomNo=${chatRoom.roomNo})}" th:text="${chatRoom.chatToNickName}"></a></td>
+		<td th:if="${session.loginMember.memberEmail} == ${chatRoom.chatToEmail}"><a class="btn" th:href="@{/chatRoom(roomNo=${chatRoom.roomNo})}" th:text="${chatRoom.chatFromNickName}"></a></td>
+		<td th:if="${session.loginMember.memberEmail} == ${chatRoom.chatFromEmail}"><a class="btn" th:href="@{/chatRoom(roomNo=${chatRoom.roomNo})}" th:text="${chatRoom.chatToNickName}"></a></td>
 	</tr>
 </table>
 </body>

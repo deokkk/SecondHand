@@ -5,6 +5,8 @@
 <title>secondhand</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -21,6 +23,7 @@
 .table {
 	text-align: center;
 }
+
 .btnBox {
 	width: 100%;
 	text-align: right;
@@ -52,7 +55,7 @@
 				success : function(data) {
 					$('#categoryTable').empty();
 					$.each(data, function(i) {
-						$('#categoryTable').append('<tr><td class="' + data[i].categoryName + '" id="' + data[i].categoryName + '">'+ data[i].categoryName + '</td><td><button type="button" class="'+ data[i].categoryName +' updateBtn">수정</button></td><td><button type="button" id="deleteBtn">삭제</button></td>');
+						$('#categoryTable').append('<tr><td class="' + data[i].categoryName + '" id="' + data[i].categoryName + '">'+ data[i].categoryName + '</td><td><button type="button" class="'+ data[i].categoryName +' updateBtn"><i class="far fa-edit" style="font-size:24px"></i></button></td><td><button type="button" id="deleteBtn"><i class="fa fa-remove" style="font-size:24px;color:red"></i></button></td>');
 					});
 				},
 				error : function() {
@@ -169,15 +172,15 @@
 						<tbody th:id="categoryTable">
 							<tr th:each="category, stat : ${categoryList}">
 								<td th:text="${category.categoryName}" th:class="${category.categoryName}" th:id="${category.categoryName}"></td>
-								<td><button th:type="button" th:text="수정" th:class="${category.categoryName} +' updateBtn'"></button></td>
-								<td><button th:type="button" th:text="삭제" th:class="${category.categoryName} +' deleteBtn'"></button></td>
+								<td><button th:type="button" th:class="${category.categoryName} +' updateBtn'"><i class='far fa-edit' style='font-size:24px'></i></button></td>
+								<td><button th:type="button" th:class="${category.categoryName} +' deleteBtn'"><i class="fa fa-remove" style="font-size:24px;color:red"></i></button></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<div th:id="addCategoryBox" th:class="row">
 					<div th:class="btnBox">
-						<button th:type="button" th:text="입력" th:id="addCategory"></button>
+						<button th:class="'btn btn-success'" th:type="button" th:text="입력" th:id="addCategory"></button>
 					</div>
 				</div>
 			</div>
