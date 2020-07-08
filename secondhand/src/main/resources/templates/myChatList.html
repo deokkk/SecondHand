@@ -13,11 +13,17 @@
 td {
 	padding: 0px;
 }
+
+.titleBox {
+	text-align: center;
+}
 </style>
 </head>
 <body>
-<h1 th:text="채팅목록"></h1>
-<table style="width: 400px;">
+<div th:class="titleBox">
+	<h2 th:text="채팅목록"></h2>
+</div>
+<table th:class="table" style="width: 400px;">
 	<tr th:each="chatRoom : ${myChatList}">
 		<td th:if="${session.loginMember.memberEmail} == ${chatRoom.chatToEmail}"><a style="width: 400px; height: 60px;" class="btn" th:href="@{/chatRoom(roomNo=${chatRoom.roomNo})}" th:text="${chatRoom.chatFromNickName}"></a></td>
 		<td th:if="${session.loginMember.memberEmail} == ${chatRoom.chatFromEmail}"><a style="width: 400px; height: 60px;" class="btn" th:href="@{/chatRoom(roomNo=${chatRoom.roomNo})}" th:text="${chatRoom.chatToNickName}"></a></td>
