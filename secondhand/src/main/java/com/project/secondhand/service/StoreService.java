@@ -45,7 +45,7 @@ public class StoreService {
    private StoreMapper storeMapper;
    @Autowired
    private StorePicMapper storePicMapper;
-   @Value("D:\\maven.1593574788868\\secondhand\\src\\main\\resources\\static\\upload\\")
+   @Value("C:\\Users\\JJH\\Documents\\workspace-spring-tool-suite-4-4.6.1.RELEASE\\maven.1594187164632\\secondhand\\src\\main\\resources\\static\\upload\\")
    private String path;
    //카테고리 기준으로 업체 리스트 가져오기
    public List<StoreList>selectStoreBoardListByCategory(String categoryName){
@@ -69,7 +69,7 @@ public class StoreService {
 		      if(row == 1) {
 		         storeMapper.deleteStoreBoard(boardNo);
 		      }
-		      return storeMapper.deleteStoreBoard(boardNo);
+		      return row;
 		   }
    //홍보업체 게시물 추가하기
    public void addStoreBoard(StoreBoardAndBoardPic storeBoardAndBoardPic) {
@@ -245,8 +245,96 @@ public class StoreService {
 	 
 
    //홍보업체 게시물 수정하기
-   public int updateStoreBoard(StoreBoard storeBoard) {
-      return storeMapper.updateStoreBoard(storeBoard);
+   public void updateStoreBoard(StoreBoardAndBoardPic storeBoardAndBoardPic) {
+	   StoreBoard storeBoard = new StoreBoard();
+	      storeBoard.setBoardNo(storeBoardAndBoardPic.getBoardNo());
+	      storeBoard.setBoardTitle(storeBoardAndBoardPic.getBoardTitle());
+	      storeBoard.setBoardContent(storeBoardAndBoardPic.getBoardContent());
+	      storeMapper.updateStoreBoard(storeBoard);
+	      String storePicNameOne1 = null;
+	      String storePicNameOne2 = null;
+	      String storePicNameOne3 = null;
+	      String storePicNameOne4 = null;
+	      String storePicNameOne5 = null;
+	      if(!storeBoardAndBoardPic.getBoardPicNameOne().isEmpty()) {
+	    	  storePicNameOne1 = storeBoardAndBoardPic.getBoardPicNameOne().getOriginalFilename(); 
+	           }
+	            
+	    
+	       try {
+	          new File(path).mkdirs();
+	          storeBoardAndBoardPic.getBoardPicNameOne().transferTo(new File(path+storePicNameOne1));
+	       } catch (IllegalStateException e) {
+	          e.printStackTrace();
+	       } catch (IOException e) {
+	          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
+	    
+	          }
+	       if(!storeBoardAndBoardPic.getBoardPicNameTwo().isEmpty()) {
+		    	  storePicNameOne2 = storeBoardAndBoardPic.getBoardPicNameTwo().getOriginalFilename(); 
+		           }
+		            
+		    
+		       try {
+		          new File(path).mkdirs();
+		          storeBoardAndBoardPic.getBoardPicNameTwo().transferTo(new File(path+storePicNameOne2));
+		       } catch (IllegalStateException e) {
+		          e.printStackTrace();
+		       } catch (IOException e) {
+		          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
+		    
+		          }
+		       if(!storeBoardAndBoardPic.getBoardPicNameThree().isEmpty()) {
+			    	  storePicNameOne3 = storeBoardAndBoardPic.getBoardPicNameThree().getOriginalFilename(); 
+			           }
+			            
+			    
+			       try {
+			          new File(path).mkdirs();
+			          storeBoardAndBoardPic.getBoardPicNameThree().transferTo(new File(path+storePicNameOne3));
+			       } catch (IllegalStateException e) {
+			          e.printStackTrace();
+			       } catch (IOException e) {
+			          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
+			    
+			          }
+			       if(!storeBoardAndBoardPic.getBoardPicNameFour().isEmpty()) {
+				    	  storePicNameOne4 = storeBoardAndBoardPic.getBoardPicNameFour().getOriginalFilename(); 
+				           }
+				            
+				    
+				       try {
+				          new File(path).mkdirs();
+				          storeBoardAndBoardPic.getBoardPicNameFour().transferTo(new File(path+storePicNameOne4));
+				       } catch (IllegalStateException e) {
+				          e.printStackTrace();
+				       } catch (IOException e) {
+				          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
+				    
+				          }
+				       if(!storeBoardAndBoardPic.getBoardPicNameFive().isEmpty()) {
+					    	  storePicNameOne5 = storeBoardAndBoardPic.getBoardPicNameFive().getOriginalFilename(); 
+					           }
+					            
+					    
+					       try {
+					          new File(path).mkdirs();
+					          storeBoardAndBoardPic.getBoardPicNameFive().transferTo(new File(path+storePicNameOne5));
+					       } catch (IllegalStateException e) {
+					          e.printStackTrace();
+					       } catch (IOException e) {
+					          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
+					    
+					          }
+	      System.out.println(storePicNameOne1 + "/storePicNameOne1");
+   			StoreBoardPic storeBoardPic = new StoreBoardPic();
+   			storeBoardPic.setBoardNo(storeBoardAndBoardPic.getBoardNo());
+	      storeBoardPic.setBoardPicNameOne(storePicNameOne1);
+	      storeBoardPic.setBoardPicNameTwo(storePicNameOne2);
+	      storeBoardPic.setBoardPicNameThree(storePicNameOne3);
+	      storeBoardPic.setBoardPicNameFour(storePicNameOne4);
+	      storeBoardPic.setBoardPicNameFive(storePicNameOne5);
+	      storePicMapper.updateStoreBoardPic(storeBoardPic);
    }
    
    //홍보업체 게시물 삭제하기

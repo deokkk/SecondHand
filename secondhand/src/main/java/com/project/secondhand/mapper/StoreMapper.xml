@@ -174,8 +174,9 @@
   <update id="updateStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard">
   	UPDATE market_store_board
   	SET
-  		board_title =#{boardTitle},
-  		board_content =#{boardContent}
+  		board_title = #{boardTitle},
+  		board_content = #{boardContent},
+  		board_date = NOW()
   	WHERE board_no =#{boardNo}
   </update>
   <!-- 업체 삭제하기 -->

@@ -19,4 +19,6 @@ public interface StorePicMapper {
 	public void insertStorePic(StorePic storePic);
 	// 업체 게시글 작성 시 사진 추가
 	public void insertStoreBoardPic(StoreBoardPic storeBoardPic);
+	//업체 사진 업데이트
+	public void updateStoreBoardPic(StoreBoardPic storeBoardPic);
 }

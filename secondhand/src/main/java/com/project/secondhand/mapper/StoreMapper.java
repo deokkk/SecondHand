@@ -26,7 +26,7 @@ public interface StoreMapper {
 	//업체 추가하기
 	public void insertStoreBoard(StoreBoard storeBoard);
 	//업체 수정하기
-	public int updateStoreBoard(StoreBoard storeBoard);
+	public void updateStoreBoard(StoreBoard storeBoard);
 	//업체 삭제하기
 	public int deleteStoreBoard(int boardNo);
 	//업체가입

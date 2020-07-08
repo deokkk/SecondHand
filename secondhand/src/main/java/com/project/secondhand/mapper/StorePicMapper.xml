@@ -4,6 +4,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.secondhand.mapper.StorePicMapper">
 	<!-- 업체 게시글 사진 삭제 -->
+	<update id = "updateStoreBoardPic" parameterType = "com.project.secondhand.vo.StoreBoardPic">
+	UPDATE market_store_board_pic
+	SET	
+	board_pic_name_one = #{boardPicNameOne},
+	board_pic_name_two = #{boardPicNameTwo},
+	board_pic_name_three = #{boardPicNameThree},
+	board_pic_name_four = #{boardPicNameFour},
+	board_pic_name_five = #{boardPicNameFive}
+	WHERE
+	board_no = #{boardNo}
+	
+	</update>
 	<delete id="deleteStoreBoardPic" parameterType="int">
 		DELETE
 		FROM market_store_board_pic

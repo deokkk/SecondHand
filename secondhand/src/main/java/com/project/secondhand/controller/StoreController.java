@@ -182,9 +182,11 @@ public class StoreController {
 	
 	//업체홍보 추가하기 form
 	@GetMapping("/addStoreBoard")
-	public String addStoreBoard(Model model) {
+	public String addStoreBoard(HttpSession session, Model model) {
+		Store loginStore = (Store)session.getAttribute("loginStore");
 		List<Category> list = categoryService.getCategoryList("업체홍보");
 		model.addAttribute("categoryList", list);
+		model.addAttribute("loginStore", loginStore);
 		System.out.println(list + "/list/StoreController");
 		return "addStoreBoard";
 	}
@@ -198,12 +200,20 @@ public class StoreController {
 	}
 	//업체홍보 수정하기
 	@GetMapping("/modifyStoreBoard")
-	public String modifyStoreBoard(StoreBoard storeBoard) {
+	public String modifyStoreBoard(HttpSession session, StoreList storeList, @RequestParam("boardNo") int boardNo, Model model) {
+		System.out.println(boardNo + "/boardNo/modifyStoreBoard");
+
+		storeList = storeService.selectStoreBoardInfo(storeList);
+		System.out.println(storeList + "/storeList/modifyStoreBoard");
+		model.addAttribute("board", storeList);
+		model.addAttribute("boardNo", boardNo);
+
 		return "/modifyStoreBoard";
 	}
 	@PostMapping("/modifyStoreBoard")
-	public String modifyStoreBoard() {
-		return "redirect:/storeBoardListInfo";
+	public String modifyStoreBoard(StoreBoardAndBoardPic storeBoardAndBoardPic) {
+		storeService.updateStoreBoard(storeBoardAndBoardPic);
+		return "redirect:/storeBoardList";
 	}
 	
 	//업체홍보 삭제하기
