@@ -2,38 +2,40 @@ package com.project.secondhand.vo;
 
 public class StorePic {
 	private int storeNo;
-	private String storePicName;
-	private String storePicSize;
-	private String storePicExt;
-	public int getStroreNo() {
+	private String storePicNameOne;
+	private String storePicNameTwo;
+	private String storePicNameThree;
+	public int getStoreNo() {
 		return storeNo;
 	}
-	public void setStroreNo(int stroreNo) {
-		this.storeNo = stroreNo;
+	public void setStoreNo(int storeNo) {
+		this.storeNo = storeNo;
 	}
-	public String getStorePicName() {
-		return storePicName;
+	public String getStorePicNameOne() {
+		return storePicNameOne;
 	}
-	public void setStorePicName(String storePicName) {
-		this.storePicName = storePicName;
+	public void setStorePicNameOne(String storePicNameOne) {
+		this.storePicNameOne = storePicNameOne;
 	}
-	public String getStorePicSize() {
-		return storePicSize;
+	public String getStorePicNameTwo() {
+		return storePicNameTwo;
 	}
-	public void setStorePicSize(String storePicSize) {
-		this.storePicSize = storePicSize;
+	public void setStorePicNameTwo(String storePicNameTwo) {
+		this.storePicNameTwo = storePicNameTwo;
 	}
-	public String getStorePicExt() {
-		return storePicExt;
+	public String getStorePicNameThree() {
+		return storePicNameThree;
 	}
-	public void setStorePicExt(String storePicExt) {
-		this.storePicExt = storePicExt;
+	public void setStorePicNameThree(String storePicNameThree) {
+		this.storePicNameThree = storePicNameThree;
 	}
 	@Override
 	public String toString() {
-		return "StorePic [storeNo=" + storeNo + ", storePicName=" + storePicName + ", storePicSize=" + storePicSize
-				+ ", storePicExt=" + storePicExt + "]";
+		return "StorePic [storeNo=" + storeNo + ", storePicNameOne=" + storePicNameOne + ", storePicNameTwo="
+				+ storePicNameTwo + ", storePicNameThree=" + storePicNameThree + "]";
 	}
-	
-	
+
+
 }
+
+	

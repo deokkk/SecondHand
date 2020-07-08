@@ -18,13 +18,13 @@
 				<h1 align="center">회원정보 수정</h1>
 				<form method="post" th:action="@{/modifyMember}" enctype="multipart/form-data" id="myform">
 					<div align="center">
-						<img th:src="@{'/upload/'+ ${memberInfo.memberPicName}}" width="100" height="100"></img>
+						<img th:src="@{'/upload/'+ ${memberInfo?.memberPicName}}" width="100" height="100"></img>
 						<input type="file" id="memberPicName">	
 					</div>
 					
 					<div>
 						이름 : 
-						<input type="text" name = "memberNickname" id = "memberNickname" th:value="${memberInfo.memberNickname}">
+						<input type="text" name = "memberNickname" id = "memberNickname" th:value="${memberInfo?.memberNickname}">
 					</div>
 					<div>
 						비밀번호 : 
@@ -35,8 +35,8 @@
 						비밀번호 확인 : 
 						<input type="password" id = "memberPw2">
 					</div>
-					<span th:text="${memberInfo.memberEmail}"></span>
-					<input type="hidden" name="memberEmail" th:value="${memberInfo.memberEmail}">
+					<span th:text="${memberInfo?.memberEmail}"></span>
+					<input type="hidden" name="memberEmail" th:value="${memberInfo?.memberEmail}">
 					<div>
 						<button type="button" id="btn">수정</button>
 					</div>

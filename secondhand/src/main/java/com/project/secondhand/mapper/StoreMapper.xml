@@ -141,7 +141,7 @@
   			#{storeAddr},
   			#{storePhone},
   			#{storeEmail},
-  			#{storePw},
+  			PASSWORD(#{storePw},
   			NOW()
   		)
   </insert>
@@ -150,14 +150,14 @@
   	INSERT INTO 
   		market_store_pic(
   			store_no,
-  			store_pic_name,
-  			store_pic_size,
-  			store_pic_ext
+  			store_pic_name_one,
+  			store_pic_name_two,
+  			store_pic_name_three
   		)VALUES(
   			#{storeNo},
-  			#{storePicName},
-  			#{storePicSize},
-  			#{storePicExt}
+  			#{storePicNameOne},
+  			#{storePicNameTwo},
+  			#{storePicNameThree}
   		)
   		
   </insert>

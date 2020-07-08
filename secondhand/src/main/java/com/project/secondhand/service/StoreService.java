@@ -278,10 +278,10 @@ public class StoreService {
       } 
       String sizename = Integer.toString((int) file.length());
       StorePic storePic = new StorePic();
-      storePic.setStroreNo(storePicForm.getStroreNo());
-      storePic.setStorePicExt(extension);
-      storePic.setStorePicName(storePicName);
-      storePic.setStorePicSize(sizename+"byte");
+      storePic.setStoreNo(storePicForm.getStroreNo());
+      storePic.setStorePicNameOne(extension);
+      storePic.setStorePicNameTwo(extension);
+      storePic.setStorePicNameThree(extension);
       System.out.print(storePic.toString());
       storeMapper.addStorePic(storePic);
    }
