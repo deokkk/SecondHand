@@ -141,7 +141,7 @@
   			#{storeAddr},
   			#{storePhone},
   			#{storeEmail},
-  			PASSWORD(#{storePw},
+  			#{storePw},
   			NOW()
   		)
   </insert>
@@ -150,14 +150,14 @@
   	INSERT INTO 
   		market_store_pic(
   			store_no,
-  			store_pic_name_one,
-  			store_pic_name_two,
-  			store_pic_name_three
+  			store_pic_name,
+  			store_pic_size,
+  			store_pic_ext
   		)VALUES(
   			#{storeNo},
-  			#{storePicNameOne},
-  			#{storePicNameTwo},
-  			#{storePicNameThree}
+  			#{storePicName},
+  			#{storePicSize},
+  			#{storePicExt}
   		)
   		
   </insert>
@@ -201,29 +201,39 @@
 	WHERE store_phone = #{storePhone}
   </select>
   <!-- 신고기능 -->
-  <select id="storeReportDeferList" parameterType="com.project.secondhand.vo.StoreReportDefer" resultType="com.project.secondhand.vo.StoreReportDefer">
+  <select id="storeReportDeferList" parameterType="com.project.secondhand.vo.StoreReportDeferAndStoreBoardAndMember" resultType="com.project.secondhand.vo.StoreReportDeferAndStoreBoardAndMember">
 		SELECT
-			board_report_defer_no AS boardReportDeferNo,
-			board_no AS boardNo,
-			member_no AS memberNo,
-			category_name AS categoryName,
-			board_report_defer_content AS boardReportDeferContent,
-			board_report_defer_date AS boardReportDeferDate
-		FROM market_store_report_defer
+			br.board_report_defer_no AS boardReportDeferNo,
+			br.board_no AS boardNo,
+			br.member_no AS memberNo,
+			br.category_name AS categoryName,
+			br.board_report_defer_content AS boardReportDeferContent,
+			br.board_report_defer_date AS boardReportDeferDate,
+			sb.board_title AS boardTitle,
+			sb.board_content AS boardContent,
+			m.member_nickname AS memberNickname
+		FROM market_store_report_defer br
+		INNER JOIN market_store_board sb ON br.board_no=sb.board_no
+		INNER JOIN market_member m ON br.member_no=m.member_no
 			
 	</select>
-	<select id="storeReportDeferInfo" parameterType="com.project.secondhand.vo.StoreReportDefer" resultType="com.project.secondhand.vo.StoreReportDefer">
+	<select id="storeReportDeferInfo" parameterType="com.project.secondhand.vo.StoreReportDeferAndStoreBoardAndMember" resultType="com.project.secondhand.vo.StoreReportDeferAndStoreBoardAndMember">
 		SELECT
-			board_report_defer_no AS boardReportDeferNo,
-			board_no AS boardNo,
-			member_no AS memberNo,
-			category_name AS categoryName,
-			board_report_defer_content AS boardReportDeferContent,
-			board_report_defer_date AS boardReportDeferDate
-			FROM market_store_report_defer
-			WHERE board_report_defer_no =#{boardReportDeferNo}
+			br.board_report_defer_no AS boardReportDeferNo,
+			br.board_no AS boardNo,
+			br.member_no AS memberNo,
+			br.category_name AS categoryName,
+			br.board_report_defer_content AS boardReportDeferContent,
+			br.board_report_defer_date AS boardReportDeferDate,
+			sb.board_title AS boardTitle,
+			sb.board_content AS boardContent,
+			m.member_nickname AS memberNickname
+		FROM market_store_report_defer br
+		INNER JOIN market_store_board sb ON br.board_no=sb.board_no
+		INNER JOIN market_member m ON br.member_no=m.member_no
+		WHERE br.board_report_defer_no =#{boardReportDeferNo}
 	</select>
-	<insert id="addStoreReportDefer" parameterType="com.project.secondhand.vo.StoreReportDefer">
+	<insert id="addStoreReportDefer" parameterType="com.project.secondhand.vo.StoreReportDeferAndStoreBoardAndMember">
 		INSERT INTO 
 		market_store_report_defer(
 			board_report_defer_no,
@@ -246,29 +256,39 @@
 		WHERE board_report_defer_no =#{boardReportDeferNo}
 	</delete>
 	<!-- 신고결과 -->
-	<select id="storeReportResultList" parameterType="com.project.secondhand.vo.StoreReportResult" resultType="com.project.secondhand.vo.StoreReportResult">
+	<select id="storeReportResultList" parameterType="com.project.secondhand.vo.StoreReportResultAndStoreBoardAndMember" resultType="com.project.secondhand.vo.StoreReportResultAndStoreBoardAndMember">
 		SELECT
-			board_report_result_no AS boardReportResultNo,
-			board_no AS boardNo,
-			member_no AS memberNo,
-			category_name AS categoryName,
-			board_report_result_content AS boardReportResultContent,
-			board_report_result_date AS boardReportResultDate
-		FROM market_store_report_result
+			br.board_report_result_no AS boardReportResultNo,
+			br.board_no AS boardNo,
+			br.member_no AS memberNo,
+			br.category_name AS categoryName,
+			br.board_report_result_content AS boardReportResultContent,
+			br.board_report_result_date AS boardReportResultDate,
+			sb.board_title AS boardTitle,
+			sb.board_content AS boardContent,
+			m.member_nickname AS memberNickname
+		FROM market_store_report_result br
+		INNER JOIN market_store_board sb ON br.board_no=sb.board_no
+		INNER JOIN market_member m ON br.member_no=m.member_no
 			
 	</select>
-	<select id="storeReportResultInfo" parameterType="com.project.secondhand.vo.StoreReportResult" resultType="com.project.secondhand.vo.StoreReportResult">
+	<select id="storeReportResultInfo" parameterType="com.project.secondhand.vo.StoreReportResultAndStoreBoardAndMember" resultType="com.project.secondhand.vo.StoreReportResultAndStoreBoardAndMember">
 		SELECT
-			board_report_result_no AS boardReportResultNo,
-			board_no AS boardNo,
-			member_no AS memberNo,
-			category_name AS categoryName,
-			board_report_result_content AS boardReportResultContent,
-			board_report_result_date AS boardReportResultDate
-		FROM market_store_report_result
+			br.board_report_result_no AS boardReportResultNo,
+			br.board_no AS boardNo,
+			br.member_no AS memberNo,
+			br.category_name AS memberNo,
+			br.board_report_result_content AS boardReportResultContent,
+			br.board_report_result_date AS boardReportResultDate,
+			sb.board_title AS boardTitle,
+			sb.board_content AS boardContent,
+			m.member_nickname AS memberNickname
+		FROM market_store_report_result br
+		INNER JOIN market_store_board sb ON br.board_no=sb.board_no
+		INNER JOIN market_member m ON br.member_no=m.member_no
 		WHERE board_report_result_no =#{boardReportResultNo}
 	</select>
-	<insert id="addStoreReportResult" parameterType="com.project.secondhand.vo.StoreReportResult">
+	<insert id="addStoreReportResult" parameterType="com.project.secondhand.vo.StoreReportResultAndStoreBoardAndMember">
 		INSERT INTO 
 		market_store_report_result(
 			board_report_result_no,

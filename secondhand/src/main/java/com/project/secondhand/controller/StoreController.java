@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.project.secondhand.mapper.ItemReportResultMapper;
 import com.project.secondhand.service.CategoryService;
 import com.project.secondhand.service.StoreService;
@@ -26,7 +25,9 @@ import com.project.secondhand.vo.StoreBoardAndBoardPic;
 import com.project.secondhand.vo.StoreList;
 import com.project.secondhand.vo.StorePicForm;
 import com.project.secondhand.vo.StoreReportDefer;
+import com.project.secondhand.vo.StoreReportDeferAndStoreBoardAndMember;
 import com.project.secondhand.vo.StoreReportResult;
+import com.project.secondhand.vo.StoreReportResultAndStoreBoardAndMember;
 
 @Controller
 public class StoreController {
@@ -146,8 +147,9 @@ public class StoreController {
 
 	//업체홍보 리스트
 	@GetMapping("/storeBoardList")
-	public String selectStoreBoardList(Model model) {		
-	List<Category> categoryList = categoryService.getCategoryList("업체홍보");		
+	public String selectStoreBoardList(Model model) {
+		List<Category> categoryList = categoryService.getCategoryList("업체홍보");
+		
 	ArrayList<StoreList> list = storeService.selectStoreBoardList();
 	model.addAttribute("list", list);
 	model.addAttribute("categoryList", categoryList);
@@ -180,23 +182,15 @@ public class StoreController {
 	
 	//업체홍보 추가하기 form
 	@GetMapping("/addStoreBoard")
-	public String addStoreBoard(HttpSession session, Model model) {
-		if(session.getAttribute("loginStore")==null) {
-			return "redirect:/";
-		}
-		Store loginStore = (Store)session.getAttribute("loginStore");
-		System.out.println(loginStore + "/loginStore/StoreController");
+	public String addStoreBoard(Model model) {
 		List<Category> list = categoryService.getCategoryList("업체홍보");
 		model.addAttribute("categoryList", list);
-		model.addAttribute("loginStore", loginStore);
 		System.out.println(list + "/list/StoreController");
 		return "addStoreBoard";
 	}
 	//업체홍보 추가하기 action
 	@PostMapping("/addStoreBoard")
 	public String addStoreBoard(StoreBoardAndBoardPic storeBoardAndBoardPic) {
-		
-			
 		System.out.println(storeBoardAndBoardPic + "/storeBoardAndBoardPic/StoreController");
 		storeService.addStoreBoard(storeBoardAndBoardPic);
 		return "redirect:/storeBoardList";
@@ -214,12 +208,7 @@ public class StoreController {
 	
 	//업체홍보 삭제하기
 	@GetMapping("/removeStoreBoard")
-	public String removeStoreBoard(HttpSession session, int boardNo) {
-		if(session.getAttribute("loginStore")==null) {
-			return "redirect:/";
-		}
-		System.out.println(boardNo + "/boardNo/removeStoreBoard");
-		storeService.deleteStoreBoard(boardNo);
+	public String removeStoreBoard(int boardNo) {
 		return "redirect:/storeBoardList";
 	}
 	
@@ -258,7 +247,7 @@ public class StoreController {
 			return "findStoreId";
 		}
 	//업체 아이디찾기 Action
-		@PostMapping("/findStoreId")
+		@PostMapping("findStoreId")
 		public String findStoreId(Model model, Store store, HttpSession session) {
 			if(session.getAttribute("loginStore")!= null) {
 				return "redirect:/";
@@ -289,11 +278,11 @@ public class StoreController {
 	}
 	//상품 신고 상세보기
 	@GetMapping("/storeReportDeferInfo")
-	public String storeReportDeferInfo(StoreReportDefer storeReportDefer,  @RequestParam(value="boardReportDeferNo")int boardReportDeferNo, Model model) {
+	public String storeReportDeferInfo(StoreReportDeferAndStoreBoardAndMember storeReportDeferAndStoreBoardAndMember,  @RequestParam(value="boardReportDeferNo")int boardReportDeferNo, Model model) {
 		System.out.println(boardReportDeferNo + "/boardReportDeferNo/storeReportDefer");
-		storeReportDefer = storeService.storeReportDeferInfo(storeReportDefer);
-		System.out.println(storeReportDefer + "/storeReportDefer/itemReportDeferController");
-		model.addAttribute("storeReportDefer", storeReportDefer);
+		storeReportDeferAndStoreBoardAndMember = storeService.storeReportDeferInfo(storeReportDeferAndStoreBoardAndMember);
+		System.out.println(storeReportDeferAndStoreBoardAndMember + "/storeReportDefer/itemReportDeferController");
+		model.addAttribute("storeReportDefer", storeReportDeferAndStoreBoardAndMember);
 		model.addAttribute("boardReportDeferNo", boardReportDeferNo);
 		return "storeReportDeferInfo";
 	}
@@ -308,9 +297,9 @@ public class StoreController {
 		return "addStoreReportDefer";
 	}
 	@PostMapping("/addStoreReportDefer")
-	public String addItemReportDefer(StoreReportDefer storeReportDefer, HttpSession session) {
-		System.out.println(storeReportDefer+"<--Ctrl.storeReportDefer");
-		storeService.addStoreReportDefer(storeReportDefer);
+	public String addItemReportDefer(StoreReportDeferAndStoreBoardAndMember storeReportDeferAndStoreBoardAndMember, HttpSession session) {
+		System.out.println(storeReportDeferAndStoreBoardAndMember+"<--Ctrl.storeReportDefer");
+		storeService.addStoreReportDefer(storeReportDeferAndStoreBoardAndMember);
 		return "redirect:/storeBoardList";
 		
 	}
@@ -321,12 +310,12 @@ public class StoreController {
 		return "storeReportResultList";
 	}
 	@GetMapping("/storeReportResultInfo")
-	public String storeReportResultInfo(StoreReportResult storeReportResult, Model model,
+	public String storeReportResultInfo(StoreReportResultAndStoreBoardAndMember storeReportResultAndStoreBoardAndMember, Model model,
 			@RequestParam(value="boardReportResultNo")int boardReportResultNo) {
-		System.out.println(storeReportResult+"<--ResultCtrl/Info/storeReportResult");
-		storeReportResult = storeService.storeReportResultInfo(storeReportResult);
-		System.out.println(storeReportResult+"<--ResultCtrl/Info/storeReportResult");
-		model.addAttribute("storeReportResult", storeReportResult);
+		System.out.println(storeReportResultAndStoreBoardAndMember+"<--ResultCtrl/Info/storeReportResult");
+		storeReportResultAndStoreBoardAndMember = storeService.storeReportResultInfo(storeReportResultAndStoreBoardAndMember);
+		System.out.println(storeReportResultAndStoreBoardAndMember+"<--ResultCtrl/Info/storeReportResult");
+		model.addAttribute("storeReportResult", storeReportResultAndStoreBoardAndMember);
 		model.addAttribute("boardReportResultNo", boardReportResultNo);
 		return "storeReportResultInfo";
 	}

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.secondhand.mapper.ItemReportDeferMapper;
 import com.project.secondhand.vo.ItemReportDefer;
+import com.project.secondhand.vo.ItemReportDeferAndItemAndMember;
 
 @Service
 @Transactional
@@ -20,12 +21,12 @@ public class ItemReportDeferService {
 		return itemReportDeferMapper.itemReportDeferList();
 	}
 	//상품신고 상세보기
-	public ItemReportDefer itemReportDeferInfo(ItemReportDefer itemReportDefer) {
-		return itemReportDeferMapper.itemReportDeferInfo(itemReportDefer);
+	public ItemReportDeferAndItemAndMember itemReportDeferInfo(ItemReportDeferAndItemAndMember itemReportDeferAndItemAndMember) {
+		return itemReportDeferMapper.itemReportDeferInfo(itemReportDeferAndItemAndMember);
 	}
 	//상품 신고 추가하기
-	public int addItemReportDefer(ItemReportDefer itemReportDefer) {
-		return itemReportDeferMapper.addItemReportDefer(itemReportDefer);
+	public int addItemReportDefer(ItemReportDeferAndItemAndMember itemReportDeferAndItemAndMember) {
+		return itemReportDeferMapper.addItemReportDefer(itemReportDeferAndItemAndMember);
 		
 	}
 

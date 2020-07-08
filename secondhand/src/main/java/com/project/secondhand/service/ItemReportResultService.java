@@ -11,6 +11,7 @@ import com.project.secondhand.mapper.ItemPicMapper;
 import com.project.secondhand.mapper.ItemReportDeferMapper;
 import com.project.secondhand.mapper.ItemReportResultMapper;
 import com.project.secondhand.vo.ItemReportResult;
+import com.project.secondhand.vo.ItemReportResultAndItemAndMember;
 
 @Service
 @Transactional
@@ -29,12 +30,12 @@ public class ItemReportResultService {
 		return itemReportResultMapper.itemReportResultList();
 	}
 	//상품신고 결과 상세보기
-	public ItemReportResult itemReportResultInfo(ItemReportResult itemReportResult) {
-		return itemReportResultMapper.itemReportResultInfo(itemReportResult);
+	public ItemReportResultAndItemAndMember itemReportResultInfo(ItemReportResultAndItemAndMember itemReportResultAndItemAndMember) {
+		return itemReportResultMapper.itemReportResultInfo(itemReportResultAndItemAndMember);
 	}
 	//상품신고 결과 추가하기
-	public int addItemReportResult(ItemReportResult itemReportResult, int itemNo, int itemReportDeferNo) {
-		int row = itemReportResultMapper.addItemReportResult(itemReportResult);
+	public int addItemReportResult(ItemReportResultAndItemAndMember itemReportResultAndItemAndMember, int itemNo, int itemReportDeferNo) {
+		int row = itemReportResultMapper.addItemReportResult(itemReportResultAndItemAndMember);
 		if(row ==1) {
 			itemReportDeferMapper.removeItemReportDefer(itemReportDeferNo);
 		}

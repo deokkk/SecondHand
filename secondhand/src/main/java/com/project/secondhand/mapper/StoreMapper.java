@@ -2,21 +2,17 @@ package com.project.secondhand.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.project.secondhand.vo.ItemReportDefer;
-import com.project.secondhand.vo.ItemReportResult;
-import com.project.secondhand.vo.Member;
 import com.project.secondhand.vo.Store;
-import com.project.secondhand.vo.StoreAndStoreBoardAndBoardPic;
 import com.project.secondhand.vo.StoreBoard;
-import com.project.secondhand.vo.StoreBoardAndBoardPic;
 import com.project.secondhand.vo.StoreList;
 import com.project.secondhand.vo.StorePic;
 import com.project.secondhand.vo.StoreReportDefer;
+import com.project.secondhand.vo.StoreReportDeferAndStoreBoardAndMember;
 import com.project.secondhand.vo.StoreReportResult;
+import com.project.secondhand.vo.StoreReportResultAndStoreBoardAndMember;
 @Mapper
 public interface StoreMapper {
 	//업체의 카테고리를 기준으로 리슽트 가져오기
@@ -48,15 +44,15 @@ public interface StoreMapper {
 	//아이템 신고 리스트
 	public ArrayList<StoreReportDefer> storeReportDeferList();
 	//아이템 신고 리스트 상세보기
-	public StoreReportDefer storeReportDeferInfo(StoreReportDefer storeReportDefer);
+	public StoreReportDeferAndStoreBoardAndMember storeReportDeferInfo(StoreReportDeferAndStoreBoardAndMember storeReportDeferAndStoreBoardAndMember);
 	//아이템 신고시 추가
-	public int addStoreReportDefer(StoreReportDefer storeReportDefer);
+	public int addStoreReportDefer(StoreReportDeferAndStoreBoardAndMember storeReportDeferAndStoreBoardAndMember);
 	//아이템 신고 승인 시 삭제
 	public int removeStoreReportDefer(int storeReportDeferNo);
 	//아이템 신고 결과 리스트
 	public ArrayList<StoreReportResult> storeReportResultList();
 	//아이템 신고 결과 상세보기
-	public StoreReportResult storeReportResultInfo(StoreReportResult storeReportResult);
+	public StoreReportResultAndStoreBoardAndMember storeReportResultInfo(StoreReportResultAndStoreBoardAndMember storeReportResultAndStoreBoardAndMember);
 	//아이템 신고 추가
 	public int addStoreReportResult(StoreReportResult storeReportResult);
 

@@ -19,6 +19,7 @@ import com.project.secondhand.service.ItemReportDeferService;
 import com.project.secondhand.vo.Admin;
 import com.project.secondhand.vo.Category;
 import com.project.secondhand.vo.ItemReportDefer;
+import com.project.secondhand.vo.ItemReportDeferAndItemAndMember;
 
 @Controller
 public class ItemReportDeferController {
@@ -45,11 +46,11 @@ public class ItemReportDeferController {
 	}
 	//상품 신고 상세보기
 	@GetMapping("/itemReportDeferInfo")
-	public String itemReportDeferInfo(ItemReportDefer itemReportDefer,  @RequestParam(value="itemReportDeferNo")int itemReportDeferNo, Model model) {
+	public String itemReportDeferInfo(ItemReportDeferAndItemAndMember itemReportDeferAndItemAndMember,  @RequestParam(value="itemReportDeferNo")int itemReportDeferNo, Model model) {
 		System.out.println(itemReportDeferNo + "/itemReportDeferNo/itemReportDeferController");
-		itemReportDefer = itemReportDeferService.itemReportDeferInfo(itemReportDefer);
-		System.out.println(itemReportDefer + "/itemReportDefer/itemReportDeferController");
-		model.addAttribute("itemReportDefer", itemReportDefer);
+		itemReportDeferAndItemAndMember = itemReportDeferService.itemReportDeferInfo(itemReportDeferAndItemAndMember);
+		System.out.println(itemReportDeferAndItemAndMember + "/itemReportDeferAndItemAndMember/itemReportDeferController");
+		model.addAttribute("itemReportDefer", itemReportDeferAndItemAndMember);
 		model.addAttribute("itemReportDeferNo", itemReportDeferNo);
 		return "itemReportDeferInfo";
 	}
@@ -64,9 +65,9 @@ public class ItemReportDeferController {
 		return "addItemReportDefer";
 	}
 	@PostMapping("/addItemReportDefer")
-	public String addItemReportDefer(ItemReportDefer itemReportDefer, HttpSession session) {
-		System.out.println(itemReportDefer+"<--Ctrl.itemReportDefer");
-		itemReportDeferService.addItemReportDefer(itemReportDefer);
+	public String addItemReportDefer(ItemReportDeferAndItemAndMember itemReportDeferAndItemAndMember, HttpSession session) {
+		System.out.println(itemReportDeferAndItemAndMember+"<--Ctrl.itemReportDefer");
+		itemReportDeferService.addItemReportDefer(itemReportDeferAndItemAndMember);
 		return "redirect:/itemList";
 		
 	}
