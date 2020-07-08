@@ -31,22 +31,20 @@ public class ChatService {
 		chatMapper.insertChatMessage(chatMessage);
 	}
 	
-	//안읽은 메시지 리스트
-	/*
-	 * public List<ChatMessage> getNewMessage(String roomNo) {
-	 * System.out.println(roomNo + " <--roomNo service"); List<ChatMessage> list =
-	 * chatMapper.selectNewMessage(roomNo); for(ChatMessage cm : list)
-	 * chatMapper.updateChatRead(cm.getChatNo()); return list; }
-	 */
-	
 	// 채팅방 목록
 	public List<ChatRoom> getMyChatList(String memberEmail) {
 		return chatMapper.selectMyChatList(memberEmail);
 	}
 	
+	// 채팅방 정보
+	public ChatRoom getRoomOne(String roomNo) {
+		return chatMapper.selectRoomOne(roomNo);
+	}
+	
 	//  메시지 리스트
 	public List<ChatMessage> getChatMessageList(String roomNo) {
 		List<ChatMessage> list =  chatMapper.selectChatMessageList(roomNo);
+		for(ChatMessage cm : list) cm.setChatDate(cm.getChatDate().substring(5, 16));
 		return list;
 	}
 	

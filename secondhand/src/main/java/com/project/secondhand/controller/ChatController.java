@@ -71,6 +71,7 @@ public class ChatController {
 			return "redirect:/";
 		}
 		model.addAttribute("roomNo", roomNo);
+		model.addAttribute("chatRoomInfo", chatService.getRoomOne(roomNo));
 		model.addAttribute("chatMessageList", chatService.getChatMessageList(roomNo));
 		return "chatRoom";
 	}

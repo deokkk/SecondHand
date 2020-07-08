@@ -8,9 +8,112 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" media="all" href="css/itemList.css" />
-<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
-<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+.chatbox {
+	display: block;
+	position: relative;
+	max-width: 400px;
+	margin: 70px auto;
+	padding: 10px;
+	background: white;
+	border-radius: 0.2em;
+	box-shadow: 0 0 30px #eee;
+	font-size: 17px;
+}
+
+.chat-header{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: nowrap;
+		font-weight: 900;
+		padding: 10px 0;
+		width: 100%;
+		text-align: center;
+		cursor: default;
+		justify-content: space-between;
+		border-bottom: 2px solid #f5f5f5;
+}
+
+.chat-header-text {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-left: 20px;
+}
+	
+.closeBox {
+	text-align: right;
+	padding-right: 0px;
+}
+	
+#msgBox {
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	height: 580px; 
+	overflow-y: scroll;
+}
+
+.msg-line {
+	width: 100%;
+	margin-top: 5px;
+	position: relative;
+}
+
+.msg-line-primary {
+	text-align: right;
+}
+
+.msg {
+	position: relative;
+	display: inline-block;
+	padding: 5px 20px;
+	border-radius: 1em;
+	cursor: default;
+	background: #f1f1f1;
+	transition: all 0.12s;
+}
+
+.msg:hover {
+	opacity: 0.7;
+}
+
+.msg-primary {
+	color: white;
+	background-color: #007bff;
+}
+
+.input-panel {
+	width: 100%;
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#chatMessage {
+	font-size: 1em;
+	/* width: 339px; */
+	border: none;
+	background: #f3f3f3;
+	margin: 0 10px;
+	padding: 5px 15px;
+	color: #444;
+	border-radius: 0.1em;
+	box-sizing: border-box;
+}
+
+.chatDate {
+	font-size: small;
+}
+
+/* .material-icons {
+	
+} */
+</style>
 <script>
 	$(document).ready(function(){
 		let msgCnt = 0;
@@ -50,10 +153,13 @@
 					console.log('getMessage success');
 					$('#msgBox').empty();
 					$.each(data, function(i){
+						var date = data[i].chatDate.substring(5,16);
 						if(sendEmail == data[i].sendEmail) {
-							$('#msgBox').append('<div style="text-align: right">' + data[i].sendNickName + ' : ' + data[i].chatMessage + '</div>');
+							$('#msgBox').append('<div class="msg-line msg-line-primary"><div class="msg msg-primary">' + data[i].sendNickName + ' : ' + data[i].chatMessage + '</div><div class="chatDate">' + data[i].chatDate + '</div></div>');
+							//$('#msgBox').append('<div style="text-align: right">' + data[i].sendNickName + ' : ' + data[i].chatMessage + ' ' + data[i].chatDate + '</div>');
 						} else {
-							$('#msgBox').append('<div style="text-align: left">' + data[i].sendNickName + ' : ' + data[i].chatMessage + '</div>');
+							$('#msgBox').append('<div class="msg-line"><div class="msg">' + data[i].sendNickName + ' : ' + data[i].chatMessage + '</div><div class="chatDate">' + data[i].chatDate + '</div></div>');
+							//$('#msgBox').append('<div style="text-align: left">' + data[i].sendNickName + ' : ' + data[i].chatMessage + ' ' + data[i].chatDate + '</div>');
 						}			
 					});
 					console.log(msgCnt + ' <--msgCnt');
@@ -89,23 +195,30 @@
 </script>
 </head>
 <body>
-<h1 th:text="채팅"></h1>
-
-<div th:id="msgBox" style="border: medium solid black; width: 400px; height: 580px; overflow-y: scroll">
-	<div th:if="${chatMessageList} != null" th:each="message : ${chatMessageList}">
-		<div style="text-align: right" th:if="${message.sendEmail} == ${session.loginMember.memberEmail}" th:text="${message.sendNickName} + ' : ' + ${message.chatMessage}"></div>
-		<div style="text-align: left" th:if="${message.sendEmail} != ${session.loginMember.memberEmail}" th:text="${message.sendNickName} + ' : ' + ${message.chatMessage}"></div>
+	<div th:class="chatBox">
+		<!-- header -->
+		<div th:class="'chat-header row'">
+			<div th:class="col"></div>
+			<div th:class="'chat-header-text col'" th:if="${chatRoomInfo.chatToEmail} == ${session.loginMember.memberEmail}" th:text="${chatRoomInfo.chatFromNickName}"></div>
+			<div th:class="'chat-header-text col'" th:if="${chatRoomInfo.chatFromEmail} == ${session.loginMember.memberEmail}" th:text="${chatRoomInfo.chatToNickName}"></div>
+			<div th:class="'col closeBox'"><button th:class="btn" th:type="button" th:id="closeBtn"><i class="material-icons" style="font-size:30px">exit_to_app</i></button></div>
+		</div>
+		<!-- msg -->
+		<div th:id="msgBox">
+			<div th:if="${chatMessageList} != null" th:each="message : ${chatMessageList}">
+				<div th:class="'msg-line msg-line-primary'" th:if="${message.sendEmail} == ${session.loginMember.memberEmail}"><div th:class="'msg msg-primary'" th:text="${message.sendNickName} + ' : ' + ${message.chatMessage}"></div><div th:class="chatDate" th:text="${message.chatDate}"></div></div>
+				<div th:class="msg-line" th:if="${message.sendEmail} != ${session.loginMember.memberEmail}"><div th:class="msg" th:text="${message.sendNickName} + ' : ' + ${message.chatMessage}"></div><div th:class="chatDate" th:text="${message.chatDate}"></div></div>
+			</div>
+		</div>
+		<!-- send -->
+		<div th:class="'input-panel input-group'">
+			<input th:type="hidden" th:value="${session.loginMember.memberEmail}" th:id="loginMemberEmail">
+			<input th:type="hidden" th:value="${roomNo}" th:id="roomNo">
+			<input th:class="form-control" th:type="text" th:name="chatMessage" th:id="chatMessage">
+			<span th:class="input-group-btn">
+				<button th:class="btn" th:type="button" th:id="sendBtn"><i class="material-icons">send</i></button>
+			</span>
+		</div>
 	</div>
-</div>
-<div>
-	<input type="hidden" th:value="${session.loginMember.memberEmail}" id="loginMemberEmail">
-	<!-- <input th:type="hidden" th:value="2" th:id="loginMemberId"> -->
-	<input th:type="hidden" th:value="${roomNo}" th:id="roomNo">
-	<input th:type="text" th:name="chatMessage" th:id="chatMessage">
-	<button th:type="button" th:id="sendBtn" th:text="보내기"></button>
-</div>
-<div>
-	<button th:type="button" th:id="closeBtn" th:text="나가기"></button>
-</div>
 </body>
 </html>

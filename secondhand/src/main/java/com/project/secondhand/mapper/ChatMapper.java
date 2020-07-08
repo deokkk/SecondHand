@@ -32,4 +32,7 @@ public interface ChatMapper {
 	
 	// 채팅방 나가기
 	public int updateRoomState(String roomNo);
+	
+	// 채팅방 정보
+	public ChatRoom selectRoomOne(String roomNo);
 }
