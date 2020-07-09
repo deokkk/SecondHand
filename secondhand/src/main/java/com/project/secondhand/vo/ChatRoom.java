@@ -2,6 +2,10 @@ package com.project.secondhand.vo;
 
 public class ChatRoom {
 	private String roomNo;
+	private int itemNo;
+	private String itemTitle;
+	private int itemPrice;
+	private String itemState;
 	private int chatTo;
 	private String chatToEmail;
 	private String chatToNickName;
@@ -9,11 +13,36 @@ public class ChatRoom {
 	private String chatFromNickName;
 	private String chatFromEmail;
 	private String roomDate;
+	private String lastChatDate;
 	public String getRoomNo() {
 		return roomNo;
 	}
 	public void setRoomNo(String roomNo) {
 		this.roomNo = roomNo;
+	}
+	public int getItemNo() {
+		return itemNo;
+	}
+	public void setItemNo(int itemNo) {
+		this.itemNo = itemNo;
+	}
+	public String getItemTitle() {
+		return itemTitle;
+	}
+	public void setItemTitle(String itemTitle) {
+		this.itemTitle = itemTitle;
+	}
+	public int getItemPrice() {
+		return itemPrice;
+	}
+	public void setItemPrice(int itemPrice) {
+		this.itemPrice = itemPrice;
+	}
+	public String getItemState() {
+		return itemState;
+	}
+	public void setItemState(String itemState) {
+		this.itemState = itemState;
 	}
 	public int getChatTo() {
 		return chatTo;
@@ -57,10 +86,18 @@ public class ChatRoom {
 	public void setRoomDate(String roomDate) {
 		this.roomDate = roomDate;
 	}
+	public String getLastChatDate() {
+		return lastChatDate;
+	}
+	public void setLastChatDate(String lastChatDate) {
+		this.lastChatDate = lastChatDate;
+	}
 	@Override
 	public String toString() {
-		return "ChatRoom [roomNo=" + roomNo + ", chatTo=" + chatTo + ", chatToEmail=" + chatToEmail
+		return "ChatRoom [roomNo=" + roomNo + ", itemNo=" + itemNo + ", itemTitle=" + itemTitle + ", itemPrice="
+				+ itemPrice + ", itemState=" + itemState + ", chatTo=" + chatTo + ", chatToEmail=" + chatToEmail
 				+ ", chatToNickName=" + chatToNickName + ", chatFrom=" + chatFrom + ", chatFromNickName="
-				+ chatFromNickName + ", chatFromEmail=" + chatFromEmail + ", roomDate=" + roomDate + "]";
+				+ chatFromNickName + ", chatFromEmail=" + chatFromEmail + ", roomDate=" + roomDate + ", lastChatDate="
+				+ lastChatDate + "]";
 	}
 }

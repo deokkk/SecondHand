@@ -14,13 +14,21 @@ import com.project.secondhand.vo.ChatRoom;
 public class ChatService {
 	@Autowired private ChatMapper chatMapper;
 	
+	// 마지막 채팅 날짜
+	public String getLastChatDate(String roomNo) {
+		String chatDate = chatMapper.selectLastChatDate(roomNo);
+		if(chatDate != null) chatDate = chatDate.substring(0, 16);
+		return chatDate;
+	}
+	
 	//채팅방 생성
-	public String addChatRoom(int chatTo, int chatFrom) {
+	public String addChatRoom(int chatTo, int chatFrom, int itemNo) {
 		String roomNo = UUID.randomUUID().toString().substring(0, 12);
 		ChatRoom chatRoom = new ChatRoom();
 		chatRoom.setChatTo(chatTo);
 		chatRoom.setChatFrom(chatFrom);
 		chatRoom.setRoomNo(roomNo);
+		chatRoom.setItemNo(itemNo);
 		System.out.println(chatRoom.toString() + " <--chatRoom");
 		chatMapper.insertChatRoom(chatRoom);
 		return roomNo;

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.secondhand.mapper.ItemReportMapper">
+	<!-- 처리 안된 신고 리스트 -->
+	<select id="selectItemReportList" resultType="com.project.secondhand.vo.ItemReport">
+		SELECT
+			mir.item_report_no itemReportNo,
+			mir.item_no itemNo,
+			mi.item_title itemTitle,
+			mm1.member_nickname itemMemberNickName,
+			mir.member_no memberNo,
+			mm2.member_nickname memberNickName,
+			mir.category_name categoryName,
+			mir.item_report_content itemReportContent,
+			mir.item_report_date itemReportDate,
+			mir.item_report_result_date itemReportResultDate
+		FROM market_item_report mir 
+		INNER JOIN market_item mi ON mir.item_no = mi.item_no
+		INNER JOIN market_member mm1 ON mi.member_no = mm1.member_no
+		INNER JOIN market_member mm2 ON mir.member_no = mm2.member_no
+		WHERE mir.item_report_result_date IS NULL
+		ORDER BY mir.item_report_date DESC
+	</select>
+	
+	<!-- 처리 완료된 신고 리스트 -->
+	<select id="selectItemReportResultList" resultType="com.project.secondhand.vo.ItemReport">
+		SELECT
+			mir.item_report_no itemReportNo,
+			mir.item_no itemNo,
+			mi.item_title itemTitle,
+			mm1.member_nickname itemMemberNickName,
+			mir.member_no memberNo,
+			mm2.member_nickname memberNickName,
+			mir.category_name categoryName,
+			mir.item_report_content itemReportContent,
+			mir.item_report_date itemReportDate,
+			mir.item_report_result_date itemReportResultDate
+		FROM market_item_report mir 
+		INNER JOIN market_item mi ON mir.item_no = mi.item_no
+		INNER JOIN market_member mm1 ON mi.member_no = mm1.member_no
+		INNER JOIN market_member mm2 ON mir.member_no = mm2.member_no
+		WHERE mir.item_report_result_date IS NOT NULL
+		ORDER BY mir.item_report_result_date DESC
+	</select>
+	
+	<!-- 카테고리별 처리 안된 상품 신고 리스트 -->
+	<select id="selectItemReportListByCategory" parameterType="String" resultType="com.project.secondhand.vo.ItemReport">
+		SELECT
+			mir.item_report_no itemReportNo,
+			mir.item_no itemNo,
+			mi.item_title itemTitle,
+			mm1.member_nickname itemMemberNickName,
+			mir.member_no memberNo,
+			mm2.member_nickname memberNickName,
+			mir.category_name categoryName,
+			mir.item_report_content itemReportContent,
+			mir.item_report_date itemReportDate,
+			mir.item_report_result_date itemReportResultDate
+		FROM market_item_report mir 
+		INNER JOIN market_item mi ON mir.item_no = mi.item_no
+		INNER JOIN market_member mm1 ON mi.member_no = mm1.member_no
+		INNER JOIN market_member mm2 ON mir.member_no = mm2.member_no
+		WHERE mir.item_report_result_date IS NULL
+		AND mir.category_name LIKE CONCAT('%', #{categoryName}, '%')
+		ORDER BY mir.item_report_date DESC
+	</select>
+	
+	<!-- 카테고리별 처리된 상품 신고 리스트 -->
+	<select id="selectItemReportResultListByCategory" parameterType="String" resultType="com.project.secondhand.vo.ItemReport">
+		SELECT
+			mir.item_report_no itemReportNo,
+			mir.item_no itemNo,
+			mi.item_title itemTitle,
+			mm1.member_nickname itemMemberNickName,
+			mir.member_no memberNo,
+			mm2.member_nickname memberNickName,
+			mir.category_name categoryName,
+			mir.item_report_content itemReportContent,
+			mir.item_report_date itemReportDate,
+			mir.item_report_result_date itemReportResultDate
+		FROM market_item_report mir 
+		INNER JOIN market_item mi ON mir.item_no = mi.item_no
+		INNER JOIN market_member mm1 ON mi.member_no = mm1.member_no
+		INNER JOIN market_member mm2 ON mir.member_no = mm2.member_no
+		WHERE mir.item_report_result_date IS NOT NULL
+		AND mir.category_name LIKE CONCAT('%', #{categoryName}, '%')
+		ORDER BY mir.item_report_result_date DESC
+	</select>
+</mapper>

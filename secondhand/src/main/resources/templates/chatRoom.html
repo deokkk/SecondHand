@@ -23,17 +23,27 @@
 }
 
 .chat-header{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-wrap: nowrap;
-		font-weight: 900;
-		padding: 10px 0;
-		width: 100%;
-		text-align: center;
-		cursor: default;
-		justify-content: space-between;
-		border-bottom: 2px solid #f5f5f5;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: nowrap;
+	font-weight: 900;
+	padding: 10px 0;
+	width: 100%;
+	text-align: center;
+	cursor: default;
+	justify-content: space-between;
+	border-bottom: 2px solid #f5f5f5;
+}
+
+.row {
+	max-width: 400px;
+}
+
+.item-info {
+	padding-left: 15px;
+	border-bottom: 2px solid #f5f5f5;
+	width: 380px;
 }
 
 .chat-header-text {
@@ -48,12 +58,25 @@
 	text-align: right;
 	padding-right: 0px;
 }
+
+.itemTitle {
+	font-size: large;
+}
+
+.itemState {
+	text-align: right;
+	font-size: small;
+}
+
+.itemPrice {
+	font-size: medium;
+}
 	
 #msgBox {
 	width: 100%;
 	padding: 10px;
 	box-sizing: border-box;
-	height: 580px; 
+	height: 520px; 
 	overflow-y: scroll;
 }
 
@@ -164,10 +187,8 @@
 						var date = data[i].chatDate.substring(5,16);
 						if(sendEmail == data[i].sendEmail) {
 							$('#msgBox').append('<div class="msg-line msg-line-primary"><div class="msg msg-primary">' + data[i].sendNickName + ' : ' + data[i].chatMessage + '</div><div class="chatDate">' + data[i].chatDate + '</div></div>');
-							//$('#msgBox').append('<div style="text-align: right">' + data[i].sendNickName + ' : ' + data[i].chatMessage + ' ' + data[i].chatDate + '</div>');
 						} else {
 							$('#msgBox').append('<div class="msg-line"><div class="msg">' + data[i].sendNickName + ' : ' + data[i].chatMessage + '</div><div class="chatDate">' + data[i].chatDate + '</div></div>');
-							//$('#msgBox').append('<div style="text-align: left">' + data[i].sendNickName + ' : ' + data[i].chatMessage + ' ' + data[i].chatDate + '</div>');
 						}			
 					});
 					console.log(msgCnt + ' <--msgCnt');
@@ -210,6 +231,14 @@
 			<div th:class="'chat-header-text col'" th:if="${chatRoomInfo.chatToEmail} == ${session.loginMember.memberEmail}" th:text="${chatRoomInfo.chatFromNickName}"></div>
 			<div th:class="'chat-header-text col'" th:if="${chatRoomInfo.chatFromEmail} == ${session.loginMember.memberEmail}" th:text="${chatRoomInfo.chatToNickName}"></div>
 			<div th:class="'col closeBox'"><button th:class="btn" th:type="button" th:id="closeBtn"><i class="material-icons" style="font-size:30px">exit_to_app</i></button></div>
+		</div>
+		<!-- itemInfo -->
+		<div th:class="item-info">
+			<div th:class="'row'">
+				<div th:class="'itemTitle col'" th:text="${chatRoomInfo.itemTitle}"></div>
+				<div th:class="'itemState col'" th:text="'[' + ${chatRoomInfo.itemState} + ']'"></div>
+			</div>
+			<div th:class="'itemPrice'" th:text="${chatRoomInfo.itemPrice} + '원'"></div>
 		</div>
 		<!-- msg -->
 		<div th:id="msgBox">

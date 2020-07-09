@@ -10,18 +10,21 @@
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <style>
+
 td {
 	width: 400px;
 	padding: 0px;
 }
 .btn {
 	width: 400px;
-	height: 60px;
 	padding: 0px;
-	font-size: x-large;
 	margin-bottom: 5px;
 	border: 1px solid #c1c1c1;
 	border-radius: 0.1em;
+}
+
+.nickName {
+	font-size: x-large;
 }
 
 .btn:hover {
@@ -29,18 +32,22 @@ td {
 }
 
 .titleBox {
-	text-align: center;
+	padding-left: 15px;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	background-color: #bf6884;
+	color: #fff;	
 }
 </style>
 </head>
 <body>
 <div th:class="titleBox">
-	<h2 th:text="채팅목록"></h2>
+	<h3 th:text="'chat list'"></h3>
 </div>
 <table>
 	<tr th:each="chatRoom : ${myChatList}">
-		<td th:if="${session.loginMember.memberEmail} == ${chatRoom.chatToEmail}"><a class="btn" th:href="@{/chatRoom(roomNo=${chatRoom.roomNo})}" th:text="${chatRoom.chatFromNickName}"></a></td>
-		<td th:if="${session.loginMember.memberEmail} == ${chatRoom.chatFromEmail}"><a class="btn" th:href="@{/chatRoom(roomNo=${chatRoom.roomNo})}" th:text="${chatRoom.chatToNickName}"></a></td>
+		<td th:if="${session.loginMember.memberEmail} == ${chatRoom.chatToEmail}"><a class="btn" th:href="@{/chatRoom(roomNo=${chatRoom.roomNo})}"><div th:text="${chatRoom.chatFromNickName}" th:class="nickName"></div><div th:text="'상품 : ' + ${chatRoom.itemTitle}"></div><div th:text="'가격 : ' +${chatRoom.itemPrice} + '원'" th:class="titleAndPrice"></div><div th:text="${chatRoom.lastChatDate}"></div></a></td>
+		<td th:if="${session.loginMember.memberEmail} == ${chatRoom.chatFromEmail}"><a class="btn" th:href="@{/chatRoom(roomNo=${chatRoom.roomNo})}"><div th:text="${chatRoom.chatToNickName}" th:class="nickName"></div><div th:text="'상품 : ' + ${chatRoom.itemTitle}"></div><div th:text="'가격 : ' + ${chatRoom.itemPrice} + '원'" th:class="titleAndPrice"></div><div th:text="${chatRoom.lastChatDate}"></div></a></td>
 	</tr>
 </table>
 </body>

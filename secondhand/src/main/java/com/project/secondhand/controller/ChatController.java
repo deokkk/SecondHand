@@ -13,25 +13,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.secondhand.service.ChatService;
+import com.project.secondhand.service.ItemService;
 import com.project.secondhand.service.MemberService;
 import com.project.secondhand.vo.ChatMessage;
+import com.project.secondhand.vo.ChatRoom;
+import com.project.secondhand.vo.ItemList;
 import com.project.secondhand.vo.LoginMember;
-import com.project.secondhand.vo.Member;
 
 @Controller
 public class ChatController {
 	@Autowired private ChatService chatService;
 	@Autowired private MemberService memberService;
+	@Autowired private ItemService itemService;
 	
 	// 채팅방 생성
 	@GetMapping("/addChatRoom")
-	public String addChatRoom(HttpSession session, Model model, @RequestParam(value = "chatTo") int chatTo) {
+	public String addChatRoom(HttpSession session, Model model, @RequestParam(value = "itemNo") int itemNo) {
 		if (session.getAttribute("loginMember") == null) {
 			return "redirect:/login";
 		}
 		int chatFrom = memberService.getMemberNoByEmail(((LoginMember)session.getAttribute("loginMember")).getMemberEmail());
 		System.out.println(chatFrom);
-		String roomNo = chatService.addChatRoom(chatTo, chatFrom);
+		ItemList item = new ItemList();
+		item.setItemNo(itemNo);
+		item = itemService.selectItemInfo(item);
+		int chatTo = item.getMemberNo();
+		String roomNo = chatService.addChatRoom(chatTo, chatFrom, itemNo);
 		model.addAttribute("chatRoomInfo", chatService.getRoomOne(roomNo));
 		model.addAttribute("roomNo", roomNo);		
 		return "chatRoom";
@@ -50,7 +57,6 @@ public class ChatController {
 	@PostMapping("/getChatMessageList")
 	@ResponseBody
 	public List<ChatMessage> getNewMessage(@RequestParam(value = "roomNo") String roomNo) {
-		System.out.println(roomNo + " <--roomNo");
 		return chatService.getChatMessageList(roomNo);
 	}
 	
@@ -61,7 +67,9 @@ public class ChatController {
 			return "redirect:/";
 		}
 		String memberEmail = ((LoginMember)session.getAttribute("loginMember")).getMemberEmail();
-		model.addAttribute("myChatList", chatService.getMyChatList(memberEmail));
+		List<ChatRoom> list = chatService.getMyChatList(memberEmail);
+		for(ChatRoom cr : list) cr.setLastChatDate(chatService.getLastChatDate(cr.getRoomNo()));
+		model.addAttribute("myChatList", list);
 		return "myChatList";
 	}
 	

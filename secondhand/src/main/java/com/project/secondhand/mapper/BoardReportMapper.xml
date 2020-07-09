@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.secondhand.mapper.BoardReportMapper">
+	<!-- 처리 안된 신고 리스트 -->
+	<select id="selectBoardReportList" resultType="com.project.secondhand.vo.BoardReport">
+		SELECT
+			mbr.board_report_no boardReportNo,
+			mbr.board_no boardNo,
+			msb.board_title boardTitle,
+			ms.store_Name boardStoreName,
+			mbr.member_no memberNo,
+			mm.member_nickname memberNickName,
+			mbr.category_name categoryName,
+			mbr.board_report_content boardReportContent,
+			mbr.board_report_date boardReportDate,
+			mbr.board_report_result_date boardReportResultDate
+		FROM market_board_report mbr 
+		INNER JOIN market_store_board msb ON mbr.board_no = msb.board_no
+		INNER JOIN market_store ms ON msb.store_no = ms.store_no
+		INNER JOIN market_member mm ON mbr.member_no = mm.member_no
+		WHERE mbr.board_report_result_date IS NULL
+		ORDER BY mbr.board_report_date DESC
+	</select>
+	
+	<!-- 처리 완료된 신고 리스트 -->
+	<select id="selectBoardReportResultList" resultType="com.project.secondhand.vo.BoardReport">
+		SELECT
+			mbr.board_report_no boardReportNo,
+			mbr.board_no boardNo,
+			msb.board_title boardTitle,
+			ms.store_name boardStoreName,
+			mbr.member_no memberNo,
+			mm.member_nickname memberNickName,
+			mbr.category_name categoryName,
+			mbr.board_report_content boardReportContent,
+			mbr.board_report_date boardReportDate,
+			mbr.board_report_result_date boardReportResultDate
+		FROM market_board_report mbr 
+		INNER JOIN market_store_board msb ON mbr.board_no = msb.board_no
+		INNER JOIN market_store ms ON msb.store_no = ms.store_no
+		INNER JOIN market_member mm ON mbr.member_no = mm.member_no
+		WHERE mbr.board_report_result_date IS NOT NULL
+		ORDER BY mbr.board_report_result_date DESC
+	</select>
+	
+	
+	<!-- 카테고리별 처리 안된 홍보글 신고 리스트 -->
+	<select id="selectBoardReportListByCategory" parameterType="String" resultType="com.project.secondhand.vo.BoardReport">
+		SELECT
+			mbr.board_report_no boardReportNo,
+			mbr.board_no boardNo,
+			msb.board_title boardTitle,
+			ms.store_Name boardStoreName,
+			mbr.member_no memberNo,
+			mm.member_nickname memberNickName,
+			mbr.category_name categoryName,
+			mbr.board_report_content boardReportContent,
+			mbr.board_report_date boardReportDate,
+			mbr.board_report_result_date boardReportResultDate
+		FROM market_board_report mbr 
+		INNER JOIN market_store_board msb ON mbr.board_no = msb.board_no
+		INNER JOIN market_store ms ON msb.store_no = ms.store_no
+		INNER JOIN market_member mm ON mbr.member_no = mm.member_no
+		WHERE mbr.board_report_result_date IS NULL
+		AND mbr.category_name LIKE CONCAT('%', #{categoryName}, '%')
+		ORDER BY mbr.board_report_date DESC
+	</select>
+	
+	<!-- 카테고리별 처리된 상품 신고 리스트 -->
+	<select id="selectBoardReportResultListByCategory" parameterType="String" resultType="com.project.secondhand.vo.BoardReport">
+		SELECT
+			mbr.board_report_no boardReportNo,
+			mbr.board_no boardNo,
+			msb.board_title boardTitle,
+			ms.store_name boardStoreName,
+			mbr.member_no memberNo,
+			mm.member_nickname memberNickName,
+			mbr.category_name categoryName,
+			mbr.board_report_content boardReportContent,
+			mbr.board_report_date boardReportDate,
+			mbr.board_report_result_date boardReportResultDate
+		FROM market_board_report mbr 
+		INNER JOIN market_store_board msb ON mbr.board_no = msb.board_no
+		INNER JOIN market_store ms ON msb.store_no = ms.store_no
+		INNER JOIN market_member mm ON mbr.member_no = mm.member_no
+		WHERE mbr.board_report_result_date IS NOT NULL
+		AND mbr.category_name LIKE CONCAT('%', #{categoryName}, '%')
+		ORDER BY mbr.board_report_result_date DESC
+	</select>
+</mapper>

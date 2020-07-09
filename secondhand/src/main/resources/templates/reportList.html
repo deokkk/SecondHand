@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>reportList</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<!-- sidemenu style, javascript 파일 -->
+<link rel="stylesheet" href="css/sidemenu.css">
+<script src="js/sidemenu.js"></script>
+<style>
+/* sidemenu 추가하면서 수정된 style */
+#footer {
+	left: 0px;
+}
+@font-face { 
+	font-family: 'yg-jalnan'; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); 
+	font-weight: normal; 
+	font-style: normal; 
+} 
+.sidenav a, .sidenav ul li {
+	font-family: 'yg-jalnan';
+}
+</style>
+<script>
+	$(document).ready(function(){
+		var categoryName = $('#categoryName').val();
+		$('#categoryName').change(function(){
+			$.ajax({
+				url: '/getItemReportListByCategory',
+				type: 'GET',
+				data: {categoryName: categoryName},
+				success: function(data) {
+					$('#reportTable').empty();
+					console.log('getItemReportListByCategory success');
+					$.each(data, function(i) {
+						$('#reportTable').append('<tr><td>상품</td><td>' + data[i].itemReportNo + '</td><td>' + data[i].categoryName + '</td><td>' + data[i].memberNickName + '</td><td>' + data[i].itemReportDate + '</td><td><a href="">신고 내용 보기</a></td><td>미처리</td></tr>');
+					});
+				},
+				error: function() {
+					console.log('getItemReportListByCategory fail');
+				}
+			});
+			$.ajax({
+				url: '/getItemReportResultListByCategory',
+				type: 'GET',
+				data: {categoryName: categoryName},
+				success: function(data) {
+					console.log('getItemReportResultListByCategory success');
+					$.each(data, function(i) {
+						$('#reportTable').append('<tr><td>상품</td><td>' + data[i].itemReportNo + '</td><td>' + data[i].categoryName + '</td>	<td>' + data[i].memberNickName + '</td><td>' + data[i].itemReportDate + '</td><td><a href="">신고 내용 보기></a></td><td>' + data[i].itemReportResultDate + '</td></tr>');
+					});
+				},
+				error: function() {
+					console.log('getItemReportResultListByCategory fail');
+				}
+			});
+			$.ajax({
+				url: '/getBoardReportListByCategory',
+				type: 'GET',
+				data: {categoryName: categoryName},
+				success: function(data) {
+					console.log('getBoardReportListByCategory success');
+					$.each(data, function(i) {
+						$('#reportTable').append('<tr><td>홍보글</td><td>' + data[i].boardReportNo + '</td><td>' + data[i].categoryName + '</td><td>' + data[i].memberNickName + '</td><td>' + data[i].boardReportDate + '</td><td><a href="">신고 내용 보기</a></td><td>미처리</td></tr>');
+					});
+				},
+				error: function() {
+					console.log('getBoardReportListByCategory fail');
+				}
+			});
+			$.ajax({
+				url: '/getBoardReportResultListByCategory',
+				type: 'GET',
+				data: {categoryName: categoryName},
+				success: function(data) {
+					console.log('getBoardReportResultListByCategory success');
+					$.each(data, function(i) {
+						$('#reportTable').append('<tr><td>홍보글</td><td>' + data[i].boardReportNo + '</td><td>' + data[i].categoryName + '</td><td>' + data[i].memberNickName + '</td><td>' + data[i].boardReportDate + '</td><td><a href="">신고 내용 보기</a></td><td>' + data[i].boardReportResultDate + '</td></tr>');
+					});
+				},
+				error: function() {
+					console.log('getBoardReportResultListByCategory fail');
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	<!-- sidemenu include -->
+	<div th:include="/inc/sidemenu::sidemenu"></div>
+	<div th:class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:class="row">
+				<div th:class="col-sm-2"></div>
+				<div th:class="col-sm-8">
+					<h2 th:id="qna-h2" th:text="'신고 리스트'"></h2>
+					<div th:class="form-group">
+						<select th:class="form-control" th:name="categoryName"	th:id="categoryName">
+							<option value="" th:text="'전체 카테고리'">
+							<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+						</select>
+					</div>
+					<div>
+						<table th:class="table">
+							<thead>
+								<tr>
+									<th th:text="'상품/홍보글'"></th>
+									<th th:text="신고번호"></th>
+									<th th:text="카테고리"></th>
+									<th th:text="신고자"></th>
+									<th th:text="'신고 날짜'"></th>
+									<th th:text="'신고 내용 보기'"></th>
+									<th th:text="'처리 날짜'"></th>
+								</tr>
+							</thead>
+							<tbody th:id="reportTable">
+								<tr th:each="itemReport : ${itemReportList}">
+									<td th:text="상품"></td>
+									<td th:text="${itemReport.itemReportNo}"></td>
+									<td th:text="${itemReport.categoryName}"></td>
+									<td th:text="${itemReport.memberNickName}"></td>
+									<td th:text="${itemReport.itemReportDate}"></td>
+									<td><a href="" th:text="'신고 내용 보기'"></a></td>
+									<td th:text="'미처리'"></td>
+								</tr>
+								<tr th:each="itemReportResult : ${itemReportResultList}">
+									<td th:text="상품"></td>
+									<td th:text="${itemReportResult.itemReportNo}"></td>
+									<td th:text="${itemReportResult.categoryName}"></td>
+									<td th:text="${itemReportResult.memberNickName}"></td>
+									<td th:text="${itemReportResult.itemReportDate}"></td>
+									<td><a href="" th:text="'신고 내용 보기'"></a></td>
+									<td th:text="${itemReportResult.itemReportResultDate}"></td>
+								</tr>
+								<tr th:each="boardReport : ${boardReportList}">
+									<td th:text="홍보글"></td>
+									<td th:text="${boardReport.boardReportNo}"></td>
+									<td th:text="${boardReport.categoryName}"></td>
+									<td th:text="${boardReport.memberNickName}"></td>
+									<td th:text="${boardReport.boardReportDate}"></td>
+									<td><a href="" th:text="'신고 내용 보기'"></a></td>
+									<td th:text="'미처리'"></td>
+								</tr>
+								<tr th:each="boardReportResult : ${boardReportResultList}">
+									<td th:text="홍보글"></td>
+									<td th:text="${boardReportResult.boardReportNo}"></td>
+									<td th:text="${boardReportResult.categoryName}"></td>
+									<td th:text="${boardReportResult.memberNickName}"></td>
+									<td th:text="${boardReportResult.boardReportDate}"></td>
+									<td><a href="" th:text="'신고 내용 보기'"></a></td>
+									<td th:text="${boardReportResult.boardReportResultDate}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div th:class="col-sm-2"></div>
+			</div>
+		</section>
+		<div th:class="header">
+			<div th:include="/inc/copyRight"></div>
+		</div>
+	</div>
+</body>
+</html>
