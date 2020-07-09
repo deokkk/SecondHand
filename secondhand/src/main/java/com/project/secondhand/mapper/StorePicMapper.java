@@ -21,4 +21,6 @@ public interface StorePicMapper {
 	public void insertStoreBoardPic(StoreBoardPic storeBoardPic);
 	//업체 사진 업데이트
 	public void updateStoreBoardPic(StoreBoardPic storeBoardPic);
+	//파일 불러오기
+	public String selectStoreBoardPic(int boardNo);
 }

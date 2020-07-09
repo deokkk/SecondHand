@@ -5,6 +5,8 @@ public class StorePic {
 	private String storePicNameOne;
 	private String storePicNameTwo;
 	private String storePicNameThree;
+	private String storePicNameFour;
+	private String storePicNameFive;
 	public int getStoreNo() {
 		return storeNo;
 	}
@@ -29,11 +31,25 @@ public class StorePic {
 	public void setStorePicNameThree(String storePicNameThree) {
 		this.storePicNameThree = storePicNameThree;
 	}
+	public String getStorePicNameFour() {
+		return storePicNameFour;
+	}
+	public void setStorePicNameFour(String storePicNameFour) {
+		this.storePicNameFour = storePicNameFour;
+	}
+	public String getStorePicNameFive() {
+		return storePicNameFive;
+	}
+	public void setStorePicNameFive(String storePicNameFive) {
+		this.storePicNameFive = storePicNameFive;
+	}
 	@Override
 	public String toString() {
 		return "StorePic [storeNo=" + storeNo + ", storePicNameOne=" + storePicNameOne + ", storePicNameTwo="
-				+ storePicNameTwo + ", storePicNameThree=" + storePicNameThree + "]";
+				+ storePicNameTwo + ", storePicNameThree=" + storePicNameThree + ", storePicNameFour="
+				+ storePicNameFour + ", storePicNameFive=" + storePicNameFive + "]";
 	}
+	
 
 
 }

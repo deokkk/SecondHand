@@ -62,18 +62,14 @@
 			</form>
 			
 			<section class="cards-wrap">
-
-
 				<article class="card-top " th:each = "board, index : ${list}">
-					 
-					<div class="card-photo">
-					<a class="card-link " data-event-label="98680541"
+					 <a class="card-link " data-event-label="98680541"
 						th:href="@{/storeBoardInfo(boardNo=${board.boardNo})}">
+					<div class="card-photo">
 							 <img th:src="@{'/upload/'+ ${board.boardPicNameOne}}" />
-							 </a>
-						</div>
-						<div class="card-desc">
-							<h2 class="card-title"><span th:text = "${board.boardTitle}"></span></h2>
+					</div>
+					<div class="card-desc">
+						<h2 class="card-title"><span th:text = "${board.boardTitle}"></span></h2>
 							<div class="card-region-name">광주 광산구 신가동</div>
 							<div class="card-price ">5,000원</div>
 							<div class="card-counts">
@@ -82,12 +78,9 @@
 								<p><span th:text = "'날짜 :' +${board.boardDate.substring(0, 16)}"></span></p>
 								<p><span th:text = "${board.storeAddr}"></span></p>
 							</div>
-						</div>
-				<!-- 	</a> -->
+					</div>
+					</a>
 				</article>
-				</div>
-				
-
 			</section>
 		</section>
 	<div class="header">

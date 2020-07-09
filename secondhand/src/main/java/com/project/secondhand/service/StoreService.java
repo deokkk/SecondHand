@@ -246,7 +246,7 @@ public class StoreService {
 
    //홍보업체 게시물 수정하기
    public void updateStoreBoard(StoreBoardAndBoardPic storeBoardAndBoardPic) {
-	   StoreBoard storeBoard = new StoreBoard();
+ 		StoreBoard storeBoard = new StoreBoard();
 	      storeBoard.setBoardNo(storeBoardAndBoardPic.getBoardNo());
 	      storeBoard.setBoardTitle(storeBoardAndBoardPic.getBoardTitle());
 	      storeBoard.setBoardContent(storeBoardAndBoardPic.getBoardContent());
@@ -258,9 +258,6 @@ public class StoreService {
 	      String storePicNameOne5 = null;
 	      if(!storeBoardAndBoardPic.getBoardPicNameOne().isEmpty()) {
 	    	  storePicNameOne1 = storeBoardAndBoardPic.getBoardPicNameOne().getOriginalFilename(); 
-	           }
-	            
-	    
 	       try {
 	          new File(path).mkdirs();
 	          storeBoardAndBoardPic.getBoardPicNameOne().transferTo(new File(path+storePicNameOne1));
@@ -268,13 +265,12 @@ public class StoreService {
 	          e.printStackTrace();
 	       } catch (IOException e) {
 	          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
-	    
-	          }
-	       if(!storeBoardAndBoardPic.getBoardPicNameTwo().isEmpty()) {
-		    	  storePicNameOne2 = storeBoardAndBoardPic.getBoardPicNameTwo().getOriginalFilename(); 
-		           }
-		            
-		    
+	       }
+	      }else {
+	    	  //storePicNameOne1 = storeBoardAndBoardPic.getBoardPicNameOne().getOriginalFilename();
+	      }
+	      if(!storeBoardAndBoardPic.getBoardPicNameTwo().isEmpty()) {
+	    	  storePicNameOne2 = storeBoardAndBoardPic.getBoardPicNameTwo().getOriginalFilename(); 
 		       try {
 		          new File(path).mkdirs();
 		          storeBoardAndBoardPic.getBoardPicNameTwo().transferTo(new File(path+storePicNameOne2));
@@ -282,13 +278,12 @@ public class StoreService {
 		          e.printStackTrace();
 		       } catch (IOException e) {
 		          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
-		    
-		          }
+		       }
+	      }else {
+	    	  //storePicNameOne2 = storeBoardAndBoardPic.getBoardPicNameTwo().getOriginalFilename();
+	      }
 		       if(!storeBoardAndBoardPic.getBoardPicNameThree().isEmpty()) {
 			    	  storePicNameOne3 = storeBoardAndBoardPic.getBoardPicNameThree().getOriginalFilename(); 
-			           }
-			            
-			    
 			       try {
 			          new File(path).mkdirs();
 			          storeBoardAndBoardPic.getBoardPicNameThree().transferTo(new File(path+storePicNameOne3));
@@ -296,13 +291,12 @@ public class StoreService {
 			          e.printStackTrace();
 			       } catch (IOException e) {
 			          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
-			    
-			          }
+			       }
+		       }else {
+		    	  // storePicNameOne3 = storeBoardAndBoardPic.getBoardPicNameThree().getOriginalFilename();
+		       }
 			       if(!storeBoardAndBoardPic.getBoardPicNameFour().isEmpty()) {
 				    	  storePicNameOne4 = storeBoardAndBoardPic.getBoardPicNameFour().getOriginalFilename(); 
-				           }
-				            
-				    
 				       try {
 				          new File(path).mkdirs();
 				          storeBoardAndBoardPic.getBoardPicNameFour().transferTo(new File(path+storePicNameOne4));
@@ -310,13 +304,12 @@ public class StoreService {
 				          e.printStackTrace();
 				       } catch (IOException e) {
 				          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
-				    
-				          }
+				       }
+				 }else{
+					// storePicNameOne4 = storeBoardAndBoardPic.getBoardPicNameFour().getOriginalFilename();
+				 }
 				       if(!storeBoardAndBoardPic.getBoardPicNameFive().isEmpty()) {
 					    	  storePicNameOne5 = storeBoardAndBoardPic.getBoardPicNameFive().getOriginalFilename(); 
-					           }
-					            
-					    
 					       try {
 					          new File(path).mkdirs();
 					          storeBoardAndBoardPic.getBoardPicNameFive().transferTo(new File(path+storePicNameOne5));
@@ -324,11 +317,13 @@ public class StoreService {
 					          e.printStackTrace();
 					       } catch (IOException e) {
 					          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
-					    
-					          }
+					       }
+					 }else {
+						// storePicNameOne5 = storeBoardAndBoardPic.getBoardPicNameFive().getOriginalFilename(); 
+					 }
 	      System.out.println(storePicNameOne1 + "/storePicNameOne1");
-   			StoreBoardPic storeBoardPic = new StoreBoardPic();
-   			storeBoardPic.setBoardNo(storeBoardAndBoardPic.getBoardNo());
+	      StoreBoardPic storeBoardPic = new StoreBoardPic();
+   		  storeBoardPic.setBoardNo(storeBoardAndBoardPic.getBoardNo());
 	      storeBoardPic.setBoardPicNameOne(storePicNameOne1);
 	      storeBoardPic.setBoardPicNameTwo(storePicNameOne2);
 	      storeBoardPic.setBoardPicNameThree(storePicNameOne3);
