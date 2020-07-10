@@ -14,12 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.project.secondhand.mapper.ItemReportDeferMapper;
-import com.project.secondhand.mapper.ItemReportResultMapper;
 import com.project.secondhand.mapper.StoreMapper;
 import com.project.secondhand.mapper.StorePicMapper;
-import com.project.secondhand.vo.ItemReportDefer;
-import com.project.secondhand.vo.ItemReportResult;
 import com.project.secondhand.vo.Member;
 //import com.project.secondhand.mapper.StoreBoardPicMapper;
 import com.project.secondhand.vo.Store;
@@ -31,10 +27,6 @@ import com.project.secondhand.vo.StoreBoardPic;
 import com.project.secondhand.vo.StoreList;
 import com.project.secondhand.vo.StorePic;
 import com.project.secondhand.vo.StorePicForm;
-import com.project.secondhand.vo.StoreReportDefer;
-import com.project.secondhand.vo.StoreReportDeferAndStoreBoardAndMember;
-import com.project.secondhand.vo.StoreReportResult;
-import com.project.secondhand.vo.StoreReportResultAndStoreBoardAndMember;
 
 @Service
 @Transactional
@@ -420,37 +412,5 @@ public class StoreService {
 	public String findStoreId(Store store) {
 		return storeMapper.findStoreId(store);
 }
-	
-	//상품 신고 리스트
-		public ArrayList<StoreReportDefer>storeReportDeferList(){
-			return storeMapper.storeReportDeferList();
-		}
-		//상품신고 상세보기
-		public StoreReportDeferAndStoreBoardAndMember storeReportDeferInfo(StoreReportDeferAndStoreBoardAndMember storeReportDeferAndStoreBoardAndMember) {
-			return storeMapper.storeReportDeferInfo(storeReportDeferAndStoreBoardAndMember);
-		}
-		//상품 신고 추가하기
-		public int addStoreReportDefer(StoreReportDeferAndStoreBoardAndMember storeReportDeferAndStoreBoardAndMember) {
-			return storeMapper.addStoreReportDefer(storeReportDeferAndStoreBoardAndMember);
-			
-		}
-		//상품신고 결과 리스트
-		public ArrayList<StoreReportResult>storeReportResultList(){
-			return storeMapper.storeReportResultList();
-		}
-		//상품신고 결과 상세보기
-		public StoreReportResultAndStoreBoardAndMember storeReportResultInfo(StoreReportResultAndStoreBoardAndMember storeReportResultAndStoreBoardAndMember) {
-			return storeMapper.storeReportResultInfo(storeReportResultAndStoreBoardAndMember);
-		}
-		//상품신고 결과 추가하기
-		public int addStoreReportResult(StoreReportResult storeReportResult, int boardNo, int storeReportResultNo) {
-			int row = storeMapper.addStoreReportResult(storeReportResult);
-			if(row ==1) {
-				storeMapper.removeStoreReportDefer(storeReportResultNo);
-			}
-
-			
-			return  row;
-		}
 }
 

@@ -14,8 +14,8 @@
 			mm2.member_nickname memberNickName,
 			mir.category_name categoryName,
 			mir.item_report_content itemReportContent,
-			mir.item_report_date itemReportDate,
-			mir.item_report_result_date itemReportResultDate
+			LEFT(mir.item_report_date, 16) itemReportDate,
+			LEFT(mir.item_report_result_date, 16) itemReportResultDate
 		FROM market_item_report mir 
 		INNER JOIN market_item mi ON mir.item_no = mi.item_no
 		INNER JOIN market_member mm1 ON mi.member_no = mm1.member_no
@@ -35,8 +35,8 @@
 			mm2.member_nickname memberNickName,
 			mir.category_name categoryName,
 			mir.item_report_content itemReportContent,
-			mir.item_report_date itemReportDate,
-			mir.item_report_result_date itemReportResultDate
+			LEFT(mir.item_report_date, 16) itemReportDate,
+			LEFT(mir.item_report_result_date, 16) itemReportResultDate
 		FROM market_item_report mir 
 		INNER JOIN market_item mi ON mir.item_no = mi.item_no
 		INNER JOIN market_member mm1 ON mi.member_no = mm1.member_no
@@ -56,8 +56,8 @@
 			mm2.member_nickname memberNickName,
 			mir.category_name categoryName,
 			mir.item_report_content itemReportContent,
-			mir.item_report_date itemReportDate,
-			mir.item_report_result_date itemReportResultDate
+			LEFT(mir.item_report_date, 16) itemReportDate,
+			LEFT(mir.item_report_result_date, 16) itemReportResultDate
 		FROM market_item_report mir 
 		INNER JOIN market_item mi ON mir.item_no = mi.item_no
 		INNER JOIN market_member mm1 ON mi.member_no = mm1.member_no
@@ -78,8 +78,8 @@
 			mm2.member_nickname memberNickName,
 			mir.category_name categoryName,
 			mir.item_report_content itemReportContent,
-			mir.item_report_date itemReportDate,
-			mir.item_report_result_date itemReportResultDate
+			LEFT(mir.item_report_date, 16) itemReportDate,
+			LEFT(mir.item_report_result_date, 16) itemReportResultDate
 		FROM market_item_report mir 
 		INNER JOIN market_item mi ON mir.item_no = mi.item_no
 		INNER JOIN market_member mm1 ON mi.member_no = mm1.member_no
@@ -88,4 +88,55 @@
 		AND mir.category_name LIKE CONCAT('%', #{categoryName}, '%')
 		ORDER BY mir.item_report_result_date DESC
 	</select>
+	
+	<!-- 신고 상세보기 -->
+	<select id="selectItemReportOne" parameterType="int" resultType="com.project.secondhand.vo.ItemReport">
+		SELECT
+			mir.item_report_no itemReportNo,
+			mir.item_no itemNo,
+			mi.item_title itemTitle,
+			mm1.member_nickname itemMemberNickName,
+			mir.member_no memberNo,
+			mm2.member_nickname memberNickName,
+			mir.category_name categoryName,
+			mir.item_report_content itemReportContent,
+			LEFT(mir.item_report_date, 16) itemReportDate,
+			LEFT(mir.item_report_result_date, 16) itemReportResultDate
+		FROM market_item_report mir 
+		INNER JOIN market_item mi ON mir.item_no = mi.item_no
+		INNER JOIN market_member mm1 ON mi.member_no = mm1.member_no
+		INNER JOIN market_member mm2 ON mir.member_no = mm2.member_no
+		WHERE mir.item_report_no = #{itemReportNo}
+		ORDER BY mir.item_report_date DESC
+	</select>
+	
+	<!-- 신고 삭제 -->
+	<delete id="deleteItemReport" parameterType="int">
+		DELETE FROM market_item_report
+		WHERE item_report_no = #{itemReportNo}
+	</delete>
+	
+	<!-- 신고 처리 -->
+	<update id="updateItemReport" parameterType="int">
+		UPDATE market_item_report SET
+			item_report_result_date = NOW()
+		WHERE item_report_no = #{itemReportNo}
+	</update>
+	
+	<!-- 신고하기 -->
+	<insert id="insertItemReport" parameterType="com.project.secondhand.vo.ItemReport">
+		INSERT INTO market_item_report (
+			item_no,
+			member_no,
+			category_name,
+			item_report_content,
+			item_report_date
+		) VALUES (
+			#{itemNo},
+			#{memberNo},
+			#{categoryName},
+			#{itemReportContent},
+			NOW()
+		)
+	</insert>
 </mapper>

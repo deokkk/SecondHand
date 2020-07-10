@@ -16,4 +16,12 @@ public interface ItemReportMapper {
 	public List<ItemReport> selectItemReportListByCategory(String categoryName);
 	// 카테고리별 처리 완료된 신고 리스트
 	public List<ItemReport> selectItemReportResultListByCategory(String categoryName);
+	// 신고 상세보기
+	public ItemReport selectItemReportOne(int itemReportNo);
+	// 신고 삭제
+	public int deleteItemReport(int itemReportNo);
+	// 신고 처리
+	public int updateItemReport(int itemReportNo);
+	// 신고하기
+	public int insertItemReport(ItemReport itemReport);
 }

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>report detail</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<!-- sidemenu style, javascript 파일 -->
+<link rel="stylesheet" href="css/sidemenu.css">
+<script src="js/sidemenu.js"></script>
+<style>
+#reportBtnBox {
+	text-align: right;
+}
+/* sidemenu 추가하면서 수정된 style */
+#footer {
+	left: 0px;
+}
+@font-face { 
+	font-family: 'yg-jalnan'; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); 
+	font-weight: normal; 
+	font-style: normal; 
+} 
+.sidenav a, .sidenav ul li {
+	font-family: 'yg-jalnan';
+}
+</style>
+</head>
+<body>
+	<!-- sidemenu include -->
+	<div th:include="/inc/sidemenu::sidemenu"></div>
+	<div th:class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:class="row">
+				<div th:class="col-sm-3"></div>
+				<div th:class="col-sm-6">
+					<h2 th:id="qna-h2" th:text="'신고 상세보기'"></h2>
+					<div>
+						<table th:class="table">
+							<tr>
+								<th th:text="글종류"></th>
+								<td th:text="${itemReport} != null ? '상품' : '홍보글'"></td>
+							</tr>
+							<tr>
+								<th th:text="신고번호"></th>
+								<td th:text="${itemReport} != null ? ${itemReport.itemReportNo} : ${boardReport.boardReportNo}"></td>
+							</tr>
+							<tr>
+								<th th:text="게시글"></th>
+								<td><a th:href="${itemReport} != null ? @{/itemInfo(itemNo = ${itemReport.itemNo})} : @{/storeBoardInfo(boardNo = ${boardReport.boardNo})}" th:text="${itemReport} != null ? ${itemReport.itemTitle} + '(작성자 : ' + ${itemReport.itemMemberNickName} + ')' : ${boardReport.boardTitle} + '(작성자 : ' + ${boardReport.boardStoreName} + ')'"></a></td>
+							</tr>
+							<tr>
+								<th th:text="카테고리"></th>
+								<td th:text="${itemReport} != null ? ${itemReport.categoryName} : ${boardReport.categoryName}"></td>
+							</tr>
+							<tr>
+								<th th:text="신고자"></th>
+								<td th:text="${itemReport} != null ? ${itemReport.memberNickName} : ${boardReport.memberNickName}"></td>
+							</tr>
+							<tr>
+								<th th:text="신고내용"></th>
+								<td th:text="${itemReport} != null ? ${itemReport.itemReportContent} : ${boardReport.boardReportContent}"></td>
+							</tr>
+							<tr>
+								<th th:text="신고날짜"></th>
+								<td th:text="${itemReport} != null ? ${itemReport.itemReportDate} : ${boardReport.boardReportDate}"></td>
+							</tr>
+							<tr>
+								<th th:text="처리날짜"></th>
+								<td th:text="${itemReport} != null ? (${itemReport.itemReportResultDate} == null ? '미처리' : ${itemReport.itemReportResultDate}) : (${boardReport.boardReportResultDate} == null ? '미처리' : ${boardReport.boardReportResultDate})"></td>
+							</tr>
+						</table>
+					</div>
+					<div th:id="reportBtnBox">
+						<a th:href="${itemReport} != null ? @{/modifyReportState(type = 'item', no = ${itemReport.itemReportNo})} : @{/modifyReportState(type = 'board', no = ${boardReport.boardReportNo})}" th:text="처리"></a>
+						<a th:href="${itemReport} != null ? @{/removeReport(type = 'item', no = ${itemReport.itemReportNo})} : @{/removeReport(type = 'board', no = ${boardReport.boardReportNo})}" th:text="삭제"></a>
+						<a th:href="@{/reportList}" th:text="목록으로"></a>
+					</div>
+				</div>
+				<div th:class="col-sm-3"></div>
+			</div>
+		</section>
+		<div th:class="header">
+			<div th:include="/inc/copyRight"></div>
+		</div>
+	</div>
+</body>
+</html>

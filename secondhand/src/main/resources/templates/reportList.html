@@ -31,8 +31,8 @@
 </style>
 <script>
 	$(document).ready(function(){
-		var categoryName = $('#categoryName').val();
 		$('#categoryName').change(function(){
+			var categoryName = $('#categoryName').val();
 			$.ajax({
 				url: '/getItemReportListByCategory',
 				type: 'GET',
@@ -41,53 +41,57 @@
 					$('#reportTable').empty();
 					console.log('getItemReportListByCategory success');
 					$.each(data, function(i) {
-						$('#reportTable').append('<tr><td>상품</td><td>' + data[i].itemReportNo + '</td><td>' + data[i].categoryName + '</td><td>' + data[i].memberNickName + '</td><td>' + data[i].itemReportDate + '</td><td><a href="">신고 내용 보기</a></td><td>미처리</td></tr>');
+						console.log(data[i])
+						$('#reportTable').append('<tr><td>상품</td><td>' + data[i].itemReportNo + '</td><td>' + data[i].categoryName + '</td><td>' + data[i].memberNickName + '</td><td>' + data[i].itemReportDate + '</td><td><a href="/reportDetail?type=item&no=' + data[i].itemReportNo + '">신고 내용 보기</a></td><td>미처리</td></tr>');
+					});
+					$.ajax({
+						url: '/getItemReportResultListByCategory',
+						type: 'GET',
+						data: {categoryName: categoryName},
+						success: function(data) {
+							console.log('getItemReportResultListByCategory success');
+							$.each(data, function(i) {
+								console.log(data[i])
+								$('#reportTable').append('<tr><td>상품</td><td>' + data[i].itemReportNo + '</td><td>' + data[i].categoryName + '</td>	<td>' + data[i].memberNickName + '</td><td>' + data[i].itemReportDate + '</td><td><a href="/reportDetail?type=item&no=' + data[i].itemReportNo + '">신고 내용 보기</a></td><td>' + data[i].itemReportResultDate + '</td></tr>');
+							});
+							$.ajax({
+								url: '/getBoardReportListByCategory',
+								type: 'GET',
+								data: {categoryName: categoryName},
+								success: function(data) {
+									console.log('getBoardReportListByCategory success');
+									$.each(data, function(i) {
+									console.log(data[i])
+										$('#reportTable').append('<tr><td>홍보글</td><td>' + data[i].boardReportNo + '</td><td>' + data[i].categoryName + '</td><td>' + data[i].memberNickName + '</td><td>' + data[i].boardReportDate + '</td><td><a href="/reportDetail?type=board&no=' + data[i].boardReportNo + '">신고 내용 보기</a></td><td>미처리</td></tr>');
+									});
+									$.ajax({
+										url: '/getBoardReportResultListByCategory',
+										type: 'GET',
+										data: {categoryName: categoryName},
+										success: function(data) {
+											console.log('getBoardReportResultListByCategory success');
+											$.each(data, function(i) {
+												console.log(data[i])
+												$('#reportTable').append('<tr><td>홍보글</td><td>' + data[i].boardReportNo + '</td><td>' + data[i].categoryName + '</td><td>' + data[i].memberNickName + '</td><td>' + data[i].boardReportDate + '</td><td><a href="/reportDetail?type=board&no=' + data[i].itemReportNo + '">신고 내용 보기</a></td><td>' + data[i].boardReportResultDate + '</td></tr>');
+											});
+										},
+										error: function() {
+											console.log('getBoardReportResultListByCategory fail');
+										}
+									});
+								},
+								error: function() {
+									console.log('getBoardReportListByCategory fail');
+								}
+							});
+						},
+						error: function() {
+							console.log('getItemReportResultListByCategory fail');
+						}
 					});
 				},
 				error: function() {
 					console.log('getItemReportListByCategory fail');
-				}
-			});
-			$.ajax({
-				url: '/getItemReportResultListByCategory',
-				type: 'GET',
-				data: {categoryName: categoryName},
-				success: function(data) {
-					console.log('getItemReportResultListByCategory success');
-					$.each(data, function(i) {
-						$('#reportTable').append('<tr><td>상품</td><td>' + data[i].itemReportNo + '</td><td>' + data[i].categoryName + '</td>	<td>' + data[i].memberNickName + '</td><td>' + data[i].itemReportDate + '</td><td><a href="">신고 내용 보기></a></td><td>' + data[i].itemReportResultDate + '</td></tr>');
-					});
-				},
-				error: function() {
-					console.log('getItemReportResultListByCategory fail');
-				}
-			});
-			$.ajax({
-				url: '/getBoardReportListByCategory',
-				type: 'GET',
-				data: {categoryName: categoryName},
-				success: function(data) {
-					console.log('getBoardReportListByCategory success');
-					$.each(data, function(i) {
-						$('#reportTable').append('<tr><td>홍보글</td><td>' + data[i].boardReportNo + '</td><td>' + data[i].categoryName + '</td><td>' + data[i].memberNickName + '</td><td>' + data[i].boardReportDate + '</td><td><a href="">신고 내용 보기</a></td><td>미처리</td></tr>');
-					});
-				},
-				error: function() {
-					console.log('getBoardReportListByCategory fail');
-				}
-			});
-			$.ajax({
-				url: '/getBoardReportResultListByCategory',
-				type: 'GET',
-				data: {categoryName: categoryName},
-				success: function(data) {
-					console.log('getBoardReportResultListByCategory success');
-					$.each(data, function(i) {
-						$('#reportTable').append('<tr><td>홍보글</td><td>' + data[i].boardReportNo + '</td><td>' + data[i].categoryName + '</td><td>' + data[i].memberNickName + '</td><td>' + data[i].boardReportDate + '</td><td><a href="">신고 내용 보기</a></td><td>' + data[i].boardReportResultDate + '</td></tr>');
-					});
-				},
-				error: function() {
-					console.log('getBoardReportResultListByCategory fail');
 				}
 			});
 		});
@@ -132,7 +136,7 @@
 									<td th:text="${itemReport.categoryName}"></td>
 									<td th:text="${itemReport.memberNickName}"></td>
 									<td th:text="${itemReport.itemReportDate}"></td>
-									<td><a href="" th:text="'신고 내용 보기'"></a></td>
+									<td><a th:href="@{/reportDetail(type = item, no = ${itemReport.itemReportNo})}" th:text="'신고 내용 보기'"></a></td>
 									<td th:text="'미처리'"></td>
 								</tr>
 								<tr th:each="itemReportResult : ${itemReportResultList}">
@@ -141,7 +145,7 @@
 									<td th:text="${itemReportResult.categoryName}"></td>
 									<td th:text="${itemReportResult.memberNickName}"></td>
 									<td th:text="${itemReportResult.itemReportDate}"></td>
-									<td><a href="" th:text="'신고 내용 보기'"></a></td>
+									<td><a th:href="@{/reportDetail(type = item, no = ${itemReportResult.itemReportNo})}" th:text="'신고 내용 보기'"></a></td>
 									<td th:text="${itemReportResult.itemReportResultDate}"></td>
 								</tr>
 								<tr th:each="boardReport : ${boardReportList}">
@@ -150,7 +154,7 @@
 									<td th:text="${boardReport.categoryName}"></td>
 									<td th:text="${boardReport.memberNickName}"></td>
 									<td th:text="${boardReport.boardReportDate}"></td>
-									<td><a href="" th:text="'신고 내용 보기'"></a></td>
+									<td><a th:href="@{/reportDetail(type = board, no = ${boardReport.boardReportNo})}" th:text="'신고 내용 보기'"></a></td>
 									<td th:text="'미처리'"></td>
 								</tr>
 								<tr th:each="boardReportResult : ${boardReportResultList}">
@@ -159,7 +163,7 @@
 									<td th:text="${boardReportResult.categoryName}"></td>
 									<td th:text="${boardReportResult.memberNickName}"></td>
 									<td th:text="${boardReportResult.boardReportDate}"></td>
-									<td><a href="" th:text="'신고 내용 보기'"></a></td>
+									<td><a th:href="@{/reportDetail(type = baord, no = ${boardReportResult.boardReportNo})}" th:text="'신고 내용 보기'"></a></td>
 									<td th:text="${boardReportResult.boardReportResultDate}"></td>
 								</tr>
 							</tbody>

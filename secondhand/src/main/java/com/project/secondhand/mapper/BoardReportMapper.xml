@@ -14,8 +14,8 @@
 			mm.member_nickname memberNickName,
 			mbr.category_name categoryName,
 			mbr.board_report_content boardReportContent,
-			mbr.board_report_date boardReportDate,
-			mbr.board_report_result_date boardReportResultDate
+			LEFT(mbr.board_report_date, 16) boardReportDate,
+			LEFT(mbr.board_report_result_date, 16) boardReportResultDate
 		FROM market_board_report mbr 
 		INNER JOIN market_store_board msb ON mbr.board_no = msb.board_no
 		INNER JOIN market_store ms ON msb.store_no = ms.store_no
@@ -35,8 +35,8 @@
 			mm.member_nickname memberNickName,
 			mbr.category_name categoryName,
 			mbr.board_report_content boardReportContent,
-			mbr.board_report_date boardReportDate,
-			mbr.board_report_result_date boardReportResultDate
+			LEFT(mbr.board_report_date, 16) boardReportDate,
+			LEFT(mbr.board_report_result_date, 16) boardReportResultDate
 		FROM market_board_report mbr 
 		INNER JOIN market_store_board msb ON mbr.board_no = msb.board_no
 		INNER JOIN market_store ms ON msb.store_no = ms.store_no
@@ -57,8 +57,8 @@
 			mm.member_nickname memberNickName,
 			mbr.category_name categoryName,
 			mbr.board_report_content boardReportContent,
-			mbr.board_report_date boardReportDate,
-			mbr.board_report_result_date boardReportResultDate
+			LEFT(mbr.board_report_date, 16) boardReportDate,
+			LEFT(mbr.board_report_result_date, 16) boardReportResultDate
 		FROM market_board_report mbr 
 		INNER JOIN market_store_board msb ON mbr.board_no = msb.board_no
 		INNER JOIN market_store ms ON msb.store_no = ms.store_no
@@ -79,8 +79,8 @@
 			mm.member_nickname memberNickName,
 			mbr.category_name categoryName,
 			mbr.board_report_content boardReportContent,
-			mbr.board_report_date boardReportDate,
-			mbr.board_report_result_date boardReportResultDate
+			LEFT(mbr.board_report_date, 16) boardReportDate,
+			LEFT(mbr.board_report_result_date, 16) boardReportResultDate
 		FROM market_board_report mbr 
 		INNER JOIN market_store_board msb ON mbr.board_no = msb.board_no
 		INNER JOIN market_store ms ON msb.store_no = ms.store_no
@@ -89,4 +89,55 @@
 		AND mbr.category_name LIKE CONCAT('%', #{categoryName}, '%')
 		ORDER BY mbr.board_report_result_date DESC
 	</select>
+	
+	<!-- 신고 상세보기 -->
+	<select id="selectBoardReportOne" parameterType="int" resultType="com.project.secondhand.vo.BoardReport">
+		SELECT
+			mbr.board_report_no boardReportNo,
+			mbr.board_no boardNo,
+			msb.board_title boardTitle,
+			ms.store_Name boardStoreName,
+			mbr.member_no memberNo,
+			mm.member_nickname memberNickName,
+			mbr.category_name categoryName,
+			mbr.board_report_content boardReportContent,
+			LEFT(mbr.board_report_date, 16) boardReportDate,
+			LEFT(mbr.board_report_result_date, 16) boardReportResultDate
+		FROM market_board_report mbr 
+		INNER JOIN market_store_board msb ON mbr.board_no = msb.board_no
+		INNER JOIN market_store ms ON msb.store_no = ms.store_no
+		INNER JOIN market_member mm ON mbr.member_no = mm.member_no
+		WHERE mbr.board_report_no = #{boardReportNo}
+		ORDER BY mbr.board_report_date DESC
+	</select>
+	
+	<!-- 신고 삭제 -->
+	<delete id="deleteBoardReport" parameterType="int">
+		DELETE FROM market_board_report
+		WHERE board_report_no = #{boardReportNo}
+	</delete>
+	
+	<!-- 신고 처리 -->
+	<update id="updateBoardReport" parameterType="int">
+		UPDATE market_board_report SET
+			board_report_result_date = NOW()
+		WHERE board_report_no = #{boardReportNo}
+	</update>
+	
+	<!-- 신고하기 -->
+	<insert id="insertBoardReport" parameterType="com.project.secondhand.vo.BoardReport">
+		INSERT INTO market_board_report (
+			board_no,
+			member_no,
+			category_name,
+			board_report_content,
+			board_report_date
+		) VALUES (
+			#{boardNo},
+			#{memberNo},
+			#{categoryName},
+			#{boardReportContent},
+			NOW()
+		)
+	</insert>
 </mapper>

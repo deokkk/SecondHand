@@ -170,7 +170,7 @@
 							</tr>
 						</thead>
 						<tbody th:id="categoryTable">
-							<tr th:each="category, stat : ${categoryList}">
+							<tr th:each="category : ${categoryList}">
 								<td th:text="${category.categoryName}" th:class="${category.categoryName}" th:id="${category.categoryName}"></td>
 								<td><button th:type="button" th:class="${category.categoryName} +' updateBtn'"><i class='far fa-edit' style='font-size:24px'></i></button></td>
 								<td><button th:type="button" th:class="${category.categoryName} +' deleteBtn'"><i class="fa fa-remove" style="font-size:24px;color:red"></i></button></td>

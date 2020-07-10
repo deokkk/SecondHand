@@ -56,7 +56,7 @@
 			</article>
 		</section>
 		<div th:if="${session.loginMember} != null">
-			<a th:href="@{/addItemReportDefer(itemNo=${item.itemNo})}">신고하기</a>
+			<a th:href="@{/addItemReport(itemNo=${item.itemNo})}">신고하기</a>
 			<!-- 채팅 -->
 			<button type="button" id="popup">채팅</button>
 			<input th:type="hidden" th:value="${session.loginMember}" th:id="sessionVal">
