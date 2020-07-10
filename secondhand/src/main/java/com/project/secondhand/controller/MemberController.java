@@ -273,6 +273,9 @@ public class MemberController {
 			return "redirect:/memberInfo";
 		}
 		
+		
+		
+		//회원탈퇴
 		@GetMapping("/removeMember")
 		public String removeMember(HttpSession session) {
 			if(session.getAttribute("loginMember")==null) {
@@ -286,6 +289,7 @@ public class MemberController {
 				return "redirect:/";
 			}
 			LoginMember loginMember = (LoginMember)(session.getAttribute("loginMember"));
+			
 			loginMember.setMemberPw(memberPw);
 			
 			memberService.removeMember(member, memberPic);

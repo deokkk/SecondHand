@@ -20,25 +20,25 @@
 					<tr>
 						<td>사진</td>
 						<td>
-							<img th:src="@{'/upload/'+ ${memberInfo?.memberPicName}}" width="100" height="100"></img>
+							<img th:src="@{'/upload/'+ ${memberInfo.memberPicName}}" width="100" height="100"></img>
 						</td>
 					</tr>
 					<tr>
 						<td>닉네임</td>
 						
-						<td th:text="${memberInfo?.memberNickname}"></td>
+						<td th:text="${memberInfo.memberNickname}"></td>
 					</tr>
 					<tr>
 						<td>이메일</td>
-						<td th:text="${memberInfo?.memberEmail}"></td>
+						<td th:text="${memberInfo.memberEmail}"></td>
 					</tr>
 					<tr>
 						<td>전화번호</td>
-						<td th:text="${memberInfo?.memberPhone}"></td>
+						<td th:text="${memberInfo.memberPhone}"></td>
 					</tr>
 					<tr>
 						<td>주소</td>
-						<td th:text="${memberInfo?.bigCity}+' '+${memberInfo?.middleCity}+' '+${memberInfo?.smallCity}"></td>
+						<td th:text="${memberInfo.bigCity}+' '+${memberInfo.middleCity}+' '+${memberInfo.smallCity}"></td>
 					</tr>
 				</table>
 				<div>

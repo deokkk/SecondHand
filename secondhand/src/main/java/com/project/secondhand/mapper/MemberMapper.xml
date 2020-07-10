@@ -33,18 +33,20 @@
 		NOW()  	
   	)
   </insert>
+  
   <!-- 회원탈퇴 -->
   <delete id="removeMember" parameterType="com.project.secondhand.vo.Member">
   	DELETE FROM market_member
   	WHERE member_email = #{memberEmail}
   	AND member_pw = PASSWORD(#{memberPw})
   </delete>  
+  
   <delete id="removeMemberPic" parameterType="com.project.secondhand.vo.MemberPic">
-  	DELETE FROM market_member_pic
+  	DELETE
+  	FROM market_member_Pic
   	WHERE member_no=#{memberNo}
   </delete>
-  
-  
+   
   <!-- id(email)중복체크 -->
   <select id="memberIdCheck" resultType="String" parameterType="String">
   	SELECT

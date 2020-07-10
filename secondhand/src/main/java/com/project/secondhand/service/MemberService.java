@@ -93,8 +93,10 @@ public class MemberService {
 	
 	 //회원삭제 
 	public int removeMember(Member member, MemberPic memberPic) { //멤버 이미지 파일 삭제 String
-		memberMapper.removeMemberPic(memberPic);
-		 return memberMapper.addMember(member);
+		
+		 memberMapper.removeMemberPic(memberPic);
+		 return memberMapper.removeMember(member);
+		// return memberMapper.addMember(member);
 	 
 	 }
 	// 비밀번호 찾기
