@@ -212,7 +212,11 @@ public class StoreController {
 	
 	//업체홍보 삭제하기
 	@GetMapping("/removeStoreBoard")
-	public String removeStoreBoard(int boardNo) {
+	public String removeStoreBoard(HttpSession session, @RequestParam(value = "boardNo") int boardNo) {
+		if(session.getAttribute("loginAdmin") == null) {
+			return "redirect:/";
+		}
+		storeService.deleteStoreBoard(boardNo);
 		return "redirect:/storeBoardList";
 	}
 	

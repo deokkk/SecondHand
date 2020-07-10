@@ -29,11 +29,11 @@ $(document).ready(function(){
 	
 //<button>을 클릭하면 작동된다.
 	$('#btn').click(function(){	
-	if($('#storename').val().length ===0) {
+	if($('#storeName').val().length ===0) {
 		helperInit();
 		$('#nameHelper').text("회사명을 입력하세요.");
-		$('#storename').focus();	
-	}else if($('#memberPw').val().length < 4){
+		$('#storeName').focus();	
+	}else if($('#sotrePw').val().length < 4){
 		helperInit();
 		$('#pwHelper').text("4글자 이상 입력하세요");
 		$('#storePw').focus();
@@ -97,7 +97,7 @@ $(document).ready(function(){
 	</div>
 	<div class="container-fluid">
 		<section id="content">
-			<form method="post" th:action="@{/addStore}" enctype="multipart/form-data" id = "addStorForm">
+			<form method="post" th:action="@{/addStore}" enctype="multipart/form-data" id = "addStoreForm">
 				<div class="row">
 					<div class="col-sm-2"></div>
 					<div class="col-sm-7">
@@ -108,7 +108,7 @@ $(document).ready(function(){
 									<td>
 										<label for="usr">회사명:</label>
 									<td>
-										<input type="text" class="form-control"	id="storename" name="storename" th:placeholder="회사명을입력하세요">
+										<input type="text" class="form-control"	id="storeName" name="storeName" th:placeholder="회사명을입력하세요">
 										<span id = "nameHelper"></span>
 									</td>
 									<td>

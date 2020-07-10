@@ -18,6 +18,18 @@
 	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
 <link rel="stylesheet" media="all" href="css/searchWord.css" />
+<script>
+	$(document).ready(function() {
+		$('#storeBoardBtn').click(function() {
+			var result = confirm('정말 삭제하시겠습니까?')
+			if(result){
+				location.replace('storeBoardList')
+			}else{
+				return false
+			}
+		});
+	});
+</script>
 <style>
 .imgSize {
 	width: 300px;
@@ -38,7 +50,7 @@
 					</div>
 
 					<p>
-					<a th:href = "@{/removeStoreBoard(boardNo = ${board.boardNo})}">삭제</a>
+					<a th:href = "@{/removeStoreBoard(boardNo = ${board.boardNo})}" th:id="storeBoardBtn">삭제</a>
 					<a th:href = "@{/modifyStoreBoard(boardNo = ${board.boardNo})}">수정</a>
 						<h4 style="text-align: center;">업체사진</h4>
 									<p>

@@ -37,16 +37,12 @@
 		store_no,
 		store_pic_name_one,
 		store_pic_name_two,
-		store_pic_name_three,
-		store_pic_name_four,
-		store_pic_name_five
+		store_pic_name_three
 		)VALUES(
 		#{storeNo},
 		#{storePicNameOne},
 		#{storePicNameTwo},
-		#{storePicNameThree},
-		#{storePicNameFour},
-		#{storePicNameFive}
+		#{storePicNameThree}
 		)
 	</insert>
 	<!-- 업체 게시글 작성시 사진추가 -->

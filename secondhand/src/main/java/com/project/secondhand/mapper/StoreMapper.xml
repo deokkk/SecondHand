@@ -141,7 +141,7 @@
   			#{storeAddr},
   			#{storePhone},
   			#{storeEmail},
-  			#{storePw},
+  			PASSWORD(#{storePw}),
   			NOW()
   		)
   </insert>

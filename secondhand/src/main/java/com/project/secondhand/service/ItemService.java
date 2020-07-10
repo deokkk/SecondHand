@@ -25,7 +25,7 @@ public class ItemService {
    private ItemMapper itemMapper;
    @Autowired
    private ItemPicMapper itemPicMapper;
-   @Value("D:\\maven.1593574788868\\secondhand\\src\\main\\resources\\static\\upload\\")
+   @Value("D:\\sts-4.6.1.RELEASE\\tkdgus\\maven.1594192784663\\secondhand\\src\\main\\resources\\static\\upload\\")
    private String path;
    //카테고리별 아이템 리스트 출력
    public List<ItemList> selectItemByCategory(String categoryName){
