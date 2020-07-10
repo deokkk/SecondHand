@@ -13,21 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.project.secondhand.mapper.ItemReportResultMapper;
 import com.project.secondhand.service.CategoryService;
 import com.project.secondhand.service.StoreService;
 import com.project.secondhand.vo.Category;
-import com.project.secondhand.vo.ItemReportResult;
 import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreAndStoreBoardAndBoardPic;
 import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreBoardAndBoardPic;
 import com.project.secondhand.vo.StoreList;
 import com.project.secondhand.vo.StorePicForm;
-import com.project.secondhand.vo.StoreReportDefer;
-import com.project.secondhand.vo.StoreReportDeferAndStoreBoardAndMember;
-import com.project.secondhand.vo.StoreReportResult;
-import com.project.secondhand.vo.StoreReportResultAndStoreBoardAndMember;
 
 @Controller
 public class StoreController {
@@ -272,69 +266,4 @@ public class StoreController {
 			
 			return "storeIdView";
 		}
-	//상품 신고 리스트
-	@GetMapping("/storeReportList")
-	public String storeReportDeferList(HttpSession session, Model model) {
-		//세션 : 로그인이 아닐때 활성화
-		/*Admin loginAdmin = new Admin();
-		loginAdmin = adminService.adminLogin(admin);
-		if(loginAdmin==null) {//로그인 중이 아니면 인덱스로
-			return "redirect:/adminLogin";
-		}*/
-		ArrayList<StoreReportDefer> storeReport = storeService.storeReportDeferList();
-		System.out.println(storeReport+"<--itemReport.list");
-		model.addAttribute("storeReport", storeReport);
-		return "storeReportList";
-	}
-	//상품 신고 상세보기
-	@GetMapping("/storeReportDeferInfo")
-	public String storeReportDeferInfo(StoreReportDeferAndStoreBoardAndMember storeReportDeferAndStoreBoardAndMember,  @RequestParam(value="boardReportDeferNo")int boardReportDeferNo, Model model) {
-		System.out.println(boardReportDeferNo + "/boardReportDeferNo/storeReportDefer");
-		storeReportDeferAndStoreBoardAndMember = storeService.storeReportDeferInfo(storeReportDeferAndStoreBoardAndMember);
-		System.out.println(storeReportDeferAndStoreBoardAndMember + "/storeReportDefer/itemReportDeferController");
-		model.addAttribute("storeReportDefer", storeReportDeferAndStoreBoardAndMember);
-		model.addAttribute("boardReportDeferNo", boardReportDeferNo);
-		return "storeReportDeferInfo";
-	}
-	
-	//상품신고 추가
-	@GetMapping("/addStoreReportDefer")
-	public String addStoreReportDefer(Model model, HttpSession session, @RequestParam(value="boardNo")int boardNo) {
-		System.out.println(boardNo+"<--Ctrl.itemNo");
-		List<Category> categoryList = categoryService.getCategoryList("업체홍보");
-		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("boardNo", boardNo);
-		return "addStoreReportDefer";
-	}
-	@PostMapping("/addStoreReportDefer")
-	public String addItemReportDefer(StoreReportDeferAndStoreBoardAndMember storeReportDeferAndStoreBoardAndMember, HttpSession session) {
-		System.out.println(storeReportDeferAndStoreBoardAndMember+"<--Ctrl.storeReportDefer");
-		storeService.addStoreReportDefer(storeReportDeferAndStoreBoardAndMember);
-		return "redirect:/storeBoardList";
-		
-	}
-	@GetMapping("/storeReportResultList")
-	public String storeReportResultList(Model model) {
-		ArrayList<StoreReportResult> storeReportResult = storeService.storeReportResultList();
-		model.addAttribute("storeReportResult", storeReportResult);
-		return "storeReportResultList";
-	}
-	@GetMapping("/storeReportResultInfo")
-	public String storeReportResultInfo(StoreReportResultAndStoreBoardAndMember storeReportResultAndStoreBoardAndMember, Model model,
-			@RequestParam(value="boardReportResultNo")int boardReportResultNo) {
-		System.out.println(storeReportResultAndStoreBoardAndMember+"<--ResultCtrl/Info/storeReportResult");
-		storeReportResultAndStoreBoardAndMember = storeService.storeReportResultInfo(storeReportResultAndStoreBoardAndMember);
-		System.out.println(storeReportResultAndStoreBoardAndMember+"<--ResultCtrl/Info/storeReportResult");
-		model.addAttribute("storeReportResult", storeReportResultAndStoreBoardAndMember);
-		model.addAttribute("boardReportResultNo", boardReportResultNo);
-		return "storeReportResultInfo";
-	}
-	@PostMapping("/addStoreReportResult")
-	public String addStoreReportResult(StoreReportResult storeReportResult, int boardNo, int boardReportDeferNo) {
-		System.out.println(boardNo + "/boardNo/????");
-		System.out.println(boardReportDeferNo + "/boardReportDeferNo//////");
-		System.out.println(storeReportResult + "/storeReportResult/ddddd");
-		storeService.addStoreReportResult(storeReportResult, boardNo, boardReportDeferNo);
-		return "redirect:/storeReportResultList";
-	}
 	}

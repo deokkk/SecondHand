@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.secondhand.mapper.BoardReportMapper;
 import com.project.secondhand.mapper.ItemReportMapper;
+import com.project.secondhand.mapper.MemberMapper;
 import com.project.secondhand.vo.BoardReport;
 import com.project.secondhand.vo.ItemReport;
 
@@ -16,6 +17,7 @@ import com.project.secondhand.vo.ItemReport;
 public class ReportService {
 	@Autowired private ItemReportMapper itemReportMapper;
 	@Autowired private BoardReportMapper boardReportMapper;
+	@Autowired private MemberMapper memberMapper;
 	
 	// 전체 신고 리스트
 	public Map<String, Object> getReportListAll() {
@@ -32,7 +34,7 @@ public class ReportService {
 		return itemReportMapper.selectItemReportListByCategory(categoryName);
 	}
 	
-	// 카테고리별 처리된 상품 신괴 리스트
+	// 카테고리별 처리된 상품 신고 리스트
 	public List<ItemReport> getItemReportResultListByCategory(String categoryName) {
 		return itemReportMapper.selectItemReportResultListByCategory(categoryName);
 	}
@@ -45,5 +47,53 @@ public class ReportService {
 	// 카테고리별 처리된 홍보글 신고 리스트
 	public List<BoardReport> getBoardReportResultListByCategory(String categoryName) {
 		return boardReportMapper.selectBoardReportResultListByCategory(categoryName);
+	}
+	
+	// 상품 신고 상세보기
+	public ItemReport getItemReportOne(int itemReportNo) {
+		return itemReportMapper.selectItemReportOne(itemReportNo);
+	}
+	
+	// 홍보글 신고 상세보기
+	public BoardReport getBoardReportOne(int boardReportNo) {
+		return boardReportMapper.selectBoardReportOne(boardReportNo);
+	}
+	
+	// 신고 삭제
+	public void removeItemReport(int itemReportNo) {
+		itemReportMapper.deleteItemReport(itemReportNo);
+	}
+	public void removeBoardReport(int boardReportNo) {
+		boardReportMapper.deleteBoardReport(boardReportNo);
+	}
+	
+	// 신고 처리
+	public void modifyItemReport(int itemReportNo) {
+		itemReportMapper.updateItemReport(itemReportNo);
+	}
+	public void modifyBoardReport(int boardReportNo) {
+		boardReportMapper.updateBoardReport(boardReportNo);
+	}
+	
+	// 상품 신고하기
+	public void addItemReport(int itemNo, String memberEmail, String categoryName, String reportContent) {
+		int memberNo = memberMapper.selectMemberNoByEmail(memberEmail);
+		ItemReport itemReport = new ItemReport();
+		itemReport.setItemNo(itemNo);
+		itemReport.setMemberNo(memberNo);
+		itemReport.setCategoryName(categoryName);
+		itemReport.setItemReportContent(reportContent);
+		itemReportMapper.insertItemReport(itemReport);
+	}
+	
+	// 게시글 신고하기
+	public void addBoardReport(int boardNo, String memberEmail, String categoryName, String reportContent) {
+		int memberNo = memberMapper.selectMemberNoByEmail(memberEmail);
+		BoardReport boardReport = new BoardReport();
+		boardReport.setBoardNo(boardNo);
+		boardReport.setMemberNo(memberNo);
+		boardReport.setCategoryName(categoryName);
+		boardReport.setBoardReportContent(reportContent);
+		boardReportMapper.insertBoardReport(boardReport);
 	}
 }
