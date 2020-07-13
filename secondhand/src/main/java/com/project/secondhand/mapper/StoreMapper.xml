@@ -163,7 +163,8 @@
   </insert>
 	<!-- 업체 로그인 확인 -->
 	<select id="selectLoginStore" parameterType="com.project.secondhand.vo.Store" resultType="com.project.secondhand.vo.Store">
-		SELECT 
+		SELECT
+			store_no AS storeNo, 
 			store_email AS storeEmail,
 			store_pw AS storePw
 		FROM market_store

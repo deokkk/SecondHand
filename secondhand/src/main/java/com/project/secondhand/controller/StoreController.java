@@ -162,7 +162,7 @@ public class StoreController {
 		model.addAttribute("list", selectBoardByAddr);
 		return "/storeBoardList";
 	}
-	@PostMapping("/storeBoardListByCategory")
+	@GetMapping("/storeBoardListByCategory")
 	public String selectStoreBoardListByCategory(Model model, @RequestParam("categoryName") String categoryName) {
 		System.out.println(categoryName + "/categoryName/StoreController");
 		List<StoreList> selectBoardByCategory = storeService.selectStoreBoardListByCategory(categoryName);
@@ -187,6 +187,7 @@ public class StoreController {
 		model.addAttribute("categoryList", list);
 		model.addAttribute("loginStore", loginStore);
 		System.out.println(list + "/list/StoreController");
+		System.out.println(loginStore + "/loginStore/StoreController");
 		return "addStoreBoard";
 	}
 	//업체홍보 추가하기 action

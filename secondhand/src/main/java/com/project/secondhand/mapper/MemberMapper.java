@@ -7,6 +7,7 @@ import com.project.secondhand.vo.Member;
 import com.project.secondhand.vo.MemberAddr;
 import com.project.secondhand.vo.MemberInfo;
 import com.project.secondhand.vo.MemberPic;
+import com.project.secondhand.vo.Temper;
 @Mapper
 public interface MemberMapper {
 	//회원가입
@@ -17,6 +18,8 @@ public interface MemberMapper {
 	public void addMemberPic(MemberPic memberPic);
 	//회원 주소 추가
 	public void addMemberAddr(MemberAddr memberAddr);
+	//회원 온도 추가
+	public void addMemberTemper(Temper temper);
 	//아이디(이메일) 찾기
 	public String findMemberId(Member member);
 	//비밀번호 찾기 
@@ -30,8 +33,9 @@ public interface MemberMapper {
 	//회원사진 삭제
 	public int removeMemberPic(MemberPic memberPic);
 	//회원 정보 수정
-	public void modifyMember(MemberInfo memberInfo);
+	public int modifyMember(MemberInfo memberInfo);
 	//회원 번호
 	public int selectMemberNoByEmail(String email);
+
 }
  	

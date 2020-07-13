@@ -93,8 +93,8 @@ $(document).ready(function(){
                               <div class="form-group">
                                  <!-- 추후 지성이형 조와 연결 -->
                                  <input type="hidden" class="form-control" id="storeNo" name="storeNo" th:value="${loginStore.storeNo}">
-                                 <input type="text" class="form-control"   id="boardTitle" name="boardTitle" th:placeholder="업체명">
-                                 <span id = "titleHelper"></span>
+                                 <input type="text" class="form-control"   id="boardTitle" name="boardTitle" th:placeholder="업체명" >
+                                 <span id = "titleHelper" th:text="${loginStore.storeNo}"></span>
                               </div>
                            </td>
                         </tr>

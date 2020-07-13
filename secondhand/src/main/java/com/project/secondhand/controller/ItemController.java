@@ -3,6 +3,7 @@ package com.project.secondhand.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.secondhand.service.CategoryService;
 import com.project.secondhand.service.ItemService;
+import com.project.secondhand.service.MemberService;
 import com.project.secondhand.vo.Category;
 import com.project.secondhand.vo.ItemAndMemberAndMemberAddrAndItemPic;
 import com.project.secondhand.vo.ItemList;
+import com.project.secondhand.vo.LoginMember;
 
 @Controller
 public class ItemController {
@@ -24,11 +27,20 @@ public class ItemController {
 	private ItemService itemService;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private MemberService memberService;
 	
-	
+	//업체홍보관련 카테고리 선택 템플릿
+	@GetMapping("/categoryListByItem")
+	public String categoryListByItem() {
+		return "categoryListByItem";
+	}
 	//아이템 삭제
 	@GetMapping("/removeItem")
-	public String removeItem(@RequestParam(value="itemNo", required = false) int itemNo) {
+	public String removeItem(HttpSession session, @RequestParam(value="itemNo", required = false) int itemNo) {
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/";
+		}
 		itemService.removeItem(itemNo);
 		return "redirect:/itemList";
 	}
@@ -42,8 +54,7 @@ public class ItemController {
 		}
 	//아이템 리스트
 	@GetMapping("/itemList")
-	public String selectItemList(Model model, String smallCity) {
-		System.out.println(smallCity+"<--Ctrl.smallCity");
+	public String selectItemList(HttpSession session, Model model, String smallCity, LoginMember loginMember) {
 		List<Category> categoryList = categoryService.getCategoryList("아이템");
 		ArrayList<ItemList> itemList = itemService.selectItemListByAll();
 		System.out.println(itemList + "/itemList/itemController");
@@ -66,7 +77,10 @@ public class ItemController {
 	}
 	//아이템 추가하기
 	@GetMapping("/addItem")
-	public String addItem(Model model) {
+	public String addItem(Model model, HttpSession session) {
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/";
+		}
 		List<Category> categoryList = categoryService.getCategoryList("아이템");
 		model.addAttribute("categoryList", categoryList);
 		return "addItem";

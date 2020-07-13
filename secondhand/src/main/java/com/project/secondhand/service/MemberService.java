@@ -17,6 +17,7 @@ import com.project.secondhand.vo.MemberAddr;
 import com.project.secondhand.vo.MemberInfo;
 import com.project.secondhand.vo.MemberPic;
 import com.project.secondhand.vo.MemberPicForm;
+import com.project.secondhand.vo.Temper;
 
 @Service
 @Transactional
@@ -86,8 +87,9 @@ public class MemberService {
 	}
 
 	// 회원 주소 추가
-	public void addMemberAddr(MemberAddr memberAddr) {
+	public void addMemberAddr(MemberAddr memberAddr, Temper temper) {
 		memberMapper.addMemberAddr(memberAddr);
+		memberMapper.addMemberTemper(temper);
 	}
 
 	
@@ -129,9 +131,42 @@ public class MemberService {
 	}
 	
 	//회원 정보 수정
-	public void modifyMember(MemberInfo memberInfo) {
-		memberMapper.modifyMember(memberInfo);
-	}
+		public void modifyMember(MemberInfo memberInfo, MultipartFile memberPicForm) {
+			
+			MultipartFile mf = memberPicForm;
+			String originName = mf.getOriginalFilename();
+
+			int lastDot = originName.lastIndexOf(".");
+			String extension = originName.substring(lastDot);
+
+			String memberPicName = memberInfo.getMemberNo() + extension;
+			
+			memberInfo.setMemberPicName(memberPicName);
+			
+			if(memberMapper.modifyMember(memberInfo) == 1) {
+				
+				String path = "C:\\spring eclipse\\spring work_space\\maven.1593564314857\\secondhand\\src\\main\\resources\\static\\upload\\";
+				
+				
+				
+				File file = new File(path + memberPicName);
+
+			      if(file.exists() == true){
+
+			      file.delete();
+
+			   }
+			    
+				
+				File file2 = new File(path + memberPicName);
+				try {
+					mf.transferTo(file2); // 예외처리가 꼭 필요한 코드
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException(); // 예외처리를 없앤다.
+				}
+			}
+		}
 	
 	// 회원 번호 가져오기
 	public int getMemberNoByEmail(String memberEmail) {
