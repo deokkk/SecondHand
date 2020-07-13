@@ -78,7 +78,13 @@ $(document).ready(function(){
    </div>
    <div class="container-fluid">
       <section id="content">
-         <form method="post" th:action="@{/modifyStoreBoard}"   enctype="multipart/form-data" id = "addStoreBoard">
+         <form method="post" th:action="@{/modifyStoreBoard
+         (
+         nameOne = ${board.boardPicNameOne},
+         nameTwo = ${board.boardPicNameTwo},
+         nameThree = ${board.boardPicNameThree},
+         nameFour = ${board.boardPicNameFour}
+         )}"   enctype="multipart/form-data" id = "addStoreBoard">
             <div class="row">
                <div class="col-sm-2"></div>
                <div class="col-sm-7">

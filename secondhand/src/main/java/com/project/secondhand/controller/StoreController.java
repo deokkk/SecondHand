@@ -1,17 +1,21 @@
 package com.project.secondhand.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.secondhand.service.CategoryService;
 import com.project.secondhand.service.StoreService;
@@ -205,7 +209,28 @@ public class StoreController {
 		return "/modifyStoreBoard";
 	}
 	@PostMapping("/modifyStoreBoard")
-	public String modifyStoreBoard(StoreBoardAndBoardPic storeBoardAndBoardPic) {
+	public String modifyStoreBoard(StoreAndStoreBoardAndBoardPic storeAndStoreBoardAndBoardPic, @RequestParam("nameOne") String nameOne) {
+		String storePicNameOne1 = null;
+	      String storePicNameOne2 = null;
+	      String storePicNameOne3 = null;
+	      String storePicNameOne4 = null;
+	      String storePicNameOne5 = null;
+	      if(!storeAndStoreBoardAndBoardPic.getBoardPicNameOne().isEmpty()) {
+	    	  storePicNameOne1 = storeAndStoreBoardAndBoardPic.getBoardPicNameOne().getOriginalFilename(); 
+	       try {
+	    	  String path =  "C:\\Users\\JJH\\Documents\\workspace-spring-tool-suite-4-4.6.1.RELEASE\\maven.1594187164632\\secondhand\\src\\main\\resources\\static\\upload\\";
+	          new File(path).mkdirs(); 
+	          storeAndStoreBoardAndBoardPic.getBoardPicNameOne().transferTo(new File(path+storePicNameOne1));
+	       } catch (IllegalStateException e) {
+	          e.printStackTrace();
+	       } catch (IOException e) {
+	          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
+	       }
+	      }else {
+	    	 storePicNameOne1 = nameOne;
+	      }
+	      StoreBoardAndBoardPic storeBoardAndBoardPic = new StoreBoardAndBoardPic();
+//	      storeBoardAndBoardPic.setBoardPicNameOne(storePicNameOne1);
 		storeService.updateStoreBoard(storeBoardAndBoardPic);
 		return "redirect:/storeBoardList";
 	}
