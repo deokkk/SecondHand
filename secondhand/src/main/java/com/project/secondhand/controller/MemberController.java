@@ -2,7 +2,6 @@ package com.project.secondhand.controller;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.secondhand.service.MemberService;
 import com.project.secondhand.vo.LoginMember;
@@ -18,6 +18,7 @@ import com.project.secondhand.vo.MemberAddr;
 import com.project.secondhand.vo.MemberInfo;
 import com.project.secondhand.vo.MemberPic;
 import com.project.secondhand.vo.MemberPicForm;
+import com.project.secondhand.vo.Temper;
 @Controller
 public class MemberController {
 	@Autowired
@@ -214,9 +215,9 @@ public class MemberController {
 			return "addMemberAddr";
 			
 		}
-	//회원주소 추가 Action
+		//회원주소 추가 Action
 		@PostMapping("/addMemberAddr")
-		public String addMemberAddr(HttpSession session,@RequestParam("memberNo") int memberNo,@RequestParam("memberAddrAll") String memberAddrAll,MemberAddr memberAddr) {
+		public String addMemberAddr(HttpSession session,@RequestParam("memberNo") int memberNo,@RequestParam("memberAddrAll") String memberAddrAll,MemberAddr memberAddr,Temper temper) {
 			if(session.getAttribute("loginMember")!=null) {
 				return "redirect:/";
 			}
@@ -238,8 +239,9 @@ public class MemberController {
 		         memberAddr.setMiddleCity(date[1]);
 		         memberAddr.setSmallCity(date[2]);   
 		      }
+			temper.setMemberNo(memberNo);
 			//System.out.println(memberAddr+"<--------------------------------------------AddmemberAddr");
-			memberService.addMemberAddr(memberAddr);
+			memberService.addMemberAddr(memberAddr,temper);
 			return "redirect:/";
 		}
 		
@@ -255,7 +257,7 @@ public class MemberController {
 			return "memberInfo";
 		}
 		
-	//회원 정보 수정
+		//회원 정보 수정 GET
 		@GetMapping("/modifyMember")
 		public String modifyMember(HttpSession session, Model model) {
 			if(session.getAttribute("loginMember")==null) {
@@ -265,10 +267,25 @@ public class MemberController {
 			model.addAttribute("memberInfo", memberInfo);
 			return "modifyMember";
 		}
+	//회원 정보 수정 POST
 		@PostMapping("/modifyMember")
-		public String modifyMember(HttpSession session, MemberInfo memberInfo) {
+		public String modifyMember(HttpSession session, MemberInfo memberInfo, @RequestParam("memberPicName") MultipartFile memberPicForm, @RequestParam("memberAddrAll") String memberAddrAll) {
+			if(session.getAttribute("loginMember")==null) {
+				return "redirect:/";
+			}
+			
+			String date[] = memberAddrAll.split(" ");
+			if(date.length <3) {
+		         memberInfo.setBigCity(date[0]);
+		         memberInfo.setMiddleCity(date[1]);
+		         memberInfo.setSmallCity("");
+		      }else {
+		    	 memberInfo.setBigCity(date[0]);
+		    	 memberInfo.setMiddleCity(date[1]);
+		    	 memberInfo.setSmallCity(date[2]);   
+		      }
 			System.out.println(memberInfo.getMemberEmail()+"<----------------------------------membercontroller memberemail");
-			memberService.modifyMember(memberInfo);
+			memberService.modifyMember(memberInfo, memberPicForm);
 			System.out.println(memberInfo.getMemberNickname()+"<----------------------------------membercontroller membernickname");
 			return "redirect:/memberInfo";
 		}

@@ -92,7 +92,21 @@
   			#{smallCity}
   		)
   </insert>
-
+	<!-- 회원 온도 추가 -->
+	<insert id="addMemberTemper" parameterType="com.project.secondhand.vo.Temper">
+		INSERT INTO
+			market_temper(
+				member_no,
+				temper,
+				temper_total,
+				temper_date
+			)VALUES(
+				#{memberNo},
+				36.5,
+				36.5,
+				NOW()
+			)
+	</insert>
   
   <update id ="updateMemberPw" parameterType="com.project.secondhand.vo.Member">
   	UPDATE market_member
@@ -129,18 +143,25 @@
 		mmp.member_pic_name AS memberPicName,
 		mma.big_city AS bigCity,
 		mma.middle_city AS middleCity,
-		mma.small_city AS smallCity
+		mma.small_city AS smallCity,
+		mt.temper_total AS temperTotal
 	FROM market_member mm
 	INNER JOIN market_member_pic mmp ON mm.member_no = mmp.member_no
 	INNER JOIN market_member_addr mma ON mm.member_no = mma.member_no
+	INNER JOIN market_temper mt ON mm.member_no = mt.member_no
 	WHERE mm.member_email = #{memberEmail}
   </select>
   
   <!-- 회원 정보 수정 -->
   <update id="modifyMember" parameterType="com.project.secondhand.vo.MemberInfo">
-  	UPDATE market_member
-		SET member_nickname = #{memberNickname}
-	WHERE member_email = #{memberEmail}
+  	UPDATE market_member mm 
+  	INNER JOIN market_member_addr mma ON mm.member_no = mma.member_no
+		SET mm.member_nickname=#{memberNickname},
+			mm.member_phone=#{memberPhone},
+			mma.big_city=#{bigCity},
+			mma.middle_city=#{middleCity},
+			mma.small_city=#{smallCity}	
+	WHERE mm.member_no = #{memberNo}
   </update>
   
   <!-- 회원 번호 가져오기 -->

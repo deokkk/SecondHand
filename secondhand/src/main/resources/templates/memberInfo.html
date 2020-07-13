@@ -15,13 +15,16 @@
 		<!-- class = "main" 내용 위치 선정 -->
 		<div class="main">
 			<div class="container">
-				<h1 align="center">회원정보</h1>
+				<h1>회원정보</h1>
 				<table class="table">
 					<tr>
 						<td>사진</td>
 						<td>
 							<img th:src="@{'/upload/'+ ${memberInfo.memberPicName}}" width="100" height="100"></img>
 						</td>
+					</tr>
+					<tr>
+						<td>온도 &nbsp;&nbsp;&nbsp;&nbsp;<span th:text="${memberInfo.temperTotal}"></span></td>
 					</tr>
 					<tr>
 						<td>닉네임</td>
