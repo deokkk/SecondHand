@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -294,5 +295,39 @@ public class StoreController {
 			model.addAttribute("findStoreId",findStoreId);
 			
 			return "storeIdView";
+		}
+		
+		// 업체 리스트
+		@GetMapping("/storeList")
+		public String getStoreList(HttpSession session, Model model) {
+			if(session.getAttribute("loginAdmin") == null) {
+				return "redirect:/";
+			}
+			model.addAttribute("storeList", storeService.getStoreList());
+			return "storeList";
+		}
+		
+		// 관리자 업체관리
+		@GetMapping("/storeInfo")
+		public String storeInfo(HttpSession session, Model model, @RequestParam(value = "storeNo") int storeNo) {
+			if(session.getAttribute("loginAdmin") == null) {
+				return "redirect:/";
+			}
+			Map<String, Object> map = storeService.getStoreInfo(storeNo);
+			model.addAttribute("storeBasicInfo", map.get("storeBasicInfo"));
+			model.addAttribute("storePicInfo", map.get("storePicInfo"));
+			model.addAttribute("storeBoardList", map.get("storeBoardList"));
+			model.addAttribute("boardReportList", map.get("boardReportList"));
+			return "storeInfoByAdmin";
+		}
+		
+		// 관리자가 업체 블랙(탈퇴)
+		@GetMapping("/removeStore")
+		public String removeStore(HttpSession session, @RequestParam(value = "storeNo") int storeNo) {
+			if(session.getAttribute("loginAdmin") == null) {
+				return "redirect:/";
+			}
+			storeService.removeStore(storeNo);
+			return "redirect:/storeList";
 		}
 	}

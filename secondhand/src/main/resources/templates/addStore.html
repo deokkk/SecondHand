@@ -51,7 +51,7 @@ $(document).ready(function(){
 		$('#storePhone').focus();
 	}else if($('#storeEmail').val().length < 4){
 		helperInit();
-		$('#emailrHelper').text("4글자 이상 입력하세요");
+		$('#emailHelper').text("4글자 이상 입력하세요");
 		$('#storeEmail').focus();
 	}else{
 		$('#addStoreForm').submit();
@@ -68,7 +68,7 @@ $(document).ready(function(){
 });
 	var confirm = '';
 	$('#emailCh').click(function(){
-		var storeEmailSend = $('#storeEmailSend').val();
+		var storeEmailSend = $('#storeEmail').val();
 		$.ajax({
 			url: '/storeEmailSend',
 			type: 'POST',

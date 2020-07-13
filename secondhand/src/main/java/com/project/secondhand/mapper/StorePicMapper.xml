@@ -63,4 +63,16 @@
 		#{boardPicNameFive}
 		)
 	</insert>
+	
+	<!-- 관리자 업체정보 상세보기 사진 -->
+	<select id="selectStorePic" parameterType="int" resultType="com.project.secondhand.vo.StorePic">
+		SELECT
+			store_pic_name_one storePicNameOne,
+			store_pic_name_one storePicNameTwo,
+			store_pic_name_one storePicNameThree,
+			store_pic_name_one storePicNameFour,
+			store_pic_name_one storePicNameFive
+		FROM market_store_pic
+		WHERE store_no = #{storeNo}
+	</select>
 </mapper>

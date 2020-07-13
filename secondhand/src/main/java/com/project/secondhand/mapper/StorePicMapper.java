@@ -23,4 +23,6 @@ public interface StorePicMapper {
 	public void updateStoreBoardPic(StoreBoardPic storeBoardPic);
 	//파일 불러오기
 	public String selectStoreBoardPic(int boardNo);
+	// 관리자 업체정보 상세보기 사진
+	public StorePic selectStorePic(int storeNo);
 }

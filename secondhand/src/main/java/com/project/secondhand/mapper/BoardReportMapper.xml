@@ -140,4 +140,32 @@
 			NOW()
 		)
 	</insert>
+	
+	<!-- 업체별 신고 누적횟수 -->
+	<select id="selectStoreReportCnt" parameterType="int" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM market_board_report mbr 
+		INNER JOIN market_store_board msb 
+		ON mbr.board_no = msb.board_no 
+		INNER JOIN market_store ms 
+		ON msb.store_no = ms.store_no
+		WHERE ms.store_no = #{storeNo}
+	</select>
+	
+	<!-- 업체별 신고 리스트 -->
+	<select id="selectBoardReportListByStore" parameterType="int" resultType="com.project.secondhand.vo.BoardReport">
+		SELECT
+			mbr.board_no boardNo,
+			mbr.member_no memberNo,
+			mm.member_nickname memberNickName,
+			mbr.category_name categoryName,
+			mbr.board_report_content boardReportContent,
+			LEFT(mbr.board_report_date, 16) boardReportDate,
+			LEFT(mbr.board_report_result_date, 16) boardReportResultDate
+		FROM market_board_report mbr 
+		INNER JOIN market_member mm ON mbr.member_no = mm.member_no
+		WHERE mbr.board_no = #{boardNo}
+		ORDER BY mbr.board_report_date DESC	
+	</select>
 </mapper>

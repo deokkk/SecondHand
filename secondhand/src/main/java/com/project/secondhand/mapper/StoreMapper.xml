@@ -201,4 +201,34 @@
 	FROM market_store
 	WHERE store_phone = #{storePhone}
   </select>
+  
+  <!-- 업체 리스트 -->
+  <select id="selectStoreList" resultType="com.project.secondhand.vo.StoreAndReportCnt">
+  	SELECT
+  		store_no storeNo,
+  		store_name storeName,
+  		store_email storeEmail
+  	FROM market_store
+  </select>
+  
+  <!-- 관리자 업체 정보 상세보기 -->
+  <select id="selectStoreOne" parameterType="int" resultType="com.project.secondhand.vo.Store">
+  	SELECT
+  		store_name storeName,
+  		store_addr storeAddr,
+  		store_phone storePhone
+  	FROM market_store
+  	WHERE store_no = #{storeNo}
+  </select>
+  
+  <!-- 관리자 해당 업체 홍보글 리스트 -->
+  <select id="selectStoreBoardListByStore" parameterType="int" resultType="com.project.secondhand.vo.StoreBoard">
+  	SELECT
+  		board_no boardNo,
+  		category_name categoryName,
+  		board_title boardTitle,
+  		board_date boardDate
+  	FROM market_store_board
+  	WHERE store_no = #{storeNo}
+  </select>
 </mapper>

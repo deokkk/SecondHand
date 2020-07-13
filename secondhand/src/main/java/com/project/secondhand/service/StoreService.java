@@ -3,7 +3,9 @@ package com.project.secondhand.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.secondhand.mapper.BoardReportMapper;
 import com.project.secondhand.mapper.StoreMapper;
 import com.project.secondhand.mapper.StorePicMapper;
+import com.project.secondhand.vo.BoardReport;
 import com.project.secondhand.vo.Member;
 //import com.project.secondhand.mapper.StoreBoardPicMapper;
 import com.project.secondhand.vo.Store;
+import com.project.secondhand.vo.StoreAndReportCnt;
 import com.project.secondhand.vo.StoreAndStoreBoardAndBoardPic;
 import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreBoardAndBoardPic;
@@ -37,6 +42,8 @@ public class StoreService {
    private StoreMapper storeMapper;
    @Autowired
    private StorePicMapper storePicMapper;
+   @Autowired 
+   private BoardReportMapper boardReportMapper;
    @Value("C:\\Users\\JJH\\Documents\\workspace-spring-tool-suite-4-4.6.1.RELEASE\\maven.1594187164632\\secondhand\\src\\main\\resources\\static\\upload\\")
    private String path;
    //카테고리 기준으로 업체 리스트 가져오기
@@ -412,5 +419,39 @@ public class StoreService {
 	public String findStoreId(Store store) {
 		return storeMapper.findStoreId(store);
 }
+	
+	// 업체 리스트
+	public List<StoreAndReportCnt> getStoreList() {
+		List<StoreAndReportCnt> list = storeMapper.selectStoreList();
+		for(StoreAndReportCnt store : list) {
+			store.setStoreReportCnt(boardReportMapper.selectStoreReportCnt(store.getStoreNo()));
+		}
+		return list;
+	}
+	
+	// 관리자 업체정보 상세보기
+	public Map<String, Object> getStoreInfo(int storeNo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("storeBasicInfo", storeMapper.selectStoreOne(storeNo));
+		map.put("storePicInfo", storePicMapper.selectStorePic(storeNo));
+		List<StoreBoard> storeBoardList = storeMapper.selectStoreBoardListByStore(storeNo); 
+		map.put("storeBoardList", storeBoardList);
+		List<BoardReport> boardReportList = new ArrayList<>();
+		for(StoreBoard sb : storeBoardList) {
+			System.out.println(sb.getBoardNo() + " <--boardNo");
+			List<BoardReport> temp = boardReportMapper.selectBoardReportListByStore(sb.getBoardNo());
+			for(BoardReport br : temp) {
+				boardReportList.add(br);
+				System.out.println(br.getBoardNo() + " <--report boardNo");
+			}
+		}
+		map.put("boardReportList", boardReportList);
+		return map;
+	}
+	
+	// 업체 블랙(탈퇴)
+	public void removeStore(int storeNo) {
+		// board, boardPic, comment, storePic, boardReport전부 삭제
+	}
 }
 

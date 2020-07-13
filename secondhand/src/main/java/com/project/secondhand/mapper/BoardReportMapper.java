@@ -25,4 +25,8 @@ public interface BoardReportMapper {
 	public int updateBoardReport(int boardReportNo);
 	// 신고하기
 	public int insertBoardReport(BoardReport boardReport);
+	// 업체별 신고누적횟수
+	public int selectStoreReportCnt(int storeNo);
+	// 업체별 신고리스트
+	public List<BoardReport> selectBoardReportListByStore(int boardNo);
 }

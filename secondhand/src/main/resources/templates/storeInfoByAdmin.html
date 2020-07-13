@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>storeInfoByAdmin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<!-- sidemenu style, javascript 파일 -->
+<link rel="stylesheet" href="css/sidemenu.css">
+<script src="js/sidemenu.js"></script>
+<style>
+#removeBtnBox {
+	text-align: right;	
+}
+.boardDate {
+	text-align: right;
+}
+.tab {
+	margin-left: 20px;
+}
+/* sidemenu 추가하면서 수정된 style */
+#footer {
+	left: 0px;
+}
+@font-face { 
+	font-family: 'yg-jalnan'; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); 
+	font-weight: normal; 
+	font-style: normal; 
+} 
+.sidenav a, .sidenav ul li {
+	font-family: 'yg-jalnan';
+}
+</style>
+<script>
+	$(document).ready(function(){
+		$('#removeBtn').click(function(){
+			var result = confirm('정말 삭제하시겠습니까?');
+			if(result){
+				location.replace('storeBoardList');
+			}else{
+				return false;
+			}
+		});
+	});
+</script>
+<body>
+	<!-- sidemenu include -->
+	<div th:include="/inc/sidemenu::sidemenu"></div>
+	<div th:class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:class="row">
+				<div th:class="col-sm-2"></div>
+				<div th:class="col-sm-8">
+					<h2 th:id="qna-h2" th:text="'업체 상세보기'"></h2>
+					<div th:id="removeBtnBox"><a th:href="@{/removeStore(storeNo = ${storeBasicInfo.storeNo})}" th:text="블랙" th:id="removeBtn" th:class="'btn btn-success'"></a></div>
+					<div th:class="row">
+						<div th:class="col" th:text="'업체명 : ' + ${storeBasicInfo.storeName}"></div>
+						<div th:class="col" th:text="'업체 주소 : ' + ${storeBasicInfo.storeAddr}"></div>
+						<div th:class="col" th:text="'업체 전화번호 : ' + ${storeBasicInfo.storePhone}"></div>
+					</div>
+					<hr>
+					<!-- 나중에 사진으로 바꿔야됨 -->
+					<div>
+						<div th:text="${storePicInfo.storePicNameOne}"></div>
+						<div th:text="${storePicInfo.storePicNameTwo}"></div>
+						<div th:text="${storePicInfo.storePicNameThree}"></div>
+						<div th:text="${storePicInfo.storePicNameFour}"></div>
+						<div th:text="${storePicInfo.storePicNameFive}"></div>
+					</div>
+					<hr>
+					<div>
+						<div th:text="홍보글목록"></div>
+						<hr>
+						<div th:each="storeBoard : ${storeBoardList}">
+							<div th:class="row" th:onclick="|location.href='@{/storeBoardInfo(boardNo = ${storeBoard.boardNo})}'|">
+								<div th:class="col">
+									<span th:text="'[' + ${storeBoard.categoryName} + ']'"></span>
+									<span th:text="${storeBoard.boardTitle}"></span>
+								</div>
+								<div th:class="'col boardDate'" th:text="${storeBoard.boardDate}"></div>
+							</div>
+							<hr>
+							<div th:class="tab" th:each="boardReport : ${boardReportList}" th:if="${boardReport.boardNo} == ${storeBoard.boardNo}">
+								<div th:text="신고내역"></div>
+								<div th:text="'신고한 사람 : ' + ${boardReport.memberNickName}"></div>
+								<span th:text="'[' + ${boardReport.categoryName} + ']'"></span>
+								<span th:text="${boardReport.boardReportContent}"></span>
+								<div th:text="'신고날짜 : ' + ${boardReport.boardReportDate}"></div>
+								<div th:text="${boardReport.boardReportResultDate} == null ? '처리날짜 : 미처리' : '처리날짜 : ' + ${boardReport.boardReportResultDate}"></div>
+								<hr>
+							</div>
+							<hr>
+						</div>
+					</div>
+					<div>
+					</div>
+				</div>
+				<div th:class="col-sm-2"></div>
+			</div>
+		</section>
+	</div>
+</body>
+</html>
