@@ -36,19 +36,50 @@
 	<div class="header">
 		<div th:include="/inc/topHeader"></div>
 	</div>
-	<h1 style = "text-align: center;" id="hot-articles-head-title" >업체관련 카테고리 리스트</h1>
+	<h1 style = "padding-left: 45%" id="hot-articles-head-title" >업체관련 카테고리 리스트</h1>
 
-			
 
-			<div class = "categoryImg">
-			<a class = "underLine" href = "">
+	<table style = "padding-left: 23%;">
+		<tr>
+			<td><a class = "underLine" th:href = "@{/storeBoardListByCategory(categoryName = '음식점')}">
 			<img class = "mainImg" src = "/img/food.jpg">
-			</a>		
-			</div>
-			
-			
-			
-
+			</a></td>
+			<td><a class = "underLine" th:href = "@{/storeBoardListByCategory(categoryName = '부동산')}">
+			<img class = "mainImg" src = "/img/home.jpg">
+			</a></td>
+			<td><a class = "underLine" th:href = "@{/storeBoardListByCategory(categoryName = '중고차')}">
+			<img class = "mainImg" src = "/img/car.png">
+			</a></td><td><a class = "underLine" th:href = "@{/storeBoardListByCategory(categoryName = '상점')}">
+			<img class = "mainImg" src = "/img/market.png">
+			</a></td>
+		</tr>
+		<tr>
+			<td style = "padding-left: 13%;">음식점</td>
+			<td style = "padding-left: 12%;">부동산</td>
+			<td style = "padding-left: 12%;">중고차</td>
+			<td style = "padding-left: 13%;">상점</td>
+		</tr>
+		<tr>
+			<td><a class = "underLine" th:href = "@{/storeBoardListByCategory(categoryName = '카페')}">
+			<img class = "mainImg" src = "/img/coffee.png">
+			</a></td>
+			<td><a class = "underLine" th:href = "@{/storeBoardListByCategory(categoryName = '미용/뷰티')}">
+			<img class = "mainImg" src = "/img/beauty.jpg">
+			</a></td>
+			<td><a class = "underLine" th:href = "@{/storeBoardListByCategory(categoryName = '이사/중장비')}">
+			<img class = "mainImg" src = "/img/moveHome.png">
+			</a></td>
+			<td><a class = "underLine" th:href = "@{/storeBoardListByCategory(categoryName = '그 외 기타')}">
+			<img class = "mainImg" src = "/img/Other.png">
+			</a></td>
+		</tr>
+		<tr>
+			<td style = "padding-left: 13%;">카페</td>
+			<td style = "padding-left: 13%;">미용/뷰티</td>
+			<td style = "padding-left: 12%;">이사/중장비</td>
+			<td style = "padding-left: 12%;">그 외 기타</td>
+		</tr>
+	</table>
 	<div class="header">
 		<div th:include="/inc/copyRight"></div>
 	</div>

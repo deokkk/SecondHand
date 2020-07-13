@@ -20,6 +20,8 @@
 		SELECT		
 		mm.member_no AS memberNo,
 		mm.member_nickname AS memberNickName,
+		ma.big_city AS bigCity,
+		ma.middle_city AS middleCity,
 		ma.small_city AS smallCity,
 		i.item_no AS itemNo,
 		i.category_name AS categoryName,
@@ -45,6 +47,8 @@
 		SELECT		
 		mm.member_no AS memberNo,
 		mm.member_nickname AS memberNickName,
+		ma.big_city AS bigCity,
+		ma.middle_city AS middleCity,
 		ma.small_city AS smallCity,
 		i.item_no AS itemNo,
 		i.category_name AS categoryName,
@@ -70,6 +74,8 @@
 		SELECT
 			 m.member_no AS memberNo,
 			 m.member_nickname AS memberNickName,
+			 ma.big_city AS bigCity,
+		 	 ma.middle_city AS middleCity,
 			 ma.small_city AS smallCity,
 			 i.item_no AS itemNo,
 			 i.category_name AS categoryName,
@@ -96,6 +102,8 @@
 		SELECT
 			 m.member_no AS memberNo,
 			 m.member_nickname AS memberNickName,
+			 ma.big_city AS bigCity,
+		 	 ma.middle_city AS middleCity,
 			 ma.small_city AS smallCity,
 			 i.item_no AS itemNo,
 			 i.category_name AS categoryName,

@@ -28,29 +28,18 @@
 }
 
 </style>
-
 </head>
 <body class="hoian-kr">
 <div th:include="/inc/sidemenu::sidemenu"></div>
 	<div class="header">
 		<div th:include="/inc/topHeader"></div>
 	</div>
-		<section id="content">
-			
+		<section id="content">			
 			<a th:href = "@{/storeBoardList}" style = "text-decoration: none;">
 				<h1 class="head-title" id="hot-articles-head-title" >업체홍보 리스트</h1>
 			</a>
 			
 			<div class="title-line-divider"></div>
-			<form method = "post" th:action = "@{/storeBoardListByCategory}">
-			
-				<select name="categoryName" id = "categoryName" style = "vertical-align: middle; text-align-last: center"  class="form-control">
-					<option>카테고리</option>
-					<option th:each="category : ${categoryList}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
-				</select> 
-				<button type="submit" class = "btn">찾기</button>
-			
-			</form>
 			<form method = "post" th:action = "@{/storeBoardListByAddr}">
 			<nav id="hot-articles-navigation">
 				<input type="text" name="storeAddr" id="" placeholder="주소를 입력하세요."	class="hot-articles-nav-select">
@@ -86,7 +75,5 @@
 	<div class="header">
 		<div th:include="/inc/copyRight"></div>
 	</div>
-
-
 </body>
 </html>

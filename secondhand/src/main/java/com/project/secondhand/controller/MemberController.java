@@ -104,13 +104,13 @@ public class MemberController {
 	}
 	//멤버 로그인 Action
 	@PostMapping("/loginMember")
-	public String loginMember(Model model, HttpSession session, LoginMember  loginMember) {
+	public String loginMember(Model model, HttpSession session, LoginMember loginMember) {
 		if(session.getAttribute("loginMember")!=null) {
 			return "redirect:/";
 		}
 		//System.out.println(loginMember+"<-loginMember");
 		LoginMember returnLoginMember = memberService.login(loginMember);
-		//System.out.println(returnLoginMember+"<-returnLoginMember");
+		System.out.println(returnLoginMember+"<-returnLoginMember");
 		if(returnLoginMember == null) {//로그인 실패시
 			model.addAttribute("msg","아이디와 비밀번호를 확인하세요");
 			return "loginMember";

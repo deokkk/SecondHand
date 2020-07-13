@@ -21,12 +21,13 @@ width:1200px;
 }
 .mainImg{
 	padding-left: 50px;
-	width: 250px;
+	width: 230px;
+	height: 230px;
 }
-.mainImg2{
-	padding-bottom : 55px;
-	padding-left: 50px;
-	width: 100px;
+.mainImgByItem{
+	padding-left: 100px;
+	width: 130px;
+	height: 130px;
 }
 .mainImg3{
 	padding-bottom : 40px;

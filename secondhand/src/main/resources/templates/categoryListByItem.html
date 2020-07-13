@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+
+<title>SecondHand</title>
+
+<!-- 아이템 관련 css -->
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<!-- 기본 api 링크-->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link rel="stylesheet" href="css/sidemenu.css">
+<link rel="stylesheet" href="css/base.css">
+<script src="js/sidemenu.js"></script>
+<style>
+
+.btn1 {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 2px 10px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+</style>
+
+</head>
+<body class="hoian-kr">
+<div th:include="/inc/sidemenu::sidemenu"></div>
+	<div class="header">
+		<div th:include="/inc/topHeader"></div>
+	</div>
+	<h1 style = "padding-left: 50%" id="hot-articles-head-title" >아이템 카테고리 리스트</h1>
+
+
+	<table style = "padding-left: 23%;">
+		<tr>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '디지털/가전')}">
+					<img class = "mainImgByItem" src = "/img/beauty.jpg">
+				</a>
+			</td>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '도서/음반/티켓')}">
+					<img class = "mainImgByItem" src = "/img/tv.jpg">
+				</a>
+			</td>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '남성잡화')}">
+					<img class = "mainImgByItem" src = "/img/book.jpg">
+				</a>
+			</td>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '남성의류')}">
+					<img class = "mainImgByItem" src = "/img/manEtc.jpg">
+				</a>
+			</td>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '미용/뷰티')}">
+					<img class = "mainImgByItem" src = "/img/manClothes.jpg">
+				</a>
+			</td>			
+		</tr>
+		<tr>
+			<td style = "padding-left: 11%;">디지털/가전</td>
+			<td style = "padding-left: 10%;">도서/음반/티켓</td>
+			<td style = "padding-left: 11%;">남성잡화</td>
+			<td style = "padding-left: 12%;">남성의류</td>
+			<td style = "padding-left: 12%;">미용/뷰티</td>
+		</tr>
+		<tr>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '여성잡화')}">
+					<img class = "mainImgByItem" src = "/img/womenEtc.jpg">
+				</a>
+			</td>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '여성의류')}">
+					<img class = "mainImgByItem" src = "/img/womenClothes.jpg">
+				</a>
+			</td>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '게임/취미')}">
+					<img class = "mainImgByItem" src = "/img/game.jpg">
+				</a>
+			</td>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '가구/인테리어')}">
+					<img class = "mainImgByItem" src = "/img/ikea.jpg">
+				</a>
+			</td>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '자동차용품')}">
+					<img class = "mainImgByItem" src = "/img/carwash.jpg">
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<td style = "padding-left: 12%;">여성잡화</td>
+			<td style = "padding-left: 12%;">여성의류</td>
+			<td style = "padding-left: 12%;">게임/취미</td>
+			<td style = "padding-left: 11%;">가구/인테리어</td>
+			<td style = "padding-left: 11%;">자동차용품</td>			
+		</tr>
+		<tr>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '반려동물용품')}">
+					<img class = "mainImgByItem" src = "/img/dog.jpg">
+				</a>
+			</td>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '유아동/유아도서')}">
+					<img class = "mainImgByItem" src = "/img/fairyTaleBook.jpg">
+				</a>
+			</td>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '스포츠/레저')}">
+					<img class = "mainImgByItem" src = "/img/sport.jpg">
+				</a>
+			</td>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '생활/가공식품')}">
+					<img class = "mainImgByItem" src = "/img/food2.jpg">
+				</a>
+			</td>
+			<td>
+				<a class = "underLine" th:href = "@{/storeBoardListByItem(categoryName = '그 외 기타')}">
+					<img class = "mainImgByItem" src = "/img/Other.png">
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<td style = "padding-left: 10%;">반려동물용품</td>
+			<td style = "padding-left: 10%;">유아동/유아도서</td>
+			<td style = "padding-left: 12%;">스포츠/레저</td>
+			<td style = "padding-left: 10%;">생활/가공식품</td>
+			<td style = "padding-left: 11%;">그 외 기타</td>
+			
+		</tr>
+	
+
+	</table>
+		<br>
+		<br>
+		<br>
+		<br><br>	
+			
+			
+
+	<div class="header">
+		<div th:include="/inc/copyRight"></div>
+	</div>
+
+
+</body>
+</html>
