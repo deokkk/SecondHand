@@ -147,10 +147,10 @@
 		)
 	</insert>
 	<!-- 상품 수정하기 -->
-	<!-- <update id="updateItem" parameterType = "com.project.secondhand.vo.Item" 
+	<update id="updateItem" parameterType = "com.project.secondhand.vo.Item" 
 		> UPDATE market_item SET category_name = #{categoryName}, item_title = #{itemTitle}, 
 		item_content = #{itemContent}, item_date = NOW() WHERE item_no=#{itemNo} 
-		</update> -->
+		</update>
 	<!-- 상품 삭제하기 -->
 	<delete id="deleteItem" parameterType="int">
 		DELETE FROM market_item
