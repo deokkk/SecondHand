@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.project.secondhand.vo.Item;
-import com.project.secondhand.vo.ItemAndMemberAndMemberAddrAndItemPic;
+import com.project.secondhand.vo.ItemAndItemPic;
 import com.project.secondhand.vo.ItemList;
 
 @Mapper
@@ -22,7 +22,7 @@ public interface ItemMapper {
 		//상품 추가하기
 		public void insertItem(Item item);
 		//상품 수정하기
-		public void updateItem(Item item);
+		public void updateItem(ItemAndItemPic itemAndItemPic);
 		//상품 삭제하기
 		public int deleteItem(int itemNo);
 		

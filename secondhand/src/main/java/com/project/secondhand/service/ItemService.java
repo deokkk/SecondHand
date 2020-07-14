@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.secondhand.mapper.ItemMapper;
 import com.project.secondhand.mapper.ItemPicMapper;
 import com.project.secondhand.vo.Item;
+import com.project.secondhand.vo.ItemAndItemPic;
 import com.project.secondhand.vo.ItemPic;
 import com.project.secondhand.vo.ItemAndMemberAndMemberAddrAndItemPic;
 import com.project.secondhand.vo.ItemList;
@@ -25,7 +26,7 @@ public class ItemService {
    private ItemMapper itemMapper;
    @Autowired
    private ItemPicMapper itemPicMapper;
-   @Value("D:\\sts-4.6.1.RELEASE\\tkdgus\\maven.1594192784663\\secondhand\\src\\main\\resources\\static\\upload\\")
+   @Value("D:\\maven.1594186776148\\secondhand\\src\\main\\resources\\static\\upload\\")
    private String path;
    //카테고리별 아이템 리스트 출력
    public List<ItemList> selectItemByCategory(String categoryName){
@@ -45,13 +46,24 @@ public class ItemService {
 	   }
 	   return row;
    }
+ //홍보업체 게시글 수정하기
+   public void updateItem(ItemAndItemPic itemAndItemPic, ItemPic itemPic) {
+	  itemPicMapper.updateItemPic(itemPic);
+
+		   itemMapper.updateItem(itemAndItemPic);
+	   System.out.println(itemAndItemPic+"<--itemAndItemPic.Service.modify");
+	   }
+   
+   public int selectItemPic(ItemPic itemPic) {
+	   return itemPicMapper.selectItemPic(itemPic);
+   }
    //아이템 목록
    public ArrayList<ItemList> selectItemListByAll(){
       return itemMapper.selectItemListByAll();
    }
    //아이템 상세보기
    public ItemList selectItemInfo(ItemList itemList) {
-	   System.out.println(itemList + "/itemList/ItemService");
+	   //System.out.println(itemList + "/itemList/ItemService");
 	   return itemMapper.selectItemInfo(itemList);
    }
    //아이템 추가
@@ -231,4 +243,7 @@ public class ItemService {
       System.out.println(itemPic + "/itemPic///////////");
       itemPicMapper.insertItemPic(itemPic);
    }
+   
+
+   
 }

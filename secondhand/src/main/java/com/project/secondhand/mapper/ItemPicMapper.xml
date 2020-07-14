@@ -3,6 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.secondhand.mapper.ItemPicMapper">
+	<!-- 아이템 사진 불러오기 -->
+	<select id="selectItemPic" parameterType="int" resultType="com.project.secondhand.vo.ItemPic">
+	SELECT
+		item_no,
+		item_pic_name_one,
+		item_pic_name_two,
+		item_pic_name_three,
+		item_pic_name_four,
+		item_pic_name_five
+		FROM market_item_pic
+		WHERE item_no = #{itemNo}
+	</select>
 	<!-- 아이템 사진 추가  -->
 	<insert id="insertItemPic" parameterType="com.project.secondhand.vo.ItemPic">
 	INSERT INTO 
@@ -22,9 +34,21 @@
 	#{itemPicNameFive}
 	)
 	</insert>
+	<update id="updateItemPic" parameterType="com.project.secondhand.vo.ItemPic">
+	UPDATE market_item_pic
+	SET
+	item_pic_name_one =#{itemPicNameOne},
+	item_pic_name_two =#{itemPicNameTwo},
+	item_pic_name_three =#{itemPicNameThree},
+	item_pic_name_four =#{itemPicNameFour},
+	item_pic_name_five =#{itemPicNameFive}
+	WHERE
+	item_no =#{itemNo}
+	</update>
 	<!-- 아이템 사진 삭제 -->
 	<delete id="deleteItemPic" parameterType = "int">
-	DELETE FROM market_item_pic
+	DELETE 
+	FROM market_item_pic
 	WHERE item_no = #{itemNo}
 	</delete>
 </mapper>
