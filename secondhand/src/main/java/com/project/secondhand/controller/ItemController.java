@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.secondhand.service.CategoryService;
 import com.project.secondhand.service.ItemService;
 import com.project.secondhand.vo.Category;
+import com.project.secondhand.vo.Item;
 import com.project.secondhand.vo.ItemAndItemPic;
 import com.project.secondhand.vo.ItemAndMemberAndMemberAddrAndItemPic;
 import com.project.secondhand.vo.ItemList;
@@ -39,100 +41,37 @@ public class ItemController {
 	}
 	//아이템 수정 form
 		@GetMapping("/modifyItem")
-		public String modifyItem(HttpSession session, ItemList itemList, @RequestParam("itemNo") int itemNo, Model model) {
+		public String modifyItem(HttpSession session, @RequestParam("itemNo") int itemNo, Model model) {
 			System.out.println(itemNo+"/Ctrl.modify.itemNo");
 			
-			itemList = itemService.selectItemInfo(itemList);
-			//System.out.println(itemList+"<--/Ctrl.modify.itemList");
-			model.addAttribute("item", itemList);
-			model.addAttribute("itemNo", itemNo);
-			//System.out.println(model+"<--/Ctrl.modify.model");
+			itemService.getUpdateItem(itemNo);
+			System.out.println(itemNo+"<--Ctrl.modify.itemNo///////");
+			
+			Map<String, Object> map = itemService.getUpdateItem(itemNo);
+			System.out.println(map+"/Ctrl.modify.map");
+			
+			
+			ItemPic itemPic = (ItemPic)map.get("itemPic");
+			System.out.println(itemPic+"/Ctrl.modify.itemPic!!!!!!");
+			Item item = (Item)map.get("item");
+			System.out.println(item + " <== Controller item??????");
+			model.addAttribute("item", item);
+			model.addAttribute("itemPic", itemPic);
+			System.out.println(model+"<--/Ctrl.modify.model");
 			return "/modifyItem";
 		}
 		//아이템 수정 action
 		@PostMapping("/modifyItem")
 		public String modifyItem(ItemAndItemPic itemAndItemPic) {
-			System.out.println(itemAndItemPic.getItemPicNameOne()+"/getItemPicNameOne<--Ctrl.modify.itemAndItemPic??????????");
-			System.out.println(itemAndItemPic.getItemPicNameTwo()+"/getItemPicName2<--Ctrl.modify.itemAndItemPic??????????");
-			System.out.println(itemAndItemPic.getItemPicNameThree()+"/getItemPicNam3eOne<--Ctrl.modify.itemAndItemPic??????????");
-			System.out.println(itemAndItemPic.getItemPicNameFour()+"/getItemPicNameO4ne<--Ctrl.modify.itemAndItemPic??????????");
-			System.out.println(itemAndItemPic.getItemPicNameFive()+"/getItemPicNameOn5e<--Ctrl.modify.itemAndItemPic??????????");
-			String path = "D:\\maven.1594186776148\\secondhand\\src\\main\\resources\\static\\upload\\";
+			System.out.println(itemAndItemPic+"<--Ctrl.action.itemAndItemPic;;;;;;");
+			int itemNo = itemAndItemPic.getItemNo();
+			System.out.println(itemNo+"<--Ctrl.action.itemNo!!!");
+			itemAndItemPic.setItemNo(itemNo);
+			System.out.println(itemAndItemPic+"<--itemAndItemPic??????");
 			
-			String itemPicNameOne = null;
-			String itemPicNameTwo = null;
-			String itemPicNameThree = null;
-			String itemPicNameFour = null;
-			String itemPicNameFive = null;
-			//새로운 파일이 등록되었는지 확인
-			if(!itemAndItemPic.getItemPicNameOne().isEmpty()){
-				itemPicNameOne = itemAndItemPic.getItemPicNameOne().getOriginalFilename();
-				System.out.println(itemPicNameOne+"<--Ctrl.modify.itemPicNameOne");
-			       try {
-			          new File(path).mkdirs();
-			          itemAndItemPic.getItemPicNameOne().transferTo(new File(path+itemPicNameOne));
-			          
-			          System.out.println(itemAndItemPic+"<--Ctrl.modify.itemAndItemPic");
-			       } catch (Exception e) {
-			          e.printStackTrace();
-			       	}
-			      }else {
-			    	  itemPicNameOne = itemAndItemPic.getItemPicNameOne().getOriginalFilename();
-			      }
-				System.out.println(itemPicNameOne+"<--itemPicNameOne");
-			      if(!itemAndItemPic.getItemPicNameTwo().isEmpty()) {
-			    	  itemPicNameTwo = itemAndItemPic.getItemPicNameTwo().getOriginalFilename(); 
-				       try {
-				          new File(path).mkdirs();
-				          itemAndItemPic.getItemPicNameTwo().transferTo(new File(path+itemPicNameTwo));
-				       } catch (Exception e) {
-				          e.printStackTrace();
-				       }
-			      }else {
-			    	  itemPicNameTwo = itemAndItemPic.getItemPicNameTwo().getOriginalFilename();
-			      }
-				       if(!itemAndItemPic.getItemPicNameThree().isEmpty()) {
-				    	   itemPicNameThree = itemAndItemPic.getItemPicNameThree().getOriginalFilename(); 
-					       try {
-					          new File(path).mkdirs();
-					          itemAndItemPic.getItemPicNameThree().transferTo(new File(path+itemPicNameThree));
-					       } catch (Exception e) {
-					          e.printStackTrace();
-					       }
-				       }else {
-				    	   itemPicNameThree = itemAndItemPic.getItemPicNameThree().getOriginalFilename();
-					      }
-					       if(!itemAndItemPic.getItemPicNameFour().isEmpty()) {
-					    	   itemPicNameFour = itemAndItemPic.getItemPicNameFour().getOriginalFilename(); 
-						       try {
-						          new File(path).mkdirs();
-						          itemAndItemPic.getItemPicNameFour().transferTo(new File(path+itemPicNameFour));
-						       } catch (Exception e) {
-						          e.printStackTrace();
-						       } 
-						 }else {
-							 itemPicNameFour = itemAndItemPic.getItemPicNameFour().getOriginalFilename();
-					      }
-						       if(!itemAndItemPic.getItemPicNameFive().isEmpty()) {
-						    	   itemPicNameFive = itemAndItemPic.getItemPicNameFive().getOriginalFilename(); 
-							       try {
-							          new File(path).mkdirs();
-							          itemAndItemPic.getItemPicNameFive().transferTo(new File(path+itemPicNameFive));
-							       } catch (Exception e) {
-							          e.printStackTrace();
-							       }
-							 }else {
-								 itemPicNameFive = itemAndItemPic.getItemPicNameFive().getOriginalFilename();
-						      }
-			ItemPic itemPic = new ItemPic();
-			itemPic.setItemNo(itemAndItemPic.getItemNo());
-			itemPic.setItemPicNameOne(itemPicNameOne);
-			itemPic.setItemPicNameTwo(itemPicNameTwo);
-			itemPic.setItemPicNameThree(itemPicNameThree);
-			itemPic.setItemPicNameFour(itemPicNameFour);
-			itemPic.setItemPicNameFive(itemPicNameFive);
-			System.out.println(itemPic+"<--itemPic");
-			itemService.updateItem(itemAndItemPic, itemPic);
+			itemService.updateItem(itemAndItemPic);
+			itemService.getUpdateItem(itemNo);
+			System.out.println(itemService+"<--itemService");
 			return "redirect:/itemList";
 		}
 	//아이템 상세보기

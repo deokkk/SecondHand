@@ -2,7 +2,9 @@
 body {
   font-family: "Lato", sans-serif;
 }
-
+.sidenavi{
+	
+}
 .sidenav {
   height: 100%;
   width: 0;
@@ -62,9 +64,10 @@ body {
 #fixed-bar {
 	margin-left: 250px;
 	text-align: left;
+	left:0;
 }
 #fixed-bar-wrap {
-	margin-left: 0px;
+	margin: 0 auto;
 }
 #footer {
 	left: 0px;

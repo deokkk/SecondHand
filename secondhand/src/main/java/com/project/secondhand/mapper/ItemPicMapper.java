@@ -8,7 +8,7 @@ import com.project.secondhand.vo.ItemPic;
 @Mapper
 public interface ItemPicMapper {
 	//아이템 사진 불러오기
-	public int selectItemPic(ItemPic itemPic);
+	public ItemPic selectItemPic(int itemNo);
 	//아이템 사진 추가
 	public void insertItemPic(ItemPic itemPic);
 	//아이템 사진 삭제

@@ -3,7 +3,10 @@ package com.project.secondhand.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,9 +18,9 @@ import com.project.secondhand.mapper.ItemMapper;
 import com.project.secondhand.mapper.ItemPicMapper;
 import com.project.secondhand.vo.Item;
 import com.project.secondhand.vo.ItemAndItemPic;
-import com.project.secondhand.vo.ItemPic;
 import com.project.secondhand.vo.ItemAndMemberAndMemberAddrAndItemPic;
 import com.project.secondhand.vo.ItemList;
+import com.project.secondhand.vo.ItemPic;
 
 @Service
 @Transactional
@@ -47,16 +50,242 @@ public class ItemService {
 	   return row;
    }
  //홍보업체 게시글 수정하기
-   public void updateItem(ItemAndItemPic itemAndItemPic, ItemPic itemPic) {
-	  itemPicMapper.updateItemPic(itemPic);
-
-		   itemMapper.updateItem(itemAndItemPic);
-	   System.out.println(itemAndItemPic+"<--itemAndItemPic.Service.modify");
+   public int updateItem(ItemAndItemPic itemAndItemPic) {
+	   System.out.println(itemAndItemPic+"<--Service.modify.ItemAndItemPic");
+	   int itemNo = itemAndItemPic.getItemNo();
+	   ItemPic itemPic = itemPicMapper.selectItemPic(itemNo);
+	   	String originItemPicNameOne = itemPic.getItemPicNameOne();
+		String originItemPicNameTwo = itemPic.getItemPicNameTwo();
+		String originItemPicNameThree = itemPic.getItemPicNameThree();
+		String originItemPicNameFour = itemPic.getItemPicNameFour();
+		String originItemPicNameFive = itemPic.getItemPicNameFive(); 
+		
+		//폼에서  넘어온 파일
+		MultipartFile mf1 = itemAndItemPic.getItemPicNameOne();
+		MultipartFile mf2 = itemAndItemPic.getItemPicNameTwo();
+		MultipartFile mf3 = itemAndItemPic.getItemPicNameThree();
+		MultipartFile mf4 = itemAndItemPic.getItemPicNameFour();
+		MultipartFile mf5 = itemAndItemPic.getItemPicNameFive();
+		//폼에서 넘어온 파일의 실제 이름 구하기
+		String itemPicNameOne1 = mf1.getOriginalFilename();
+		System.out.println(itemPicNameOne1+"<--Service.itemPicNameOne1");
+		String itemPicNameOne2 = mf2.getOriginalFilename();
+		String itemPicNameOne3 = mf3.getOriginalFilename();
+		String itemPicNameOne4 = mf4.getOriginalFilename();
+		String itemPicNameOne5 = mf5.getOriginalFilename();
+		//새로 db에 입력될 이름
+		String itemPicNameOne = "";
+		String itemPicNameTwo = "";
+		String itemPicNameThree = "";
+		String itemPicNameFour = "";
+		String itemPicNameFive = "";
+		
+		
+		System.out.println(originItemPicNameOne + " <-------------");
+		//값이 없으면 삭제x, 있으면 삭제실행
+		if(!mf1.isEmpty()){
+			System.out.println(mf1.getOriginalFilename() + "!!!!!!!!!!!!!");
+			//이미지 삭제
+			File originFile = new File(path+originItemPicNameOne);
+			//초기 설정 이미지 삭제 x
+			if(originFile.exists()&& ! originItemPicNameOne.equals("default.jpg")) {
+				originFile.delete();
+		}
+			System.out.println(itemPicNameOne1+"<--Service.itemPicNameOne1!!!!");
+		int lastDot = itemPicNameOne1.lastIndexOf(".");
+		System.out.println(lastDot+"<--Service.lastDot");
+		String extension = itemPicNameOne1.substring(lastDot);
+		System.out.println(extension+"<--Serice.extension");
+		//랜덤 이름주기
+		UUID uuid = UUID.randomUUID();
+		System.out.println(uuid+"<--Service.uuid");
+		String pic1Name = uuid.toString().substring(0,6);
+		System.out.println(pic1Name+"<--Service.pic1Name");
+		itemPicNameOne = pic1Name+"1"+extension;
+		}else{
+	   itemPicNameOne = originItemPicNameOne;
 	   }
-   
-   public int selectItemPic(ItemPic itemPic) {
-	   return itemPicMapper.selectItemPic(itemPic);
+		if(!mf2.isEmpty()){
+			//이미지 삭제
+			File originFile = new File(path+originItemPicNameTwo);
+			//초기 설정 이미지 삭제 x
+			if(originFile.exists()&& ! originItemPicNameTwo.equals("default.jpg")) {
+				originFile.delete();
+		}
+		int lastDot = itemPicNameOne2.lastIndexOf(".");
+		String extension = itemPicNameOne2.substring(lastDot);
+		//랜덤 이름주기
+		UUID uuid = UUID.randomUUID();
+		System.out.println(uuid+"<--Service.uuid");
+		String pic2Name = uuid.toString().substring(0,6);
+		System.out.println(pic2Name+"<--Service.pic2Name");
+		itemPicNameTwo = pic2Name+"2"+extension;
+		}else{
+	   itemPicNameTwo = originItemPicNameTwo;
+	   }
+		if(!mf3.isEmpty()){
+			//이미지 삭제
+			File originFile = new File(path+originItemPicNameThree);
+			//초기 설정 이미지 삭제 x
+			if(originFile.exists()&& ! originItemPicNameThree.equals("default.jpg")) {
+				originFile.delete();
+		}
+		int lastDot = itemPicNameOne3.lastIndexOf(".");
+		String extension = itemPicNameOne3.substring(lastDot);
+		//랜덤 이름주기
+		UUID uuid = UUID.randomUUID();
+		System.out.println(uuid+"<--Service.uuid");
+		String pic3Name = uuid.toString().substring(0,6);
+		System.out.println(pic3Name+"<--Service.pic3Name");
+		itemPicNameThree = pic3Name+"3"+extension;
+		}else{
+	   itemPicNameThree = originItemPicNameThree;
+	   }
+		if(!mf4.isEmpty()){
+			//이미지 삭제
+			File originFile = new File(path+originItemPicNameFour);
+			//초기 설정 이미지 삭제 x
+			if(originFile.exists()&& ! originItemPicNameFour.equals("default.jpg")) {
+				originFile.delete();
+		}
+		int lastDot = itemPicNameOne4.lastIndexOf(".");
+		String extension = itemPicNameOne4.substring(lastDot);
+		//랜덤 이름주기
+		UUID uuid = UUID.randomUUID();
+		System.out.println(uuid+"<--Service.uuid");
+		String pic4Name = uuid.toString().substring(0,6);
+		System.out.println(pic4Name+"<--Service.pic4Name");
+		itemPicNameFour = pic4Name+"4"+extension;
+		}else{
+	   itemPicNameFour = originItemPicNameFour;
+	   }
+		if(!mf5.isEmpty()){
+			//이미지 삭제
+			File originFile = new File(path+originItemPicNameFive);
+			//초기 설정 이미지 삭제 x
+			if(originFile.exists()&& ! originItemPicNameFive.equals("default.jpg")) {
+				originFile.delete();
+		}
+		int lastDot = itemPicNameOne5.lastIndexOf(".");
+		String extension = itemPicNameOne5.substring(lastDot);
+		//랜덤 이름주기
+		UUID uuid = UUID.randomUUID();
+		System.out.println(uuid+"<--Service.uuid");
+		String pic5Name = uuid.toString().substring(0,6);
+		System.out.println(pic5Name+"<--Service.pic1Name");
+		itemPicNameFive = pic5Name+"5"+extension;
+		}else{
+	   itemPicNameFive = originItemPicNameFive;
+	   }
+		
+		Item item = new Item();
+		item.setItemNo(itemAndItemPic.getItemNo());
+		item.setItemTitle(itemAndItemPic.getItemTitle());
+		item.setItemContent(itemAndItemPic.getItemContent());
+		item.setItemPrice(itemAndItemPic.getItemPrice());
+		itemMapper.updateItem(itemAndItemPic);
+		
+		ItemPic itemPicc = new ItemPic();
+		itemPicc.setItemNo(itemAndItemPic.getItemNo());
+		itemPicc.setItemPicNameOne(itemPicNameOne);
+		itemPicc.setItemPicNameTwo(itemPicNameTwo);
+		itemPicc.setItemPicNameThree(itemPicNameThree);
+		itemPicc.setItemPicNameFour(itemPicNameFour);
+		itemPicc.setItemPicNameFive(itemPicNameFive);
+		itemPicMapper.updateItemPic(itemPicc);
+		System.out.println(itemPicMapper+"<--itemPicMapper!!!!!!!!!!!!!!!!!!");
+		//사진 저장
+		if(!originItemPicNameOne.equals("")) {
+			// 파일 저장
+			// 경로 저장
+			File file = new File(path + itemPicNameOne);
+			// mf의 파일을 옮겨준다
+			try {
+				mf1.transferTo(file);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				// 예외처리를 코드에 구현하지 않아도 문제 없는 예외
+				throw new RuntimeException();
+			}
+			// 예외처리를 해야만 문법적으로 이상없는 예외
+		}
+		if(!originItemPicNameTwo.equals("")) {
+			// 파일 저장
+			// 경로 저장
+			File file = new File(path + itemPicNameTwo);
+			// mf의 파일을 옮겨준다
+			try {
+				mf1.transferTo(file);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				// 예외처리를 코드에 구현하지 않아도 문제 없는 예외
+				throw new RuntimeException();
+			}
+			// 예외처리를 해야만 문법적으로 이상없는 예외
+		}
+		if(!originItemPicNameThree.equals("")) {
+			// 파일 저장
+			// 경로 저장
+			File file = new File(path + itemPicNameThree);
+			// mf의 파일을 옮겨준다
+			try {
+				mf1.transferTo(file);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				// 예외처리를 코드에 구현하지 않아도 문제 없는 예외
+				throw new RuntimeException();
+			}
+			// 예외처리를 해야만 문법적으로 이상없는 예외
+		}
+		if(!originItemPicNameFour.equals("")) {
+			// 파일 저장
+			// 경로 저장
+			File file = new File(path + itemPicNameFour);
+			// mf의 파일을 옮겨준다
+			try {
+				mf1.transferTo(file);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				// 예외처리를 코드에 구현하지 않아도 문제 없는 예외
+				throw new RuntimeException();
+			}
+			// 예외처리를 해야만 문법적으로 이상없는 예외
+		}
+		if(!originItemPicNameFive.equals("")) {
+			// 파일 저장
+			// 경로 저장
+			File file = new File(path + itemPicNameFive);
+			// mf의 파일을 옮겨준다
+			try {
+				mf1.transferTo(file);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				// 예외처리를 코드에 구현하지 않아도 문제 없는 예외
+				throw new RuntimeException();
+			}
+			// 예외처리를 해야만 문법적으로 이상없는 예외
+		}
+		return itemNo;
    }
+   
+   public Map<String,Object> getUpdateItem(int itemNo){
+	   //리턴타입 map 생성
+	   HashMap<String, Object> map = new HashMap<String, Object>();
+	   //map에 담을 정보
+	   ItemPic itemPic = itemPicMapper.selectItemPic(itemNo);
+	   Item item = itemMapper.selectMemberItemInfoUpdate(itemNo);
+	   
+	   map.put("itemPic", itemPic);
+	   map.put("item", item);
+	
+	   return map;   
+   }
+ 
    //아이템 목록
    public ArrayList<ItemList> selectItemListByAll(){
       return itemMapper.selectItemListByAll();

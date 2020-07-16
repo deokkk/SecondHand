@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" media="all" href="css/itemList.css" />
+<script   src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<!--  -->
+
+<link rel="stylesheet" href="css/file.css">
+
+<!--  -->
+
+</head>
+<style>
+
+.btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+file{
+color: #11111;
+}
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+// 확인 버튼을 클릭했을때 공란이면  모든칸은 초기화 된다.
+
+let helperInit = function(){
+   $('#itemTitle').text("");
+   $('#itemPrice').text("");
+   $('#itemContent').text("");
+};
+
+//document(body)가 준비되면 작동된다.
+$(document).ready(function(){
+   
+//<button>을 클릭하면 작동된다.
+   $('#btn').click(function(){   
+   if($('#itemTitle').val()=="") {
+      helperInit();
+      $('#titleHelper').text("제목을 입력하세요.");
+      $('#itemTitle').focus();      
+   }else if ($('#itemContent').val()==""){
+      helperInit();
+      $('#contentHelper').text("내용을 입력하세요");
+      $('#itemContent').focus();
+   }else {
+      $('#modifyItem').submit();
+   }
+   
+   });   
+});
+
+</script>
+<body class="hoian-kr">
+   <div class="header">
+      <div th:include="/inc/topHeader"></div>
+   </div>
+		<form method="post" th:action="@{/modifyItem}" enctype="multipart/form-data">
+			<h1>상품 수정</h1>
+			<table class="table">
+				<tr>
+					<th>제목</th>
+					<th>가격</th>
+					<th>내용</th>
+					<th>사진1</th>
+					<th>사진2</th>
+					<th>사진3</th>
+					<th>사진4</th>
+					<th>사진5</th>
+				</tr>
+				<tr>
+					<td><input type="text" name="itemTitle" id="itemTitle" th:value="${item.itemTitle}">
+					</td>
+					<td><input type="text" name="itemPrice" id="itemPrice" th:value="${item.itemPrice}"></td>
+					<td><input type="text" name="itemContent" id="itemContent" th:value="${item.itemContent}"></td>
+					<td>
+						<img th:src="@{'/upload/'+${itemPic.itemPicNameOne}}" width="300" height="150"></img><br>
+						<input type="file" name="itemPicNameOne" id="itemPicNameOne" th:value="${itemPic.itemPicNameOne}">
+					</td>
+					<td>
+						<img th:src="@{'/upload/'+${itemPic.itemPicNameTwo}}" width="300" height="150"></img><br>
+						<input type="file" name="itemPicNameTwo" id="itemPicNameTwo" th:value="${itemPic.itemPicNameTwo}">
+					</td>
+					<td>
+						<img th:src="@{'/upload/'+${itemPic.itemPicNameThree}}" width="300" height="150"></img><br>
+						<input type="file" name="itemPicNameThree" id="itemPicNameThree" th:value="${itemPic.itemPicNameThree}">
+					</td>
+					<td>
+						<img th:src="@{'/upload/'+${itemPic.itemPicNameFour}}" width="300" height="150"></img><br>
+						<input type="file" name="itemPicNameFour" id="itemPicNameFour" th:value="${itemPic.itemPicNameFour}">
+					</td>
+					<td>
+						<img th:src="@{'/upload/'+${itemPic.itemPicNameFive}}" width="300" height="150"></img><br>
+						<input type="file" name="itemPicNameFive" id="itemPicNameFive" th:value="${itemPic.itemPicNameFive}">
+					</td>
+				</tr>
+				<div>
+					<button type="submit" id="btn">수정</button>
+				</div>
+			</table>
+			<input type="hidden" name="itemNo" id="itemNo" th:value="${item.itemNo}">
+		</form>
+   <div class="header">
+      <div th:include="/inc/copyRight"></div>
+   </div>
+</body>
+</html>

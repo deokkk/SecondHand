@@ -64,7 +64,7 @@ public class MemberService {
 
 		String memberPicName = memberPicForm.getMemberNo() + extension;
 
-		String path = "C:\\springwork\\maven.1593664203848\\secondhand\\src\\main\\resources\\static\\upload\\";
+		String path = "D:\\maven.1594716682238\\secondhand\\src\\main\\resources\\static\\upload\\";
 
 		File file = new File(path + memberPicName);
 		try {

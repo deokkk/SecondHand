@@ -22,8 +22,10 @@ public interface ItemMapper {
 		//상품 추가하기
 		public void insertItem(Item item);
 		//상품 수정하기
-		public void updateItem(ItemAndItemPic itemAndItemPic);
+		public int updateItem(ItemAndItemPic itemAndItemPic);
 		//상품 삭제하기
 		public int deleteItem(int itemNo);
+		//수정을 위한 상품 받아오기	
+		public Item selectMemberItemInfoUpdate(int itemNo);
 		
 }

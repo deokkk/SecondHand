@@ -40,6 +40,18 @@
 		AND mm.member_no = ma.member_no
 		AND i.member_no = mm.member_no
 	</select>
+	<!-- 수정에 쓸 상품 상세보기 받기 -->
+	<select id="selectMemberItemInfoUpdate" resultType="com.project.secondhand.vo.Item" parameterType="int">
+      SELECT 
+         item_no AS itemNo,
+         item_title AS itemTitle,
+     	 item_price AS itemPrice,
+         item_content AS itemContent,
+         item_date AS itemDate,
+         item_state AS itemState
+      FROM market_item
+      WHERE item_no = #{itemNo}
+   </select>
 	<!-- 상품 리스트 상세보기 -->
 	<select id="selectItemInfo"
 		parameterType="com.project.secondhand.vo.ItemList"
@@ -147,9 +159,16 @@
 		)
 	</insert>
 	<!-- 상품 수정하기 -->
-	<update id="updateItem" parameterType = "com.project.secondhand.vo.Item" 
-		> UPDATE market_item SET category_name = #{categoryName}, item_title = #{itemTitle}, 
-		item_content = #{itemContent}, item_date = NOW() WHERE item_no=#{itemNo} 
+	<update id="updateItem" parameterType = "com.project.secondhand.vo.Item">
+	UPDATE market_item 
+	SET 
+		
+		item_title = #{itemTitle}, 
+		item_content = #{itemContent},
+		item_price = #{itemPrice},
+		item_date = NOW()
+	WHERE
+		item_no=#{itemNo} 
 		</update>
 	<!-- 상품 삭제하기 -->
 	<delete id="deleteItem" parameterType="int">

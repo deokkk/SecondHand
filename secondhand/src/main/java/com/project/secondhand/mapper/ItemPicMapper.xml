@@ -6,12 +6,11 @@
 	<!-- 아이템 사진 불러오기 -->
 	<select id="selectItemPic" parameterType="int" resultType="com.project.secondhand.vo.ItemPic">
 	SELECT
-		item_no,
-		item_pic_name_one,
-		item_pic_name_two,
-		item_pic_name_three,
-		item_pic_name_four,
-		item_pic_name_five
+		item_pic_name_one AS itemPicNameOne,
+		item_pic_name_two AS itemPicNameTwo,
+		item_pic_name_three AS itemPicNameThree,
+		item_pic_name_four AS itemPicNameFour,
+		item_pic_name_five AS itemPicNameFive
 		FROM market_item_pic
 		WHERE item_no = #{itemNo}
 	</select>
@@ -37,6 +36,7 @@
 	<update id="updateItemPic" parameterType="com.project.secondhand.vo.ItemPic">
 	UPDATE market_item_pic
 	SET
+	item_no =#{itemNo},
 	item_pic_name_one =#{itemPicNameOne},
 	item_pic_name_two =#{itemPicNameTwo},
 	item_pic_name_three =#{itemPicNameThree},
