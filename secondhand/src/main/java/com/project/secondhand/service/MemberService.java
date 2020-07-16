@@ -1,6 +1,10 @@
 package com.project.secondhand.service;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.secondhand.mapper.ItemReportMapper;
 import com.project.secondhand.mapper.MemberMapper;
+import com.project.secondhand.vo.ItemList;
+import com.project.secondhand.vo.ItemReport;
 import com.project.secondhand.vo.LoginMember;
 import com.project.secondhand.vo.Member;
 import com.project.secondhand.vo.MemberAddr;
+import com.project.secondhand.vo.MemberAndReportCnt;
 import com.project.secondhand.vo.MemberInfo;
 import com.project.secondhand.vo.MemberPic;
 import com.project.secondhand.vo.MemberPicForm;
@@ -26,6 +34,8 @@ public class MemberService {
 	private MemberMapper memberMapper;
 	@Autowired
 	private JavaMailSender javaMailSender;
+	@Autowired
+	private ItemReportMapper itemReportMapper;
 
 	// 회원가입
 	public int addMember(Member member) {
@@ -172,5 +182,33 @@ public class MemberService {
 	// 회원 번호 가져오기
 	public int getMemberNoByEmail(String memberEmail) {
 	   return memberMapper.selectMemberNoByEmail(memberEmail);
+	}
+	
+	// 회원 리스트
+	public List<MemberAndReportCnt> getMemberList() {
+		List<MemberAndReportCnt> list = memberMapper.selectMemberList();
+		for(MemberAndReportCnt arc : list) {
+			arc.setMemberReportCnt(itemReportMapper.selectMemberReportCnt(arc.getMemberNo()));
+		}
+		return list;
+	}
+	
+	// 관리자 회원정보 상세보기
+	public Map<String, Object> getMemberInfoByAdmin(int memberNo) {
+		Map<String, Object> map = new HashMap();
+		map.put("memberBasicInfo", memberMapper.selectMemberOneByAdmin(memberNo));
+		System.out.println(memberMapper.selectMemberOneByAdmin(memberNo).toString() + " <--memberService");
+		List<ItemList> itemList = memberMapper.selectItemListByMemberNo(memberNo);
+		map.put("itemList", itemList);
+		List<ItemReport> itemReportList = new ArrayList();
+		for(ItemList item : itemList) {
+			System.out.println(item.toString());
+			List<ItemReport> temp = itemReportMapper.selectItemReportListByItem(item.getItemNo());
+			for(ItemReport ir : temp) {
+				itemReportList.add(ir);
+			}
+		}
+		map.put("itemReportList", itemReportList);
+		return map;
 	}
 }

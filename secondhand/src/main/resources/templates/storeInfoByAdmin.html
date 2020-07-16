@@ -21,6 +21,12 @@
 .boardDate {
 	text-align: right;
 }
+.boardInfo:hover {
+	background-color: #dee2e6;
+}
+.tab:hover {
+	background-color: #dee2e6;
+}
 .tab {
 	margin-left: 20px;
 }
@@ -82,7 +88,7 @@
 						<div th:text="홍보글목록"></div>
 						<hr>
 						<div th:each="storeBoard : ${storeBoardList}">
-							<div th:class="row" th:onclick="|location.href='@{/storeBoardInfo(boardNo = ${storeBoard.boardNo})}'|">
+							<div th:class="'row boardInfo'" th:onclick="|location.href='@{/storeBoardInfo(boardNo = ${storeBoard.boardNo})}'|">
 								<div th:class="col">
 									<span th:text="'[' + ${storeBoard.categoryName} + ']'"></span>
 									<span th:text="${storeBoard.boardTitle}"></span>
@@ -90,7 +96,7 @@
 								<div th:class="'col boardDate'" th:text="${storeBoard.boardDate}"></div>
 							</div>
 							<hr>
-							<div th:class="tab" th:each="boardReport : ${boardReportList}" th:if="${boardReport.boardNo} == ${storeBoard.boardNo}">
+							<div th:class="tab" th:each="boardReport : ${boardReportList}" th:if="${boardReport.boardNo} == ${storeBoard.boardNo}" th:onclick="|location.href='@{/reportDetail(type = board, no = ${boardReport.boardReportNo})}'|">
 								<div th:text="신고내역"></div>
 								<div th:text="'신고한 사람 : ' + ${boardReport.memberNickName}"></div>
 								<span th:text="'[' + ${boardReport.categoryName} + ']'"></span>
@@ -108,6 +114,9 @@
 				<div th:class="col-sm-2"></div>
 			</div>
 		</section>
+		<div th:class="header">
+			<div th:include="/inc/copyRight"></div>
+		</div>
 	</div>
 </body>
 </html>

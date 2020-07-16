@@ -81,10 +81,13 @@ public class ReportController {
 		if(session.getAttribute("loginAdmin") == null) {
 			return "redirect:/";
 		}
+		System.out.println(type.equals("board") + ", " + no);
 		if(type.equals("item")) {
 			model.addAttribute("itemReport", reportService.getItemReportOne(no));
+			System.out.println(reportService.getItemReportOne(no).toString() + " <---itemReport");
 		} else if(type.equals("board")) {
 			model.addAttribute("boardReport", reportService.getBoardReportOne(no));
+			System.out.println(reportService.getBoardReportOne(no).toString() + " <---boardReport");
 		}
 		return "reportDetail";
 	}

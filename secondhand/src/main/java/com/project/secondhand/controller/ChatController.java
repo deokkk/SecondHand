@@ -38,9 +38,13 @@ public class ChatController {
 		item.setItemNo(itemNo);
 		item = itemService.selectItemInfo(item);
 		int chatTo = item.getMemberNo();
+		String chatFromPic = chatService.getChatMemberPic(chatFrom);
+		String chatToPic = chatService.getChatMemberPic(chatTo);
 		String roomNo = chatService.addChatRoom(chatTo, chatFrom, itemNo);
 		model.addAttribute("chatRoomInfo", chatService.getRoomOne(roomNo));
 		model.addAttribute("roomNo", roomNo);		
+		model.addAttribute("chatFromPic", chatFromPic);
+		model.addAttribute("chatToPic", chatToPic);
 		return "chatRoom";
 	}
 	
@@ -79,9 +83,14 @@ public class ChatController {
 		if (session.getAttribute("loginMember") == null) {
 			return "redirect:/";
 		}
+		ChatRoom chatRoom = chatService.getRoomOne(roomNo);
+		String chatFromPic = chatService.getChatMemberPic(chatRoom.getChatFrom());
+		String chatToPic = chatService.getChatMemberPic(chatRoom.getChatTo());
 		model.addAttribute("roomNo", roomNo);
-		model.addAttribute("chatRoomInfo", chatService.getRoomOne(roomNo));
+		model.addAttribute("chatRoomInfo", chatRoom);
 		model.addAttribute("chatMessageList", chatService.getChatMessageList(roomNo));
+		model.addAttribute("chatFromPic", chatFromPic);
+		model.addAttribute("chatToPic", chatToPic);
 		return "chatRoom";
 	}
 	

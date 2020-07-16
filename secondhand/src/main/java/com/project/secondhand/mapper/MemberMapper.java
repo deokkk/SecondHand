@@ -1,10 +1,14 @@
 package com.project.secondhand.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
+import com.project.secondhand.vo.ItemList;
 import com.project.secondhand.vo.LoginMember;
 import com.project.secondhand.vo.Member;
 import com.project.secondhand.vo.MemberAddr;
+import com.project.secondhand.vo.MemberAndReportCnt;
 import com.project.secondhand.vo.MemberInfo;
 import com.project.secondhand.vo.MemberPic;
 import com.project.secondhand.vo.Temper;
@@ -40,6 +44,14 @@ public interface MemberMapper {
 	public int modifyMember(MemberInfo memberInfo);
 	//회원 번호
 	public int selectMemberNoByEmail(String email);
+	// 회원 사진
+	public String selectMemberPicOne(int memberNo);
+	// 회원 리스트
+	public List<MemberAndReportCnt> selectMemberList();
+	// 관리자 회원 상세보기
+	public MemberInfo selectMemberOneByAdmin(int memberNo);
+	// 관리자 회원이 올린 상품 리스트
+	public List<ItemList> selectItemListByMemberNo(int memberNo);
 
 }
  	

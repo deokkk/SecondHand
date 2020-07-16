@@ -139,4 +139,32 @@
 			NOW()
 		)
 	</insert>
+	
+	<!-- 회원별 신고 누적 횟수 -->
+	<select id="selectMemberReportCnt" parameterType="int" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM market_item_report mir 
+		INNER JOIN market_item mi ON mir.item_no = mi.item_no 
+		INNER JOIN market_member mm ON mi.member_no = mm.member_no
+		WHERE mm.member_no = #{memberNo}
+	</select>
+	
+	<!-- 관리자 상품별 신고 리스트 -->
+	<select id="selectItemReportListByItem" parameterType="int" resultType="com.project.secondhand.vo.ItemReport">
+		SELECT
+			mir.item_report_no itemReportNo,
+			mir.item_no itemNo,
+			mir.member_no memberNo,
+			mm.member_nickname memberNickName,
+			mir.category_name categoryName,
+			mir.item_report_content itemReportContent,
+			LEFT(mir.item_report_date, 16) itemReportDate,
+			LEFT(mir.item_report_result_date, 16) itemReportResultDate
+		FROM market_item_report mir
+		INNER JOIN market_item mi ON mir.item_no = mi.item_no
+		INNER JOIN market_member mm ON mi.member_no = mm.member_no
+		WHERE mi.item_no = #{itemNo}
+		ORDER BY mir.item_report_date DESC
+	</select>
 </mapper>

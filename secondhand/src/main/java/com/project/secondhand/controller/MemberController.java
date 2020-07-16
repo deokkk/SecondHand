@@ -1,5 +1,7 @@
 package com.project.secondhand.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -312,6 +314,30 @@ public class MemberController {
 			memberService.removeMember(memberInfo);
 			session.invalidate();
 			return "redirect:/";
+		}
+		
+		// 관리자 회원관리 리스트
+		@GetMapping("/memberList")
+		public String getMemberList(HttpSession session, Model model) {
+			if(session.getAttribute("loginAdmin") == null) {
+				return "redirect:/";
+			}
+			model.addAttribute("memberList", memberService.getMemberList());
+			return "memberList";
+		}
+		
+		// 관리자 회원정보 보기
+		@GetMapping("/memberInfoByAdmin")
+		public String getMemberInfoByAdmin(HttpSession session, Model model, @RequestParam(value = "memberNo") int memberNo) {
+			System.out.println(memberNo + " <----memberController memberNo");
+			if(session.getAttribute("loginAdmin") == null) {
+				return "redirect:/";
+			}
+			Map<String, Object> map = memberService.getMemberInfoByAdmin(memberNo);
+			model.addAttribute("memberBasicInfo", map.get("memberBasicInfo"));
+			model.addAttribute("itemList", map.get("itemList")); 
+			model.addAttribute("itemReportList", map.get("itemReportList"));
+			return "memberInfoByAdmin";
 		}
 }
 

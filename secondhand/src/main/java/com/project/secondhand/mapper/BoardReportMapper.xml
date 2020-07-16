@@ -156,6 +156,7 @@
 	<!-- 업체별 신고 리스트 -->
 	<select id="selectBoardReportListByStore" parameterType="int" resultType="com.project.secondhand.vo.BoardReport">
 		SELECT
+			mbr.board_report_no boardReportNo,
 			mbr.board_no boardNo,
 			mbr.member_no memberNo,
 			mm.member_nickname memberNickName,

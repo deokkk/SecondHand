@@ -183,4 +183,62 @@
      FROM market_member
      WHERE member_email = #{memberEmail}
   </select>
+  
+  <!-- 회원 사진 가져오기 -->
+  <select id="selectMemberPicOne" parameterType="int" resultType="String">
+  	SELECT
+  		member_pic_name memberPicName
+  	FROM market_member_pic
+  	WHERE member_no = #{memberNo}
+  </select>
+  
+  <!-- 회원 리스트 -->
+  <select id="selectMemberList" resultType="com.project.secondhand.vo.MemberAndReportCnt">
+  	SELECT
+  		member_no memberNo,
+  		member_nickname memberNickName,
+  		member_phone memberPhone,
+  		member_email memberEmail,
+  		member_date memberDate
+  	FROM market_member
+  </select>
+  
+  <!-- 관리자 회원 정보 -->
+  <select id="selectMemberOneByAdmin" parameterType="int" resultType="com.project.secondhand.vo.MemberInfo">
+  	SELECT
+		mm.member_nickname memberNickname,
+		mm.member_no memberNo,
+		mm.member_phone memberPhone,
+		mm.member_email memberEmail,
+		mm.member_date memberDate,
+		mmp.member_pic_name memberPicName,
+		mma.big_city bigCity,
+		mma.middle_city middleCity,
+		mma.small_city smallCity,
+		mt.temper_total temperTotal
+	FROM market_member mm
+	INNER JOIN market_member_pic mmp ON mm.member_no = mmp.member_no
+	INNER JOIN market_member_addr mma ON mm.member_no = mma.member_no
+	INNER JOIN market_temper mt ON mm.member_no = mt.member_no
+	WHERE mm.member_no = #{memberNo}
+  </select>
+  
+  <!-- 관리자 회원이 올린 상품 리스트 -->
+  <select id="selectItemListByMemberNo" parameterType="int" resultType="com.project.secondhand.vo.ItemList">
+ 	 SELECT
+  		mi.item_no itemNo,
+  		mi.category_name categoryName,
+  		mi.item_title itemTitle,
+  		mi.item_price itemPrice,
+  		mi.item_state itemState,
+  		mi.item_date itemDate,
+  		mip.item_pic_name_one itemPicNameOne,
+  		mip.item_pic_name_two itemPicNameTwo,
+  		mip.item_pic_name_three itemPicNameThree,
+  		mip.item_pic_name_four itemPicNameFour,
+  		mip.item_pic_name_five itemPicNameFive
+  	FROM market_item mi
+  	INNER JOIN market_item_pic mip ON mi.item_no = mip.item_no
+  	WHERE member_no = #{memberNo}
+  </select>
 </mapper>

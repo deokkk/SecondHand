@@ -24,4 +24,8 @@ public interface ItemReportMapper {
 	public int updateItemReport(int itemReportNo);
 	// 신고하기
 	public int insertItemReport(ItemReport itemReport);
+	// 회원별 신고누적 횟수
+	public int selectMemberReportCnt(int memberNo);
+	// 관리자 상품별 신고 리스트
+	public List<ItemReport> selectItemReportListByItem(int itemNo);
 }

@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.secondhand.mapper.ChatMapper;
+import com.project.secondhand.mapper.MemberMapper;
 import com.project.secondhand.vo.ChatMessage;
 import com.project.secondhand.vo.ChatRoom;
 
 @Service
 public class ChatService {
 	@Autowired private ChatMapper chatMapper;
+	@Autowired private MemberMapper memberMapper;
 	
 	// 마지막 채팅 날짜
 	public String getLastChatDate(String roomNo) {
@@ -21,7 +23,7 @@ public class ChatService {
 		return chatDate;
 	}
 	
-	//채팅방 생성
+	// 채팅방 생성
 	public String addChatRoom(int chatTo, int chatFrom, int itemNo) {
 		String roomNo = UUID.randomUUID().toString().substring(0, 12);
 		ChatRoom chatRoom = new ChatRoom();
@@ -32,6 +34,11 @@ public class ChatService {
 		System.out.println(chatRoom.toString() + " <--chatRoom");
 		chatMapper.insertChatRoom(chatRoom);
 		return roomNo;
+	}
+	
+	// 회원 사진
+	public String getChatMemberPic(int memberNo) {
+		return memberMapper.selectMemberPicOne(memberNo);
 	}
 	
 	//채팅 전송

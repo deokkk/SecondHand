@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>storeList</title>
+<title>memberList</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="css/sidemenu.css">
 <script src="js/sidemenu.js"></script>
 <style>
-.storeList:hover {
+.memberList:hover {
 	background-color: #e8e8e8;
 }
 /* sidemenu 추가하면서 수정된 style */
@@ -44,23 +44,23 @@
 			<div th:class="row">
 				<div th:class="col-sm-2"></div>
 				<div th:class="col-sm-8">
-					<h2 th:id="qna-h2" th:text="'업체 리스트'"></h2>
+					<h2 th:id="qna-h2" th:text="'회원 리스트'"></h2>
 					<div>
 						<table th:class="table">
 							<thead>
 								<tr>
-									<th th:text="업체번호"></th>
-									<th th:text="업체이름"></th>
+									<th th:text="회원번호"></th>
+									<th th:text="닉네임"></th>
 									<th th:text="이메일"></th>
 									<th th:text="'신고 누적 횟수'"></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:class="storeList" th:each="store : ${storeList}" th:onclick="|location.href='@{/storeInfo(storeNo = ${store.storeNo})}'|">
-									<td th:text="${store.storeNo}"></td>
-									<td th:text="${store.storeName}"></td>
-									<td th:text="${store.storeEmail}"></td>
-									<td th:text="${store.storeReportCnt}"></td>
+								<tr th:class="memberList" th:each="member : ${memberList}" th:onclick="|location.href='@{/memberInfoByAdmin(memberNo = ${member.memberNo})}'|">
+									<td th:text="${member.memberNo}"></td>
+									<td th:text="${member.memberNickname}"></td>
+									<td th:text="${member.memberEmail}"></td>
+									<td th:text="${member.memberReportCnt}"></td>
 								</tr>
 							</tbody>
 						</table>

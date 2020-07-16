@@ -82,9 +82,10 @@
 						</table>
 					</div>
 					<div th:id="reportBtnBox">
-						<a th:href="${itemReport} != null ? @{/modifyReportState(type = 'item', no = ${itemReport.itemReportNo})} : @{/modifyReportState(type = 'board', no = ${boardReport.boardReportNo})}" th:text="처리"></a>
+						<a th:if="${itemReport} == null and ${boardReport.boardReportResultDate} == null" th:href="@{/modifyReportState(type = 'board', no = ${boardReport.boardReportNo})}" th:text="처리"></a>
+						<a th:if="${boardReport} == null and ${itemReport.itemReportResultDate} == null" th:href="@{/modifyReportState(type = 'item', no = ${itemReport.itemReportNo})}" th:text="처리"></a>
 						<a th:href="${itemReport} != null ? @{/removeReport(type = 'item', no = ${itemReport.itemReportNo})} : @{/removeReport(type = 'board', no = ${boardReport.boardReportNo})}" th:text="삭제"></a>
-						<a th:href="@{/reportList}" th:text="목록으로"></a>
+						<a th:href="@{/reportList}" th:text="신고목록"></a>
 					</div>
 				</div>
 				<div th:class="col-sm-3"></div>

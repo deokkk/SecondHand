@@ -63,6 +63,15 @@
 	font-size: large;
 }
 
+.titlePicBox {
+	text-align: right;
+}
+
+.titlePic {
+	width: 40px;
+	height: 40px;
+}
+
 .itemState {
 	text-align: right;
 	font-size: small;
@@ -227,10 +236,11 @@
 	<div th:class="chatBox">
 		<!-- header -->
 		<div th:class="'chat-header row'">
-			<div th:class="col"></div>
-			<div th:class="'chat-header-text col'" th:if="${chatRoomInfo.chatToEmail} == ${session.loginMember.memberEmail}" th:text="${chatRoomInfo.chatFromNickName}"></div>
-			<div th:class="'chat-header-text col'" th:if="${chatRoomInfo.chatFromEmail} == ${session.loginMember.memberEmail}" th:text="${chatRoomInfo.chatToNickName}"></div>
-			<div th:class="'col closeBox'"><button th:class="btn" th:type="button" th:id="closeBtn"><i class="material-icons" style="font-size:30px">exit_to_app</i></button></div>
+			<div th:class="'col-6 titlePicBox'" th:if="${chatRoomInfo.chatToEmail} == ${session.loginMember.memberEmail}"><img th:class="titlePic" th:src="@{'/upload/'+ ${chatFromPic}}"></div>
+			<div th:class="'col-6 titlePicBox'" th:if="${chatRoomInfo.chatFromEmail} == ${session.loginMember.memberEmail}"><img th:class="titlePic" th:src="@{'/upload/'+ ${chatToPic}}"></div>
+			<div th:class="'chat-header-text col-1'" th:if="${chatRoomInfo.chatToEmail} == ${session.loginMember.memberEmail}" th:text="${chatRoomInfo.chatFromNickName}"></div>
+			<div th:class="'chat-header-text col-1'" th:if="${chatRoomInfo.chatFromEmail} == ${session.loginMember.memberEmail}" th:text="${chatRoomInfo.chatToNickName}"></div>
+			<div th:class="'col-5 closeBox'"><button th:class="btn" th:type="button" th:id="closeBtn"><i class="material-icons" style="font-size:30px">exit_to_app</i></button></div>
 		</div>
 		<!-- itemInfo -->
 		<div th:class="item-info">
