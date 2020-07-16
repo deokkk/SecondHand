@@ -9,6 +9,7 @@ import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreAndReportCnt;
 import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreList;
+import com.project.secondhand.vo.StoreMemberInfo;
 import com.project.secondhand.vo.StorePic;
 @Mapper
 public interface StoreMapper {
@@ -44,4 +45,8 @@ public interface StoreMapper {
 	public Store selectStoreOne(int storeNo);
 	// 관리자 해당 업체 홍보글 리스트
 	public List<StoreBoard> selectStoreBoardListByStore(int storeNo);
+	//업체 개인정보
+	public StoreMemberInfo storeMemberInfo(Store store);
+	//업체 개인정보 수정
+	public int modifyStore(StoreMemberInfo storeMemberInfo);
 }

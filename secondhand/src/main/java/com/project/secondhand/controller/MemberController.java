@@ -116,6 +116,7 @@ public class MemberController {
 			return "loginMember";
 		}else { //로그인 성공
 			session.setAttribute("loginMember",loginMember);
+			session.setAttribute("levelMember", "levelMember");
 			return "redirect:/";
 		}
 	}
@@ -267,13 +268,14 @@ public class MemberController {
 			model.addAttribute("memberInfo", memberInfo);
 			return "modifyMember";
 		}
-	//회원 정보 수정 POST
+		//회원 정보 수정 POST
 		@PostMapping("/modifyMember")
-		public String modifyMember(HttpSession session, MemberInfo memberInfo, @RequestParam("memberPicName") MultipartFile memberPicForm, @RequestParam("memberAddrAll") String memberAddrAll) {
+		public String modifyMember(HttpSession session, MemberInfo memberInfo, @RequestParam("memberNewPic") MultipartFile memberNewPic, @RequestParam("memberAddrAll") String memberAddrAll) {
 			if(session.getAttribute("loginMember")==null) {
 				return "redirect:/";
 			}
-			
+			//System.out.println(memberInfo+"<-----------------------------------------membercontroller member");
+			//System.out.println(memberAddrAll+"<-----------------------------------------membercontroller memberAddrall");
 			String date[] = memberAddrAll.split(" ");
 			if(date.length <3) {
 		         memberInfo.setBigCity(date[0]);
@@ -284,9 +286,9 @@ public class MemberController {
 		    	 memberInfo.setMiddleCity(date[1]);
 		    	 memberInfo.setSmallCity(date[2]);   
 		      }
-			System.out.println(memberInfo.getMemberEmail()+"<----------------------------------membercontroller memberemail");
-			memberService.modifyMember(memberInfo, memberPicForm);
-			System.out.println(memberInfo.getMemberNickname()+"<----------------------------------membercontroller membernickname");
+			//System.out.println(memberInfo.getMemberEmail()+"<----------------------------------membercontroller memberemail");
+			memberService.modifyMember(memberInfo, memberNewPic);
+			//System.out.println(memberInfo.getMemberNickname()+"<----------------------------------membercontroller membernickname");
 			return "redirect:/memberInfo";
 		}
 		
@@ -294,24 +296,20 @@ public class MemberController {
 		
 		//회원탈퇴
 		@GetMapping("/removeMember")
-		public String removeMember(HttpSession session) {
+		public String removeMember(HttpSession session, Model model) {
 			if(session.getAttribute("loginMember")==null) {
 				return "redirect:/";
 			}
-				return "removeMember";
+				MemberInfo memberInfo = memberService.selectMemberOne((LoginMember)(session.getAttribute("loginMember")));
+				model.addAttribute("memberInfo", memberInfo);
+			return "removeMember";
 		}
 		@PostMapping("/removeMember")
-		public String removeMember(HttpSession session, Member member, MemberPic memberPic,@RequestParam("memberPw")String memberPw) {
+		public String removeMember(HttpSession session, MemberInfo memberInfo) {
 			if(session.getAttribute("loginMember")==null) {
 				return "redirect:/";
 			}
-			LoginMember loginMember = (LoginMember)(session.getAttribute("loginMember"));
-			
-			loginMember.setMemberPw(memberPw);
-			
-			memberService.removeMember(member, memberPic);
-			System.out.println(member+"<--Ctrl.member");
-			System.out.println(memberPic+"<--Ctrl.memberPic");
+			memberService.removeMember(memberInfo);
 			session.invalidate();
 			return "redirect:/";
 		}

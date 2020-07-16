@@ -35,17 +35,29 @@
   </insert>
   
   <!-- 회원탈퇴 -->
-  <delete id="removeMember" parameterType="com.project.secondhand.vo.Member">
+  <delete id="removeMember" parameterType="com.project.secondhand.vo.MemberInfo">
   	DELETE FROM market_member
-  	WHERE member_email = #{memberEmail}
-  	AND member_pw = PASSWORD(#{memberPw})
+  	WHERE member_pw = PASSWORD(#{memberPw})
+  	AND member_no = #{memberNo}
+  </delete>  
+  <!-- 회원 주소 삭제 -->
+  <delete id="removeMemberAddr" parameterType="com.project.secondhand.vo.MemberInfo">
+  	DELETE FROM market_member_addr
+  	WHERE member_pw = PASSWORD(#{memberPw})
+  	AND member_no = #{memberNo}
+  </delete>
+  <!-- 회원 사진 삭제 -->
+  <delete id="removeMemberPic" parameterType="com.project.secondhand.vo.MemberInfo">
+  	DELETE FROM market_member_pic
+  	WHERE member_pw = PASSWORD(#{memberPw})
+  	AND member_no = #{memberNo}
   </delete>  
   
-  <delete id="removeMemberPic" parameterType="com.project.secondhand.vo.MemberPic">
+<!--   <delete id="removeMemberPic" parameterType="com.project.secondhand.vo.MemberPic">
   	DELETE
   	FROM market_member_Pic
   	WHERE member_no=#{memberNo}
-  </delete>
+  </delete> -->
    
   <!-- id(email)중복체크 -->
   <select id="memberIdCheck" resultType="String" parameterType="String">

@@ -20,16 +20,15 @@ import com.project.secondhand.mapper.BoardReportMapper;
 import com.project.secondhand.mapper.StoreMapper;
 import com.project.secondhand.mapper.StorePicMapper;
 import com.project.secondhand.vo.BoardReport;
-import com.project.secondhand.vo.Member;
 //import com.project.secondhand.mapper.StoreBoardPicMapper;
 import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreAndReportCnt;
-import com.project.secondhand.vo.StoreAndStoreBoardAndBoardPic;
 import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreBoardAndBoardPic;
 //import com.project.secondhand.vo.StoreBoardAndStoreBoardPic;
 import com.project.secondhand.vo.StoreBoardPic;
 import com.project.secondhand.vo.StoreList;
+import com.project.secondhand.vo.StoreMemberInfo;
 import com.project.secondhand.vo.StorePic;
 import com.project.secondhand.vo.StorePicForm;
 
@@ -452,6 +451,14 @@ public class StoreService {
 	// 업체 블랙(탈퇴)
 	public void removeStore(int storeNo) {
 		// board, boardPic, comment, storePic, boardReport전부 삭제
+	}
+	// 업체 개인정보
+	public StoreMemberInfo storeMemberInfo(Store store) {
+		return storeMapper.storeMemberInfo(store);
+	}
+	// 업체 개인정보 수정
+	public void modifyStore(StoreMemberInfo storeMemberInfo) {
+		storeMapper.modifyStore(storeMemberInfo); 
 	}
 }
 

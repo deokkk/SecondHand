@@ -27,11 +27,15 @@ public interface MemberMapper {
 	//비밀번호 전송
 	public int updateMemberPw(Member member);
 	//회원 탈퇴
-	public int removeMember(Member member);
+	public void removeMember(MemberInfo memberInfo);
+	//회원 주소 삭제
+	public int removeMemberAddr(MemberInfo memberInfo);
+	//회원 사진 삭제
+	public int removeMemberPic(MemberInfo memberInfo);
 	//회원 정보 보기
 	public MemberInfo selectMemberOne(LoginMember loginMember);
 	//회원사진 삭제
-	public int removeMemberPic(MemberPic memberPic);
+	//public int removeMemberPic(MemberPic memberPic);
 	//회원 정보 수정
 	public int modifyMember(MemberInfo memberInfo);
 	//회원 번호

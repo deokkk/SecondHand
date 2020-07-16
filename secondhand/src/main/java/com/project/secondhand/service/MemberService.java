@@ -94,10 +94,11 @@ public class MemberService {
 
 	
 	 //회원삭제 
-	public int removeMember(Member member, MemberPic memberPic) { //멤버 이미지 파일 삭제 String
+	public void removeMember(MemberInfo memberInfo) { //멤버 이미지 파일 삭제 String
 		
-		 memberMapper.removeMemberPic(memberPic);
-		 return memberMapper.removeMember(member);
+		if(memberMapper.removeMemberAddr(memberInfo)==1) {
+			if(memberMapper.removeMemberPic(memberInfo)==1)memberMapper.removeMember(memberInfo);
+		}
 		// return memberMapper.addMember(member);
 	 
 	 }

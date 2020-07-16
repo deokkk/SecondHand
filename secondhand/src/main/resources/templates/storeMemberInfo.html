@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Second Hand</title>
+</head>
+<link rel="stylesheet" media="all" href="css/base.css" />
+<body>
+	<div class="frame">
+		<!-- class= "header" 상단 검색창 위치 조정 -->
+		<div class="header">
+			<div th:include="/inc/topHeader"></div>
+		</div>
+		<!-- class = "main" 내용 위치 선정 -->
+		<div class="main">
+			<div class="container"><br>
+				<h1>기업정보</h1>
+				<table class="table">
+					<tr>
+						<td>사진</td>
+						<td>
+							<!-- 이미지 나중에 넣기 -->
+						</td>
+					</tr>
+					<tr>
+						<td>기업 이름 : </td>
+						<td th:text="${storeMemberInfo.storeName}"></td>
+					</tr>
+					
+					<tr>
+						<td>이메일</td>
+						<td th:text="${storeMemberInfo.storeEmail}"></td>
+					</tr>
+					<tr>
+						<td>주소 : </td>
+						<td th:text="${storeMemberInfo.storeAddr}"></td>
+					</tr>
+					<tr>
+						<td>전화번호 : </td>
+						<td th:text="${storeMemberInfo.storePhone}"></td>
+					</tr>
+				</table>
+				<div>
+					<a th:href="@{/removeStore}" class="btn btn-primary">기업탈퇴 </a> 
+					<a th:href="@{/modifyStore}" class="btn btn-primary">기업수정</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="/inc/copyRight"></div>
+</body>
+</html>

@@ -186,7 +186,30 @@
   	FROM market_store_board
   	WHERE board_no = #{boardNo}
   </delete>
-  
+  <!-- 업체 개인정보 -->
+  <select id="storeMemberInfo" parameterType="com.project.secondhand.vo.Store" resultType="com.project.secondhand.vo.StoreMemberInfo">
+  	SELECT
+  		ms.store_no AS storeNo,
+  		ms.store_name AS storeName,
+  		ms.store_addr AS storeAddr,
+  		ms.store_email AS storeEmail,
+  		ms.store_pw AS storePw,
+  		ms.store_phone AS storePhone,
+  		ms.store_date AS storeDate,
+  		msp.store_pic_name_one AS storePicNameOne,
+  		msp.store_pic_name_two AS storePicNameTwo,
+  		msp.store_pic_name_three AS storePicNameThree
+  	FROM market_store ms INNER JOIN market_store_pic msp
+  	ON ms.store_no = msp.store_no
+  	WHERE ms.store_email = #{storeEmail}
+  </select>
+  <!-- 업체 개인정보 수정 -->
+  <update id="modifyStore" parameterType="com.project.secondhand.vo.StoreMemberInfo">
+  	UPDATE market_store
+  		SET store_phone = #{storePhone},
+  			store_addr = #{storeAddr}
+  	WHERE store_no = #{storeNo}
+  </update>
    <!-- 비밀번호 찾기 -->
   <select id="findStorePw" resultType="com.project.secondhand.vo.Store" parameterType="com.project.secondhand.vo.Store">
   	SELECT *

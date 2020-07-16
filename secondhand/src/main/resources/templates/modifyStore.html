@@ -18,11 +18,11 @@
 <script>
 	$(document).ready(function(){
 		$('#btn').click(function(){
-			if($('#memberPw').val() != $('#memberPw2').val()){
+			if($('#storePw').val() != $('#storePw2').val()){
 				$('#pwHelper').text("pw를 확인하세요");
-				$('#memberPw').focus();
+				$('#storePw').focus();
 				return;
-			}else if($('#memberPw').val() == $('#memberPw2').val()){
+			}else if($('#storePw').val() == $('#storePw2').val()){
 				$('#myform').submit();
 			}
 		});
@@ -84,23 +84,24 @@
 		<!-- class = "main" 내용 위치 선정 -->
 		<div class="container-fluid">
 			<section id="content">
-				<form method="post" th:action="@{/modifyMember}" enctype="multipart/form-data" id="myform">
+				<form method="post" th:action="@{/modifyStore}" enctype="multipart/form-data" id="myform">
 					<div class="row">
 					<div class="col-sm-2"></div>
 					<div class="col-sm-7">
-						<h2 align="center">회원정보 수정</h2>
+						<h2 align="center">기업정보 수정</h2>
 						<table class="table">
 					<div align="center"> 
-						<img th:src="@{'/upload/'+ ${memberInfo.memberPicName}}" width="100" height="100" name="memberNewPic"></img>
-						<input type="file" id="memberNewPic" name="memberNewPic">
+						<!-- 사진은 추가 예정
+						<img th:src="@{'/upload/'+ ${storeMemberInfo.storePicNameOne}}" width="100" height="100" name="storeNewPic"></img>
+						<input type="file" id="storeNewPic" name="storeNewPic"> -->
 					</div>
 					
 					<tr>
 						<td>
-							<label for="usr">닉네임 :</label>
+							<label for="usr">기업 이름 :</label>
 						</td>
 						<td>
-							<input type="text" class="form-control" name = "memberNickname" id = "memberNickname" th:value="${memberInfo.memberNickname}">
+							<input type="text" class="form-control" name = "storeName" id = "storeName" th:value="${storeMemberInfo.storeName}" readonly>
 						</td>
 					</tr>
 					<tr>
@@ -108,7 +109,7 @@
 							<label for="usr">번호 :</label>
 						</td>
 						<td>
-							<input type="text" class="form-control" name = "memberPhone" id = "memberPhone" th:value="${memberInfo.memberPhone}">
+							<input type="text" class="form-control" name = "storePhone" id = "storePhone" th:value="${storeMemberInfo.storePhone}">
 						</td>
 					</tr>
 					<tr>
@@ -117,7 +118,7 @@
 						</td>
 						<td>
 							<input type="hidden" id="sample6_postcode" placeholder="우편번호">
-				            <input type="text" id="sample6_address" placeholder="주소" name="memberAddrAll" th:value="${memberInfo.bigCity+' '+memberInfo.middleCity+' '+memberInfo.smallCity}" class="form-control">
+				            <input type="text" id="sample6_address" placeholder="주소" name="storeAddr" th:value="${storeMemberInfo.storeAddr}" class="form-control">
 				            <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 				            <input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
 				            <input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
@@ -129,11 +130,11 @@
 							<label for="usr">비밀번호 확인:</label>
 						</td>
 						<td>
-							<input type="password" class="form-control"	id="memberPw" name="memberPw" th:placeholder="비밀번호를입력하세요">
+							<input type="password" class="form-control"	id="storePw" name="storePw" th:placeholder="비밀번호를입력하세요">
 							<br>
-							<input type="password" class="form-control"	id="memberPw2"th:placeholder="비밀번호를입력하세요"> 
+							<input type="password" class="form-control"	id="storePw2"th:placeholder="비밀번호를입력하세요"> 
 							<span id = "pwHelper"></span>
-							<input type="hidden" name="memberNo" th:value="${memberInfo.memberNo}">
+							<input type="hidden" name="storeNo" th:value="${storeMemberInfo.storeNo}">
 						</td>
 					</tr>
 					</table>

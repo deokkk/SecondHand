@@ -9,23 +9,23 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.project.secondhand.service.CategoryService;
 import com.project.secondhand.service.StoreService;
 import com.project.secondhand.vo.Category;
+import com.project.secondhand.vo.LoginMember;
+import com.project.secondhand.vo.MemberInfo;
 import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreAndStoreBoardAndBoardPic;
-import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreBoardAndBoardPic;
 import com.project.secondhand.vo.StoreList;
+import com.project.secondhand.vo.StoreMemberInfo;
 import com.project.secondhand.vo.StorePicForm;
 
 @Controller
@@ -69,6 +69,7 @@ public class StoreController {
 			return "loginStore";
 		}else { //로그인 성공
 			session.setAttribute("loginStore",loginStore);
+			session.setAttribute("levelStore","levelStore");
 			return "redirect:/";
 		} 
 	}
@@ -143,7 +144,37 @@ public class StoreController {
 	public String storeEmailCheck() {
 		return "redirect:/";
 	}
-
+	//업체 개인정보
+	@GetMapping("/storeMemberInfo")
+	public String storeInfo(HttpSession session, Model model) {
+		if(session.getAttribute("loginStore")==null) {
+			return "redirect/";
+		}
+		StoreMemberInfo storeMemberInfo = storeService.storeMemberInfo((Store)(session.getAttribute("loginStore")));
+		//System.out.println(storeMemberInfo+"<-----------------------------------------storeMemberInfo");
+		model.addAttribute("storeMemberInfo", storeMemberInfo);
+		return "storeMemberInfo";
+	}
+	//업체 개인정보 수정 GET
+	@GetMapping("/modifyStore")
+	public String modifyStore(HttpSession session, Model model) {
+		if(session.getAttribute("loginStore")==null) {
+			return "redirect/";
+		}
+		StoreMemberInfo storeMemberInfo = storeService.storeMemberInfo((Store)(session.getAttribute("loginStore")));
+		model.addAttribute("storeMemberInfo", storeMemberInfo);
+		return "modifyStore";
+	}
+	//업체 개인정보 수정 POST
+	@PostMapping("/modifyStore")
+	public String modifyStore(HttpSession session, StoreMemberInfo storeMemberInfo) {
+		if(session.getAttribute("loginStore")==null) {
+			return "redirect/";
+		}
+		storeService.modifyStore(storeMemberInfo);
+		
+		return "redirect:/storeMemberInfo";
+	}
 	//업체홍보 리스트
 	@GetMapping("/storeBoardList")
 	public String selectStoreBoardList(Model model) {
