@@ -23,7 +23,9 @@ import com.project.secondhand.vo.LoginMember;
 import com.project.secondhand.vo.MemberInfo;
 import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreAndStoreBoardAndBoardPic;
+import com.project.secondhand.vo.StoreBoard;
 import com.project.secondhand.vo.StoreBoardAndBoardPic;
+import com.project.secondhand.vo.StoreBoardPic;
 import com.project.secondhand.vo.StoreList;
 import com.project.secondhand.vo.StoreMemberInfo;
 import com.project.secondhand.vo.StorePicForm;
@@ -231,41 +233,33 @@ public class StoreController {
 	}
 	//업체홍보 수정하기
 	@GetMapping("/modifyStoreBoard")
-	public String modifyStoreBoard(HttpSession session, StoreList storeList, @RequestParam("boardNo") int boardNo, Model model) {
+	public String modifyStoreBoard(HttpSession session, @RequestParam("boardNo") int boardNo, Model model) {
 		System.out.println(boardNo + "/boardNo/modifyStoreBoard");
 
-		storeList = storeService.selectStoreBoardInfo(storeList);
-		System.out.println(storeList + "/storeList/modifyStoreBoard");
-		model.addAttribute("board", storeList);
-		model.addAttribute("boardNo", boardNo);
+		storeService.getUpdateStoreBoard(boardNo);
+		Map<String, Object> map = storeService.getUpdateStoreBoard(boardNo);
+		System.out.println(map+"<--Ctrl/modify/map!!!!!!!!!!!!!!!!!!");
+		
+		StoreBoardPic storeBoardPic = (StoreBoardPic)map.get("storeBoardPic");
+		System.out.println(storeBoardPic+"<--Ctrl/Modify/storeBoardPic??????????");
+		StoreBoard storeBoard = (StoreBoard)map.get("storeBoard");
+		System.out.println(storeBoard+"<--Ctrl/Modify/storeBoard??????????");
+		
+		model.addAttribute("board", storeBoard);
+		System.out.println(storeBoard+"<--Ctrl.modify.storeBoard--------------------");
+		model.addAttribute("boardPic", storeBoardPic);
+		System.out.println(storeBoardPic+"<--Ctrl.modify.storeBoardPic--------------------");
+		System.out.println(model+"<--Ctrl/modify/model!!!!!!!!!!!!!!!");
 
 		return "/modifyStoreBoard";
 	}
 	@PostMapping("/modifyStoreBoard")
-	public String modifyStoreBoard(StoreAndStoreBoardAndBoardPic storeAndStoreBoardAndBoardPic, @RequestParam("nameOne") String nameOne) {
-		String storePicNameOne1 = null;
-	      String storePicNameOne2 = null;
-	      String storePicNameOne3 = null;
-	      String storePicNameOne4 = null;
-	      String storePicNameOne5 = null;
-	      if(!storeAndStoreBoardAndBoardPic.getBoardPicNameOne().isEmpty()) {
-	    	  storePicNameOne1 = storeAndStoreBoardAndBoardPic.getBoardPicNameOne().getOriginalFilename(); 
-	       try {
-	    	  String path =  "C:\\Users\\JJH\\Documents\\workspace-spring-tool-suite-4-4.6.1.RELEASE\\maven.1594187164632\\secondhand\\src\\main\\resources\\static\\upload\\";
-	          new File(path).mkdirs(); 
-	          storeAndStoreBoardAndBoardPic.getBoardPicNameOne().transferTo(new File(path+storePicNameOne1));
-	       } catch (IllegalStateException e) {
-	          e.printStackTrace();
-	       } catch (IOException e) {
-	          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
-	       }
-	      }else {
-	    	 storePicNameOne1 = nameOne;
-	      }
-	      StoreBoardAndBoardPic storeBoardAndBoardPic = new StoreBoardAndBoardPic();
-//	      storeBoardAndBoardPic.setBoardPicNameOne(storePicNameOne1);
+	public String modifyStoreBoard(StoreBoardAndBoardPic storeBoardAndBoardPic) {
+		int boardNo =storeBoardAndBoardPic.getBoardNo();
+		storeBoardAndBoardPic.setBoardNo(boardNo);
 		storeService.updateStoreBoard(storeBoardAndBoardPic);
-		return "redirect:/storeBoardList";
+		storeService.getUpdateStoreBoard(boardNo);
+		return "redirect:/modifyStoreBoard";
 	}
 	
 	//업체홍보 삭제하기

@@ -19,10 +19,10 @@ public interface StorePicMapper {
 	public void insertStorePic(StorePic storePic);
 	// 업체 게시글 작성 시 사진 추가
 	public void insertStoreBoardPic(StoreBoardPic storeBoardPic);
-	//업체 사진 업데이트
+	//업체 게시글 사진 불러오기
+	public StoreBoardPic selectStoreBoardPicByUpdate(int boardNo);
+	//업체 게시글 사진 업데이트
 	public void updateStoreBoardPic(StoreBoardPic storeBoardPic);
-	//파일 불러오기
-	public String selectStoreBoardPic(int boardNo);
 	// 관리자 업체정보 상세보기 사진
 	public StorePic selectStorePic(int storeNo);
 }

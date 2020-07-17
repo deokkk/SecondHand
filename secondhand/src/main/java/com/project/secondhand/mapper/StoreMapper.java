@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreAndReportCnt;
 import com.project.secondhand.vo.StoreBoard;
+import com.project.secondhand.vo.StoreBoardAndBoardPic;
 import com.project.secondhand.vo.StoreList;
 import com.project.secondhand.vo.StoreMemberInfo;
 import com.project.secondhand.vo.StorePic;
@@ -23,8 +24,10 @@ public interface StoreMapper {
 	public StoreList selectStoreBoardInfo(StoreList storeList);
 	//업체 추가하기
 	public void insertStoreBoard(StoreBoard storeBoard);
-	//업체 수정하기
-	public void updateStoreBoard(StoreBoard storeBoard);
+	//업체게시글 수정하기
+	public int updateStoreBoard(StoreBoardAndBoardPic storeBoardAndBoardPic);
+	//업체게시글 수정을 위한 업체 받아오기
+	public StoreBoard selectStoreBoardInfoUpdate(int boardNo);
 	//업체 삭제하기
 	public int deleteStoreBoard(int boardNo);
 	//업체가입

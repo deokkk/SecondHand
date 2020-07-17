@@ -242,92 +242,204 @@ public class StoreService {
 
 	 
 
-   //홍보업체 게시물 수정하기
-   public void updateStoreBoard(StoreBoardAndBoardPic storeBoardAndBoardPic) {
+ //홍보업체 게시물 수정하기
+   public int updateStoreBoard(StoreBoardAndBoardPic storeBoardAndBoardPic) {
+	   	System.out.println(storeBoardAndBoardPic+"<--Service/modify/storeBoardAndBoardPic!!!!!!!");
+ 		int boardNo = storeBoardAndBoardPic.getBoardNo();
+ 		StoreBoardPic storeBoardPic = storePicMapper.selectStoreBoardPicByUpdate(boardNo);
+ 		String originStoreBoardNameOne = storeBoardPic.getBoardPicNameOne();
+ 		String originStoreBoardNameTwo = storeBoardPic.getBoardPicNameTwo();
+ 		String originStoreBoardNameThree = storeBoardPic.getBoardPicNameThree();
+ 		String originStoreBoardNameFour = storeBoardPic.getBoardPicNameFour();
+ 		String originStoreBoardNameFive = storeBoardPic.getBoardPicNameFive();
+ 		
+ 		//폼에서 넘어온 파일
+ 		MultipartFile mf1 = storeBoardAndBoardPic.getBoardPicNameOne();
+ 		MultipartFile mf2 = storeBoardAndBoardPic.getBoardPicNameTwo();
+ 		MultipartFile mf3 = storeBoardAndBoardPic.getBoardPicNameThree();
+ 		MultipartFile mf4 = storeBoardAndBoardPic.getBoardPicNameFour();
+ 		MultipartFile mf5 = storeBoardAndBoardPic.getBoardPicNameFive();
+ 		
+ 		//품에서 넘어온 파일의 실제 이름 구하기
+ 		String boardPicNameOne1 = mf1.getOriginalFilename();
+ 		System.out.println(boardPicNameOne1+"<--Service/modify/boardPicNameOne1");
+ 		String boardPicNameOne2 = mf2.getOriginalFilename();
+ 		String boardPicNameOne3 = mf3.getOriginalFilename();
+ 		String boardPicNameOne4 = mf4.getOriginalFilename();
+ 		String boardPicNameOne5 = mf5.getOriginalFilename();
+ 		//새로 db에 입력될 이름
+ 		String boardPicNameOne ="";
+ 		String boardPicNameTwo ="";
+ 		String boardPicNameThree ="";
+ 		String boardPicNameFour ="";
+ 		String boardPicNameFive ="";
+ 		
+ 		//값이 없으면 삭제, 있으면 삭제 실행
+ 		//1번 사진
+ 		if(!mf1.isEmpty()) {
+ 			System.out.println(mf1.getOriginalFilename()+"<----boardPicNameOne1!!!!!");
+ 			//이미지 삭제
+ 			File originFile = new File(path+originStoreBoardNameOne);
+ 			if(originFile.exists()&& ! originStoreBoardNameOne.equals("default.jpg")) {
+ 				originFile.delete();
+ 			}
+ 				System.out.println(boardPicNameOne1+"<----boardPicNameOne1!!!!!");
+ 			int lastDot = boardPicNameOne1.lastIndexOf(".");
+ 				System.out.println(lastDot+"<--Service.lastDot");
+ 			String extension = boardPicNameOne1.substring(lastDot);
+ 				System.out.println(extension+"<--Service.extention");
+ 			//랜덤 이름 부여
+ 			UUID uuid = UUID.randomUUID();
+ 			System.out.println(uuid+"<--Service/uuid");
+ 			String pic1Name = uuid.toString().substring(0,6);
+ 			System.out.println(pic1Name+"<--Service/pic1Name");
+ 			boardPicNameOne = pic1Name+"1"+extension;
+ 			}else {
+ 			boardPicNameOne = originStoreBoardNameOne;
+ 		}
+ 		//2번 사진
+ 		if(!mf1.isEmpty()) {
+ 			//이미지 삭제
+ 			File originFile = new File(path+originStoreBoardNameTwo);
+ 			if(originFile.exists()&& ! originStoreBoardNameTwo.equals("default.jpg")) {
+ 				originFile.delete();
+ 			}
+ 			int lastDot = boardPicNameOne2.lastIndexOf(".");
+ 			String extension = boardPicNameOne2.substring(lastDot);
+ 			//랜덤 이름 부여
+ 			UUID uuid = UUID.randomUUID();
+ 			String pic2Name = uuid.toString().substring(0,6);
+ 			boardPicNameTwo = pic2Name+"2"+extension;
+			}else {
+			boardPicNameTwo = originStoreBoardNameTwo;
+ 		}
+ 		//3번 사진
+ 		if(!mf3.isEmpty()) {
+ 			//이미지 삭제
+ 			File originFile = new File(path+originStoreBoardNameThree);
+ 			if(originFile.exists()&& ! originStoreBoardNameThree.equals("default.jpg")) {
+ 				originFile.delete();
+ 			}
+ 			int lastDot = boardPicNameOne3.lastIndexOf(".");
+ 			String extension = boardPicNameOne2.substring(lastDot);
+ 			//랜덤 이름 부여
+ 			UUID uuid = UUID.randomUUID();
+ 			String pic3Name = uuid.toString().substring(0,6);
+ 			boardPicNameThree = pic3Name+"3"+extension;
+			}else {
+			boardPicNameThree = originStoreBoardNameThree;
+ 		}
+ 		//4번 사진
+ 		if(!mf3.isEmpty()) {
+ 			//이미지 삭제
+ 			File originFile = new File(path+originStoreBoardNameFour);
+ 			if(originFile.exists()&& ! originStoreBoardNameFour.equals("default.jpg")) {
+ 				originFile.delete();
+ 			}
+ 			int lastDot = boardPicNameOne4.lastIndexOf(".");
+ 			String extension = boardPicNameOne4.substring(lastDot);
+ 			//랜덤 이름 부여
+ 			UUID uuid = UUID.randomUUID();
+ 			String pic4Name = uuid.toString().substring(0,6);
+ 			boardPicNameFour = pic4Name+"4"+extension;
+			}else {
+			boardPicNameFour = originStoreBoardNameFour;
+ 		}
+ 		//5번 사진
+ 		if(!mf5.isEmpty()) {
+ 			//이미지 삭제
+ 			File originFile = new File(path+originStoreBoardNameFive);
+ 			if(originFile.exists()&& ! originStoreBoardNameFive.equals("default.jpg")) {
+ 				originFile.delete();
+ 			}
+ 			int lastDot = boardPicNameOne5.lastIndexOf(".");
+ 			String extension = boardPicNameOne5.substring(lastDot);
+ 			//랜덤 이름 부여
+ 			UUID uuid = UUID.randomUUID();
+ 			String pic5Name = uuid.toString().substring(0,6);
+ 			boardPicNameFive = pic5Name+"5"+extension;
+			}else {
+			boardPicNameFive = originStoreBoardNameFive;
+ 		}
+ 		
  		StoreBoard storeBoard = new StoreBoard();
-	      storeBoard.setBoardNo(storeBoardAndBoardPic.getBoardNo());
-	      storeBoard.setBoardTitle(storeBoardAndBoardPic.getBoardTitle());
-	      storeBoard.setBoardContent(storeBoardAndBoardPic.getBoardContent());
-	      storeMapper.updateStoreBoard(storeBoard);
-	      String storePicNameOne1 = null;
-	      String storePicNameOne2 = null;
-	      String storePicNameOne3 = null;
-	      String storePicNameOne4 = null;
-	      String storePicNameOne5 = null;
-	      if(!storeBoardAndBoardPic.getBoardPicNameOne().isEmpty()) {
-	    	  storePicNameOne1 = storeBoardAndBoardPic.getBoardPicNameOne().getOriginalFilename(); 
-	       try {
-	          new File(path).mkdirs();
-	          storeBoardAndBoardPic.getBoardPicNameOne().transferTo(new File(path+storePicNameOne1));
-	       } catch (IllegalStateException e) {
-	          e.printStackTrace();
-	       } catch (IOException e) {
-	          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
-	       }
-	      }else {
-	    	  //storePicNameOne1 = storeBoardAndBoardPic.getBoardPicNameOne().getOriginalFilename();
-	      }
-	      if(!storeBoardAndBoardPic.getBoardPicNameTwo().isEmpty()) {
-	    	  storePicNameOne2 = storeBoardAndBoardPic.getBoardPicNameTwo().getOriginalFilename(); 
-		       try {
-		          new File(path).mkdirs();
-		          storeBoardAndBoardPic.getBoardPicNameTwo().transferTo(new File(path+storePicNameOne2));
-		       } catch (IllegalStateException e) {
-		          e.printStackTrace();
-		       } catch (IOException e) {
-		          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
-		       }
-	      }else {
-	    	  //storePicNameOne2 = storeBoardAndBoardPic.getBoardPicNameTwo().getOriginalFilename();
-	      }
-		       if(!storeBoardAndBoardPic.getBoardPicNameThree().isEmpty()) {
-			    	  storePicNameOne3 = storeBoardAndBoardPic.getBoardPicNameThree().getOriginalFilename(); 
-			       try {
-			          new File(path).mkdirs();
-			          storeBoardAndBoardPic.getBoardPicNameThree().transferTo(new File(path+storePicNameOne3));
-			       } catch (IllegalStateException e) {
-			          e.printStackTrace();
-			       } catch (IOException e) {
-			          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
-			       }
-		       }else {
-		    	  // storePicNameOne3 = storeBoardAndBoardPic.getBoardPicNameThree().getOriginalFilename();
-		       }
-			       if(!storeBoardAndBoardPic.getBoardPicNameFour().isEmpty()) {
-				    	  storePicNameOne4 = storeBoardAndBoardPic.getBoardPicNameFour().getOriginalFilename(); 
-				       try {
-				          new File(path).mkdirs();
-				          storeBoardAndBoardPic.getBoardPicNameFour().transferTo(new File(path+storePicNameOne4));
-				       } catch (IllegalStateException e) {
-				          e.printStackTrace();
-				       } catch (IOException e) {
-				          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
-				       }
-				 }else{
-					// storePicNameOne4 = storeBoardAndBoardPic.getBoardPicNameFour().getOriginalFilename();
-				 }
-				       if(!storeBoardAndBoardPic.getBoardPicNameFive().isEmpty()) {
-					    	  storePicNameOne5 = storeBoardAndBoardPic.getBoardPicNameFive().getOriginalFilename(); 
-					       try {
-					          new File(path).mkdirs();
-					          storeBoardAndBoardPic.getBoardPicNameFive().transferTo(new File(path+storePicNameOne5));
-					       } catch (IllegalStateException e) {
-					          e.printStackTrace();
-					       } catch (IOException e) {
-					          e.printStackTrace(); // 아래 코드가 없으면 여기서 끝나버린다.
-					       }
-					 }else {
-						// storePicNameOne5 = storeBoardAndBoardPic.getBoardPicNameFive().getOriginalFilename(); 
-					 }
-	      System.out.println(storePicNameOne1 + "/storePicNameOne1");
-	      StoreBoardPic storeBoardPic = new StoreBoardPic();
-   		  storeBoardPic.setBoardNo(storeBoardAndBoardPic.getBoardNo());
-	      storeBoardPic.setBoardPicNameOne(storePicNameOne1);
-	      storeBoardPic.setBoardPicNameTwo(storePicNameOne2);
-	      storeBoardPic.setBoardPicNameThree(storePicNameOne3);
-	      storeBoardPic.setBoardPicNameFour(storePicNameOne4);
-	      storeBoardPic.setBoardPicNameFive(storePicNameOne5);
-	      storePicMapper.updateStoreBoardPic(storeBoardPic);
+ 		storeBoard.setBoardNo(storeBoardAndBoardPic.getBoardNo());
+ 		storeBoard.setBoardTitle(storeBoardAndBoardPic.getBoardTitle());
+ 		storeBoard.setBoardContent(storeBoardAndBoardPic.getBoardContent());
+ 		storeMapper.updateStoreBoard(storeBoardAndBoardPic);
+ 		
+ 		StoreBoardPic storeBoardPicc = new StoreBoardPic();
+ 		storeBoardPicc.setBoardNo(storeBoardAndBoardPic.getBoardNo());
+ 		storeBoardPicc.setBoardPicNameOne(boardPicNameOne);
+ 		storeBoardPicc.setBoardPicNameOne(boardPicNameTwo);
+ 		storeBoardPicc.setBoardPicNameOne(boardPicNameThree);
+ 		storeBoardPicc.setBoardPicNameOne(boardPicNameFour);
+ 		storeBoardPicc.setBoardPicNameOne(boardPicNameFive);
+ 		storePicMapper.updateStoreBoardPic(storeBoardPicc);
+ 		
+ 		if(!originStoreBoardNameOne.equals("")) {
+ 			File file = new File(path + boardPicNameOne);
+ 			try {
+ 				mf1.transferTo(file);
+ 			}catch(Exception e) {
+ 				e.printStackTrace();
+ 				throw new RuntimeException();
+ 			}
+ 		}
+ 		if(!originStoreBoardNameTwo.equals("")) {
+ 			File file = new File(path + boardPicNameTwo);
+ 			try {
+ 				mf1.transferTo(file);
+ 			}catch(Exception e) {
+ 				e.printStackTrace();
+ 				throw new RuntimeException();
+ 			}
+ 		}
+ 		if(!originStoreBoardNameThree.equals("")) {
+ 			File file = new File(path + boardPicNameThree);
+ 			try {
+ 				mf1.transferTo(file);
+ 			}catch(Exception e) {
+ 				e.printStackTrace();
+ 				throw new RuntimeException();
+ 			}
+ 		}
+ 		if(!originStoreBoardNameFour.equals("")) {
+ 			File file = new File(path + boardPicNameFour);
+ 			try {
+ 				mf1.transferTo(file);
+ 			}catch(Exception e) {
+ 				e.printStackTrace();
+ 				throw new RuntimeException();
+ 			}
+ 		}
+ 		if(!originStoreBoardNameFive.equals("")) {
+ 			File file = new File(path + boardPicNameFive
+ 					);
+ 			try {
+ 				mf1.transferTo(file);
+ 			}catch(Exception e) {
+ 				e.printStackTrace();
+ 				throw new RuntimeException();
+ 			}
+ 		}
+		return boardNo;   
+   }
+   
+   
+   public Map<String,Object> getUpdateStoreBoard(int boardNo){
+	   //리턴타입 map 생성
+	   HashMap<String, Object> map = new HashMap<String,Object>();
+	   //map에 담을 정보
+	   StoreBoardPic storeBoardPic = storePicMapper.selectStoreBoardPicByUpdate(boardNo);
+	   System.out.println(storeBoardPic+"<--getUPdate/storeBoardPic");
+	   StoreBoard storeBoard = storeMapper.selectStoreBoardInfoUpdate(boardNo);
+	   System.out.println(storeBoard +"<--getUpdate/storeBoard");
+	   map.put("storeBoardPic", storeBoardPic);
+	   map.put("storeBoard", storeBoard);
+	   System.out.println(map+"<--getUpdate/map");
+	   
+	   return map;
    }
    
    //홍보업체 게시물 삭제하기

@@ -105,6 +105,17 @@
 	AND ms.store_no = msb.store_no
   	WHERE msb.category_name = #{categoryName}
   </select>
+  <!-- 수정에 쓸 업체 상세보기 받기 -->
+  <select id="selectStoreBoardInfoUpdate" resultType="com.project.secondhand.vo.StoreBoard" parameterType="int">
+	  SELECT
+	  	board_no AS boardNo,
+	  	board_title AS boardTitle,
+	  	board_content AS boardContent,
+	  	board_date AS boardDate
+	  FROM market_store_board
+	  WHERE board_no =#{boardNo}
+  	
+  </select>
   <!-- 업체 추가하기 -->
   <insert id="insertStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard" useGeneratedKeys="true" keyColumn="board_no" keyProperty="boardNo">
 	INSERT INTO
@@ -171,7 +182,7 @@
 		WHERE store_email = #{storeEmail}
 		AND store_pw = PASSWORD(#{storePw})
 	</select>
-  <!-- 업체 수정하기 -->
+  <!-- 업체 게시글 수정하기 -->
   <update id="updateStoreBoard" parameterType="com.project.secondhand.vo.StoreBoard">
   	UPDATE market_store_board
   	SET
