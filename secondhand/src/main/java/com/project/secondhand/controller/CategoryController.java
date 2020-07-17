@@ -1,6 +1,7 @@
 package com.project.secondhand.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,16 +31,24 @@ public class CategoryController {
 	public int romoveCategory(@RequestParam(value = "categoryName") String categoryName) {
 		return categoryService.removeCategory(categoryName);
 	}
-
+	
+	/*
 	@GetMapping("/getCategoryListByType")
 	@ResponseBody
-	public List<Category> getCategoryList(@RequestParam(value="categoryType") String categoryType) {
-		return categoryService.getCategoryList(categoryType);
+	public Map<String, Object> getCategoryList(@RequestParam(value="categoryType") String categoryType, @RequestParam(value = "currentPage", defaultValue = "1") int currentPage) { 
+		return categoryService.getCategoryList(categoryType, currentPage);
 	}
+	*/
 	
 	@GetMapping("/categoryList")
-	public String categoryList(HttpSession session, Model model) {
-		model.addAttribute("categoryList", categoryService.getCategoryListAll());
+	public String categoryList(HttpSession session, Model model, @RequestParam(value= "categoryType", defaultValue = "") String categoryType, @RequestParam(value = "currentPage", defaultValue = "1") int currentPage) {
+		if(session.getAttribute("loginAdmin") == null) {
+			return "redirect:/";
+		}
+		Map<String, Object> map = categoryService.getCategoryListAll(categoryType, currentPage);
+		model.addAttribute("categoryList", map.get("categoryList"));
+		model.addAttribute("page", map.get("page"));
+		model.addAttribute("categoryType", categoryType);
 		return "categoryList";
 	}
 	

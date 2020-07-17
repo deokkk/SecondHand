@@ -28,6 +28,25 @@
 	width: 100%;
 	text-align: right;
 }
+
+#type-btn {
+	width: 100%;
+}
+
+.pagination {
+	margin-top: 15px;
+}
+
+.page-item.active .page-link {
+	color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+	
+.page-link {
+	color: black;
+}
+
 /* sidemenu 추가하면서 수정된 style */
 #footer {
 	left: 0px;
@@ -44,14 +63,17 @@
 </style>
 <script>
 	$(document).ready(function() {
-	//$(document).on("change", "input[name='categoryName']",function(){ 
+	//$(document).on("change", "input[name='categoryName']",function(){
+		/*
 		$('#categoryType').change(function() {
 			var categoryType = $(this).val();
-			console.log(categoryType + " <--categoryType")
+			var currentPage = $('#currentPage').val();
+			console.log(currentPage + " <--currentPage");
+			console.log(categoryType + " <--categoryType");
 			$.ajax({
 				url : '/getCategoryListByType',
 				type : 'GET',
-				data : {categoryType : categoryType},
+				data : {categoryType : categoryType, currentPage : currentPage},
 				success : function(data) {
 					$('#categoryTable').empty();
 					$.each(data, function(i) {
@@ -63,6 +85,11 @@
 				}
 			});
 		});
+		*/
+		$('#type-btn').click(function() {
+			var categoryType = $('#categoryType').val();
+			location.href = "/categoryList?categoryType="+categoryType;
+		})
 		
 		$('.deleteBtn').click(function() {
 			var result = confirm('정말 삭제하시겠습니까 ? 되돌릴수업어요 !');
@@ -152,13 +179,18 @@
 			<div th:class="col-sm-3"></div>
 			<div th:class="col-sm-6">
 				<h2 th:id="qna-h2" th:text="'카테고리 리스트'"></h2>
-				<div th:class="form-group">
-					<select th:class="form-control" th:id="categoryType">
-						<option value="" th:text="전체보기">
-						<option th:value="item" th:text="상품"></option>
-						<option th:value="board" th:text="업체홍보게시판"></option>
-						<option th:value="qna" th:text="자주묻는질문"></option>
-					</select>
+				<div th:class="'form-group row'">
+					<div th:class="col-10">
+						<select th:class="form-control" th:id="categoryType">
+							<option value="" th:text="전체보기">
+							<option th:value="item" th:text="상품" th:selected="${categoryType} eq 'item'"></option>
+							<option th:value="board" th:text="업체홍보게시판" th:selected="${categoryType} eq 'board'"></option>
+							<option th:value="qna" th:text="자주묻는질문" th:selected="${categoryType} eq 'qna'"></option>
+						</select>
+					</div>
+					<div th:class="col-2">
+						<button th:type="button" th:class="'btn btn-success'" th:id="type-btn" th:text="보기"></button>
+					</div>
 				</div>
 				<div>
 					<table th:class="table">
@@ -182,6 +214,17 @@
 					<div th:class="btnBox">
 						<button th:class="'btn btn-success'" th:type="button" th:text="입력" th:id="addCategory"></button>
 					</div>
+				</div>
+				<div>
+					<input th:type="hidden" th:id="currentPage" th:value="${page.currentPage}">
+					<ul class="pagination"  style="justify-content: center;">
+						<li class="page-item"><a th:href="${categoryType} == null ? @{/categoryList(currentPage=${page.currentPageGroup-page.pagePerGroup})} : @{/categoryList(currentPage=${page.currentPageGroup-page.pagePerGroup}, categoryType=${categoryType})}" th:if="${page.currentPageGroup}>1" class="page-link"><i class="fa fa-angle-left"></i></a></li>
+						<li th:if="${i}<${page.lastPage+1}" th:each="i : ${#numbers.sequence(page.currentPageGroup, page.currentPageGroup+page.pagePerGroup-1)}" th:class="${i}==${page.currentPage} ? 'page-item active' : 'page-item'">
+							<span th:if="${i}==${page.currentPage}" th:text="${i}" class="page-link"></span>
+							<a th:unless="${i}==${page.currentPage}" th:text=${i} th:href="${categoryType} == null ? @{/categoryList(currentPage=${i})} : @{/categoryList(currentPage=${i}, categoryType=${categoryType})}" class="page-link"></a>
+						</li>
+						<li class="page-item"><a th:href="${categoryType} == null ? @{/categoryList(currentPage=${page.currentPageGroup+page.pagePerGroup})} : @{/categoryList(currentPage=${page.currentPageGroup+page.pagePerGroup}, categoryType=${categoryType})}" th:if="${page.currentPageGroup<(page.lastPageGroup-1)*page.pagePerGroup+1}" class="page-link"><i class="fa fa-angle-right"></i></a></li>
+					</ul>
 				</div>
 			</div>
 			<div th:class="col-sm-3"></div>
