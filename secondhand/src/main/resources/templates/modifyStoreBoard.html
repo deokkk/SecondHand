@@ -5,9 +5,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<script   src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script   src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script   src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" media="all" href="css/itemList.css" />
 <script   src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
 <link rel="stylesheet" media="all" href="css/copyRight.css" />
@@ -39,12 +39,8 @@ color: #11111;
 // 확인 버튼을 클릭했을때 공란이면  모든칸은 초기화 된다.
 
 let helperInit = function(){
-   $('#memberNo').text("");
-   $('#itemState').text("");
-   $('#itemTitle').text("");
-   $('#categoryName').text("");
-   $('#itemPrice').text("");
-   $('#itemContent').text("");
+   $('#boardTitle').text("");
+   $('#boardContent').text("");
 };
 
 //document(body)가 준비되면 작동된다.
@@ -52,20 +48,16 @@ $(document).ready(function(){
    
 //<button>을 클릭하면 작동된다.
    $('#btn').click(function(){   
-   if($('#storeTitle').val()=="") {
+   if($('#boardTitle').val()=="") {
       helperInit();
       $('#titleHelper').text("제목을 입력하세요.");
       $('#boardTitle').focus();      
-   }else if ($('#categoryName').val()==""){
-      helperInit();
-      $('#categoryHelper').text("카테고리를 선택하세요.");
-      $('#categoryName').focus();
    }else if ($('#boardContent').val()==""){
       helperInit();
       $('#contentHelper').text("내용을 입력하세요");
       $('#boardContent').focus();
    }else {
-      $('#addStoreBoard').submit();
+      $('#modifyStoreBoard').submit();
    }
    
    });   
@@ -76,83 +68,48 @@ $(document).ready(function(){
    <div class="header">
       <div th:include="/inc/topHeader"></div>
    </div>
-   <div class="container-fluid">
-      <section id="content">
-         <form method="post" th:action="@{/modifyStoreBoard
-         (
-         nameOne = ${board.boardPicNameOne},
-         nameTwo = ${board.boardPicNameTwo},
-         nameThree = ${board.boardPicNameThree},
-         nameFour = ${board.boardPicNameFour}
-         )}"   enctype="multipart/form-data" id = "addStoreBoard">
-            <div class="row">
-               <div class="col-sm-2"></div>
-               <div class="col-sm-7">
-                  <h2>업체수정</h2>
-                  <table class="table">
-                     <tbody>
-                        <tr>
-                           <td>
-                              <label for="usr">제목:</label>
-                           </td>
-                           <td>
-                              <div class="form-group">
-                                 <!-- 추후 지성이형 조와 연결 -->
-                                 <input type="text" class="form-control"   id="" name="boardNo" th:value = "${boardNo}">
-                                 <input type="text" class="form-control"   id="boardTitle" name="boardTitle" th:value = "${board.boardTitle}">
-                                 <span id = "titleHelper"></span>
-                                 <input type="text" class="form-control"   id="" name="boardPicNameOne" th:value = "${board.boardPicNameOne}">
-                                 <input type="text" class="form-control"   id="" name="boardPicNameTwo" th:value = "${board.boardPicNameTwo}">
-                                 <input type="text" class="form-control"   id="" name="boardPicNameThree" th:value = "${board.boardPicNameThree}">
-                                 <input type="text" class="form-control"   id="" name="boardPicNameFour" th:value = "${board.boardPicNameFour}">
-                                 <input type="text" class="form-control"   id="" name="boardPicNameFive" th:value = "${board.boardPicNameFive}">
-                              </div>
-                           </td>
-                        </tr>                       
-                        <tr>
-                           <td>
-                              <label for="comment">업체 설명:</label>
-                           </td>
-                           <td>
-                              <div class="form-group">
-                                 <input class="form-control" type = "text" id="boardContent" name="boardContent" th:value = "${board.boardContent}"></textarea>
-                                 <span id = "contentHelper"></span>
-                              </div>
-                           </td>
-                        </tr>
-                     </tbody>
-                  </table>
-                  <div><button type="button" id = "btn" class="btn">등록</button></div>
-               </div>
-               <div class="col-sm-3">
-
-                  <br>
-                  <div>                  
-                     <input type="file" name="boardPicNameOne" class = "btn">
-                  </div>
-
-                  <br>
-                  <div>
-                     <input type="file" name="boardPicNameTwo" class = "btn">
-                  </div>
-                  <br>
-                  <div>
-                     <input type="file" name="boardPicNameThree"class = "btn">
-                  </div>
-                  <br>
-                  <div>
-                     <input type="file" name="boardPicNameFour"class = "btn">
-                  </div>
-                  <br>
-                  <div>
-                     <input type="file" name="boardPicNameFive"class = "btn">
-                  </div>
-               </div>
-               <div class="col-sm-1"></div>               
-            </div>            
-         </form>
-      </section>
-   </div>
+		<form method="post" id="modifyStoreBoard"th:action="@{/modifyStoreBoard}" enctype="multipart/form-data">
+			<h1>상품 수정</h1>
+			<table class="table">
+				<tr>
+					<th>제목</th>
+					<th>내용</th>
+					<th>사진1</th>
+					<th>사진2</th>
+					<th>사진3</th>
+					<th>사진4</th>
+					<th>사진5</th>
+				</tr>
+				<tr>
+					<td><input type="text" name="boardTitle" id="boardTitle" th:value="${board.boardTitle}"></td>
+					<td><input type="text" name="boardContent" id="boardContent" th:value="${board.boardContent}"></td>
+					<td>
+						<img th:src="@{'/upload/'+${boardPic.boardPicNameOne}}" width="300" height="150"></img><br>
+						<input type="file" name="boardPicNameOne" id="boardPicNameOne" th:value="${boardPic.boardPicNameOne}">
+					</td>
+					<td>
+						<img th:src="@{'/upload/'+${boardPic.boardPicNameTwo}}" width="300" height="150"></img><br>
+						<input type="file" name="boardPicNameTwo" id="boardPicNameTwo" th:value="${boardPic.boardPicNameTwo}">
+					</td>
+					<td>
+						<img th:src="@{'/upload/'+${boardPic.boardPicNameThree}}" width="300" height="150"></img><br>
+						<input type="file" name="boardPicNameThree" id="boardPicNameThree" th:value="${boardPic.boardPicNameThree}">
+					</td>
+					<td>
+						<img th:src="@{'/upload/'+${boardPic.boardPicNameFour}}" width="300" height="150"></img><br>
+						<input type="file" name="boardPicNameFour" id="boardPicNameFour" th:value="${boardPic.boardPicNameFour}">
+					</td>
+					<td>
+						<img th:src="@{'/upload/'+${boardPic.boardPicNameFive}}" width="300" height="150"></img><br>
+						<input type="file" name="boardPicNameFive" id="boardPicNameFive" th:value="${boardPic.boardPicNameFive}">
+					</td>
+				</tr>
+				<div>
+					<button type="submit" id="btn">수정</button>
+				</div>
+			</table>
+			<input type="hidden" name="boardNo" id="boardNo" th:value="${board.boardNo}">
+		</form>
    <div class="header">
       <div th:include="/inc/copyRight"></div>
    </div>

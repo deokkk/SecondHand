@@ -15,18 +15,20 @@
 	<!-- 업체게시글 수정시 업체게시글 선택 -->
 	<select id="selectStoreBoardPicByUpdate" parameterType="int" resultType="com.project.secondhand.vo.StoreBoardPic">
 	SELECT
-		board_pic_name_one =#{boardPicNameOne},
-		board_pic_name_two =#{boardPicNameTwo},
-		board_pic_name_three =#{boardPicNameThree},
-		board_pic_name_four =#{boardPicNameFour},
-		board_pic_name_five =#{boardPicNameFive}
+		board_no AS boardNo,
+		board_pic_name_one AS boardPicNameOne,
+		board_pic_name_two AS boardPicNameTwo,
+		board_pic_name_three AS boardPicNameThree,
+		board_pic_name_four AS boardPicNameFour,
+		board_pic_name_five AS boardPicNameFive
 	FROM market_store_board_pic
 	WHERE board_no =#{boardNo}
 	</select>
-	<!-- 업체 게시글 사진 삭제 -->
+	<!-- 업체 게시글 사진 수정 -->
 	<update id = "updateStoreBoardPic" parameterType = "com.project.secondhand.vo.StoreBoardPic">
 	UPDATE market_store_board_pic
 	SET	
+	board_no =#{boardNo},
 	board_pic_name_one = #{boardPicNameOne},
 	board_pic_name_two = #{boardPicNameTwo},
 	board_pic_name_three = #{boardPicNameThree},

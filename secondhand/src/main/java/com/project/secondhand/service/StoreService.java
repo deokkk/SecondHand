@@ -43,7 +43,7 @@ public class StoreService {
    private StorePicMapper storePicMapper;
    @Autowired 
    private BoardReportMapper boardReportMapper;
-   @Value("C:\\Users\\JJH\\Documents\\workspace-spring-tool-suite-4-4.6.1.RELEASE\\maven.1594187164632\\secondhand\\src\\main\\resources\\static\\upload\\")
+   @Value("D:\\maven.1594186776148\\secondhand\\src\\main\\resources\\static\\upload\\")
    private String path;
    //카테고리 기준으로 업체 리스트 가져오기
    public List<StoreList>selectStoreBoardListByCategory(String categoryName){
@@ -247,11 +247,17 @@ public class StoreService {
 	   	System.out.println(storeBoardAndBoardPic+"<--Service/modify/storeBoardAndBoardPic!!!!!!!");
  		int boardNo = storeBoardAndBoardPic.getBoardNo();
  		StoreBoardPic storeBoardPic = storePicMapper.selectStoreBoardPicByUpdate(boardNo);
+ 		System.out.println(storeBoardPic+"<--Service//storeBoardPic@@@@@@@@@");
  		String originStoreBoardNameOne = storeBoardPic.getBoardPicNameOne();
+ 		System.out.println(originStoreBoardNameOne+"<--One--------------------");
  		String originStoreBoardNameTwo = storeBoardPic.getBoardPicNameTwo();
+ 		System.out.println(originStoreBoardNameTwo+"<--two--------------------");
  		String originStoreBoardNameThree = storeBoardPic.getBoardPicNameThree();
+ 		System.out.println(originStoreBoardNameThree+"<--three--------------------");
  		String originStoreBoardNameFour = storeBoardPic.getBoardPicNameFour();
+ 		System.out.println(originStoreBoardNameFour+"<--four--------------------");
  		String originStoreBoardNameFive = storeBoardPic.getBoardPicNameFive();
+ 		System.out.println(originStoreBoardNameFive+"<--Five--------------------");
  		
  		//폼에서 넘어온 파일
  		MultipartFile mf1 = storeBoardAndBoardPic.getBoardPicNameOne();
@@ -259,6 +265,12 @@ public class StoreService {
  		MultipartFile mf3 = storeBoardAndBoardPic.getBoardPicNameThree();
  		MultipartFile mf4 = storeBoardAndBoardPic.getBoardPicNameFour();
  		MultipartFile mf5 = storeBoardAndBoardPic.getBoardPicNameFive();
+ 		System.out.println(mf1+"<mf111111111111111111111111111");
+ 		System.out.println(mf2+"<mf2222222222222222222222222222");
+ 		System.out.println(mf3+"<mf3333333333333");
+ 		System.out.println(mf4+"<mf44444444444444444");
+ 		System.out.println(mf5+"<mf55555555555555555555");
+ 		
  		
  		//품에서 넘어온 파일의 실제 이름 구하기
  		String boardPicNameOne1 = mf1.getOriginalFilename();
@@ -280,6 +292,7 @@ public class StoreService {
  			System.out.println(mf1.getOriginalFilename()+"<----boardPicNameOne1!!!!!");
  			//이미지 삭제
  			File originFile = new File(path+originStoreBoardNameOne);
+ 			//초기 설정 이미지 삭제 x
  			if(originFile.exists()&& ! originStoreBoardNameOne.equals("default.jpg")) {
  				originFile.delete();
  			}
@@ -294,22 +307,31 @@ public class StoreService {
  			String pic1Name = uuid.toString().substring(0,6);
  			System.out.println(pic1Name+"<--Service/pic1Name");
  			boardPicNameOne = pic1Name+"1"+extension;
+ 			System.out.println(boardPicNameOne+"<--Service//boardPicNameOne????");
  			}else {
  			boardPicNameOne = originStoreBoardNameOne;
+ 			System.out.println(boardPicNameOne+"<-----------boardPicNameOne!!!!!!!!!!!");
  		}
  		//2번 사진
- 		if(!mf1.isEmpty()) {
+ 		if(!mf2.isEmpty()) {
  			//이미지 삭제
  			File originFile = new File(path+originStoreBoardNameTwo);
+ 			System.out.println(originStoreBoardNameTwo+"<--originStoreBoardNameTwo!!!!!!!!!!!!!");
  			if(originFile.exists()&& ! originStoreBoardNameTwo.equals("default.jpg")) {
  				originFile.delete();
  			}
+ 			System.out.println(boardPicNameOne2+"<--boardPicNameOne2!!!!!!!!!!!!!!!");
  			int lastDot = boardPicNameOne2.lastIndexOf(".");
+ 			System.out.println(lastDot+"<--Service.lastDot");
  			String extension = boardPicNameOne2.substring(lastDot);
+ 			System.out.println(extension+"<--Service.extension");
  			//랜덤 이름 부여
  			UUID uuid = UUID.randomUUID();
+ 			System.out.println(uuid+"<-----uuid!!!!!!!!!!!!!!!!!!!!");
  			String pic2Name = uuid.toString().substring(0,6);
+ 			System.out.println(pic2Name+"<------------pic2Name!!!!!!!!!!!!!");
  			boardPicNameTwo = pic2Name+"2"+extension;
+ 			System.out.println(boardPicNameTwo+"<--boardPIcNameTwo!!!!!!!!!!!!!!!!!!");
 			}else {
 			boardPicNameTwo = originStoreBoardNameTwo;
  		}
@@ -321,7 +343,7 @@ public class StoreService {
  				originFile.delete();
  			}
  			int lastDot = boardPicNameOne3.lastIndexOf(".");
- 			String extension = boardPicNameOne2.substring(lastDot);
+ 			String extension = boardPicNameOne3.substring(lastDot);
  			//랜덤 이름 부여
  			UUID uuid = UUID.randomUUID();
  			String pic3Name = uuid.toString().substring(0,6);
@@ -330,7 +352,7 @@ public class StoreService {
 			boardPicNameThree = originStoreBoardNameThree;
  		}
  		//4번 사진
- 		if(!mf3.isEmpty()) {
+ 		if(!mf4.isEmpty()) {
  			//이미지 삭제
  			File originFile = new File(path+originStoreBoardNameFour);
  			if(originFile.exists()&& ! originStoreBoardNameFour.equals("default.jpg")) {
@@ -371,13 +393,18 @@ public class StoreService {
  		StoreBoardPic storeBoardPicc = new StoreBoardPic();
  		storeBoardPicc.setBoardNo(storeBoardAndBoardPic.getBoardNo());
  		storeBoardPicc.setBoardPicNameOne(boardPicNameOne);
- 		storeBoardPicc.setBoardPicNameOne(boardPicNameTwo);
- 		storeBoardPicc.setBoardPicNameOne(boardPicNameThree);
- 		storeBoardPicc.setBoardPicNameOne(boardPicNameFour);
- 		storeBoardPicc.setBoardPicNameOne(boardPicNameFive);
+ 		System.out.println(storeBoardPicc+"<------storeBoardPicc!!!!!!!!!!!!!!");
+ 		storeBoardPicc.setBoardPicNameTwo(boardPicNameTwo);
+ 		storeBoardPicc.setBoardPicNameThree(boardPicNameThree);
+ 		storeBoardPicc.setBoardPicNameFour(boardPicNameFour);
+ 		storeBoardPicc.setBoardPicNameFive(boardPicNameFive);
  		storePicMapper.updateStoreBoardPic(storeBoardPicc);
- 		
+ 		System.out.println(storePicMapper+"<-----------storePicMapper!!!!");
+ 		//사진저장
  		if(!originStoreBoardNameOne.equals("")) {
+ 			System.out.println(originStoreBoardNameOne+"<---originStoreBoardNameOne@@@@@@@");
+ 			//파일 저장
+ 			//경로 저장
  			File file = new File(path + boardPicNameOne);
  			try {
  				mf1.transferTo(file);
@@ -387,9 +414,10 @@ public class StoreService {
  			}
  		}
  		if(!originStoreBoardNameTwo.equals("")) {
+ 			System.out.println(originStoreBoardNameTwo+"<--Service//originStoreBoardNameTwo");
  			File file = new File(path + boardPicNameTwo);
  			try {
- 				mf1.transferTo(file);
+ 				mf2.transferTo(file);
  			}catch(Exception e) {
  				e.printStackTrace();
  				throw new RuntimeException();
@@ -398,7 +426,7 @@ public class StoreService {
  		if(!originStoreBoardNameThree.equals("")) {
  			File file = new File(path + boardPicNameThree);
  			try {
- 				mf1.transferTo(file);
+ 				mf3.transferTo(file);
  			}catch(Exception e) {
  				e.printStackTrace();
  				throw new RuntimeException();
@@ -407,7 +435,7 @@ public class StoreService {
  		if(!originStoreBoardNameFour.equals("")) {
  			File file = new File(path + boardPicNameFour);
  			try {
- 				mf1.transferTo(file);
+ 				mf4.transferTo(file);
  			}catch(Exception e) {
  				e.printStackTrace();
  				throw new RuntimeException();
@@ -417,7 +445,7 @@ public class StoreService {
  			File file = new File(path + boardPicNameFive
  					);
  			try {
- 				mf1.transferTo(file);
+ 				mf5.transferTo(file);
  			}catch(Exception e) {
  				e.printStackTrace();
  				throw new RuntimeException();

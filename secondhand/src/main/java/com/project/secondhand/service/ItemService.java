@@ -216,7 +216,7 @@ public class ItemService {
 			File file = new File(path + itemPicNameTwo);
 			// mf의 파일을 옮겨준다
 			try {
-				mf1.transferTo(file);
+				mf2.transferTo(file);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -231,7 +231,7 @@ public class ItemService {
 			File file = new File(path + itemPicNameThree);
 			// mf의 파일을 옮겨준다
 			try {
-				mf1.transferTo(file);
+				mf3.transferTo(file);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -246,7 +246,7 @@ public class ItemService {
 			File file = new File(path + itemPicNameFour);
 			// mf의 파일을 옮겨준다
 			try {
-				mf1.transferTo(file);
+				mf4.transferTo(file);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -261,7 +261,7 @@ public class ItemService {
 			File file = new File(path + itemPicNameFive);
 			// mf의 파일을 옮겨준다
 			try {
-				mf1.transferTo(file);
+				mf5.transferTo(file);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

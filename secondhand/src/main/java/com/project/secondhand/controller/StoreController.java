@@ -255,10 +255,14 @@ public class StoreController {
 	}
 	@PostMapping("/modifyStoreBoard")
 	public String modifyStoreBoard(StoreBoardAndBoardPic storeBoardAndBoardPic) {
+		System.out.println(storeBoardAndBoardPic+"<--CTRL.storeBoardAndBoardPic#######");
 		int boardNo =storeBoardAndBoardPic.getBoardNo();
+		System.out.println(boardNo+"<-----CTRL.boardNo!!!!!!!!!");
 		storeBoardAndBoardPic.setBoardNo(boardNo);
+		System.out.println(storeBoardAndBoardPic+"<-------CTRL.storeBoardAndBoardPic%%%%%%%%%");
 		storeService.updateStoreBoard(storeBoardAndBoardPic);
 		storeService.getUpdateStoreBoard(boardNo);
+		System.out.println(storeService+"<--storeService^^^^^^^^^^^");
 		return "redirect:/modifyStoreBoard";
 	}
 	
