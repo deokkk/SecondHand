@@ -20,6 +20,7 @@ import com.project.secondhand.mapper.BoardReportMapper;
 import com.project.secondhand.mapper.StoreMapper;
 import com.project.secondhand.mapper.StorePicMapper;
 import com.project.secondhand.vo.BoardReport;
+import com.project.secondhand.vo.Page;
 //import com.project.secondhand.mapper.StoreBoardPicMapper;
 import com.project.secondhand.vo.Store;
 import com.project.secondhand.vo.StoreAndReportCnt;
@@ -43,8 +44,11 @@ public class StoreService {
    private StorePicMapper storePicMapper;
    @Autowired 
    private BoardReportMapper boardReportMapper;
-   @Value("D:\\maven.1594186776148\\secondhand\\src\\main\\resources\\static\\upload\\")
+   //@Value("D:\\maven.1594186776148\\secondhand\\src\\main\\resources\\static\\upload\\")
+   @Value("D:\\second\\git\\SecondHand\\secondhand\\src\\main\\resources\\static\\upload\\")
    private String path;
+	private int rowPerPage = 10;
+	private int pagePerGroup = 5;
    //카테고리 기준으로 업체 리스트 가져오기
    public List<StoreList>selectStoreBoardListByCategory(String categoryName){
 	   return storeMapper.selectStoreBoardListByCategory(categoryName);
@@ -493,9 +497,7 @@ public class StoreService {
       String extension = originName.substring(lastDot);
       
       String storePicName = storePicForm.getStroreNo()+extension;
-      
-      String path = "C:\\spring eclipse\\spring work_space\\maven.1593564314857\\secondhand\\src\\main\\resources\\static\\upload\\";
-      
+      System.out.println(storePicName + " <---storePicName");
       File file = new File(path+storePicName);
       try {
          mf.transferTo(file);   //예외처리가 꼭 필요한 코드
@@ -506,7 +508,8 @@ public class StoreService {
       String sizename = Integer.toString((int) file.length());
       StorePic storePic = new StorePic();
       storePic.setStoreNo(storePicForm.getStroreNo());
-      storePic.setStorePicNameOne(extension);
+      //storePic.setStorePicNameOne(extension);
+      storePic.setStorePicNameOne(storePicName);
       storePic.setStorePicNameTwo(extension);
       storePic.setStorePicNameThree(extension);
       System.out.print(storePic.toString());
@@ -560,12 +563,29 @@ public class StoreService {
 }
 	
 	// 업체 리스트
-	public List<StoreAndReportCnt> getStoreList() {
-		List<StoreAndReportCnt> list = storeMapper.selectStoreList();
+	public Map<String, Object> getStoreList(int currentPage) {
+		Page page = new Page();
+		page.setCurrentPage(currentPage);
+		page.setRowPerPage(rowPerPage);
+		int beginRow = (currentPage - 1) * rowPerPage;
+		page.setBeginRow(beginRow);
+		int totalRow = storeMapper.selectNoticeTotalRow();
+		page.setTotalRow(totalRow);
+		int lastPage = totalRow%rowPerPage!=0 ? totalRow/rowPerPage+1 : totalRow/rowPerPage;
+		page.setLastPage(lastPage);
+		int currentPageGroup = (currentPage-1)%pagePerGroup==0 ? currentPage : (currentPage-1)/pagePerGroup*pagePerGroup+1;
+		page.setCurrentPageGroup(currentPageGroup);
+		int lastPageGroup = lastPage%pagePerGroup!=0 ? lastPage/pagePerGroup+1 : lastPage/pagePerGroup;
+		page.setLastPageGroup(lastPageGroup);
+		page.setPagePerGroup(pagePerGroup);
+		List<StoreAndReportCnt> list = storeMapper.selectStoreList(page);
 		for(StoreAndReportCnt store : list) {
 			store.setStoreReportCnt(boardReportMapper.selectStoreReportCnt(store.getStoreNo()));
 		}
-		return list;
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("page", page);
+		return map;
 	}
 	
 	// 관리자 업체정보 상세보기

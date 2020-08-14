@@ -1,0 +1,50 @@
+@charset "UTF-8";
+#bottom-box {
+	background-color: #495057;
+	margin: 0 auto;
+	padding: 15px 0 0 0;
+	text-align: center;
+	color: #dee2e6;
+	font-size: 15px;
+	line-height: 1.6;
+	z-index: 100;
+	letter-spacing: -0.6px;
+}
+
+.bot-list {
+	list-style-type: none;
+	margin: 24px 0;
+}
+
+.list-item {
+	display: inline-block;
+}
+
+.list-item:after {
+	content: '|';
+	margin: 0 16px;
+	color: #868e96;
+	font-weight: normal;
+}
+
+.list-item:last-child {
+	vertical-align: top;
+	text-align: left;
+}
+
+.list-item:last-child:after {
+  content: none;
+}
+
+#team {
+  font-weight: 200;
+}
+
+#copyright {
+  color: #868e96;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: -0.6px;
+  margin: 8px 0;
+}

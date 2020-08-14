@@ -118,7 +118,7 @@ public class MemberController {
 			return "loginMember";
 		}else { //로그인 성공
 			session.setAttribute("loginMember",loginMember);
-			session.setAttribute("levelMember", "levelMember");
+			session.setAttribute("level", "member");
 			return "redirect:/";
 		}
 	}
@@ -318,11 +318,13 @@ public class MemberController {
 		
 		// 관리자 회원관리 리스트
 		@GetMapping("/memberList")
-		public String getMemberList(HttpSession session, Model model) {
+		public String getMemberList(HttpSession session, Model model, @RequestParam(value = "currentPage", defaultValue = "1") int currentPage) {
 			if(session.getAttribute("loginAdmin") == null) {
 				return "redirect:/";
 			}
-			model.addAttribute("memberList", memberService.getMemberList());
+			Map<String, Object> map = memberService.getMemberList(currentPage);
+			model.addAttribute("memberList", map.get("list"));
+			model.addAttribute("page", map.get("page"));
 			return "memberList";
 		}
 		

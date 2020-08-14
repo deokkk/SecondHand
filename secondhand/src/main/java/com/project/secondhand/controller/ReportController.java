@@ -81,7 +81,6 @@ public class ReportController {
 		if(session.getAttribute("loginAdmin") == null) {
 			return "redirect:/";
 		}
-		System.out.println(type.equals("board") + ", " + no);
 		if(type.equals("item")) {
 			model.addAttribute("itemReport", reportService.getItemReportOne(no));
 			System.out.println(reportService.getItemReportOne(no).toString() + " <---itemReport");

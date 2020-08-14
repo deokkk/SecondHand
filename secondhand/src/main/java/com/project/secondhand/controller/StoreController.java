@@ -71,7 +71,7 @@ public class StoreController {
 			return "loginStore";
 		}else { //로그인 성공
 			session.setAttribute("loginStore",loginStore);
-			session.setAttribute("levelStore","levelStore");
+			session.setAttribute("level","store");
 			return "redirect:/";
 		} 
 	}
@@ -329,11 +329,13 @@ public class StoreController {
 		
 		// 업체 리스트
 		@GetMapping("/storeList")
-		public String getStoreList(HttpSession session, Model model) {
+		public String getStoreList(HttpSession session, Model model, @RequestParam(value = "currentPage", defaultValue = "1") int currentPage) {
 			if(session.getAttribute("loginAdmin") == null) {
 				return "redirect:/";
 			}
-			model.addAttribute("storeList", storeService.getStoreList());
+			Map<String, Object> map = storeService.getStoreList(currentPage);
+			model.addAttribute("storeList", map.get("list"));
+			model.addAttribute("page", map.get("page"));
 			return "storeList";
 		}
 		

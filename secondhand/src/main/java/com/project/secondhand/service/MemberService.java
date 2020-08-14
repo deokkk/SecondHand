@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import com.project.secondhand.vo.MemberAndReportCnt;
 import com.project.secondhand.vo.MemberInfo;
 import com.project.secondhand.vo.MemberPic;
 import com.project.secondhand.vo.MemberPicForm;
+import com.project.secondhand.vo.Page;
 import com.project.secondhand.vo.Temper;
 
 @Service
@@ -36,7 +38,11 @@ public class MemberService {
 	private JavaMailSender javaMailSender;
 	@Autowired
 	private ItemReportMapper itemReportMapper;
-
+	private int rowPerPage = 10;
+	private int pagePerGroup = 5;
+	//@Value("D:\\maven.1594186776148\\secondhand\\src\\main\\resources\\static\\upload\\")
+	@Value("D:\\second\\git\\SecondHand\\secondhand\\src\\main\\resources\\static\\upload\\")
+	private String path;
 	// 회원가입
 	public int addMember(Member member) {
 		return memberMapper.addMember(member);
@@ -74,8 +80,6 @@ public class MemberService {
 
 		String memberPicName = memberPicForm.getMemberNo() + extension;
 
-		String path = "D:\\maven.1594716682238\\secondhand\\src\\main\\resources\\static\\upload\\";
-
 		File file = new File(path + memberPicName);
 		try {
 			mf.transferTo(file); // 예외처리가 꼭 필요한 코드
@@ -107,7 +111,7 @@ public class MemberService {
 	public void removeMember(MemberInfo memberInfo) { //멤버 이미지 파일 삭제 String
 		
 		if(memberMapper.removeMemberAddr(memberInfo)==1) {
-			if(memberMapper.removeMemberPic(memberInfo)==1)memberMapper.removeMember(memberInfo);
+			if(memberMapper.removeMemberPic(memberInfo)==1) memberMapper.removeMember(memberInfo);
 		}
 		// return memberMapper.addMember(member);
 	 
@@ -156,7 +160,7 @@ public class MemberService {
 			
 			if(memberMapper.modifyMember(memberInfo) == 1) {
 				
-				String path = "C:\\spring eclipse\\spring work_space\\maven.1593564314857\\secondhand\\src\\main\\resources\\static\\upload\\";
+				
 				
 				
 				
@@ -185,22 +189,39 @@ public class MemberService {
 	}
 	
 	// 회원 리스트
-	public List<MemberAndReportCnt> getMemberList() {
-		List<MemberAndReportCnt> list = memberMapper.selectMemberList();
+	public Map<String, Object> getMemberList(int currentPage) {
+		Page page = new Page();
+		page.setCurrentPage(currentPage);
+		page.setRowPerPage(rowPerPage);
+		int beginRow = (currentPage - 1) * rowPerPage;
+		page.setBeginRow(beginRow);
+		int totalRow = memberMapper.selectNoticeTotalRow();
+		page.setTotalRow(totalRow);
+		int lastPage = totalRow%rowPerPage!=0 ? totalRow/rowPerPage+1 : totalRow/rowPerPage;
+		page.setLastPage(lastPage);
+		int currentPageGroup = (currentPage-1)%pagePerGroup==0 ? currentPage : (currentPage-1)/pagePerGroup*pagePerGroup+1;
+		page.setCurrentPageGroup(currentPageGroup);
+		int lastPageGroup = lastPage%pagePerGroup!=0 ? lastPage/pagePerGroup+1 : lastPage/pagePerGroup;
+		page.setLastPageGroup(lastPageGroup);
+		page.setPagePerGroup(pagePerGroup);
+		List<MemberAndReportCnt> list = memberMapper.selectMemberList(page);
 		for(MemberAndReportCnt arc : list) {
 			arc.setMemberReportCnt(itemReportMapper.selectMemberReportCnt(arc.getMemberNo()));
 		}
-		return list;
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("page", page);
+		return map;
 	}
 	
 	// 관리자 회원정보 상세보기
 	public Map<String, Object> getMemberInfoByAdmin(int memberNo) {
-		Map<String, Object> map = new HashMap();
+		Map<String, Object> map = new HashMap<>();
 		map.put("memberBasicInfo", memberMapper.selectMemberOneByAdmin(memberNo));
 		System.out.println(memberMapper.selectMemberOneByAdmin(memberNo).toString() + " <--memberService");
 		List<ItemList> itemList = memberMapper.selectItemListByMemberNo(memberNo);
 		map.put("itemList", itemList);
-		List<ItemReport> itemReportList = new ArrayList();
+		List<ItemReport> itemReportList = new ArrayList<ItemReport>();
 		for(ItemList item : itemList) {
 			System.out.println(item.toString());
 			List<ItemReport> temp = itemReportMapper.selectItemReportListByItem(item.getItemNo());

@@ -1,117 +1,125 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Bootstrap Example</title>
+<title>addStore</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" media="all" href="css/itemList.css" />
 <script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
-<link rel="stylesheet" media="all" href="css/copyRight.css" />
-</head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- sidemenu style, javascript 파일 -->
+<link rel="stylesheet" href="css/menu.css">
+<script src="js/sidemenu.js"></script>
 <script>
-// 확인 버튼을 클릭했을때 공란이면  모든칸은 초기화 된다.
-
-let helperInit = function(){
-	$('#nameHelper').text("");
-	$('#pwHelper').text("");
-	$('#phoneHelper').text("");
-	$('#emailhelper').text("");
-	$('#addrHelper').text("");
-};
-
-//document(body)가 준비되면 작동된다.
-$(document).ready(function(){
+	// 확인 버튼을 클릭했을때 공란이면  모든칸은 초기화 된다.
+	let helperInit = function(){
+		$('#nameHelper').text("");
+		$('#pwHelper').text("");
+		$('#phoneHelper').text("");
+		$('#emailhelper').text("");
+		$('#addrHelper').text("");
+	};
 	
-//<button>을 클릭하면 작동된다.
-	$('#btn').click(function(){	
-	if($('#storeName').val().length ===0) {
-		helperInit();
-		$('#nameHelper').text("회사명을 입력하세요.");
-		$('#storeName').focus();	
-	}else if($('#storePw').val().length < 4){
-		helperInit();
-		$('#pwHelper').text("4글자 이상 입력하세요");
-		$('#storePw').focus();
-	}else if($('#storePw').val() !=$('#storePw2').val()){
-		helperInit();
-		$('#pwHelper').text("비밀번호가 다릅니다.");
-		$('#storePw').focus();
-	}else if($('#storeAddr').val().length < 4){
-		helperInit();
-		$('#addrHelper').text("4글자 이상 입력하세요");
-		$('#storeAddr').focus();
-	}else if($('#storePhone').val().length < 4){
-		helperInit();
-		$('#phoneHelper').text("4글자 이상 입력하세요");
-		$('#storePhone').focus();
-	}else if($('#storeEmail').val().length < 4){
-		helperInit();
-		$('#emailHelper').text("4글자 이상 입력하세요");
-		$('#storeEmail').focus();
-	}else{
-		$('#addStoreForm').submit();
-	}
-	$('#pwBtn').click(function(){
-		if($('#storePw').val() != $('#storePw2').val()){
+	//document(body)가 준비되면 작동된다.
+	$(document).ready(function(){
+		
+	//<button>을 클릭하면 작동된다.
+		$('#btn').click(function(){	
+		if($('#storeName').val().length ===0) {
 			helperInit();
-			$('#pwHelper').text("비밀번호가 다릅니다.")
-			$('#storePw2').focus();
+			$('#nameHelper').text("회사명을 입력하세요.");
+			$('#storeName').focus();	
+		}else if($('#storePw').val().length < 4){
+			helperInit();
+			$('#pwHelper').text("4글자 이상 입력하세요");
+			$('#storePw').focus();
+		}else if($('#storePw').val() !=$('#storePw2').val()){
+			helperInit();
+			$('#pwHelper').text("비밀번호가 다릅니다.");
+			$('#storePw').focus();
+		}else if($('#storeAddr').val().length < 4){
+			helperInit();
+			$('#addrHelper').text("4글자 이상 입력하세요");
+			$('#storeAddr').focus();
+		}else if($('#storePhone').val().length < 4){
+			helperInit();
+			$('#phoneHelper').text("4글자 이상 입력하세요");
+			$('#storePhone').focus();
+		}else if($('#storeEmail').val().length < 4){
+			helperInit();
+			$('#emailHelper').text("4글자 이상 입력하세요");
+			$('#storeEmail').focus();
 		}else{
-			$('#pwHelper').text("비밀번호가 일치합니다.")
+			$('#addStoreForm').submit();
 		}
-	});
-});
-	var confirm = '';
-	$('#emailCh').click(function(){
-		var storeEmailSend = $('#storeEmail').val();
-		$.ajax({
-			url: '/storeEmailSend',
-			type: 'POST',
-			data: {storeEmailSend : storeEmailSend},
-			success: function(data) {
-				alert('전송완료');
-				confirm = data;
+		$('#pwBtn').click(function(){
+			if($('#storePw').val() != $('#storePw2').val()){
+				helperInit();
+				$('#pwHelper').text("비밀번호가 다릅니다.")
+				$('#storePw2').focus();
+			}else{
+				$('#pwHelper').text("비밀번호가 일치합니다.")
 			}
 		});
 	});
-	$('#emailSa').click(function(){
-		var storeEmailSame = $('#storeEmailSame').val();
-		if(storeEmailSame == confirm) {
-			alert('일치!');
-		} else {
-			alert('불일치!');
-		}
+		var confirm = '';
+		$('#emailCh').click(function(){
+			var storeEmailSend = $('#storeEmail').val();
+			$.ajax({
+				url: '/storeEmailSend',
+				type: 'POST',
+				data: {storeEmailSend : storeEmailSend},
+				success: function(data) {
+					alert('전송완료');
+					confirm = data;
+				}
+			});
+		});
+		$('#emailSa').click(function(){
+			var storeEmailSame = $('#storeEmailSame').val();
+			if(storeEmailSame == confirm) {
+				alert('일치!');
+			} else {
+				alert('불일치!');
+			}
+		});
+		
 	});
-	
-});
-
 </script>
-<body class="hoian-kr">
-	<div class="header">
-		<div th:include="/inc/topHeader"></div>
-	</div>
+<style>
+.addStoreBtn-box {
+	text-align: right;
+}
+
+#bottom-box {
+	position: absolute;
+    bottom: 0;
+}
+</style>
+</head>
+<body>
+	<!-- sidemenu include -->
+	<div th:include="/inc/menu::sidemenu"></div>
+	<!-- topmenu include -->
+	<div th:include="/inc/menu::topmenu"></div>
 	<div class="container-fluid">
 		<section id="content">
 			<form method="post" th:action="@{/addStore}" enctype="multipart/form-data" id = "addStoreForm">
 				<div class="row">
-					<div class="col-sm-2"></div>
-					<div class="col-sm-7">
-						<h2>회원가입</h2>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-6">
+						<h2 th:text="회원가입"></h2>
 						<table class="table">
 							<tbody>
 								<tr>
 									<td>
 										<label for="usr">회사명:</label>
+									</td>
 									<td>
 										<input type="text" class="form-control"	id="storeName" name="storeName" th:placeholder="회사명을입력하세요">
 										<span id = "nameHelper"></span>
-									</td>
-									<td>
 									</td>
 								</tr>
 								<tr>
@@ -151,7 +159,7 @@ $(document).ready(function(){
 									</td>
 									<td>
 										<input type="text" class="form-control" id="storeEmail" name="storeEmail"th:placeholder="email을입력하세요">
-										<button type="button" id="emailCh">인증번호 전송</button>
+										<div th:class="addStoreBtn-box"><button type="button" id="emailCh" th:class="'btn btn-success'">인증번호 전송</button></div>
 										<span id = "emailHelper"></span>
 									</td>	
 								</tr>
@@ -161,20 +169,20 @@ $(document).ready(function(){
 									</td>
 									<td>
 										<input type="text" class="form-control" id="storeEmailSame" name="storeEmailSame"th:placeholder="인증번호를입력하세요">
-										<button type="button" id="emailSa">인증번호 확인</button><span th:text="${msg}"></span>
+										<div th:class="addStoreBtn-box"><button type="button" id="emailSa" th:class="'btn btn-success'">인증번호 확인</button><span th:text="${msg}"></span></div>
 									</td>
 								</tr>
 							</tbody>
 						</table>
-						<div><button type="button" id = "btn" class="btn btn-success">회원가입</button></div>
+						<hr>
+						<div th:class="addStoreBtn-box"><button type="button" id = "btn" class="btn btn-success">회원가입</button></div>
 					</div>
-					<div class="col-sm-1"></div>					
+					<div class="col-sm-3"></div>					
 				</div>				
 			</form>
 		</section>
 	</div>
-	<div class="header">
-		<div th:include="/inc/copyRight"></div>
-	</div>
+	<!-- bottomenu include -->
+	<div th:include="/inc/menu::bottommenu"></div>
 </body>
 </html>

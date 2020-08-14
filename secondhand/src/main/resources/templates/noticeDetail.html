@@ -7,60 +7,66 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" media="all" href="css/itemList.css" />
 <script src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
-<link rel="stylesheet" media="all" href="css/copyRight.css" />
+<!-- sidemenu style, javascript 파일 -->
+<link rel="stylesheet" href="css/menu.css">
+<script src="js/sidemenu.js"></script>
 <script>
 	$(document).ready(function() {
 		$('#noticeBtn').click(function() {
 			var result = confirm('정말 삭제하시겠습니까 ? 되돌릴수업어요 !');
-			
-			if(result){
+			if (result) {
 				location.replace('noticeList');
-			}else{
+			} else {
 				return false;
 			}
-		});	
-	}); 
-	
+		});
+	});
 </script>
 <style>
 #noticeDetailBox {
 	text-align: right;
 }
-#noticeDetail{
+
+#noticeDetail {
 	height: 430px;
+}
+
+#bottom-box {
+	position: absolute;
+    bottom: 0;
 }
 </style>
 </head>
 <body>
-	<div th:class="header">
-		<div th:include="/inc/topHeader"></div>
-	</div>
+	<!-- sidemenu include -->
+	<div th:include="/inc/menu::sidemenu"></div>
+	<!-- topmenu include -->
+	<div th:include="/inc/menu::topmenu"></div>
 	<div th:class="container-fluid">
 		<section th:id="content">
 			<div th:class="row">
 				<div th:class="col-sm-3"></div>
 				<div th:class="col-sm-6">
-	<h2 th:text="'공지사항 상세보기'"></h2>
-	<div th:class="form-group">
-	 	<div th:class="form-control" th:text="'번호 :'+${notice.noticeNo}"></div>
-	 	<div th:class="form-control" th:text="'제목 :'+${notice.noticeTitle}"></div>
-	 	<div th:class="form-control" th:text="'날짜 :'+${notice.noticeDate}"></div>
-	 	<div th:id="noticeDetail" th:class="form-control" th:text="'내용 :'+${notice.noticeContent}"></div>
+					<h2 th:text="'공지사항 상세보기'"></h2>
+					<div th:class="form-group">
+						<div th:class="form-control" th:text="'번호 :'+${notice.noticeNo}"></div>
+						<div th:class="form-control"
+							th:text="'제목 :'+${notice.noticeTitle}"></div>
+						<div th:class="form-control" th:text="'날짜 :'+${notice.noticeDate}"></div>
+						<div th:id="noticeDetail" th:class="form-control" th:text="'내용 :'+${notice.noticeContent}"></div>
+					</div>
+					<div th:id="noticeDetailBox" th:class="form-group">
+						<a th:class="'btn btn-success'" th:href="@{/modifyNotice(noticeNo=${notice.noticeNo})}" th:text="수정" th:if="${session.level} == 'admin'"></a>
+						<a th:class="'btn btn-success'" th:href="@{/removeNotice(noticeNo=${notice.noticeNo})}" th:text="삭제" th:id="noticeBtn" th:if="${session.level} == 'admin'"></a>
+						<a th:class="'btn btn-success'" th:href="@{/noticeList}" th:text="목록"></a>
+					</div>
+					<div th:class="col-sm-3"></div>
+				</div>
+			</div>
+		</section>
 	</div>
-	<div th:id="noticeDetailBox" th:class="form-group">
-		<a th:class="'btn btn-success'" th:href="@{/modifyNotice(noticeNo=${notice.noticeNo})}" th:text="수정"></a>
-		<a th:class="'btn btn-success'" th:href="@{/removeNotice(noticeNo=${notice.noticeNo})}" th:text="삭제" th:id="noticeBtn"></a>
-		<a th:class="'btn btn-success'" th:href="@{/noticeList}" th:text="목록"></a>
-	</div>
-	<div th:class="col-sm-3"></div>
-	</div>
-	</div>
-	</section>
-		<div th:class="header">
-			<div th:include="/inc/copyRight"></div>
-		</div>
-		</div>
+	<!-- bottomenu include -->
+	<div th:include="/inc/menu::bottommenu"></div>
 </body>
 </html>

@@ -161,14 +161,10 @@
   	INSERT INTO 
   		market_store_pic(
   			store_no,
-  			store_pic_name,
-  			store_pic_size,
-  			store_pic_ext
+  			store_pic_name_one
   		)VALUES(
   			#{storeNo},
-  			#{storePicName},
-  			#{storePicSize},
-  			#{storePicExt}
+  			#{storePicNameOne}
   		)
   		
   </insert>
@@ -207,9 +203,7 @@
   		ms.store_pw AS storePw,
   		ms.store_phone AS storePhone,
   		ms.store_date AS storeDate,
-  		msp.store_pic_name_one AS storePicNameOne,
-  		msp.store_pic_name_two AS storePicNameTwo,
-  		msp.store_pic_name_three AS storePicNameThree
+  		msp.store_pic_name_one AS storePicNameOne
   	FROM market_store ms INNER JOIN market_store_pic msp
   	ON ms.store_no = msp.store_no
   	WHERE ms.store_email = #{storeEmail}
@@ -238,11 +232,19 @@
   </select>
   
   <!-- 업체 리스트 -->
-  <select id="selectStoreList" resultType="com.project.secondhand.vo.StoreAndReportCnt">
+  <select id="selectStoreList" parameterType="com.project.secondhand.vo.Page" resultType="com.project.secondhand.vo.StoreAndReportCnt">
   	SELECT
   		store_no storeNo,
   		store_name storeName,
   		store_email storeEmail
+  	FROM market_store
+  	LIMIT #{beginRow}, #{rowPerPage}
+  </select>
+  
+  <!-- 업체 전체 행 수 -->
+  <select id="selectNoticeTotalRow" resultType="int">
+  	SELECT
+  		COUNT(*)
   	FROM market_store
   </select>
   

@@ -1,34 +1,16 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <title>Second Hand</title>
-</head>
-<link rel="stylesheet" media="all" href="css/base.css" />
-<body>
-   <div class="frame">
-      <!-- class= "header" 상단 검색창 위치 조정 -->
-      <div class="header">
-         <div th:include="/inc/topHeader"></div>
-      </div>
-      <!-- class = "main" 내용 위치 선정 -->
-      <div class="main">
-         <form method="post" th:action="@{/addMemberAddr}" id="addMemberAddr">
-            <input type="hidden" id="sample6_postcode" placeholder="우편번호">
-            <input type="text" id="sample6_address" placeholder="주소" name="memberAddrAll">
-            <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-            <input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
-            <input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
-            <input type="hidden" name="memberNo" th:value="${memberNo}">
-            <div>
-               <button type="button" id="btn">추가</button>
-            </div>
-         </form>
-      </div>
-   </div>
-   <div th:include="/inc/copyRight"></div>
-</body>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<!-- sidemenu style, javascript 파일 -->
+<link rel="stylesheet" href="css/menu.css">
+<script src="js/sidemenu.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function sample6_execDaumPostcode() {
@@ -78,11 +60,58 @@
             }
         }).open();
     }
-    $(document).ready(function(){
-       $('#btn').click(function(){
-    	   alert("회원가입 성공");
-          $('#addMemberAddr').submit();
-    	   });
+	$(document).ready(function(){
+		$('#btn').click(function(){
+    		alert("회원가입 성공");
+        	$('#addMemberAddr').submit();
+    	});
     });
 </script>
+<style>
+.member-btn {
+	text-align: right;
+}
+
+#bottom-box {
+	position: absolute;
+    bottom: 0;
+}
+</style>
+</head>
+<body>
+	<!-- sidemenu include -->
+	<div th:include="/inc/menu::sidemenu"></div>
+	<!-- topmenu include -->
+	<div th:include="/inc/menu::topmenu"></div>
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:class="row">
+				<div th:class="col-sm-3"></div>
+				<div th:class="col-sm-7">
+					<h2 th:text="'주소 등록'"></h2>
+			         <form method="post" th:action="@{/addMemberAddr}" id="addMemberAddr">
+			            <input type="hidden" id="sample6_postcode" placeholder="우편번호">
+			            <input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
+			            <input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
+			            <input type="hidden" name="memberNo" th:value="${memberNo}">
+			            <div th:class="row">
+			            	<div th:class="'col-10 form-group'">
+					            <input th:class="form-control" type="text" id="sample6_address" placeholder="주소" name="memberAddrAll">
+			            	</div>
+			            	<div th:class="col-2">
+					            <input type="button" onclick="sample6_execDaumPostcode()" value="주소 찾기" th:class="'btn'">
+			            	</div>
+			            </div>
+			            <div th:class="member-btn">
+							<button type="button" id="btn" th:class="'btn btn-success'">추가</button>
+			            </div>
+			         </form>
+				</div>
+			    <div th:class="col-sm-2"></div>
+			</div>
+		</section>
+   </div>
+	<!-- bottomenu include -->
+	<div th:include="/inc/menu::bottommenu"></div>
+</body>
 </html>

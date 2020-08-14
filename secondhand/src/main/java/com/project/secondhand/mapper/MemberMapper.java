@@ -11,6 +11,7 @@ import com.project.secondhand.vo.MemberAddr;
 import com.project.secondhand.vo.MemberAndReportCnt;
 import com.project.secondhand.vo.MemberInfo;
 import com.project.secondhand.vo.MemberPic;
+import com.project.secondhand.vo.Page;
 import com.project.secondhand.vo.Temper;
 @Mapper
 public interface MemberMapper {
@@ -47,7 +48,9 @@ public interface MemberMapper {
 	// 회원 사진
 	public String selectMemberPicOne(int memberNo);
 	// 회원 리스트
-	public List<MemberAndReportCnt> selectMemberList();
+	public List<MemberAndReportCnt> selectMemberList(Page page);
+	// 회원 전체 행 수
+	public int selectNoticeTotalRow();
 	// 관리자 회원 상세보기
 	public MemberInfo selectMemberOneByAdmin(int memberNo);
 	// 관리자 회원이 올린 상품 리스트

@@ -2,19 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-
 <title>SecondHand</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<!-- sidemenu style, javascript 파일 -->
+<link rel="stylesheet" href="css/menu.css">
+<script src="js/sidemenu.js"></script>
 <!-- 아이템 관련 css -->
-<link rel="stylesheet" media="all" href="css/itemList.css" />
-<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
-<link rel="stylesheet" media="all" href="css/copyRight.css" />
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <!-- 기본 api 링크-->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<link rel="stylesheet" href="css/sidemenu.css">
-<script src="js/sidemenu.js"></script>
 <style>
+#hot-articles-head-title {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
 
 .btn1 {
   border: 2px solid gray;
@@ -27,54 +33,69 @@
   text-decoration: none;
 }
 
+.col-sm-7 {
+	height: 2000px;
+}
+
+.card:hover {
+	background-color: #e8e8e8;
+}
+
+#searchWord {
+	width: 90%;
+}
+
+#searchBtn {
+	width: 10%;
+}
 </style>
 </head>
-<body class="hoian-kr">
-<div th:include="/inc/sidemenu::sidemenu"></div>
-	<div class="header">
-		<div th:include="/inc/topHeader"></div>
-	</div>
-		<section id="content">			
-		
-				<h1 class="head-title" id="hot-articles-head-title" >상품 리스트</h1>
-			
-			
-			<div class="title-line-divider"></div>
-			<form method = "post"th:action = "@{/itemListByAddr}">
-			<nav id="hot-articles-navigation">
-				<input type="text" name = "smallCity" id="" placeholder="주소를 입력하세요."	class="hot-articles-nav-select">
-				<button type="submit" class = "btn1">검색</button>
-				<br>
-				<br>
-				 <!-- <div th:if="${session.loginMember != null"> -->
-				<a class = "btn1" th:href = "@{/addItem}" >상품 등록</a>
-				</div>
-			</nav>
-			</form>
-			
-			<section class="cards-wrap">
-				<article class="card-top " th:each="item, index : ${list}">
-					 <a class="card-link " data-event-label="98680541"
-						 th:href="@{/itemInfo(itemNo=${item.itemNo})}">
-					<div class="card-photo">
-							 <img th:src="@{'/upload/'+ ${item.itemPicNameOne}}" />
+<body>
+	<!-- sidemenu include -->
+	<div th:include="/inc/menu::sidemenu"></div>
+	<!-- topmenu include -->
+	<div th:include="/inc/menu::topmenu"></div>
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:class="row">
+				<div th:class="col-sm-2"></div>
+				<div th:class="col-sm-7">
+					<h2 th:class="head-title" id="hot-articles-head-title" th:text="'상품 리스트'"></h2>
+					<div th:class="form-group">
+						<form th:class="form-inline" th:method="get" th:action="@{/itemListByAddr}">
+							<label th:for="searchWord"></label>
+							<input th:class="form-control" th:type="text" th:name="smallCity" th:id="searchWord" th:placeholder="'주소를 검색하세요'">
+							<button th:class="'btn btn-success'" th:type="submit" th:id="searchBtn" th:text="검색"></button>
+						</form>
 					</div>
-					<div class="card-desc">
-						<h2 class="card-title"><span th:text="${item.itemTitle}"></span></h2>
-							<div class="card-region-name"><span th:text="${item.bigCity} + ${item.middleCity} + ${item.smallCity}"></span></div>
-							<div class="card-price "><span th:text="${item.itemPrice}"></span></div>
-							<div class="card-counts">
-								<p><span th:text="'판매상태 :'+${item.itemState}"></span></p>
-								<p><span th:text="'카테고리 :'+${item.categoryName}"></span></p>
-								<p><span th:text="'날짜 :' +${item.itemDate.substring(0, 16)}"></span></p>
+					<div th:if="${session.loginMember} != null">
+						<a class = "btn1" th:href = "@{/addItem}">상품 등록</a>
+					</div>
+					<section class="cards-wrap">
+						<div th:each="item, index : ${list}">
+							<div class="card" th:style="${index.index}%4==3 ? 'width:250px; margin-right:5px;' : 'width:250px; float:left;'" th:onclick="|location.href='@{itemInfo/(itemNo = ${item.itemNo})}'|">
+								<img class="card-img-bottom" th:src="@{'/upload/'+ ${item.itemPicNameOne}}" alt="Card image" style="width:100%">
+								<div class="card-body">
+									<h2 class="card-title"><span th:text="${item.itemTitle}"></span></h2>								
+								</div>
+								<div class="card-text">
+									<div class="card-region-name"><span th:text="${item.bigCity} + ${item.middleCity} + ${item.smallCity}"></span></div>
+									<div class="card-price "><span th:text="${item.itemPrice}"></span></div>
+									<div class="card-counts">
+										<p><span th:text="'판매상태 :'+${item.itemState}"></span></p>
+										<p><span th:text="'카테고리 :'+${item.categoryName}"></span></p>
+										<p><span th:text="'날짜 :' +${item.itemDate.substring(0, 16)}"></span></p>
+									</div>
+								</div>
 							</div>
-					</div>
-					</a>
-				</article>
-			</section>
+						</div>
+					</section>
+				</div>
+				<div th:class="col-sm-3"></div>
+			</div>
 		</section>
-	<div class="header">
-		<div th:include="/inc/copyRight"></div>
 	</div>
+	<!-- bottomenu include -->
+	<div th:include="/inc/menu::bottommenu"></div>
 </body>
 </html>

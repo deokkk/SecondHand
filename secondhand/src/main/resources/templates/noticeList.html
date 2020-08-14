@@ -7,13 +7,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" media="all" href="css/itemList.css" />
 <script src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
-<link rel="stylesheet" media="all" href="css/copyRight.css" />
 <!-- sidemenu style, javascript 파일 -->
-<link rel="stylesheet" href="css/sidemenu.css">
+<link rel="stylesheet" href="css/menu.css">
 <script src="js/sidemenu.js"></script>
 <style>
+.noticeList:hover {
+	background-color: #e8e8e8;
+}
 #qna-h2 {
 	margin-bottom: 20px;
 }
@@ -22,27 +23,31 @@
 	text-align: right;
 }
 
-/* sidemenu 추가하면서 수정된 style */
-#footer {
-	left: 0px;
+#bottom-box {
+	position: absolute;
+    bottom: 0;
 }
-@font-face { 
-	font-family: 'yg-jalnan'; 
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); 
-	font-weight: normal; 
-	font-style: normal; 
-} 
-.sidenav a, .sidenav ul li {
-	font-family: 'yg-jalnan';
+
+.pagination {
+	margin-top: 15px;
+}
+
+.page-item.active .page-link {
+	color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+	
+.page-link {
+	color: black;
 }
 </style>
 </head>
 <body>
 	<!-- sidemenu include -->
-	<div th:include="/inc/sidemenu::sidemenu"></div>
-	<div th:class="header">
-		<div th:include="/inc/topHeader"></div>
-	</div>
+	<div th:include="/inc/menu::sidemenu"></div>
+	<!-- topmenu include -->
+	<div th:include="/inc/menu::topmenu"></div>
 	<div th:class="container-fluid">
 		<section th:id="content">
 			<div th:class="row">
@@ -58,24 +63,34 @@
 							</tr>
 						</thead>
 						<tbody th:id="qnaTable">
-							<tr th:each="notice : ${list}">
+							<tr th:class="noticeList" th:each="notice : ${noticeList}" th:onclick="|location.href='@{/noticeDetail(noticeNo = ${notice.noticeNo})}'|">
 								<td th:text="${notice.noticeNo}"></td>
-								<td><a th:href="@{/noticeDetail(noticeNo=${notice.noticeNo})}" th:text="${notice.noticeTitle}"></a></td>
+								<td th:text="${notice.noticeTitle}"></td>
 								<td th:text="${notice.noticeDate}"></td>
 							</tr>
 						</tbody>
 					</table>
 					<br>
-					<div th:id="noticeListBox">
+					<div th:id="noticeListBox" th:if="${session.level} == 'admin'">
 						<a th:href="@{/addNotice}" th:class="'btn btn-success'" th:text="입력하기"></a>
+					</div>
+					<div>
+						<input th:type="hidden" th:id="currentPage" th:value="${page.currentPage}">
+						<ul class="pagination" style="justify-content: center;">
+							<li class="page-item"><a th:href="@{/noticeList(currentPage=${page.currentPageGroup-page.pagePerGroup})}" th:if="${page.currentPageGroup}>1" class="page-link"><i class="fa fa-angle-left"></i></a></li>
+							<li th:if="${i}<${page.lastPage+1}" th:each="i : ${#numbers.sequence(page.currentPageGroup, page.currentPageGroup+page.pagePerGroup-1)}" th:class="${i}==${page.currentPage} ? 'page-item active' : 'page-item'">
+								<span th:if="${i}==${page.currentPage}" th:text="${i}" class="page-link"></span>
+								<a th:unless="${i}==${page.currentPage}" th:text=${i} th:href="@{/noticeList(currentPage=${i})}" class="page-link"></a>
+							</li>
+							<li class="page-item"><a th:href="@{/noticeList(currentPage=${page.currentPageGroup+page.pagePerGroup})}" th:if="${page.currentPageGroup<(page.lastPageGroup-1)*page.pagePerGroup+1}" class="page-link"><i class="fa fa-angle-right"></i></a></li>
+						</ul>
 					</div>
 				</div>
 				<div th:class="col-sm-3"></div>
 			</div>
 		</section>
-		<div th:class="header">
-			<div th:include="/inc/copyRight"></div>
-		</div>
 	</div>
+	<!-- bottomenu include -->
+	<div th:include="/inc/menu::bottommenu"></div>
 </body>
 </html>

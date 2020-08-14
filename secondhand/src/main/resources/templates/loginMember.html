@@ -1,47 +1,21 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <title>Second Hand</title>
-</head>
-<link rel="stylesheet" media="all" href="css/base.css" />
-<body>
-	<div class="frame">
-		<!-- class= "header" 상단 검색창 위치 조정 -->
-		<div class="header">
-			<div th:include="/inc/topHeader"></div>
-		</div>
-		<!-- class = "main" 내용 위치 선정 -->
-		<div class="main">
-			<h1>일반회원 로그인</h1>
-			<form method="post" th:action="@{/loginMember}" id="loginMember">
-			<div>
-				Email : 
-				<input type="text" name="memberEmail" id="memberEmail">
-				<span id="emailHelper"></span>
-			</div>
-			<div>
-				Pw : 
-				<input type="password" name="memberPw" id="memberPw">
-				<span id="pwHelper"></span>
-			</div>
-			<div>
-				<span th:text="${msg}"></span>
-			</div>
-			<div>
-				<button type="button" id ="btn" class="">로그인</button>
-			</div>
-			</form>
-		</div>
-	</div>
-	<div th:include="/inc/copyRight"></div>
-</body>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<!-- sidemenu style, javascript 파일 -->
+<link rel="stylesheet" href="css/menu.css">
+<script src="js/sidemenu.js"></script>
 <script>
 	let helperInit = function(){
 		$('#emailHelper').text("");
 		$('#pwHelper').text("");
-};
+	};
 
 	$(document).ready(function(){
 		$('#btn').click(function(){
@@ -58,4 +32,54 @@
 		});
 	});
 </script>
+<style>
+#btnBox {
+	text-align: right;
+}
+
+#bottom-box {
+	position: absolute;
+    bottom: 0;
+}
+</style>
+</head>
+<body>
+	<!-- sidemenu include -->
+	<div th:include="/inc/menu::sidemenu"></div>
+	<!-- topmenu include -->
+	<div th:include="/inc/menu::topmenu"></div>
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:class="row">
+				<div th:class="col-sm-3"></div>
+				<div th:class="col-sm-2">
+					<h2 th:text="'일반회원 로그인'"></h2>
+					<form method="post" th:action="@{/loginMember}" id="loginMember">
+						<div th:class="form-group">
+							<label th:for="memberEmail" th:text="'Email : '"></label>
+							<input th:class="form-control" type="text" name="memberEmail" id="memberEmail">
+							<span id="emailHelper"></span>
+						</div>
+						<div th:class="form-group">
+							<label th:for="memberPw" th:text="'Pw : '"></label>
+							<input th:class="form-control" type="password" name="memberPw" id="memberPw">
+							<span id="pwHelper"></span>
+						</div>
+						<div>
+							<span th:text="${msg}"></span>
+						</div>
+						<div th:id="btnBox">
+							<button type="button" id ="btn" th:class="'btn btn-success'">로그인</button>
+						</div>
+					</form>
+					<div><a th:href="@{/findMemberId}">일반회원 아이디 찾기</a></div>
+					<div><a th:href="@{/findMemberPw}">일반회원 비밀번호 찾기</a></div>
+				</div>
+				<div th:class="col-sm-7"></div>
+			</div>
+		</section>
+	</div>
+	<!-- bottomenu include -->
+	<div th:include="/inc/menu::bottommenu"></div>
+</body>
 </html>

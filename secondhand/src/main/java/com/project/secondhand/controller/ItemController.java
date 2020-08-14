@@ -89,6 +89,7 @@ public class ItemController {
 		List<Category> categoryList = categoryService.getCategoryList("아이템");
 		ArrayList<ItemList> itemList = itemService.selectItemListByAll();
 		//System.out.println(itemList + "/itemList/itemController");
+		for(ItemList i : itemList) System.out.println(i.toString());
 		model.addAttribute("list", itemList);
 		model.addAttribute("categoryList", categoryList);
 		return "itemList";

@@ -8,11 +8,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" media="all" href="css/itemList.css" />
 <script src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
-<link rel="stylesheet" media="all" href="css/copyRight.css" />
 <!-- sidemenu style, javascript 파일 -->
-<link rel="stylesheet" href="css/sidemenu.css">
+<link rel="stylesheet" href="css/menu.css">
 <script src="js/sidemenu.js"></script>
 <script>
 	let helperInit = function() {
@@ -42,33 +40,25 @@
 </script>
 <style>
 #qna-h2 {
-		margin-bottom: 20px;
-	}
-#addNoticeBox{
+	margin-bottom: 20px;
+}
+	
+#addNoticeBox {
 	text-align: right;
 	color: #e49aec;
-}	
-/* sidemenu 추가하면서 수정된 style */
-#footer {
-	left: 0px;
 }
-@font-face { 
-	font-family: 'yg-jalnan'; 
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); 
-	font-weight: normal; 
-	font-style: normal; 
-} 
-.sidenav a, .sidenav ul li {
-	font-family: 'yg-jalnan';
+
+#bottom-box {
+	position: absolute;
+    bottom: 0;
 }
 </style>
 </head>
 <body>
 	<!-- sidemenu include -->
-	<div th:include="/inc/sidemenu::sidemenu"></div>
-	<div th:class="header">
-		<div th:include="/inc/topHeader"></div>
-	</div>
+	<div th:include="/inc/menu::sidemenu"></div>
+	<!-- topmenu include -->
+	<div th:include="/inc/menu::topmenu"></div>
 	<div th:class="container-fluid">
 		<section th:id="content">
 			<form th:id="addNoticeForm" th:method="post" th:action="@{/addNotice}">
@@ -94,9 +84,8 @@
 				</div>
 			</form>
 		</section>
-		<div th:class="header">
-			<div th:include="/inc/copyRight"></div>
-		</div>
 	</div>
+	<!-- bottomenu include -->
+	<div th:include="/inc/menu::bottommenu"></div>
 </body>
 </html>

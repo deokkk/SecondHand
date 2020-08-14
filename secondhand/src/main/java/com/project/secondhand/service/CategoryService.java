@@ -1,6 +1,5 @@
 package com.project.secondhand.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,6 @@ public class CategoryService {
 	
 	// 카테고리 리스트
 	public Map<String, Object> getCategoryListAll(String categoryType, int currentPage) {
-		List<Category> list = new ArrayList<Category>();
 		Page page = new Page();
 		page.setCurrentPage(currentPage);
 		page.setRowPerPage(rowPerPage);
@@ -43,7 +41,7 @@ public class CategoryService {
 		Map<String, Object> inputMap = new HashMap<>();
 		inputMap.put("categoryType", categoryType);
 		inputMap.put("page", page);
-		list = categoryMapper.selectCategoryListByPage(inputMap);
+		List<Category> list = categoryMapper.selectCategoryListByPage(inputMap);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("categoryList", list);

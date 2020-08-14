@@ -1,6 +1,7 @@
 package com.project.secondhand.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -42,11 +43,11 @@ public class NoticeController {
 	
 	// 공지사항 리스트
 	@GetMapping("/noticeList")
-	public String getNoticeList(Model model) {
+	public String getNoticeList(Model model, @RequestParam(value = "currentPage", defaultValue = "1") int currentPage) {
 		//model.addAttribute("noticeList", noticeService.getNoticeList());
-		List<Notice> list = noticeService.getNoticeList();
-		for(Notice n : list) System.out.println(n.toString()+"<-------------------");
-		model.addAttribute("list", list);
+		Map<String, Object> map = noticeService.getNoticeList(currentPage); 
+		model.addAttribute("noticeList", map.get("noticeList"));
+		model.addAttribute("page", map.get("page"));
 		// noticeList 출력할 html
 		return "noticeList";
 	}

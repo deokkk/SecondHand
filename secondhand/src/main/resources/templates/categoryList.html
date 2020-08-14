@@ -10,11 +10,9 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" media="all" href="css/itemList.css" />
 <script	src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
-<link rel="stylesheet" media="all" href="css/copyRight.css" />
 <!-- sidemenu style, javascript 파일 -->
-<link rel="stylesheet" href="css/sidemenu.css">
+<link rel="stylesheet" href="css/menu.css">
 <script src="js/sidemenu.js"></script>
 <style>
 #qna-h2 {
@@ -47,18 +45,9 @@
 	color: black;
 }
 
-/* sidemenu 추가하면서 수정된 style */
-#footer {
-	left: 0px;
-}
-@font-face { 
-	font-family: 'yg-jalnan'; 
-	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); 
-	font-weight: normal; 
-	font-style: normal; 
-} 
-.sidenav a, .sidenav ul li {
-	font-family: 'yg-jalnan';
+#bottom-box {
+	position: absolute;
+    bottom: 0;
 }
 </style>
 <script>
@@ -141,14 +130,14 @@
 		});
 		
 		$(document).on("click", "#addCategory", function(){
-			$('#addCategoryBox').prepend('<div class="col-3"><select class="form-control" id="addCategoryType"><option value="item">상품</option><option value="board">게시판</option><option value="qna">자주묻는질문</option></select></div><div class="col-7"><input class="form-control" type="text" id="categoryName"></div>');
+			$('#addCategoryBox').prepend('<div class="col-3"><select class="form-control" id="addCategoryType"><option value="item">상품</option><option value="board">게시판</option><option value="qna">자주묻는질문</option></select></div><div class="col-7"><input class="form-control" type="text" id="addCategoryName"></div>');
 			$('.btnBox').addClass('col-2');
 			$(this).attr('id', 'addBtn')
 			$(this).addClass('btn');
 			$('#addBtn').click(function(){
 				var categoryType = $('#addCategoryType').val(); 
 				console.log(categoryType);
-				var categoryName = $('#categoryName').val();
+				var categoryName = $('#addCategoryName').val();
 				console.log(categoryName);
 				$.ajax({
 					url: '/addCategory',
@@ -168,71 +157,69 @@
 </script>
 </head>
 <body>
-<!-- sidemenu include -->
-<div th:include="/inc/sidemenu::sidemenu"></div>
-<div th:class="header">
-	<div th:include="/inc/topHeader"></div>
-</div>
-<div th:class="container-fluid">
-	<section th:id="content">
-		<div th:class="row">
-			<div th:class="col-sm-3"></div>
-			<div th:class="col-sm-6">
-				<h2 th:id="qna-h2" th:text="'카테고리 리스트'"></h2>
-				<div th:class="'form-group row'">
-					<div th:class="col-10">
-						<select th:class="form-control" th:id="categoryType">
-							<option value="" th:text="전체보기">
-							<option th:value="item" th:text="상품" th:selected="${categoryType} eq 'item'"></option>
-							<option th:value="board" th:text="업체홍보게시판" th:selected="${categoryType} eq 'board'"></option>
-							<option th:value="qna" th:text="자주묻는질문" th:selected="${categoryType} eq 'qna'"></option>
-						</select>
+	<!-- sidemenu include -->
+	<div th:include="/inc/menu::sidemenu"></div>
+	<!-- topmenu include -->
+	<div th:include="/inc/menu::topmenu"></div>
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:class="row">
+				<div th:class="col-sm-3"></div>
+				<div th:class="col-sm-6">
+					<h2 th:id="qna-h2" th:text="'카테고리 리스트'"></h2>
+					<div th:class="'form-group row'">
+						<div th:class="col-10">
+							<select th:class="form-control" th:id="categoryType">
+								<option value="" th:text="전체보기">
+								<option th:value="item" th:text="상품" th:selected="${categoryType} eq 'item'"></option>
+								<option th:value="board" th:text="업체홍보게시판" th:selected="${categoryType} eq 'board'"></option>
+								<option th:value="qna" th:text="자주묻는질문" th:selected="${categoryType} eq 'qna'"></option>
+							</select>
+						</div>
+						<div th:class="col-2">
+							<button th:type="button" th:class="'btn btn-success'" th:id="type-btn" th:text="보기"></button>
+						</div>
 					</div>
-					<div th:class="col-2">
-						<button th:type="button" th:class="'btn btn-success'" th:id="type-btn" th:text="보기"></button>
+					<div>
+						<table th:class="table">
+							<thead>
+								<tr>
+									<th th:style="'width: 80%;'" th:text="'제목'"></th>
+									<th th:style="'width: 10%;'" th:text="'수정'"></th>
+									<th th:style="'width: 10%;'" th:text="'삭제'"></th>
+								</tr>
+							</thead>
+							<tbody th:id="categoryTable">
+								<tr th:each="category : ${categoryList}">
+									<td th:text="${category.categoryName}" th:class="${category.categoryName}" th:id="${category.categoryName}"></td>
+									<td><button th:type="button" th:class="${category.categoryName} +' updateBtn'"><i class='far fa-edit' style='font-size:24px'></i></button></td>
+									<td><button th:type="button" th:class="${category.categoryName} +' deleteBtn'"><i class="fa fa-remove" style="font-size:24px;color:red"></i></button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div th:id="addCategoryBox" th:class="row">
+						<div th:class="btnBox">
+							<button th:class="'btn btn-success'" th:type="button" th:text="입력" th:id="addCategory"></button>
+						</div>
+					</div>
+					<div>
+						<input th:type="hidden" th:id="currentPage" th:value="${page.currentPage}">
+						<ul class="pagination" style="justify-content: center;">
+							<li class="page-item"><a th:href="${categoryType} == null ? @{/categoryList(currentPage=${page.currentPageGroup-page.pagePerGroup})} : @{/categoryList(currentPage=${page.currentPageGroup-page.pagePerGroup}, categoryType=${categoryType})}" th:if="${page.currentPageGroup}>1" class="page-link"><i class="fa fa-angle-left"></i></a></li>
+							<li th:if="${i}<${page.lastPage+1}" th:each="i : ${#numbers.sequence(page.currentPageGroup, page.currentPageGroup+page.pagePerGroup-1)}" th:class="${i}==${page.currentPage} ? 'page-item active' : 'page-item'">
+								<span th:if="${i}==${page.currentPage}" th:text="${i}" class="page-link"></span>
+								<a th:unless="${i}==${page.currentPage}" th:text=${i} th:href="${categoryType} == null ? @{/categoryList(currentPage=${i})} : @{/categoryList(currentPage=${i}, categoryType=${categoryType})}" class="page-link"></a>
+							</li>
+							<li class="page-item"><a th:href="${categoryType} == null ? @{/categoryList(currentPage=${page.currentPageGroup+page.pagePerGroup})} : @{/categoryList(currentPage=${page.currentPageGroup+page.pagePerGroup}, categoryType=${categoryType})}" th:if="${page.currentPageGroup<(page.lastPageGroup-1)*page.pagePerGroup+1}" class="page-link"><i class="fa fa-angle-right"></i></a></li>
+						</ul>
 					</div>
 				</div>
-				<div>
-					<table th:class="table">
-						<thead>
-							<tr>
-								<th th:style="'width: 80%;'" th:text="'제목'"></th>
-								<th th:style="'width: 10%;'" th:text="'수정'"></th>
-								<th th:style="'width: 10%;'" th:text="'삭제'"></th>
-							</tr>
-						</thead>
-						<tbody th:id="categoryTable">
-							<tr th:each="category : ${categoryList}">
-								<td th:text="${category.categoryName}" th:class="${category.categoryName}" th:id="${category.categoryName}"></td>
-								<td><button th:type="button" th:class="${category.categoryName} +' updateBtn'"><i class='far fa-edit' style='font-size:24px'></i></button></td>
-								<td><button th:type="button" th:class="${category.categoryName} +' deleteBtn'"><i class="fa fa-remove" style="font-size:24px;color:red"></i></button></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div th:id="addCategoryBox" th:class="row">
-					<div th:class="btnBox">
-						<button th:class="'btn btn-success'" th:type="button" th:text="입력" th:id="addCategory"></button>
-					</div>
-				</div>
-				<div>
-					<input th:type="hidden" th:id="currentPage" th:value="${page.currentPage}">
-					<ul class="pagination"  style="justify-content: center;">
-						<li class="page-item"><a th:href="${categoryType} == null ? @{/categoryList(currentPage=${page.currentPageGroup-page.pagePerGroup})} : @{/categoryList(currentPage=${page.currentPageGroup-page.pagePerGroup}, categoryType=${categoryType})}" th:if="${page.currentPageGroup}>1" class="page-link"><i class="fa fa-angle-left"></i></a></li>
-						<li th:if="${i}<${page.lastPage+1}" th:each="i : ${#numbers.sequence(page.currentPageGroup, page.currentPageGroup+page.pagePerGroup-1)}" th:class="${i}==${page.currentPage} ? 'page-item active' : 'page-item'">
-							<span th:if="${i}==${page.currentPage}" th:text="${i}" class="page-link"></span>
-							<a th:unless="${i}==${page.currentPage}" th:text=${i} th:href="${categoryType} == null ? @{/categoryList(currentPage=${i})} : @{/categoryList(currentPage=${i}, categoryType=${categoryType})}" class="page-link"></a>
-						</li>
-						<li class="page-item"><a th:href="${categoryType} == null ? @{/categoryList(currentPage=${page.currentPageGroup+page.pagePerGroup})} : @{/categoryList(currentPage=${page.currentPageGroup+page.pagePerGroup}, categoryType=${categoryType})}" th:if="${page.currentPageGroup<(page.lastPageGroup-1)*page.pagePerGroup+1}" class="page-link"><i class="fa fa-angle-right"></i></a></li>
-					</ul>
-				</div>
+				<div th:class="col-sm-3"></div>
 			</div>
-			<div th:class="col-sm-3"></div>
-		</div>
-	</section>
-	<div th:class="header">
-		<div th:include="/inc/copyRight"></div>
+		</section>
 	</div>
-</div>
+	<!-- bottomenu include -->
+	<div th:include="/inc/menu::bottommenu"></div>
 </body>
 </html>

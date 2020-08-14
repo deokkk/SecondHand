@@ -1,56 +1,77 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <title>Second Hand</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base-d5f8bd2e2e6729d4f86324f85bbdb9a5c6bafeff1957b761a1187ae9c7d773b8.js"></script>
+<!-- sidemenu style, javascript 파일 -->
+<link rel="stylesheet" href="css/menu.css">
+<script src="js/sidemenu.js"></script>
+<style>
+.member-btn {
+	text-align: right;
+}
+
+#bottom-box {
+	position: absolute;
+    bottom: 0;
+}
+</style>
 </head>
-<link rel="stylesheet" media="all" href="css/base.css" />
 <body>
-	<div class="frame">
-		<!-- class= "header" 상단 검색창 위치 조정 -->
-		<div class="header">
-			<div th:include="/inc/topHeader"></div>
-		</div>
-		<!-- class = "main" 내용 위치 선정 -->
-		<div class="main">
-			<div class="container">
-				<h1>회원정보</h1>
-				<table class="table">
-					<tr>
-						<td>사진</td>
-						<td>
-							<img th:src="@{'/upload/'+ ${memberInfo.memberPicName}}" width="100" height="100"></img>
-						</td>
-					</tr>
-					<tr>
-						<td>온도 &nbsp;&nbsp;&nbsp;&nbsp;<span th:text="${memberInfo.temperTotal}"></span></td>
-					</tr>
-					<tr>
-						<td>닉네임</td>
-						
-						<td th:text="${memberInfo.memberNickname}"></td>
-					</tr>
-					<tr>
-						<td>이메일</td>
-						<td th:text="${memberInfo.memberEmail}"></td>
-					</tr>
-					<tr>
-						<td>전화번호</td>
-						<td th:text="${memberInfo.memberPhone}"></td>
-					</tr>
-					<tr>
-						<td>주소</td>
-						<td th:text="${memberInfo.bigCity}+' '+${memberInfo.middleCity}+' '+${memberInfo.smallCity}"></td>
-					</tr>
-				</table>
-				<div>
-					<a th:href="@{/removeMember}" class="btn btn-primary">회원탈퇴 </a> 
-					<a th:href="@{/modifyMember}" class="btn btn-primary">회원수정</a>
+<body>
+	<!-- sidemenu include -->
+	<div th:include="/inc/menu::sidemenu"></div>
+	<!-- topmenu include -->
+	<div th:include="/inc/menu::topmenu"></div>
+	<div th:class="container-fluid">
+		<section th:id="content">
+			<div th:class="row">
+				<div th:class="col-sm-3"></div>
+				<div th:class="col-sm-6">
+					<h2 th:text="회원정보"></h2>
+					<table class="table">
+						<tr>
+							<td>사진</td>
+							<td>
+								<img th:src="@{'/upload/'+ ${memberInfo.memberPicName}}" width="100" height="100"></img>
+							</td>
+						</tr>
+						<tr>
+							<td>온도 &nbsp;&nbsp;&nbsp;&nbsp;<span th:text="${memberInfo.temperTotal}"></span></td>
+						</tr>
+						<tr>
+							<td>닉네임</td>
+							
+							<td th:text="${memberInfo.memberNickname}"></td>
+						</tr>
+						<tr>
+							<td>이메일</td>
+							<td th:text="${memberInfo.memberEmail}"></td>
+						</tr>
+						<tr>
+							<td>전화번호</td>
+							<td th:text="${memberInfo.memberPhone}"></td>
+						</tr>
+						<tr>
+							<td>주소</td>
+							<td th:text="${memberInfo.bigCity}+' '+${memberInfo.middleCity}+' '+${memberInfo.smallCity}"></td>
+						</tr>
+					</table>
+					<div th:class="member-btn">
+						<a th:href="@{/removeMember}" class="btn btn-success">회원탈퇴 </a> 
+						<a th:href="@{/modifyMember}" class="btn btn-success">회원수정</a>
+					</div>
 				</div>
+				<div th:class="col-sm-3"></div>
 			</div>
-		</div>
+		</section>
 	</div>
-	<div th:include="/inc/copyRight"></div>
+	<!-- bottomenu include -->
+	<div th:include="/inc/menu::bottommenu"></div>
 </body>
 </html>

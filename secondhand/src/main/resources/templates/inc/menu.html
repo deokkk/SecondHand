@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<!-- sidemenu -->
+	<div th:fragment="sidemenu" class="sidenavi">
+		<div th:id="mySidenav" th:class="sidenav">
+			<a th:href="@{javascript:void(0)}" th:class="closebtn" onclick="closeNav()">&times;</a>
+			
+			<a th:href="@{/}" th:text="홈"></a> 
+			<a th:href="@{/noticeList}" th:text="공지사항"></a> 
+			<a th:href="@{/itemList}" th:text="상품"></a>
+			<a th:href="@{/storeBoardList}" th:text="업체홍보게시판"></a>
+			<!-- <a th:class="adminMenu" th:text="카테고리"></a>
+			<ul th:class="hide">
+				<li><a th:href="@{/categoryListByItem}" th:text="-아이템"></a></li>
+				<li><a th:href="@{/categoryListByStore}" th:text="-홍보업체"></a></li>
+			</ul> -->
+			<a th:href="@{/qnaList}">자주묻는질문</a>
+			<a th:class="adminMenu" th:if="${session.level}=='admin'" th:text="관리자메뉴"></a>
+			<ul th:class="hide">
+				<li><a th:href="@{/memberList}" th:text="-회원리스트"></a></li>
+				<li><a th:href="@{/storeList}" th:text="-업체리스트"></a></li>
+				<li><a th:href="@{/categoryList}" th:text="-카테고리리스트"></a></li>
+				<li><a th:href="@{/reportList}" th:text="-신고리스트"></a></li>
+			</ul>
+		</div>
+		<span
+			style="font-size: 30px; cursor: pointer; color: #B5E61D; margin: 10px;"
+			onclick="openNav()">&#9776;</span>
+	</div>
+	<!-- topmenu -->
+	<div th:fragment="topmenu">
+		<div th:class="row">
+			<div th:class="col-3"></div>
+			<div th:class="col-1">
+				<a th:href="@{/}"><span th:class="sr-only"></span><img th:alt="secondhand" th:src="@{img/logo.jpg}" th:class="logo"></a>
+			</div>
+			<div th:class="col-4">
+				<div th:id="search-box">
+					<input th:type="text" th:name="indexSearchWord" th:id="indexSearchWord" th:placeholder="'상품, 업체 등을 검색해보세요.'">
+					<button th:type="button" th:id="search-btn"><img th:id="search-btn-img" th:alt="search" th:src="@{img/search.jpg}"></button>
+				</div>
+			</div>
+			<div th:class="col-4">
+				<input th:type="hidden" th:value="${session.level} == 'member' ? 'levelMember' : (${session.level} == 'store' ? 'levelStore' : 'level')" th:id="chan">
+				<div th:class="dropdown" th:style="'float: left; margin-right: 5px;'">
+					<button th:type="button" th:class="(${session.loginMember} == null) and (${session.loginStore} == null) ? 'top-btn dropdown-toggle' : 'top-btn'" th:data-toggle="(${session.loginMember} == null) and (${session.loginStore} == null) ? 'dropdown' : ''" th:id="(${session.loginMember} == null) and (${session.loginStore} == null) ? addMemberChose : selectMemberOne" th:text="(${session.loginMember} == null) and (${session.loginStore} == null) ? '회원가입' : '개인정보'" th:if="${session.level} != 'admin'"></button>
+					<div th:class="dropdown-menu">
+						<a th:class="dropdown-item"  th:href="@{/addMember}" th:text="일반회원"></a>
+						<a th:class="dropdown-item" th:href="@{/addStore}" th:text="업체"></a>
+					</div>
+				</div>
+				<div th:class="dropdown" th:style="'float: left; margin-right: 5px;'">
+					<button th:type="button" th:class="(${session.loginMember} == null) and (${session.loginStore} == null) ? 'top-btn dropdown-toggle login' : 'top-btn login'" th:data-toggle="(${session.loginMember} == null) and (${session.loginStore} == null) ? 'dropdown' : ''" th:id="(${session.loginMember} == null) and (${session.loginStore} == null) ? loginBtn : logoutBtn" th:text="(${session.loginMember} == null) and (${session.loginStore} == null) ? '로그인' : '로그아웃'" th:if="${session.level} != 'admin'"></button>
+					<div th:class="dropdown-menu">
+						<a th:class="dropdown-item"  th:href="@{/loginMember}" th:text="일반회원"></a>
+						<a th:class="dropdown-item" th:href="@{/loginStore}" th:text="업체"></a>
+					</div>
+				</div>
+				<!-- <button th:type="button" th:class="'top-btn login'" th:id="(${session.loginMember} == null) and (${session.loginStore} == null) ? loginBtn : logoutBtn" th:text="(${session.loginMember} == null) and (${session.loginStore} == null) ? '로그인 ' : '로그아웃'" th:if="${session.level} != 'admin'"></button> -->
+				<button th:type="button" th:class="admin-logout" th:id="logoutBtn" th:text="'관리자 로그아웃'" th:if="${session.level} == 'admin'"></button>
+				<button th:type="button" th:class="top-btn" th:if="(${session.loginMember} != null or ${session.loginStore} != null) and ${session.level} != 'admin'" th:id="chatListBtn" th:text="채팅"></button>
+				<script>
+					$("#selectMemberOne").click(function(){
+						console.log($("#chan").val());
+						if($("#chan").val()=="levelMember"){
+							location.href = 'memberInfo';
+						}else if($("#chan").val()=="levelStore"){
+							location.href = 'storeMemberInfo';
+						}
+					});
+					$("#logoutBtn").click(function(){
+						console.log("click")
+						location.href = 'logout';
+					}); 
+					$('#chatListBtn').click(function() {
+						window.open("/getMyChatList", "_blank", "top=0, width=400, height=700")
+					});
+				</script>
+			</div>
+		</div>
+	</div>
+	<!-- bottommenu -->
+	<div th:fragment="bottommenu">
+		<div th:id="bottom-box">
+			<ul th:class="bot-list">
+				<li th:class="list-item" th:text="'인사말'"></li>
+				<li th:class="list-item" th:text="'프로젝트 소개'"></li>
+				<li th:class="list-item" th:text="'조원 소개'"></li>
+				<li th:class="list-item" th:text="'도움주신분들'"></li>
+				<li th:class="list-item" th:text="'후기'"></li>
+			</ul>
+			<ul th:class="bot-list" th:id="addr-list">
+				<li th:class="list-item" th:text="'프로젝트명 - SecondHand'"></li>
+				<li th:class="list-item" th:text="'구디아카데미 - Secondhand Team'"></li>
+				<li th:class="list-item" th:text="'고객문의 : chonghg21@naver.com'"></li>
+			</ul>
+			<p th:id="team" th:text="'제작자 : 정종혁, 김경덕, 정지성, 이병관, 남상현, 송중우'">
+			<div th:id="copyright" th:text="'Copyright © SecondHand. All rights reserved.'"></div>
+		</div>
+	</div>
+</body>
+</html>

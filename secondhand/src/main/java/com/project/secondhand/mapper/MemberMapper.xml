@@ -43,14 +43,12 @@
   <!-- 회원 주소 삭제 -->
   <delete id="removeMemberAddr" parameterType="com.project.secondhand.vo.MemberInfo">
   	DELETE FROM market_member_addr
-  	WHERE member_pw = PASSWORD(#{memberPw})
-  	AND member_no = #{memberNo}
+  	WHERE member_no = #{memberNo}
   </delete>
   <!-- 회원 사진 삭제 -->
   <delete id="removeMemberPic" parameterType="com.project.secondhand.vo.MemberInfo">
   	DELETE FROM market_member_pic
-  	WHERE member_pw = PASSWORD(#{memberPw})
-  	AND member_no = #{memberNo}
+  	WHERE member_no = #{memberNo}
   </delete>  
   
 <!--   <delete id="removeMemberPic" parameterType="com.project.secondhand.vo.MemberPic">
@@ -193,13 +191,21 @@
   </select>
   
   <!-- 회원 리스트 -->
-  <select id="selectMemberList" resultType="com.project.secondhand.vo.MemberAndReportCnt">
+  <select id="selectMemberList" parameterType="com.project.secondhand.vo.Page" resultType="com.project.secondhand.vo.MemberAndReportCnt">
   	SELECT
   		member_no memberNo,
   		member_nickname memberNickName,
   		member_phone memberPhone,
   		member_email memberEmail,
   		member_date memberDate
+  	FROM market_member
+  	LIMIT #{beginRow}, #{rowPerPage}
+  </select>
+  
+  <!-- 회원 전체 행 수 -->
+  <select id="selectNoticeTotalRow" resultType="int">
+  	SELECT
+  		COUNT(*)
   	FROM market_member
   </select>
   
